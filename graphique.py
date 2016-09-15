@@ -1,7 +1,7 @@
 # Module relatif à l'interface graphique
+
 import sys
 from PySide.QtGui import *
-from PySide.QtCore import *
 from PySide.QtWebKit import *
 from couleurs import *
 
@@ -29,7 +29,6 @@ class Fenetre(QWidget):
 
         self.show()
 
-        editor = QTextEdit()
         self.highlighter = HTMLHighLighter(self.edit.document())
 
 
