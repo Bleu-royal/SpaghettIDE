@@ -1,3 +1,4 @@
+
 # Module relatif au traitement des documents (noms, extention, sauvegarde, chargement...)
 class Document():
 
@@ -17,5 +18,4 @@ class Document():
 		fichier = open(self.chemin_enregistrement, "w")
 		fichier.write(self.textEdit.toPlainText())
 		fichier.close()
-
 
