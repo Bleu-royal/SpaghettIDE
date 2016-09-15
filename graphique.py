@@ -4,6 +4,7 @@ import sys
 from PySide.QtGui import *
 from PySide.QtWebKit import *
 from couleurs import *
+from document import *
 
 app = QApplication(sys.argv)
 
@@ -17,8 +18,12 @@ class Fenetre(QWidget):
 
         self.code = QTextEdit()
 
+        # Bouton temporaire de sauvegarde
+        self.bouton_sauvegarde = QPushButton("Save")
+        self.bouton_sauvegarde.clicked.connect(self.save)
+
         self.apercu = QWebView()
-        self.apercu.load("http://www.google.fr")
+        self.apercu.load("")
         self.apercu.setMaximumWidth(450)
         self.apercu.setMaximumHeight(450)
         self.apercu.setZoomFactor(0.5)
@@ -26,12 +31,24 @@ class Fenetre(QWidget):
         # Positionnement des Layouts
         self.layout.addWidget(self.apercu, 5, 0)
         self.layout.addWidget(self.code, 0, 1, 6, 10)
+        self.layout.addWidget(self.bouton_sauvegarde, 10,0)
 
         self.setLayout(self.layout)
 
         self.show()
 
         self.highlighter = HTMLHighLighter(self.code.document())
+
+
+    #Fonction de sauvgarde Temporaire
+    def save(self):
+        chemin = QFileDialog.getSaveFileName(self,'Open file','/home')[0]
+        nom = chemin.split("/")[-1]
+        extension = nom.split(".")[-1]
+        self.doc = Document(self.code, nom, extension, chemin)
+        print(self.doc.nombre_lignes)
+        print(self.doc.nom)
+        print(self.doc.extension)
 
 
 fenetre = Fenetre("IDE de la mort qui tue (Bleu Royal)", [400, 400])
