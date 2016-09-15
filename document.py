@@ -1,1 +1,1 @@
-# Module relatif au traitement des documents (noms, extention, sauvegarde, chargement...)
+# Module relatif au traitement des documents (noms, extension, sauvegarde, chargement...)

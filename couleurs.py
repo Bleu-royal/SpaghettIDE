@@ -19,5 +19,5 @@ class HTMLHighLighter(QSyntaxHighlighter):
     def highlightBlock(self, text):
 
         self.select_n_color("<([\w|/|\s|=|\"|\.]+)>", (255, 0, 0), text)  # Balises
-        self.select_n_color("\"(\w|\.)+\"", (40, 200, 40), text)  # guillements
+        self.select_n_color("\"(\w|\.)+\"", (40, 200, 40), text)  # Guillemets
 
