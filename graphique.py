@@ -13,23 +13,25 @@ class Fenetre(QWidget):
         self.setWindowTitle(titre)
         self.resize(size[0], size[1])
 
-        self.layout = QHBoxLayout()
+        self.layout = QGridLayout()
 
-        self.edit = QTextEdit()
-        self.layout.addWidget(self.edit)
+        self.code = QTextEdit()
 
-        self.button = QPushButton("Valider")
-        self.layout.addWidget(self.button)
+        self.apercu = QWebView()
+        self.apercu.load("http://www.google.fr")
+        self.apercu.setMaximumWidth(450)
+        self.apercu.setMaximumHeight(450)
+        self.apercu.setZoomFactor(0.5)
 
-        self.nav = QWebView()
-        self.nav.load("http://www.google.fr")
-        self.layout.addWidget(self.nav)
+        # Positionnement des Layouts
+        self.layout.addWidget(self.apercu, 5, 0)
+        self.layout.addWidget(self.code, 0, 1, 6, 10)
 
         self.setLayout(self.layout)
 
         self.show()
 
-        self.highlighter = HTMLHighLighter(self.edit.document())
+        self.highlighter = HTMLHighLighter(self.code.document())
 
 
 fenetre = Fenetre("IDE de la mort qui tue (Bleu Royal)", [400, 400])
