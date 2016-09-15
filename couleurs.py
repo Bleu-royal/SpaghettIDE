@@ -7,27 +7,17 @@ class HTMLHighLighter(QSyntaxHighlighter):
     def __init__(self, parent=None):
         super().__init__(parent)  # Appelle le __init__ de la classe parent
 
+    def select_n_color(self, exp_reguliere, color, text):
+        rgx = QRegExp(exp_reguliere)  # Reconnaitre les expressions à colorier
+        pos = rgx.indexIn(text, 0)  # Position de la première expression régulière rencontrée
+
+        while pos != -1:
+            self.setFormat(pos, rgx.matchedLength(), QColor.fromRgb(color[0], color[1], color[2]))  # Modificateur du texte sélectionné
+            pos += rgx.matchedLength()  # Déplacer à la fin de l'exp regulière
+            pos = rgx.indexIn(text, pos)  # expr suivante
+
     def highlightBlock(self, text):
-        rgx = QRegExp("<([\w|/|\s|=|\"|\.]+)>")  # Reconnaitre les balises
-        pos = rgx.indexIn(text, 0)  # Position de la première balise rencontrée
 
-        while pos != -1:
-            self.setFormat(pos, rgx.matchedLength(), QColor.fromRgb(255, 0, 0))  # Modificateur du texte sélectionné
-            pos += rgx.matchedLength()  # Déplacer à la fin de la balise
-            pos = rgx.indexIn(text, pos)  # Balise suivante
+        self.select_n_color("<([\w|/|\s|=|\"|\.]+)>", (255, 0, 0), text)  # Balises
+        self.select_n_color("\"(\w|\.)+\"", (40, 200, 40), text)  # guillements
 
-        rgx = QRegExp("\"(\w|\.)+\"")  # Reconnaitre les guillemets
-        pos = rgx.indexIn(text, 0)
-
-        while pos != -1:
-            self.setFormat(pos, rgx.matchedLength(), QColor.fromRgb(0, 255, 0))
-            pos += rgx.matchedLength()
-            pos = rgx.indexIn(text, pos)
-
-        rgx = QRegExp(">(\w|\.|\s)+<")  # Reconnaitre ce qu'il y a entre les balises.
-        pos = rgx.indexIn(text, 0)
-
-        while pos != -1:
-            self.setFormat(pos + 1, rgx.matchedLength() - 2, QColor.fromRgb(0, 0, 255))
-            pos += rgx.matchedLength()
-            pos = rgx.indexIn(text, pos)
