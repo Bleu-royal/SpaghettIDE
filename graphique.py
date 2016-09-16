@@ -8,6 +8,7 @@ from document import *
 
 app = QApplication(sys.argv)
 
+
 class Fenetre(QWidget):
     def __init__(self, titre, size=[600, 500]):
         super().__init__()
@@ -21,6 +22,9 @@ class Fenetre(QWidget):
         # Bouton temporaire de sauvegarde
         self.bouton_sauvegarde = QPushButton("Save")
         self.bouton_sauvegarde.clicked.connect(self.save)
+        # Bouton temporaire d'ouverture
+        self.bouton_open = QPushButton("Open")
+        self.bouton_open.clicked.connect(self.open)
 
         self.apercu = QWebView()
         self.apercu.load("")
@@ -31,7 +35,8 @@ class Fenetre(QWidget):
         # Positionnement des Layouts
         self.layout.addWidget(self.apercu, 5, 0)
         self.layout.addWidget(self.code, 0, 1, 6, 10)
-        self.layout.addWidget(self.bouton_sauvegarde, 10,0)
+        self.layout.addWidget(self.bouton_sauvegarde, 10, 0)
+        self.layout.addWidget(self.bouton_open, 11, 0)
 
         self.setLayout(self.layout)
 
@@ -39,14 +44,14 @@ class Fenetre(QWidget):
 
         self.highlighter = HTMLHighLighter(self.code.document())
 
-
-    #Fonction de sauvgarde Temporaire
+    # Fonction de sauvgarde Temporaire
     def save(self):
-        chemin = QFileDialog.getSaveFileName(self,'Open file','/home')[0]
+        chemin = QFileDialog.getSaveFileName(self, 'Save file')[0]
         self.doc = Document(self.code, chemin)
-        print(self.doc.nombre_lignes)
-        print(self.doc.nom)
-        print(self.doc.extension)
+
+    def open(self):
+        chemin = QFileDialog.getOpenFileName(self, 'Open file')[0]
+        self.doc = Document(self.code, chemin, True)
 
 
 fenetre = Fenetre("IDE de la mort qui tue (Bleu Royal)", [400, 400])
