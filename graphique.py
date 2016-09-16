@@ -43,9 +43,7 @@ class Fenetre(QWidget):
     #Fonction de sauvgarde Temporaire
     def save(self):
         chemin = QFileDialog.getSaveFileName(self,'Open file','/home')[0]
-        nom = chemin.split("/")[-1]
-        extension = nom.split(".")[-1]
-        self.doc = Document(self.code, nom, extension, chemin)
+        self.doc = Document(self.code, chemin)
         print(self.doc.nombre_lignes)
         print(self.doc.nom)
         print(self.doc.extension)
