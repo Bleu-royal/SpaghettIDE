@@ -9,7 +9,6 @@ class Document():
         self.nom = nom
         self.extension = extension
         self.chemin_enregistrement = chemin_enregistrement
-        self.nombre_lignes = self.textEdit.document.lineCount()  # Obtention du nombre de lignes presentes dans le QTextEdit
         self.nombre_lignes = self.textEdit.document().lineCount() #Obtention du nombre de lignes presentent dans le QTextEdit
         self.sauvegarde_document()
 
