@@ -15,10 +15,8 @@ class HTMLHighLighter(QSyntaxHighlighter):
         pos = rgx.indexIn(text, 0)  # Position de la première expression régulière rencontrée
 
         while pos != -1:
-            print(rgx.capturedTexts())
             if self.est_balise_valide(rgx.capturedTexts()[1].upper()):
-                self.setFormat(pos, rgx.matchedLength(),
-                               QColor.fromRgb(color[0], color[1], color[2]))  # Modificateur du texte sélectionné
+                self.setFormat(pos, rgx.matchedLength(),QColor.fromRgb(color[0], color[1], color[2]))  # Modificateur du texte sélectionné
             pos += rgx.matchedLength()  # Déplacer à la fin de l'exp regulière
             pos = rgx.indexIn(text, pos)  # expr suivante
 
@@ -26,7 +24,7 @@ class HTMLHighLighter(QSyntaxHighlighter):
 
         self.select_n_color("<([\w|/|\s|=|\"|\.]+)>", (255, 0, 0), text)  # Balises
         self.select_n_color("\"(\w|\.)+\"", (40, 200, 40), text)  # Guillemets
-
+        
     def est_balise_valide(self, balise):
         balise = balise.replace("/", "")
         balise = balise.split(" ")

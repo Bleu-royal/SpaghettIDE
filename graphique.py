@@ -2,7 +2,7 @@
 
 import sys
 from PySide.QtGui import *
-from PySide.QtWebKit import *
+from navigateur import *
 from couleurs import *
 from document import *
 
@@ -26,8 +26,7 @@ class Fenetre(QWidget):
         self.bouton_open = QPushButton("Open")
         self.bouton_open.clicked.connect(self.open)
 
-        self.apercu = QWebView()
-        self.apercu.load("")
+        self.apercu = Navigateur()
         self.apercu.setMaximumWidth(450)
         self.apercu.setMaximumHeight(450)
         self.apercu.setZoomFactor(0.5)
@@ -48,10 +47,12 @@ class Fenetre(QWidget):
     def save(self):
         chemin = QFileDialog.getSaveFileName(self, 'Save file')[0]
         self.doc = Document(self.code, chemin)
+        self.apercu.ajouter_document(self.doc)
 
     def open(self):
         chemin = QFileDialog.getOpenFileName(self, 'Open file')[0]
         self.doc = Document(self.code, chemin, True)
+        self.apercu.ajouter_document(self.doc)
 
 
 fenetre = Fenetre("IDE de la mort qui tue (Bleu Royal)", [400, 400])

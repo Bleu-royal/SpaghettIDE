@@ -21,7 +21,6 @@ class Document():
         fichier = open(self.chemin_enregistrement, "r")
         code = fichier.read()
         fichier.close()
-        print(code)
         self.textEdit.setPlainText(code)
 
     def sauvegarde_document(self):
