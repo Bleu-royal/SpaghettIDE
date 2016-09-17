@@ -2,7 +2,7 @@
 
 import sys
 from PySide.QtGui import *
-from navigateur import *
+from PySide.QtWebKit import *
 from couleurs import *
 from document import *
 
@@ -26,7 +26,7 @@ class Fenetre(QWidget):
         self.bouton_open = QPushButton("Open")
         self.bouton_open.clicked.connect(self.open)
 
-        self.apercu = Navigateur()
+        self.apercu = QWebView()
         self.apercu.setMaximumWidth(450)
         self.apercu.setMaximumHeight(450)
         self.apercu.setZoomFactor(0.5)
@@ -46,12 +46,12 @@ class Fenetre(QWidget):
     # Fonction de sauvgarde Temporaire
     def save(self):
         chemin = QFileDialog.getSaveFileName(self, 'Save file')[0]
-        self.doc = Document(self.code, chemin)
+        self.doc = Document(self.code, self.apercu, chemin)
         self.apercu.ajouter_document(self.doc)
 
     def open(self):
         chemin = QFileDialog.getOpenFileName(self, 'Open file')[0]
-        self.doc = Document(self.code, chemin, True)
+        self.doc = Document(self.code,self.apercu, chemin, True)
         self.apercu.ajouter_document(self.doc)
 
 
