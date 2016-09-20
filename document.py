@@ -1,7 +1,9 @@
 # Module relatif au traitement des documents (noms, extention, sauvegarde, chargement...)
 
+
 class Document():
-    def __init__(self, textEdit, navigateur, chemin_enregistrement,ouverture=False):  # Sauvegarde des variables au sein de la class
+
+    def __init__(self, textEdit, navigateur, chemin_enregistrement, ouverture=False):  # Sauvegarde des variables au sein de la classe
 
         self.textEdit = textEdit
         self.navigateur = navigateur
