@@ -46,11 +46,13 @@ class Fenetre(QWidget):
     # Fonction de sauvgarde Temporaire
     def save(self):
         chemin = QFileDialog.getSaveFileName(self, 'Save file')[0]
-        self.doc = Document(self.code, self.apercu, chemin)
+        if chemin != "":
+            self.doc = Document(self.code, self.apercu, chemin)
 
     def open(self):
         chemin = QFileDialog.getOpenFileName(self, 'Open file')[0]
-        self.doc = Document(self.code,self.apercu, chemin, True)
+        if chemin != "":
+            self.doc = Document(self.code,self.apercu, chemin, True)
 
 
 fenetre = Fenetre("IDE de la mort qui tue (Bleu Royal)", [400, 400])
