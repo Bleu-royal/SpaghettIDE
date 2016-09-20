@@ -12,19 +12,31 @@ app = QApplication(sys.argv)
 class Fenetre(QWidget):
     def __init__(self, titre):
         super().__init__()
+
+        self.police_code = "ABeeZee"
+        self.couleur_fond_code = QPalette()
+        self.couleur_fond_code.setColor(QPalette.Base, "#2E2E2E")
+        self.couleur_ecriture_basique = "white"
+        self.taille_police = 14
+
         self.ecran = QDesktopWidget()
         self.setWindowTitle(titre)
         self.setGeometry(0, 50, self.ecran.screenGeometry().width(), self.ecran.screenGeometry().height()-50)  # Taille de la fenêtre
 
         self.layout = QGridLayout()
 
-        self.img1 = QPixmap("Dragon.jpg")
-        self.code = QTextEdit()
+        self.code = QTextEdit()  # Zone d'écriture du code
+        self.code.setFontFamily(self.police_code)  # Police d'écriture
+        self.code.setPalette(self.couleur_fond_code)  # Couleur de fond
+        self.code.setTextColor(self.couleur_ecriture_basique)  # Couleur d'écriture
+        self.code.setFontPointSize(self.taille_police)  # Taille de police
         self.code.setReadOnly(True)
-        self.ouvrir = QPushButton()
-        self.ouvrir.setIcon(QIcon(self.img1))
-        self.ouvrir.setIconSize(QSize(self.code.width()*1.5, self.code.height()*1.5))
-        self.ouvrir.clicked.connect(self.open)
+
+        self.img1 = QPixmap("Dragon.jpg")  # Image de lancement
+        self.ouvrir = QPushButton()  # Bouton de lancement
+        self.ouvrir.setIcon(QIcon(self.img1))  # Image sur le bouton
+        self.ouvrir.setIconSize(QSize(self.code.width()*1.5, self.code.height()*1.5))  # Taille de l'image
+        self.ouvrir.clicked.connect(self.open)  # Fonction lorsque on clique
 
         # Bouton temporaire de sauvegarde
         self.bouton_sauvegarde = QPushButton("Save")
@@ -47,7 +59,7 @@ class Fenetre(QWidget):
 
         self.highlighter = HTMLHighLighter(self.code.document())
 
-    # Fonction de sauvgarde Temporaire
+    # Fonction de sauvegarde Temporaire
     def save(self):
         chemin = QFileDialog.getSaveFileName(self, 'Save file')[0]
         if chemin != "":
