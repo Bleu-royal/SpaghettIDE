@@ -10,8 +10,6 @@ class Document():
         self.extension = self.nom.split(".")[-1]  # Recupération de l'extension du fichier
         self.nombre_lignes = self.textEdit.document().lineCount()  # Obtention du nombre de lignes presentent dans le QTextEdit
 
-        self.textEdit.textChanged.connect(self.maj_navigateur)
-
         if ouverture:
             self.ouverture_document()
         else:
@@ -22,11 +20,13 @@ class Document():
         code = fichier.read()
         fichier.close()
         self.textEdit.setPlainText(code)
+        self.maj_navigateur()
 
     def sauvegarde_document(self):
         fichier = open(self.chemin_enregistrement, "w")
         fichier.write(self.textEdit.toPlainText())  # Ecriture du fichier.
         fichier.close()
+        self.maj_navigateur()
 
     def maj_navigateur(self):
         self.navigateur.setHtml(self.textEdit.toPlainText())
