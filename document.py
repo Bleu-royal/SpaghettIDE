@@ -31,4 +31,4 @@ class Document():
         self.maj_navigateur()
 
     def maj_navigateur(self):
-        self.navigateur.setHtml(self.textEdit.toPlainText())
+        self.navigateur.load(self.chemin_enregistrement)
