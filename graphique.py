@@ -47,12 +47,10 @@ class Fenetre(QWidget):
     def save(self):
         chemin = QFileDialog.getSaveFileName(self, 'Save file')[0]
         self.doc = Document(self.code, self.apercu, chemin)
-        self.apercu.ajouter_document(self.doc)
 
     def open(self):
         chemin = QFileDialog.getOpenFileName(self, 'Open file')[0]
         self.doc = Document(self.code,self.apercu, chemin, True)
-        self.apercu.ajouter_document(self.doc)
 
 
 fenetre = Fenetre("IDE de la mort qui tue (Bleu Royal)", [400, 400])
