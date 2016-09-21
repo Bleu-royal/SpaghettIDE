@@ -17,27 +17,27 @@ class HTMLHighLighter(QSyntaxHighlighter):
 
         while pos != -1:
             if word:
-                start = self.place_in_block(text,word,pos)
-                self.setFormat(start, len(word),QColor.fromRgb(color[0], color[1], color[2]))  # Modificateur du texte sélectionné
+                start = self.place_in_block(text, word, pos)
+                self.setFormat(start, len(word), QColor.fromRgb(color[0], color[1], color[2]))  # Modificateur du texte sélectionné
             else:
-                self.setFormat(pos, rgx.matchedLength(),QColor.fromRgb(color[0], color[1], color[2]))  # Modificateur du texte sélectionné
+                self.setFormat(pos, rgx.matchedLength(), QColor.fromRgb(color[0], color[1], color[2]))  # Modificateur du texte sélectionné
             pos += rgx.matchedLength()  # Déplacer à la fin de l'exp regulière
             pos = rgx.indexIn(text, pos)  # expr suivante
 
-    def place_in_block(self,block, word, pos):
+    def place_in_block(self, bloc, word, pos):
 
-        for i in range(pos, len(block)):
-            if block[i:i+len(word)] == word:
+        for i in range(pos, len(bloc)):
+            if bloc[i:i+len(word)] == word:
                 return i
         return False
 
     def highlightBlock(self, text):
         for e in self.attributs:
-            self.select_n_color("<(.)*(\s)+%s(\s|=)+(.)*>"%e, (166, 226, 46), text, e)  # Balises
+            self.select_n_color("<(.)*(\s)+%s(\s|=)+(.)*>" % e, (166, 226, 46), text, e)  # Balises
 
         self.select_n_color("\"(\w|\.|\s|\+|/|-|,|#|\d|:|=)+\"", (230, 219, 116), text)  # Guillemets
 
         for e in self.balises:
-            self.select_n_color("<(/)*%s(\w|\s|:|;|=|\"|\d|\.|/|\+|-|,|#)*>"%e, (238, 38, 114), text, e)  # Balises
+            self.select_n_color("<(/)*%s(\w|\s|:|;|=|\"|\d|\.|/|\+|-|,|#)*>" % e, (238, 38, 114), text, e)  # Balises
 
-        self.select_n_color("<!--(\w|\s|:|;|=|\"|\d|\.|/|\+|-|,|#)*-->",(117,113,94),text) # Commentaires
+        self.select_n_color("<!--(\w|\s|:|;|=|\"|\d|\.|/|\+|-|,|#)*-->", (117, 113, 94), text)  # Commentaires
