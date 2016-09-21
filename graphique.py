@@ -21,7 +21,7 @@ class Fenetre(QWidget):
 
         self.ecran = QDesktopWidget()
         self.setWindowTitle(titre)
-        self.setGeometry(0, 50, self.ecran.screenGeometry().width(), self.ecran.screenGeometry().height()-50)  # Taille de la fenêtre
+        self.setGeometry(0, 50, self.ecran.screenGeometry().width()/2, self.ecran.screenGeometry().height()/2)  # Taille de la fenêtre
 
         self.layout = QGridLayout()
 
