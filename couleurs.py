@@ -7,8 +7,8 @@ from PySide.QtCore import *
 class HTMLHighLighter(QSyntaxHighlighter):
     def __init__(self, parent=None):
         super().__init__(parent)  # Appelle le __init__ de la classe parent
-        self.balises = ('HTML', 'META', 'LINK', 'FORM', 'A', 'INPUT', 'STYLE', 'SCRIPT', 'BODY', 'HEAD', 'NAV', 'TITLE', 'BR', 'DIV', 'SPAN', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'IMG', 'P', 'UL', 'LI', 'BUTTON')
-        self.attributs = ('SRC', 'HREF', 'CLASS', 'ID', 'CHARSET', 'REL', 'TITLE', 'TYPE', 'NAME', 'VALUE')
+        self.balises = ('HTML', 'META', 'LINK', 'FORM', 'A', 'INPUT', 'STYLE', 'SCRIPT', 'BODY', 'HEAD', 'NAV', 'TITLE', 'BR', 'DIV', 'SPAN', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'IMG', 'P', 'UL', 'LI', 'BUTTON', "LABEL")
+        self.attributs = ('SRC', 'HREF', 'CLASS', 'ID', 'CHARSET', 'REL', 'TITLE', 'TYPE', 'NAME', 'VALUE', "LANG", "INTEGRITY", "CROSSORIGIN", "DATA-TOGGLE", "DATA-TARGET", "ARIA-EXPANDED", "ARIA-CONTROLS", "FOR","CONTENT")
 
     def select_n_color(self, exp_reguliere, color, text, word=False):
         text = text.upper()
@@ -33,10 +33,11 @@ class HTMLHighLighter(QSyntaxHighlighter):
 
     def highlightBlock(self, text):
         for e in self.attributs:
-            self.select_n_color("<(.)*%s(.)*>"%e, (255, 255, 0), text, e)  # Balises
+            self.select_n_color("<(.)*(\s)+%s(\s|=)+(.)*>"%e, (166, 226, 46), text, e)  # Balises
 
-        self.select_n_color("\"(\w|\.|\s|\+|/|-|,|#)+\"", (40, 200, 40), text)  # Guillemets
+        self.select_n_color("\"(\w|\.|\s|\+|/|-|,|#|\d|:|=)+\"", (230, 219, 116), text)  # Guillemets
 
         for e in self.balises:
-            self.select_n_color("<(/)*%s(\w|\s|:|;|=|\"|\d|\.|/|\+|-|,|#)*>"%e, (255, 0, 0), text, e)  # Balises
+            self.select_n_color("<(/)*%s(\w|\s|:|;|=|\"|\d|\.|/|\+|-|,|#)*>"%e, (238, 38, 114), text, e)  # Balises
 
+        self.select_n_color("<!--(\w|\s|:|;|=|\"|\d|\.|/|\+|-|,|#)*-->",(117,113,94),text) # Commentaires
