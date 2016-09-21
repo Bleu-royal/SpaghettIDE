@@ -38,6 +38,7 @@ class HTMLHighLighter(QSyntaxHighlighter):
         self.select_n_color("\"(\w|\.|\s|\+|/|-|,|#|\d|:|=)+\"", (230, 219, 116), text)  # Guillemets
 
         for e in self.balises:
-            self.select_n_color("<(/)*%s(\w|\s|:|;|=|\"|\d|\.|/|\+|-|,|#)*>"%e, (238, 38, 114), text, e)  # Balises
+            self.select_n_color("<(/)*%s(\s|>)+(\w|\s|:|;|=|\"|\d|\.|/|\+|-|,|#)*(>)*"%e, (238, 38, 114), text, e)  # Balises
 
-        self.select_n_color("<!--(\w|\s|:|;|=|\"|\d|\.|/|\+|-|,|#)*-->",(117,113,94),text) # Commentaires
+        self.select_n_color("<!--(\w|\s|:|;|=|\"|\d|\.|/|\+|-|,|#)*-->",(117,113,94),text) # Commentaires HTML
+        #self.select_n_color("/\*(\w|\s|:|;|=|\"|\d|\.|/|\+|-|,|#)*\*/",(117,113,94),text) # Commentaires CSS
