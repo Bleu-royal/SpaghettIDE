@@ -70,4 +70,3 @@ class Fenetre(QWidget):
             self.code.setReadOnly(False)
             self.doc = Document(self.code, self.apercu, chemin, True)
 
-
