@@ -7,7 +7,7 @@ from PySide.QtCore import *
 class HTMLHighLighter(QSyntaxHighlighter):
     def __init__(self, parent=None):  # Parent --> QTextEdit
         super().__init__(parent)  # Appelle le __init__ de la classe parent
-        self.balises = ('HTML', 'META', 'LINK', 'FORM', 'A', 'INPUT', 'STYLE', 'SCRIPT', 'BODY', 'HEAD', 'NAV', 'TITLE', 'BR', 'DIV', 'SPAN', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'IMG', 'P', 'UL', 'LI', 'BUTTON', "LABEL")
+        self.balises = ('HTML', 'META', 'LINK', 'FORM', 'A', 'INPUT', 'STYLE', 'SCRIPT', 'BODY', 'HEAD', 'NAV', 'TITLE', 'BR', 'DIV', 'SPAN', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'IMG', 'P', 'UL', 'LI', 'BUTTON', "LABEL", "ASIDE", "SECTION", "NAV", "HEADER", "FOOTER", "ARTICLE", "EM")
         self.attributs = ('SRC', 'HREF', 'CLASS', 'ID', 'CHARSET', 'REL', 'TITLE', 'TYPE', 'NAME', 'VALUE', "LANG", "INTEGRITY", "CROSSORIGIN", "DATA-TOGGLE", "DATA-TARGET", "ARIA-EXPANDED", "ARIA-CONTROLS", "FOR","CONTENT")
 
     def select_n_color(self, exp_reguliere, color, text, word=False):

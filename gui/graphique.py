@@ -3,10 +3,10 @@
 import sys
 from PySide.QtGui import *
 from PySide.QtWebKit import *
-from couleurs import *
-from document import *
-
-app = QApplication(sys.argv)
+sys.path[:0] = ["../"]
+from systeme.couleurs import *
+from systeme.document import *
+sys.path[:0] = ["gui"]
 
 
 class Fenetre(QWidget):
@@ -36,11 +36,9 @@ class Fenetre(QWidget):
         self.ouvrir = QPushButton()  # Bouton de lancement
         self.ouvrir.setIcon(QIcon(self.img1))  # Image sur le bouton
         self.ouvrir.setIconSize(QSize(self.code.width()*1.5, self.code.height()*1.5))  # Taille de l'image
-        self.ouvrir.clicked.connect(self.open)  # Fonction lorsque on clique
 
         # Bouton temporaire de sauvegarde
         self.bouton_sauvegarde = QPushButton("Save")
-        self.bouton_sauvegarde.clicked.connect(self.save)
 
         self.apercu = QWebView()
         self.apercu.setMaximumWidth(450)
@@ -73,5 +71,3 @@ class Fenetre(QWidget):
             self.doc = Document(self.code, self.apercu, chemin, True)
 
 
-fenetre = Fenetre("IDE de la mort qui tue (Bleu Royal)")
-sys.exit(app.exec_())
