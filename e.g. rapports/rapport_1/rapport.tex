@@ -1,0 +1,129 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[top=2cm,bottom=2cm,left=2cm,right=2cm]{geometry}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{url}
+
+\begin{document}
+
+\begin{titlepage}
+	\begin{center}
+		\Large{Année universitaire 2016-2017}\\
+		\Large{Université de Caen Basse-Normandie}\\[1cm]
+		
+		\huge{Rapport numéro 1:}\\
+		IDE\\
+		\vspace{3cm}
+		Alexis Carreau\\
+		Thomas Lécluse\\
+		Emma Mauger\\
+		Théo Sarrazin\\
+	\normalsize{\textit{ ~ L2 Informatique}}\\
+		\medskip
+		\vspace{2cm}
+		
+	\end{center}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+\section{Un IDE, qu'est-ce que c'est ?}
+
+\subsection{Définition}
+
+Un  IDE   ou  Environnement   de  Développement   Intégré  (Integrated
+Development Environment) est un logiciel  qui fournit des facilités au
+programmeur pour le développement logiciel. Il a pour but de maximiser
+la productivité du programmeur.
+
+\subsection{Que contient-il ?}
+
+Un IDE contient généralement un  éditeur de texte, un interpréteur, un
+debugger et un compilateur.
+
+\subsubsection{L'éditeur de texte}
+
+L'éditeur de texte présente une zone  de saisie de texte. Il ne permet
+pas la mise en forme de ce dernier.
+
+\subsubsection{L'interpréteur}
+
+L'interpréteur analyse,  traduit et  exécute les  instructions écrites
+dans  un   langage  informatique.  Ces  opérations   d'analyse  et  de
+traduction sont effectuées à chaque fois que l'on décide d'exécuter le
+programme.
+
+\subsubsection{Le debugger}
+
+Un  debugger est  un  logiciel  qui permet  d'analyser  les bugs  d'un
+programme (tels que  des erreurs de syntaxe). Il  permet d'exécuter le
+programme pas-à-pas,  d'arrêter le programme,  de l'observer et  de le
+contrôler.
+
+\subsubsection{Le compilateur}
+
+Un compilateur est un programme informatique qui transforme un code source écrit dans un langage de programmation (langage source) en un autre langage (langage cible), afin qu'il puisse être interprété par la machine (qui ne comprend un langage dit de bas niveau et traductible en binaire).
+
+Les langages utilisés pour programmer sont dits "de haut niveau" (car facilement compréhensible par l'homme), tandis que les langages plus proches du langage machine (le binaire) sont dits de bas niveau. 
+
+\subsubsection{Un outil de gestion de projet}
+
+Un  projet  se matérialise  comme  un  dossier virtuel  contenant  des
+fichiers   (fichiers  de   code   source,   fichiers  de   ressources,
+documentation\dots).  L'outil  de gestion  de projet  permet d'indexer
+les  fichiers  de  celui-ci,  d'ajouter ou  d'enlever  un  fichier  et
+associer  des  méta-données  aux  fichiers (telles  que  l'auteur,  la
+description, les dates de création  et de modification, les options de
+compilation).
+
+\subsection{Quel(s) langage(s) supporte-il ?}
+
+Pour commencer, le langage que supportera notre IDE sera le langage C.
+
+\subsection{Que doit-il être capable de faire selon un utilisateur lambda ?}
+
+Lorsqu'un utilisateur quelconque  ouvre un IDE, il  s'attend à trouver
+plusieurs fonctionnalités telles que :
+
+\begin{itemize}
+\item  Créer,   Éditer  et  Supprimer   un  "projet".  Un   projet  se
+  matérialisant  comme  un  dossier  virtuel  contenant  des  fichiers
+  (fichiers    de    code     source,    fichiers    de    ressources,
+  documentation\dots)
+\item Créer, Éditer et Supprimer un dossier.
+\item  Créer,  Éditer,  Enregistrer  et  Supprimer  des  documents  de
+  l'extension de leur choix.
+\item Naviguer dans les dossiers et documents du projet.
+\item Des raccourcis pour des outils.
+\item Une interface graphique pour que cela lui soit plus intuitif.
+\end{itemize}
+
+\subsection{Options de correction du code}
+
+Le  langage avec  lequel  notre utilisateur  codera bénéficiera  d'une
+coloration syntaxique  ainsi que  d'une vérification  syntaxique. Pour
+cela, nous allons utiliser Lex et Yacc.
+
+\section{Lex}
+
+LEX est un raccourci pour Lexical Analyzer Generator. C'est un outil qui va générer des analyseurs lexicaux 
+
+Lex va aider à reconnaître les expressions régulières (qui décrivent un ensemble de chaînes de caractères possibles, un certain motif) pour ensuite les passer à Yacc.
+
+Lex renvoie des tokens, qui sont des identificateurs qui définissent tous les éléments reconnus par LEX qu'il a réussi à identifier (chaîne de caractères, variables, mots-clefs...)
+
+\section{Yacc}
+
+YACC, acronyme de Yet Another Compiler Compiler ("Encore un Autre Compilateur de Compilateur") est un programme qui récupère les tokens envoyés par Lex, vérifie que la syntaxe soit correcte et exécute l'instruction.
+
+\section{Conclusion}
+
+En résumé, Lex lit le code et fait une liste de tokens qu'il va passer à Yacc, qui va vérifier si tout est dans le bon ordre (syntaxe correcte) et qui peut exécuter certaines fonctions si on les lui passe.
+
+
+
+\end{document}
