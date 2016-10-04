@@ -30,43 +30,33 @@ class Fenetre(QWidget):
         self.code.setPalette(self.couleur_fond_code)  # Couleur de fond
         self.code.setTextColor(self.couleur_ecriture_basique)  # Couleur d'écriture
         self.code.setFontPointSize(self.taille_police)  # Taille de police
-        self.code.setReadOnly(True)
+        #self.code.setReadOnly(True)
 
-        self.img1 = QPixmap("Dragon.jpg")  # Image de lancement
-        self.ouvrir = QPushButton()  # Bouton de lancement
-        self.ouvrir.setIcon(QIcon(self.img1))  # Image sur le bouton
-        self.ouvrir.setIconSize(QSize(self.code.width()*1.5, self.code.height()*1.5))  # Taille de l'image
+        #self.img1 = QPixmap("Dragon.jpg")  # Image de lancement
+        self.ouvrir = QPushButton("Open")  # Bouton de lancement
+        #self.ouvrir.setIcon(QIcon(self.img1))  # Image sur le bouton
+        #self.ouvrir.setIconSize(QSize(self.code.width()*1.5, self.code.height()*1.5))  # Taille de l'image
 
         # Bouton temporaire de sauvegarde
         self.bouton_sauvegarde = QPushButton("Save")
 
-        self.apercu = QWebView()
-        self.apercu.setMaximumWidth(450)
-        self.apercu.setMaximumHeight(450)
-        self.apercu.setZoomFactor(0.5)
-
         # Positionnement des Layouts
-        self.layout.addWidget(self.apercu, 5, 0)
         self.layout.addWidget(self.code, 0, 1, 6, 10)
-        self.layout.addWidget(self.ouvrir, 0, 1, 6, 10)
+        self.layout.addWidget(self.ouvrir, 11, 0)
         self.layout.addWidget(self.bouton_sauvegarde, 10, 0)
 
         self.setLayout(self.layout)
 
         self.show()
-
-        self.highlighter = HTMLHighLighter(self.code.document())
-
     # Fonction de sauvegarde Temporaire
     def save(self):
-        chemin = QFileDialog.getSaveFileName(self, 'Save file')[0]
+        chemin = QFileDialog.getSaveFileName(self, 'Save file',"","Fichier C (*.c) ;; Fichier H (*.h)")[0]
         if chemin != "":
-            self.doc = Document(self.code, self.apercu, chemin)
+            self.doc = Document(self.code, chemin)
 
     def open(self):
-        chemin = QFileDialog.getOpenFileName(self, 'Open file')[0]
+        chemin = QFileDialog.getOpenFileName(self, 'Open file',"","Fichier C (*.c) ;; Fichier H (*.h)")[0]
         if chemin != "":
             self.ouvrir.hide()
-            self.code.setReadOnly(False)
-            self.doc = Document(self.code, self.apercu, chemin, True)
+            self.doc = Document(self.code, chemin, True)
 
