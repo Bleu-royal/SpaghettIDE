@@ -5,6 +5,8 @@ __pycache__ /
 .idea
 .pyc
 
+__init__.py
+
 *~
 
 *.aux

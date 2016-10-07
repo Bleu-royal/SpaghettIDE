@@ -33,12 +33,12 @@ class Fenetre(QWidget):
         #self.code.setReadOnly(True)
 
         #self.img1 = QPixmap("Dragon.jpg")  # Image de lancement
-        self.ouvrir = QPushButton("Open")  # Bouton de lancement
+        self.ouvrir = QPushButton("Ouvrir")  # Bouton de lancement
         #self.ouvrir.setIcon(QIcon(self.img1))  # Image sur le bouton
         #self.ouvrir.setIconSize(QSize(self.code.width()*1.5, self.code.height()*1.5))  # Taille de l'image
 
         # Bouton temporaire de sauvegarde
-        self.bouton_sauvegarde = QPushButton("Save")
+        self.bouton_sauvegarde = QPushButton("Sauvegarder")
 
         # Positionnement des Layouts
         self.layout.addWidget(self.code, 0, 1, 6, 10)
@@ -50,12 +50,12 @@ class Fenetre(QWidget):
         self.show()
     # Fonction de sauvegarde Temporaire
     def save(self):
-        chemin = QFileDialog.getSaveFileName(self, 'Save file',"","Fichier C (*.c) ;; Fichier H (*.h)")[0]
+        chemin = QFileDialog.getSaveFileName(self, 'Sauvegarder un fichier',"","Fichier C (*.c) ;; Fichier H (*.h)")[0]
         if chemin != "":
             self.doc = Document(self.code, chemin)
 
     def open(self):
-        chemin = QFileDialog.getOpenFileName(self, 'Open file',"","Fichier C (*.c) ;; Fichier H (*.h)")[0]
+        chemin = QFileDialog.getOpenFileName(self, 'Ouvrir un fichier',"","Fichier C (*.c) ;; Fichier H (*.h)")[0]
         if chemin != "":
             self.ouvrir.hide()
             self.doc = Document(self.code, chemin, True)
