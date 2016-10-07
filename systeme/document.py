@@ -17,7 +17,7 @@ class Document():
 
     def ouverture_document(self):
         fichier = open(self.chemin_enregistrement, "r")
-        code = fichier.read()
+        code = fichier.read() #lecture du fichier
         fichier.close()
         self.textEdit.setPlainText(code)
 
