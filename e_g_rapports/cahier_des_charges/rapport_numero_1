@@ -1,0 +1,53 @@
+\documentclass[a4paper,12pt]{article} %style de document
+\usepackage[utf8]{inputenc} %encodage des caractères
+\usepackage[french]{babel} %paquet de langue français
+\usepackage[T1]{fontenc} %encodage de la police
+\usepackage[top=2cm,bottom=2cm,left=2cm,right=2cm]{geometry} %marges
+\usepackage{graphicx} %affichage des images
+\usepackage{wrapfig} %Images à côté du texte
+\usepackage{url}
+
+\begin{document} %début du document
+
+%page de garde
+\begin{titlepage}
+	\begin{center}
+		\Large{Année universitaire 2016-2017}\\
+		\Large{Université de Caen Basse-Normandie}\\[1cm]
+		
+		\huge{Rapport numéro 1:}\\
+		LEX et YACC\\
+		\vspace{3cm}
+		Alexis Carreau\\
+		Thomas Lécluse\\
+		Emma Mauger\\
+		Théo Sarrazin\\
+	\normalsize{\textit{ ~ L2 Informatique}}\\
+		\medskip
+		\vspace{2cm}
+		
+	\end{center}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+\section{Lex et Yacc}
+
+\subsection{Yacc}
+
+Acronyme de "Yet Another Compiler Compiler" ("Encore un autre compilateur de compilateur"), Yacc est un outil de génération d'analyseurs syntaxiques en langage C.
+Un compilateur de compilateur est un programme capable de produire la partie analyse lexicale, la partie analyse syntaxique, la partie analyse sémantique, la partie de gestion des erreurs.... pour former le code source du compilateur souhaité.\\
+
+
+
+\subsection{Lex}
+
+Fréquemment utilisé avec Yacc, il permet la génération d'analyseurs lexicaux. 
+
+On lui passe en entrée notre code, ainsi que des règles lexicales. Ces règles 
+
+
+
+
+\end{document}
