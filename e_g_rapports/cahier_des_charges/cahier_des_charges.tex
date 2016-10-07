@@ -1,0 +1,64 @@
+\documentclass[a4paper,12pt]{article} %style de document
+\usepackage[utf8]{inputenc} %encodage des caractères
+\usepackage[french]{babel} %paquet de langue français
+\usepackage[T1]{fontenc} %encodage de la police
+\usepackage[top=2cm,bottom=2cm,left=2cm,right=2cm]{geometry} %marges
+\usepackage{graphicx} %affichage des images
+\usepackage{wrapfig} %Images à côté du texte
+\usepackage{url}
+
+\begin{document} %début du document
+
+%page de garde
+\begin{titlepage}
+	\begin{center}
+		\Large{Année universitaire 2016-2017}\\
+		\Large{Université de Caen Basse-Normandie}\\[1cm]
+		
+		\huge{Cahier des charges du projet de TPA :}\\
+		L'IDE\\
+		\vspace{3cm}
+		Alexis Carreau\\
+		Thomas Lécluse\\
+		Emma Mauger\\
+		Théo Sarrazin\\
+	\normalsize{\textit{ ~ L2 Informatique}}\\
+		\medskip
+		\vspace{2cm}
+		
+	\end{center}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+\section{Définition de l'IDE}
+	L'IDE -\normalsize{\textit{Integrated Developpement Environement}}- est un logiciel qui fournit des facilités au programmeur pour le développement de logiciels, d'applications ou encore de sites internets. Il va ainsi maximiser la productivité du programmeur.\\ 	
+	Pour se faire, l'IDE utilise l'autocomplétion. C'est à dire qu'il reconnaît toutes sortes de balises, de méthodes, de mots-clés et va compléter automatiquement ce qu'écrit l'utilisateur s'il le reconnaît. Il y a aussi un accès facile à une documentation complète, et un aperçu en direct du programme en train d'être écrit.
+	
+\section{Que contient-il ?}
+	Un IDE contient entre autre :
+	\begin{itemize}
+		\item Un éditeur de texte, pour écrire et modifier des fichiers dans un langage traité par l'IDE.
+		\item Un debugger, qui va aider à analyser et repérer des bugs dans un programme en l'exécutant pas-à-pas. On peut observer donc étape par étape les valeurs prises par des variables afin de voir la source du bug.
+		\item Un interpréteur, qui analyse, traduit (si la syntaxe est correcte) et exécute à partir du fichier source le code.
+	\end{itemize}
+	
+\section{Langages supportés}
+	Un IDE peut supporter tous types de langages. Pour notre part, nous allons commencer avec du HTML 5 et du CSS 3.
+	
+\section{Notre IDE}
+	On doit pouvoir :
+	\begin{itemize}
+		\item Créer un projet, le modifier, le supprimer.
+		\item Créer un répertoire.
+		\item Créer un document dans un projet et l'enregistrer, le supprimer et l'éditer.
+		\item Ouvrir un projet / un document.
+		\item Gérer l'autocomplétion pour les balises HTML et les attributs HTML et CSS.
+		\item Repérer ou mettre en valeur des balises.
+		\item Replier ou masquer des paragraphes en HTML et la liste des propriétés en CSS.
+		\item Afficher un aperçu en direct du site en réalisation.
+	\end{itemize}
+
+
+\end{document}
