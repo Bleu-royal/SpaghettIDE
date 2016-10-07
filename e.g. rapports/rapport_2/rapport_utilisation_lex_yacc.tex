@@ -59,8 +59,13 @@
 	\subsection{Pratique}
 	
 	On commence donc par définir une grammaire, contenue dans une docstring d'une fonction (ici python), qui correspond à la syntaxe du langage que nous souhaitons traiter. Yacc va parcourir la liste de token renvoyée par Lex et dès qu'il rencontrera une syntaxe correspondante, il exécutera la fonction dans laquelle est contenue la docstring. 
-	
-	\includegraphics[scale=1]{images/schema_lex_yacc}
+	\vspace{0.5cm}
+	\begin{center}
+		\includegraphics[scale=0.6]{images/schema_lex_yacc}
+	\end{center}
 
+\section{Et dans notre projet ?}
+
+	Lex et Yacc nous permettrons de vérifier la syntaxe du code ainsi que de colorer les mots clefs.
 
 \end{document}
