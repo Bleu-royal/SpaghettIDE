@@ -1,5 +1,0 @@
-\select@language {french}
-\contentsline {section}{\numberline {1}D\IeC {\'e}finition de l'IDE}{2}
-\contentsline {section}{\numberline {2}Que contient-il ?}{2}
-\contentsline {section}{\numberline {3}Langages support\IeC {\'e}s}{2}
-\contentsline {section}{\numberline {4}Notre IDE}{2}
