@@ -50,12 +50,12 @@ class Fenetre(QWidget):
         self.show()
     # Fonction de sauvegarde Temporaire
     def save(self):
-        chemin = QFileDialog.getSaveFileName(self, 'Save file',"","Fichier C (*.c) ;; Fichier H (*.h)")[0]
+        chemin = QFileDialog.getSaveFileName(self, 'Sauvegarder un fichier',"","Fichier C (*.c) ;; Fichier H (*.h)")[0]
         if chemin != "":
             self.doc = Document(self.code, chemin)
 
     def open(self):
-        chemin = QFileDialog.getOpenFileName(self, 'Open file',"","Fichier C (*.c) ;; Fichier H (*.h)")[0]
+        chemin = QFileDialog.getOpenFileName(self, 'Ouvrir un fichier',"","Fichier C (*.c) ;; Fichier H (*.h)")[0]
         if chemin != "":
             self.ouvrir.hide()
             self.doc = Document(self.code, chemin, True)
