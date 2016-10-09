@@ -23,17 +23,17 @@
 		Théo Sarrazin\\
 	\normalsize{\textit{ ~ L2 Informatique}}\\
 		\medskip
-		\vspace{3cm}
+		\vspace{4cm}
 
 	\begin{figure}[!h]
 
 			\begin{center}
 
-				\includegraphics[scale=1.5]{"images/pysidelogo"}
+				\includegraphics[scale=1]{"images/Pysidelogo"}
 
 			\end{center}
 
-		\end{figure}
+	\end{figure}
 		
 	\end{center}
 \end{titlepage}
@@ -85,9 +85,9 @@ N'ayant pas fini notre projet, nous allons compléter cette documentation au fur
 			\end{center}
 
 		\end{figure}
-		\newpage
+		
 		Ensuite, on fait appel à la classe QApplication pour instancier une nouvelle application. Puis, on affiche l'interface graphique avec notre classe Fenêtre qui hérite de la classe QWidget que nous avons créé. 
-
+		\newpage
 		\begin{figure}[!h]
 
 			\begin{center}
@@ -113,8 +113,21 @@ N'ayant pas fini notre projet, nous allons compléter cette documentation au fur
 
 		\end{figure}
 
-		Une fois les objets créés, il faut les positionner. Pour cela, on utilise les Layout qui permet de positionner les différentes parties constituant notre interface graphique. Dans notre cas le self.layout est une instance de la classe QGridLayout. Enfin self.show permet d'afficher la fenêtre. 
+		Un autre exemple d'utilisation de widget et le QPushButton qui est, comme son nom l'indique, un bouton qu'il faudra afficher plus tard et surtout connecter à une fonction pour qu'il est un rôle.
 
+		\begin{figure}[!h]
+
+			\begin{center}
+
+				\includegraphics[scale=0.7]{"images/QPushButton"}
+
+				\caption{Création d'un bouton grâce au widget QPushButton}
+			\end{center}
+
+		\end{figure}
+
+		Une fois les objets créés, il faut les positionner. Pour cela, on utilise les Layout qui permet de positionner les différentes parties constituant notre interface graphique. Dans notre cas le self.layout est une instance de la classe QGridLayout. Enfin self.show permet d'afficher la fenêtre. 
+		\newpage
 		\begin{figure}[!h]
 
 			\begin{center}
@@ -126,8 +139,18 @@ N'ayant pas fini notre projet, nous allons compléter cette documentation au fur
 
 		\end{figure}
 
+		Après avoir positionné et affiché les widgets, il est nécessaire, mais cela peut être fait avant, de connecter les widgets nécessaires à une fonction. C'est le cas du widget QPushButton introduit précédemment. En effet, pour connecter un bouton il faut utiliser la méthode connect() qui permet de faire le lien entre un clic dans une zone et une fonction. Dans l'image ci-dessous, la fonction bind prend en argument fenêtre et les boutons de sauvegarde et d'ouverture sont connectés à leur fonction respective.
+
+		\begin{figure}[!h]
+
+			\begin{center}
+
+				\includegraphics[scale=0.8]{"images/Bind"}
+
+				\caption{Connection d'un widget à sa fonction avec la méthode connect()}
+
+			\end{center}
+
+		\end{figure}
 		
-
-
-
 \end{document}
