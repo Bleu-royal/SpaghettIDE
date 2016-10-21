@@ -12,14 +12,10 @@ class Editeur(QTextEdit):
     def __init__(self, police, couleur_fond, couleur_text, taille_text):
         QTextEdit.__init__(self)
 
-        self.setFontFamily(police)  # Police d'écriture
-
-        self.couleur_fond_code = QPalette()
-        self.couleur_fond_code.setColor(QPalette.Base, couleur_fond)
-        self.setPalette(self.couleur_fond_code)  # Couleur de fond
-
-        self.setTextColor(couleur_text)  # Couleur d'écriture
-        self.setFontPointSize(taille_text)  # Taille de police
+        self.setStyleSheet("QTextEdit { background-color:" + couleur_fond + ";" +
+                           "font-family:" + police + ";" +
+                           "color:" + couleur_text + ";" +
+                           "font-size:" + str(taille_text) + "pt; }")
 
         self.append("Coucou")
 
@@ -38,10 +34,7 @@ class Fenetre(QWidget):
 
         #self.code.setReadOnly(True)
 
-        #self.img1 = QPixmap("Dragon.jpg")  # Image de lancement
         self.ouvrir = QPushButton("Ouvrir")  # Bouton de lancement
-        #self.ouvrir.setIcon(QIcon(self.img1))  # Image sur le bouton
-        #self.ouvrir.setIconSize(QSize(self.code.width()*1.5, self.code.height()*1.5))  # Taille de l'image
 
         # Bouton temporaire de sauvegarde
         self.bouton_sauvegarde = QPushButton("Sauvegarder")
