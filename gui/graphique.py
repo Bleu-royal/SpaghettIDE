@@ -21,7 +21,8 @@ class Fenetre(QWidget):
 
         self.ecran = QDesktopWidget()
         self.setWindowTitle(titre)
-        self.setGeometry(0, 50, self.ecran.screenGeometry().width()/2, self.ecran.screenGeometry().height()/2)  # Taille de la fenêtre
+        self.setGeometry(0, 50, self.ecran.screenGeometry().width()/2, self.ecran.screenGeometry().height()/2)
+        # Taille de la fenêtre
 
         self.layout = QGridLayout()
 
@@ -30,12 +31,12 @@ class Fenetre(QWidget):
         self.code.setPalette(self.couleur_fond_code)  # Couleur de fond
         self.code.setTextColor(self.couleur_ecriture_basique)  # Couleur d'écriture
         self.code.setFontPointSize(self.taille_police)  # Taille de police
-        #self.code.setReadOnly(True)
+        # self.code.setReadOnly(True)
 
-        #self.img1 = QPixmap("Dragon.jpg")  # Image de lancement
+        # self.img1 = QPixmap("Dragon.jpg")  # Image de lancement
         self.ouvrir = QPushButton("Ouvrir")  # Bouton de lancement
-        #self.ouvrir.setIcon(QIcon(self.img1))  # Image sur le bouton
-        #self.ouvrir.setIconSize(QSize(self.code.width()*1.5, self.code.height()*1.5))  # Taille de l'image
+        # self.ouvrir.setIcon(QIcon(self.img1))  # Image sur le bouton
+        # self.ouvrir.setIconSize(QSize(self.code.width()*1.5, self.code.height()*1.5))  # Taille de l'image
 
         # Bouton temporaire de sauvegarde
         self.bouton_sauvegarde = QPushButton("Sauvegarder")
@@ -49,6 +50,7 @@ class Fenetre(QWidget):
 
         self.show()
     # Fonction de sauvegarde Temporaire
+
     def save(self):
         chemin = QFileDialog.getSaveFileName(self, 'Sauvegarder un fichier',"","Fichier C (*.c) ;; Fichier H (*.h)")[0]
         if chemin != "":
@@ -59,4 +61,3 @@ class Fenetre(QWidget):
         if chemin != "":
             self.ouvrir.hide()
             self.doc = Document(self.code, chemin, True)
-

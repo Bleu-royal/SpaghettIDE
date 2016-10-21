@@ -1,6 +1,4 @@
-def bind(fenetre):
+def bind(fenetre):  # binding
 
-	#binding
 	fenetre.bouton_sauvegarde.clicked.connect(fenetre.save)
 	fenetre.ouvrir.clicked.connect(fenetre.open)
-
