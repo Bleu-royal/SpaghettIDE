@@ -164,7 +164,7 @@
 
 \section{Séance 3, 07/10/16}
 
-	Nous devons maintenant nous pencher sur l'analyse des sorties générées par Lex et Yacc. On doit les interpréter et les comprendre pour pouvoir les exploiter pour notre IDE.
+	Nous devons maintenant nous pencher sur l'analyse des sorties générées par Lex et Yacc. On doit les interpréter et les comprendre pour pouvoir les exploiter pour notre IDE. Nous devons également obtenir un arbre syntaxique abstrait grâce à l'analyse syntaxique afin de gérer l'auto-complétion.
 
 
 	\subsection{Sortie de Lex}
@@ -175,9 +175,38 @@
 
 		Yacc, en revanche, grâce à la liste de token récupérée par Lex, exécute la fonction dans laquelle est contenue la règle grammaticale si cette dernière est reconnue. Yacc va donc exécuter une action donnée lorsque la syntaxe du bloc d'instructions est correcte. Avec Yacc, nous allons par exemple pouvoir empêcher l'enregistrement du document en cours, si sa syntaxe n'est pas correcte.
 		Pour l'instant, nous savons reconnaître les éléments seulement quand Yacc leur détecte une bonne syntaxe, mais c'est plus compliquée pour indentifier les éléments ayant une mauvaise syntaxe. C'est pour cela, que nous travaillons actuellement sur la sortie générée par Yacc. 
+		
+	\subsection{Analyse syntaxique produisant l'arbre syntaxique abstrait pour l'auto-complétion}
+
+		Pour avoir l'arbre syntaxique abstrait permettant l'auto-complétion, nous devons utiliser YACC de PLY. Pour ce faire, nous avons mené des investigations et nous avons notamment trouvé des informations intéressantes sur ce site internet : \\\url{http://www.matthieuamiguet.ch/media/documents/MA-compil-03-Analyse_Syntaxique.pdf}. Nous sommes donc en train de voir actuellement comment implémenter cette analyse syntaxique à notre IDE afin d'obtenir l'arbre syntaxique abstrait pour gérer l'auto-complétion.
+			
+			\begin{figure}[!h]
+			
+				\begin{center}
+					\includegraphics[scale=0.6]{images/AST.jpg}
+					\caption{Exemple d'arbre syntaxique}
+				\end{center}
+			
+			\end{figure}
+			
+		
+	\subsection{Coloration syntaxique avec Lex}
+
+		Afin de colorer le texte présent dans notre zone de saisie, nous avons utilisés Lex. Pour cela, nous parcourons la liste des tokens trouvés par Lex. Puis pour chaque token nous ajoutons une balise HTML (span) avec un attribut style permettant de changer la couleur du texte. La couleur dépend du type du token (Identifier, Keyword, Comment). 
+
+		\newpage
+			
+			\begin{figure}[!h]
+			
+				\begin{center}
+					\includegraphics[scale=0.6]{images/coloration}
+					\caption{Exemple de coloration syntaxique}
+				\end{center}
+			
+			\end{figure}
+
 
 			
-			
-			
+					
 			
 \end{document}
