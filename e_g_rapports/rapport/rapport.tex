@@ -188,10 +188,25 @@
 				\end{center}
 			
 			\end{figure}
+			
+		
+	\subsection{Coloration syntaxique avec Lex}
+
+		Afin de colorer le texte présent dans notre zone de saisie, nous avons utilisés Lex. Pour cela, nous parcourons la liste des tokens trouvés par Lex. Puis pour chaque token nous ajoutons une balise HTML (span) avec un attribut style permettant de changer la couleur du texte. La couleur dépend du type du token (Identifier, Keyword, Comment). 
+
+		\newpage
+			
+			\begin{figure}[!h]
+			
+				\begin{center}
+					\includegraphics[scale=0.6]{images/coloration}
+					\caption{Exemple de coloration syntaxique}
+				\end{center}
+			
+			\end{figure}
 
 
 			
-			
-			
+					
 			
 \end{document}
