@@ -8,16 +8,25 @@ from systeme.couleurs import *
 from systeme.document import *
 sys.path[:0] = ["gui"]
 
+class Editeur(QTextEdit):
+    def __init__(self, police, couleur_fond, couleur_text, taille_text):
+        QTextEdit.__init__(self)
+
+        self.setFontFamily(police)  # Police d'écriture
+
+        self.couleur_fond_code = QPalette()
+        self.couleur_fond_code.setColor(QPalette.Base, couleur_fond)
+        self.setPalette(self.couleur_fond_code)  # Couleur de fond
+
+        self.setTextColor(couleur_text)  # Couleur d'écriture
+        self.setFontPointSize(taille_text)  # Taille de police
+
+        self.append("Coucou")
+
 
 class Fenetre(QWidget):
     def __init__(self, titre):
         super().__init__()
-
-        self.police_code = "ABeeZee"
-        self.couleur_fond_code = QPalette()
-        self.couleur_fond_code.setColor(QPalette.Base, "#2E2E2E")
-        self.couleur_ecriture_basique = "white"
-        self.taille_police = 14
 
         self.ecran = QDesktopWidget()
         self.setWindowTitle(titre)
@@ -25,11 +34,8 @@ class Fenetre(QWidget):
 
         self.layout = QGridLayout()
 
-        self.code = QTextEdit()  # Zone d'écriture du code
-        self.code.setFontFamily(self.police_code)  # Police d'écriture
-        self.code.setPalette(self.couleur_fond_code)  # Couleur de fond
-        self.code.setTextColor(self.couleur_ecriture_basique)  # Couleur d'écriture
-        self.code.setFontPointSize(self.taille_police)  # Taille de police
+        self.code = Editeur("ABeeZee", "#2E2E2E", "white", 14)  # Zone d'écriture du code
+
         #self.code.setReadOnly(True)
 
         #self.img1 = QPixmap("Dragon.jpg")  # Image de lancement
@@ -48,6 +54,7 @@ class Fenetre(QWidget):
         self.setLayout(self.layout)
 
         self.show()
+
     # Fonction de sauvegarde Temporaire
     def save(self):
         chemin = QFileDialog.getSaveFileName(self, 'Sauvegarder un fichier',"","Fichier C (*.c) ;; Fichier H (*.h)")[0]
