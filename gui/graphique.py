@@ -64,6 +64,6 @@ class Fenetre(QWidget):
     def open(self):
         chemin = QFileDialog.getOpenFileName(self, 'Ouvrir un fichier',"","Fichier C (*.c) ;; Fichier H (*.h)")[0]
         if chemin != "":
-            self.ouvrir.hide()
+            #self.ouvrir.hide()
             self.doc = Document(self.code, chemin, True)
 
