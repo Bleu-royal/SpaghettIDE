@@ -8,16 +8,21 @@ from systeme.couleurs import *
 from systeme.document import *
 sys.path[:0] = ["gui"]
 
+class Editeur(QTextEdit):
+    def __init__(self, police, couleur_fond, couleur_text, taille_text):
+        QTextEdit.__init__(self)
+
+        self.setStyleSheet("QTextEdit { background-color:" + couleur_fond + ";" +
+                           "font-family:" + police + ";" +
+                           "color:" + couleur_text + ";" +
+                           "font-size:" + str(taille_text) + "pt; }")
+
+        self.append("Coucou")
+
 
 class Fenetre(QWidget):
     def __init__(self, titre):
         super().__init__()
-
-        self.police_code = "ABeeZee"
-        self.couleur_fond_code = QPalette()
-        self.couleur_fond_code.setColor(QPalette.Base, "#2E2E2E")
-        self.couleur_ecriture_basique = "white"
-        self.taille_police = 14
 
         self.ecran = QDesktopWidget()
         self.setWindowTitle(titre)
@@ -38,6 +43,12 @@ class Fenetre(QWidget):
         # self.ouvrir.setIcon(QIcon(self.img1))  # Image sur le bouton
         # self.ouvrir.setIconSize(QSize(self.code.width()*1.5, self.code.height()*1.5))  # Taille de l'image
 
+        self.code = Editeur("ABeeZee", "#2E2E2E", "white", 14)  # Zone d'écriture du code
+
+        #self.code.setReadOnly(True)
+
+        self.ouvrir = QPushButton("Ouvrir")  # Bouton de lancement
+
         # Bouton temporaire de sauvegarde
         self.bouton_sauvegarde = QPushButton("Sauvegarder")
 
@@ -49,6 +60,7 @@ class Fenetre(QWidget):
         self.setLayout(self.layout)
 
         self.show()
+
     # Fonction de sauvegarde Temporaire
 
     def save(self):
@@ -59,5 +71,5 @@ class Fenetre(QWidget):
     def open(self):
         chemin = QFileDialog.getOpenFileName(self, 'Ouvrir un fichier',"","Fichier C (*.c) ;; Fichier H (*.h)")[0]
         if chemin != "":
-            self.ouvrir.hide()
+            #self.ouvrir.hide()
             self.doc = Document(self.code, chemin, True)
