@@ -31,13 +31,6 @@ class Fenetre(QWidget):
 
         self.layout = QGridLayout()
 
-        self.code = QTextEdit()  # Zone d'écriture du code
-        self.code.setFontFamily(self.police_code)  # Police d'écriture
-        self.code.setPalette(self.couleur_fond_code)  # Couleur de fond
-        self.code.setTextColor(self.couleur_ecriture_basique)  # Couleur d'écriture
-        self.code.setFontPointSize(self.taille_police)  # Taille de police
-        # self.code.setReadOnly(True)
-
         # self.img1 = QPixmap("Dragon.jpg")  # Image de lancement
         self.ouvrir = QPushButton("Ouvrir")  # Bouton de lancement
         # self.ouvrir.setIcon(QIcon(self.img1))  # Image sur le bouton
