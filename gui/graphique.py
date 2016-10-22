@@ -6,6 +6,7 @@ from PySide.QtWebKit import *
 sys.path[:0] = ["../"]
 from systeme.couleurs import *
 from systeme.document import *
+from lexer import *
 sys.path[:0] = ["gui"]
 
 class Editeur(QTextEdit):
@@ -17,7 +18,16 @@ class Editeur(QTextEdit):
                            "color:" + couleur_text + ";" +
                            "font-size:" + str(taille_text) + "pt; }")
 
-        self.append("Coucou")
+        self.setHtml("Coucou")
+
+    def keyReleaseEvent(self, event):
+        pass
+        #if event.key() == 16777220: # Enter Key Release
+        #   lines = self.toPlainText().split("<br>")
+        #   lines[-1] = color(lines[-1])
+        #   print("----")
+        #   self.setHtml("\n".join(lines) + "<br>")
+        #   self.moveCursor(QTextCursor.End)
 
 
 class Fenetre(QWidget):
@@ -37,6 +47,7 @@ class Fenetre(QWidget):
         # self.ouvrir.setIconSize(QSize(self.code.width()*1.5, self.code.height()*1.5))  # Taille de l'image
 
         self.code = Editeur("ABeeZee", "#2E2E2E", "white", 14)  # Zone d'écriture du code
+        self.highlighter = CodeHighLighter(self.code.document())
 
         #self.code.setReadOnly(True)
 
