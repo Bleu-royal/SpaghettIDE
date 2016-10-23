@@ -26,7 +26,7 @@ class Fenetre(QWidget):
 
         self.ecran = QDesktopWidget()
         self.setWindowTitle(titre)
-        self.setGeometry(0, 50, self.ecran.screenGeometry().width()/2, self.ecran.screenGeometry().height()/2)  # Taille de la fenêtre
+        self.setGeometry(50, 50, self.ecran.screenGeometry().width()-100, self.ecran.screenGeometry().height()-100)  # Taille de la fenêtre
 
         self.layout = QGridLayout()
 
@@ -50,13 +50,11 @@ class Fenetre(QWidget):
 
     # Fonction de sauvegarde Temporaire
     def save(self):
-        chemin = QFileDialog.getSaveFileName(self, 'Sauvegarder un fichier',"","Fichier C (*.c) ;; Fichier H (*.h)")[0]
+        chemin = QFileDialog.getSaveFileName(self, 'Sauvegarder un fichier', "", "Fichier C (*.c) ;; Fichier H (*.h)")[0]
         if chemin != "":
             self.doc = Document(self.code, chemin)
 
     def open(self):
-        chemin = QFileDialog.getOpenFileName(self, 'Ouvrir un fichier',"","Fichier C (*.c) ;; Fichier H (*.h)")[0]
+        chemin = QFileDialog.getOpenFileName(self, 'Ouvrir un fichier', "", "Fichier C (*.c) ;; Fichier H (*.h)")[0]
         if chemin != "":
-            #self.ouvrir.hide()
             self.doc = Document(self.code, chemin, True)
-
