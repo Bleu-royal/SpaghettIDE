@@ -28,8 +28,14 @@ class TabWidget(QTabWidget):
 
         self.parent = parent
 
-        shortcut = QShortcut(QKeySequence(Qt.CTRL + Qt.Key_W), self)
-        shortcut.activated.connect(self.close_current_tab)
+        shortcut_close = QShortcut(QKeySequence(Qt.CTRL + Qt.Key_W), self)
+        shortcut_close.activated.connect(self.close_current_tab)
+
+        shortcut_open = QShortcut(QKeySequence(Qt.CTRL + Qt.Key_N), self)
+        shortcut_open.activated.connect(self.parent.open)
+
+        shortcut_new = QShortcut(QKeySequence(Qt.CTRL + Qt.Key_T), self)
+        shortcut_new.activated.connect(self.parent.new)
 
     def close_current_tab(self):
         idx = self.currentIndex()
@@ -40,6 +46,7 @@ class TabWidget(QTabWidget):
 
         self.parent.docs.remove(doc)
         self.parent.codes.remove(code)
+
 
 class Fenetre(QWidget):
     def __init__(self, titre):
