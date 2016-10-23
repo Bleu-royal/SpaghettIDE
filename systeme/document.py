@@ -13,8 +13,6 @@ class Document:
 
         if ouverture:
             self.ouverture_document()
-        else:
-            self.sauvegarde_document()
 
     def ouverture_document(self):
         fichier = open(self.chemin_enregistrement, "r")
@@ -22,7 +20,15 @@ class Document:
         fichier.close()
         self.textEdit.setPlainText(code)
 
-    def sauvegarde_document(self):
-        fichier = open(self.chemin_enregistrement, "w")
+    def sauvegarde_document(self, path=False):
+        if not path:
+            fichier = open(self.chemin_enregistrement, "w")
+        else:
+            fichier = open(path, "w")
         fichier.write(self.textEdit.toPlainText())  # Ecriture du fichier.
         fichier.close()
+
+    def set_chemin_enregistrement(self, value):
+        self.chemin_enregistrement = value
+        self.nom = self.chemin_enregistrement.split("/")[-1]
+        self.extension = self.nom.split(".")[-1]
