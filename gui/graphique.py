@@ -37,6 +37,9 @@ class TabWidget(QTabWidget):
         shortcut_new = QShortcut(QKeySequence(Qt.CTRL + Qt.Key_N), self)
         shortcut_new.activated.connect(self.parent.new)
 
+        shortcut_save = QShortcut(QKeySequence(Qt.CTRL + Qt.Key_S), self)
+        shortcut_save.activated.connect(self.parent.save)
+
     def close_current_tab(self):
         idx = self.currentIndex()
         self.removeTab(idx)
