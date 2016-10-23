@@ -6,6 +6,7 @@ from PySide.QtWebKit import *
 sys.path[:0] = ["../"]
 from systeme.couleurs import *
 from systeme.document import *
+from lexer import *
 sys.path[:0] = ["gui"]
 
 class Editeur(QTextEdit):
@@ -17,7 +18,16 @@ class Editeur(QTextEdit):
                            "color:" + couleur_text + ";" +
                            "font-size:" + str(taille_text) + "pt; }")
 
-        self.append("Coucou")
+        self.setHtml("Coucou")
+
+    def keyReleaseEvent(self, event):
+        pass
+        #if event.key() == 16777220: # Enter Key Release
+        #   lines = self.toPlainText().split("<br>")
+        #   lines[-1] = color(lines[-1])
+        #   print("----")
+        #   self.setHtml("\n".join(lines) + "<br>")
+        #   self.moveCursor(QTextCursor.End)
 
 
 class Fenetre(QWidget):
@@ -26,11 +36,18 @@ class Fenetre(QWidget):
 
         self.ecran = QDesktopWidget()
         self.setWindowTitle(titre)
+
         self.setGeometry(50, 50, self.ecran.screenGeometry().width()-100, self.ecran.screenGeometry().height()-100)  # Taille de la fenêtre
 
         self.layout = QGridLayout()
 
+        # self.img1 = QPixmap("Dragon.jpg")  # Image de lancement
+        self.ouvrir = QPushButton("Ouvrir")  # Bouton de lancement
+        # self.ouvrir.setIcon(QIcon(self.img1))  # Image sur le bouton
+        # self.ouvrir.setIconSize(QSize(self.code.width()*1.5, self.code.height()*1.5))  # Taille de l'image
+
         self.code = Editeur("ABeeZee", "#2E2E2E", "white", 14)  # Zone d'écriture du code
+        self.highlighter = CodeHighLighter(self.code.document())
 
         #self.code.setReadOnly(True)
 
@@ -49,6 +66,7 @@ class Fenetre(QWidget):
         self.show()
 
     # Fonction de sauvegarde Temporaire
+
     def save(self):
         chemin = QFileDialog.getSaveFileName(self, 'Sauvegarder un fichier', "", "Fichier C (*.c) ;; Fichier H (*.h)")[0]
         if chemin != "":
