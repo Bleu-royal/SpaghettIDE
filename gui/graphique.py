@@ -19,7 +19,7 @@ class Editeur(QTextEdit):
                            "color:" + couleur_text + ";" +
                            "font-size:" + str(taille_text) + "pt; }")
 
-        self.append("Coucou")
+        self.append("int main ( int argc, char** argv ){\n\n\treturn 0;\n\n}")
 
 class TabWidget(QTabWidget):
 
@@ -28,17 +28,24 @@ class TabWidget(QTabWidget):
 
         self.parent = parent
 
-        shortcut_close = QShortcut(QKeySequence(Qt.CTRL + Qt.Key_W), self)
+        shortcut_close = QShortcut(QKeySequence.Close, self)
         shortcut_close.activated.connect(self.close_current_tab)
 
-        shortcut_open = QShortcut(QKeySequence(Qt.CTRL + Qt.Key_O), self)
+        shortcut_open = QShortcut(QKeySequence.Open, self)
         shortcut_open.activated.connect(self.parent.open)
 
-        shortcut_new = QShortcut(QKeySequence(Qt.CTRL + Qt.Key_N), self)
+        shortcut_new = QShortcut(QKeySequence.New, self)
         shortcut_new.activated.connect(self.parent.new)
 
-        shortcut_save = QShortcut(QKeySequence(Qt.CTRL + Qt.Key_S), self)
+        shortcut_save = QShortcut(QKeySequence.Save, self)
         shortcut_save.activated.connect(self.parent.save)
+
+        # shortcut_next_tab = QShortcut(QKeySequence.NextChild, self)
+        shortcut_next_tab = QShortcut(QKeySequence('alt+tab'), self)
+        shortcut_next_tab.activated.connect(self.next_tab)
+
+        shortcut_prev_tab = QShortcut(QKeySequence('alt+shift+tab'), self)
+        shortcut_prev_tab.activated.connect(self.prev_tab)
 
     def close_current_tab(self):
         idx = self.currentIndex()
@@ -49,6 +56,14 @@ class TabWidget(QTabWidget):
 
         self.parent.docs.remove(doc)
         self.parent.codes.remove(code)
+
+    def next_tab(self):
+        idx = self.currentIndex() + 1 if self.currentIndex() < self.count() - 1 else 0
+        self.setCurrentIndex(idx)
+
+    def prev_tab(self):
+        idx = self.currentIndex() - 1 if self.currentIndex() >= 1  else self.count() - 1
+        self.setCurrentIndex(idx)
 
 
 class Fenetre(QWidget):
