@@ -4,142 +4,183 @@ import sys
 from PySide.QtGui import *
 from PySide.QtCore import *
 from PySide.QtWebKit import *
+
 sys.path[:0] = ["../"]
 from systeme.couleurs import *
 from systeme.document import *
 from lexer import *
+
 sys.path[:0] = ["gui"]
 
+
 class Editeur(QTextEdit):
-    def __init__(self, police, couleur_fond, couleur_text, taille_text):
-        QTextEdit.__init__(self)
 
-        self.setStyleSheet("QTextEdit { background-color:" + couleur_fond + ";" +
-                           "font-family:" + police + ";" +
-                           "color:" + couleur_text + ";" +
-                           "font-size:" + str(taille_text) + "pt; }")
+	def __init__(self, police, couleur_fond, couleur_text, taille_text):
+		QTextEdit.__init__(self)
 
-        self.append("int main ( int argc, char** argv ){\n\n\treturn 0;\n\n}")
+		self.setStyleSheet("QTextEdit { background-color:" + couleur_fond + ";"
+		                   + "font-family:" + police + ";"
+		                   + "color:" + couleur_text + ";"
+		                   + "font-size:" + str(taille_text) + "pt; }")
+
+		self.append("int main ( int argc, char** argv ){\n\n\treturn 0;\n\n}")
+
 
 class TabWidget(QTabWidget):
 
-    def __init__(self, parent):
-        super().__init__()
+	def __init__(self, parent):
+		super().__init__()
 
-        self.parent = parent
+		self.parent = parent
 
-        shortcut_close = QShortcut(QKeySequence.Close, self)
-        shortcut_close.activated.connect(self.close_current_tab)
+		shortcut_close = QShortcut(QKeySequence.Close, self)
+		shortcut_close.activated.connect(self.close_current_tab)
 
-        shortcut_open = QShortcut(QKeySequence.Open, self)
-        shortcut_open.activated.connect(self.parent.open)
+		shortcut_open = QShortcut(QKeySequence.Open, self)
+		shortcut_open.activated.connect(self.parent.open)
 
-        shortcut_new = QShortcut(QKeySequence.New, self)
-        shortcut_new.activated.connect(self.parent.new)
+		shortcut_new = QShortcut(QKeySequence.New, self)
+		shortcut_new.activated.connect(self.parent.new)
 
-        shortcut_save = QShortcut(QKeySequence.Save, self)
-        shortcut_save.activated.connect(self.parent.save)
+		shortcut_save = QShortcut(QKeySequence.Save, self)
+		shortcut_save.activated.connect(self.parent.save)
 
-        # shortcut_next_tab = QShortcut(QKeySequence.NextChild, self)
-        shortcut_next_tab = QShortcut(QKeySequence('alt+tab'), self)
-        shortcut_next_tab.activated.connect(self.next_tab)
+		# shortcut_next_tab = QShortcut(QKeySequence.NextChild, self)
+		shortcut_next_tab = QShortcut(QKeySequence('alt+tab'), self)
+		shortcut_next_tab.activated.connect(self.next_tab)
 
-        shortcut_prev_tab = QShortcut(QKeySequence('alt+shift+tab'), self)
-        shortcut_prev_tab.activated.connect(self.prev_tab)
+		shortcut_prev_tab = QShortcut(QKeySequence('alt+shift+tab'), self)
+		shortcut_prev_tab.activated.connect(self.prev_tab)
 
-    def close_current_tab(self):
-        idx = self.currentIndex()
-        self.removeTab(idx)
+	def close_current_tab(self):
+		idx = self.currentIndex()
+		self.removeTab(idx)
 
-        doc = self.parent.docs[idx]
-        code = self.parent.codes[idx]
+		doc = self.parent.docs[idx]
+		code = self.parent.codes[idx]
 
-        self.parent.docs.remove(doc)
-        self.parent.codes.remove(code)
+		self.parent.docs.remove(doc)
+		self.parent.codes.remove(code)
 
-    def next_tab(self):
-        idx = self.currentIndex() + 1 if self.currentIndex() < self.count() - 1 else 0
-        self.setCurrentIndex(idx)
+	def next_tab(self):
+		idx = self.currentIndex() + 1 if self.currentIndex() < self.count() - 1 else 0
+		self.setCurrentIndex(idx)
 
-    def prev_tab(self):
-        idx = self.currentIndex() - 1 if self.currentIndex() >= 1  else self.count() - 1
-        self.setCurrentIndex(idx)
+	def prev_tab(self):
+		idx = self.currentIndex() - 1 if self.currentIndex() >= 1 else self.count() - 1
+		self.setCurrentIndex(idx)
 
 
 class Fenetre(QWidget):
-    def __init__(self, titre):
-        super().__init__()
+	def __init__(self, titre):
+		super().__init__()
 
-        self.ecran = QDesktopWidget()
-        self.setWindowTitle(titre)
+		self.ecran = QDesktopWidget()
+		self.setWindowTitle(titre)
+		self.setGeometry(50, 50, self.ecran.screenGeometry().width() - 100, self.ecran.screenGeometry().height() - 100)
+		# Taille de la fenêtre
 
-        self.setGeometry(50, 50, self.ecran.screenGeometry().width()-100, self.ecran.screenGeometry().height()-100)  # Taille de la fenêtre
+		self.layout = QGridLayout()
+		# self.img1 = QPixmap("Dragon.jpg")  # Image de lancement
+		self.ouvrir = QPushButton("Ouvrir")  # Bouton de lancement  --> 1ère apparition
+		# self.ouvrir.setIcon(QIcon(self.img1))  # Image sur le bouton
+		# self.ouvrir.setIconSize(QSize(self.code.width()*1.5, self.code.height()*1.5))  # Taille de l'image
 
-        self.layout = QGridLayout()
+		self.codes = []
+		# self.code = Editeur("ABeeZee", "#2E2E2E", "white", 14)  # Zone d'écriture du code
+		self.highlighters = []
+		self.docs = []
+		self.tab_widget = TabWidget(self)
+		# self.code.setReadOnly(True)
 
-        # self.img1 = QPixmap("Dragon.jpg")  # Image de lancement
-        self.ouvrir = QPushButton("Ouvrir")  # Bouton de lancement
-        # self.ouvrir.setIcon(QIcon(self.img1))  # Image sur le bouton
-        # self.ouvrir.setIconSize(QSize(self.code.width()*1.5, self.code.height()*1.5))  # Taille de l'image
+		# Bouton temporaire d'ouverture d'un fichier
+		self.ouvrir = QPushButton("Ouvrir")  # --> 2ème apparition c'est normal ????????????
+		# Bouton temporaire de sauvegarde
+		self.bouton_sauvegarde = QPushButton("Sauvegarder")
+		# Bouton temporaire d'ouverture de nouveau fichier
+		self.bouton_nouveau = QPushButton("Nouveau")
 
+		# Positionnement des Layouts
+		self.layout.addWidget(self.tab_widget, 0, 1, 6, 10)
+		# self.layout.addWidget(self.code, 0, 1, 6, 10)
+		self.layout.addWidget(self.ouvrir, 11, 0)
+		self.layout.addWidget(self.bouton_sauvegarde, 10, 0)
+		self.layout.addWidget(self.bouton_nouveau, 12, 0)
 
-        self.codes = []
-        #self.code = Editeur("ABeeZee", "#2E2E2E", "white", 14)  # Zone d'écriture du code
-        self.highlighters = []
+		self.setLayout(self.layout)
+		self.show()
 
-        self.docs = []
+		# Menus
 
+		# Nouveau Fichier
+		new_action = QAction("&Nouveau", self)
+		new_action.setMenuRole(QAction.NoRole)
+		new_action.setStatusTip("Nouveau fichier")
+		new_action.triggered.connect(self.new)
 
-        self.tab_widget = TabWidget(self)
+		# Ouvrir un fichier déjà existant
+		open_action = QAction("&Ouvrir", self)
+		open_action.setMenuRole(QAction.NoRole)
+		open_action.setStatusTip("Ouvrir un fichier")
+		open_action.triggered.connect(self.open)
 
-        #self.code.setReadOnly(True)
+		# Sauvegarder le fichier courant
+		sauv_action = QAction("&Sauvegarder", self)
+		sauv_action.setMenuRole(QAction.NoRole)
+		sauv_action.setStatusTip("Sauvegarder le fichier courant")
+		sauv_action.triggered.connect(self.save)
 
-        self.ouvrir = QPushButton("Ouvrir")  # Bouton de lancement
+		# Fermer l'IDE
+		exit_action = QAction("&Exit", self)
+		exit_action.setMenuRole(QAction.NoRole)
+		exit_action.setShortcut("Ctrl+Q")
+		exit_action.setStatusTip("Quitter l'application")
+		# exit_action.triggered.connect(self.quit_func)
 
-        # Bouton temporaire de sauvegarde
-        self.bouton_sauvegarde = QPushButton("Sauvegarder")
+		menu = QMenuBar(self)
 
-        self.bouton_nouveau = QPushButton("Nouveau")
+		# Menu Fichier et ses sous-menus
+		fichier_menu = menu.addMenu("&Fichier")
+		fichier_menu.addAction(new_action)
+		fichier_menu.addAction(open_action)
+		fichier_menu.addAction(sauv_action)
+		fichier_menu.addAction(exit_action)
+		self.show()
 
-        # Positionnement des Layouts
-        self.layout.addWidget(self.tab_widget, 0, 1, 6, 10)
-        #self.layout.addWidget(self.code, 0, 1, 6, 10)
-        self.layout.addWidget(self.ouvrir, 11, 0)
-        self.layout.addWidget(self.bouton_sauvegarde, 10, 0)
-        self.layout.addWidget(self.bouton_nouveau, 12, 0)
+	"""
+	# Ne marche pas encore (qApp = NoneType)
 
-        self.setLayout(self.layout)
+	def quit_func(self):  # Fonction de fermeture de l'IDE
+		qApp.quit()
+	"""
 
-        self.show()
+	def new(self):  # Fonction de création de nouveau fichier reliée au sous-menu "Nouveau"
+		self.addCode("Unamed")
+		self.docs += [Document(self.codes[-1], "")]
+		self.tab_widget.setCurrentIndex(len(self.codes) - 1)
 
-    def addCode(self, title):
-        self.codes += [Editeur("ABeeZee", "#2E2E2E", "white", 14)]
-        self.highlighters += [CodeHighLighter(self.codes[-1].document())]
-        self.tab_widget.addTab(self.codes[-1], title)
-        self.tab_widget.setCurrentIndex(len(self.codes) - 1)
+	def save(self):  # Fonction de sauvegarde reliée au sous-menu "Sauvergarder"
+		idx = self.tab_widget.currentIndex()
+		if self.docs[idx].chemin_enregistrement == "":
+			chemin = \
+				QFileDialog.getSaveFileName(self, 'Sauvegarder un fichier', "", "Fichier C (*.c) ;; Fichier H (*.h)")[0]
+			if chemin != "":
+				self.docs[idx].set_chemin_enregistrement(chemin)
+				self.docs[idx].sauvegarde_document(chemin)
+				self.tab_widget.setTabText(idx, self.docs[idx].nom)
+		else:
+			self.docs[idx].sauvegarde_document()
 
-    def new(self):
-        self.addCode("Unamed")
-        self.docs += [Document(self.codes[-1], "")]
-        self.tab_widget.setCurrentIndex(len(self.codes) - 1)
+	def open(self):  # Fonction d'ouverture d'un fichier reliée au sous-menu "Ouvrir un fichier"
+		chemin = QFileDialog.getOpenFileName(self, 'Ouvrir un fichier', "", "Fichier C (*.c) ;; Fichier H (*.h)")[0]
+		if chemin != "":
+			title = chemin.split("/")[-1]
+			self.addCode(title)
+			self.docs += [Document(self.codes[-1], chemin, True)]
+			self.tab_widget.setCurrentIndex(len(self.codes) - 1)
 
-    # Fonction de sauvegarde Temporaire
-
-    def save(self):
-        idx = self.tab_widget.currentIndex()
-        if self.docs[idx].chemin_enregistrement == "":
-            chemin = QFileDialog.getSaveFileName(self, 'Sauvegarder un fichier', "", "Fichier C (*.c) ;; Fichier H (*.h)")[0]
-            if chemin != "":
-                self.docs[idx].set_chemin_enregistrement(chemin)
-                self.docs[idx].sauvegarde_document(chemin)
-                self.tab_widget.setTabText(idx, self.docs[idx].nom)
-        else:
-            self.docs[idx].sauvegarde_document()
-
-    def open(self):
-        chemin = QFileDialog.getOpenFileName(self, 'Ouvrir un fichier', "", "Fichier C (*.c) ;; Fichier H (*.h)")[0]
-        if chemin != "":
-            title = chemin.split("/")[-1]
-            self.addCode(title)
-            self.docs += [Document(self.codes[-1], chemin, True)]
-            self.tab_widget.setCurrentIndex(len(self.codes) - 1)
+	def addCode(self, title):
+		self.codes += [Editeur("ABeeZee", "#2E2E2E", "white", 14)]
+		self.highlighters += [CodeHighLighter(self.codes[-1].document())]
+		self.tab_widget.addTab(self.codes[-1], title)
+		self.tab_widget.setCurrentIndex(len(self.codes) - 1)
