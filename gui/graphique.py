@@ -53,14 +53,17 @@ class TabWidget(QTabWidget):
 		shortcut_prev_tab.activated.connect(self.prev_tab)
 
 	def close_current_tab(self):
-		idx = self.currentIndex()
-		self.removeTab(idx)
 
-		doc = self.parent.docs[idx]
-		code = self.parent.codes[idx]
+		if len(self.parent.codes) != 0:
+			idx = self.currentIndex()
 
-		self.parent.docs.remove(doc)
-		self.parent.codes.remove(code)
+			self.removeTab(idx)
+
+			doc = self.parent.docs[idx]
+			code = self.parent.codes[idx]
+
+			self.parent.docs.remove(doc)
+			self.parent.codes.remove(code)
 
 	def next_tab(self):
 		idx = self.currentIndex() + 1 if self.currentIndex() < self.count() - 1 else 0
