@@ -82,9 +82,9 @@ class Fenetre(QWidget):
 
 		self.layout = QGridLayout()
 
-		#Ajout du logo poulpe
+		#Ajout du logo pieuvre
 		self.label_img  = QLabel()
-		self.pixmap_img = QPixmap("images/poulpe.jpg")
+		self.pixmap_img = QPixmap("images/pieuvre.jpg")
 		self.label_img.setPixmap(self.pixmap_img)
 
 		#Ajout du navigateur de fichier
