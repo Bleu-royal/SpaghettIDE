@@ -157,7 +157,7 @@ class Fenetre(QWidget):
 		exit_action.setMenuRole(QAction.NoRole)
 		exit_action.setShortcut("Ctrl+Q")
 		exit_action.setStatusTip("Quitter l'application")
-		# exit_action.triggered.connect(self.quit_func)
+		exit_action.triggered.connect(self.quit_func)
 
 		menu = QMenuBar(self)
 
@@ -169,12 +169,8 @@ class Fenetre(QWidget):
 		fichier_menu.addAction(exit_action)
 		self.show()
 
-	"""
-	# Ne marche pas encore (qApp = NoneType)
-
 	def quit_func(self):  # Fonction de fermeture de l'IDE
-		qApp.quit()
-	"""
+		self.close()
 
 	def new(self):  # Fonction de création de nouveau fichier reliée au sous-menu "Nouveau"
 		self.addCode("Unamed")
