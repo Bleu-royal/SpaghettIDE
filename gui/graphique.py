@@ -81,10 +81,30 @@ class Fenetre(QWidget):
 		# Taille de la fenêtre
 
 		self.layout = QGridLayout()
-		# self.img1 = QPixmap("Dragon.jpg")  # Image de lancement
+
+		#Ajout du logo poulpe
+		self.label_img  = QLabel()
+		self.pixmap_img = QPixmap("images/poulpe.jpg")
+		self.label_img.setPixmap(self.pixmap_img)
+
+		#Ajout du navigateur de fichier
+		self.treeview = QTreeView()
+		self.model = QFileSystemModel()
+		self.model.setRootPath(QDir.currentPath())
+		self.treeview.setModel(self.model)
+		self.treeview.hideColumn(1)
+		self.treeview.hideColumn(2)
+		self.treeview.hideColumn(3)
+		self.treeview.setAnimated(True)
+		#event=...
+		#self.treeview.keyPressEvent(QKeyEvent*event)		
+		#QString.str(event.text("COUCOU")) 
+		self.treeview.setRootIndex(self.model.index(QDir.currentPath()))
+		
+		#self.img1 = QPixmap("Dragon.jpg")  # Image de lancement
 		self.ouvrir = QPushButton("Ouvrir")  # Bouton de lancement  --> 1ère apparition
-		# self.ouvrir.setIcon(QIcon(self.img1))  # Image sur le bouton
-		# self.ouvrir.setIconSize(QSize(self.code.width()*1.5, self.code.height()*1.5))  # Taille de l'image
+		#self.ouvrir.setIcon(QIcon(self.img1))  # Image sur le bouton
+		#self.ouvrir.setIconSize(QSize(self.code.width()*1.5, self.code.height()*1.5))  # Taille de l'image
 
 		self.codes = []
 		# self.code = Editeur("ABeeZee", "#2E2E2E", "white", 14)  # Zone d'écriture du code
@@ -101,11 +121,13 @@ class Fenetre(QWidget):
 		self.bouton_nouveau = QPushButton("Nouveau")
 
 		# Positionnement des Layouts
-		self.layout.addWidget(self.tab_widget, 0, 1, 6, 10)
+		self.layout.addWidget(self.treeview, 3, 0, 3, 2)
+		self.layout.addWidget(self.label_img, 0, 0, 3, 1)
+		self.layout.addWidget(self.tab_widget, 0, 2, 6, 10)
 		# self.layout.addWidget(self.code, 0, 1, 6, 10)
-		self.layout.addWidget(self.ouvrir, 11, 0)
-		self.layout.addWidget(self.bouton_sauvegarde, 10, 0)
-		self.layout.addWidget(self.bouton_nouveau, 12, 0)
+		self.layout.addWidget(self.ouvrir, 1, 1)
+		self.layout.addWidget(self.bouton_sauvegarde, 2, 1)
+		self.layout.addWidget(self.bouton_nouveau, 0, 1)
 
 		self.setLayout(self.layout)
 		self.show()
