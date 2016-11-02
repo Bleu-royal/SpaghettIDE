@@ -82,13 +82,11 @@ class Fenetre(QWidget):
         # self.ouvrir.setIcon(QIcon(self.img1))  # Image sur le bouton
         # self.ouvrir.setIconSize(QSize(self.code.width()*1.5, self.code.height()*1.5))  # Taille de l'image
 
-
         self.codes = []
         #self.code = Editeur("ABeeZee", "#2E2E2E", "white", 14)  # Zone d'écriture du code
         self.highlighters = []
 
         self.docs = []
-
 
         self.tab_widget = TabWidget(self)
 
@@ -111,6 +109,7 @@ class Fenetre(QWidget):
         self.setLayout(self.layout)
 
         self.show()
+
 
     def addCode(self, title):
         self.codes += [Editeur("ABeeZee", "#2E2E2E", "white", 14)]
