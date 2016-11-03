@@ -182,15 +182,16 @@ class Fenetre(QWidget):
 
     def save(self):  # Fonction de sauvegarde reliée au sous-menu "Sauvergarder"
         idx = self.tab_widget.currentIndex()
-        if self.docs[idx].chemin_enregistrement == "":
-            chemin = \
-                QFileDialog.getSaveFileName(self, 'Sauvegarder un fichier', "", "Fichier C (*.c) ;; Fichier H (*.h)")[0]
-            if chemin != "":
-                self.docs[idx].set_chemin_enregistrement(chemin)
-                self.docs[idx].sauvegarde_document(chemin)
-                self.tab_widget.setTabText(idx, self.docs[idx].nom)
-        else:
-            self.docs[idx].sauvegarde_document()
+        if idx != -1:
+            if self.docs[idx].chemin_enregistrement == "":
+                chemin = \
+                    QFileDialog.getSaveFileName(self, 'Sauvegarder un fichier', "", "Fichier C (*.c) ;; Fichier H (*.h)")[0]
+                if chemin != "":
+                    self.docs[idx].set_chemin_enregistrement(chemin)
+                    self.docs[idx].sauvegarde_document(chemin)
+                    self.tab_widget.setTabText(idx, self.docs[idx].nom)
+            else:
+                self.docs[idx].sauvegarde_document()
 
     def open(self):  # Fonction d'ouverture d'un fichier reliée au sous-menu "Ouvrir un fichier"
         chemin = QFileDialog.getOpenFileName(self, 'Ouvrir un fichier', "", "Fichier C (*.c) ;; Fichier H (*.h)")[0]
