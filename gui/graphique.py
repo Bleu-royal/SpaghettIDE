@@ -74,6 +74,27 @@ class TabWidget(QTabWidget):
         self.setCurrentIndex(idx)
 
 
+class MyAction(QAction):
+    def __init__(self, papa, name, status, func, shortcut_command=None):
+        """
+        :param papa:  Class qui appelle MyAction (ici Fenetre)
+        :type papa: object
+        :param name:  Nom à donner à l'action
+        :type name: str
+        :param status:  Truc
+        :type status: str
+        :param shortcut_command:  Commande de raccourcis (faculative)
+        :type shortcut_command: str
+        :param func:  Fonction à exécuter
+        """
+
+        QAction.__init__(self, name, papa)  # Initialisation de l'action
+        self.setMenuRole(QAction.NoRole)  # Pour que ca fonctionne sur toutes les plateformes
+        self.setStatusTip(status)
+        self.setShortcut(shortcut_command)
+        self.triggered.connect(func)
+
+
 class Fenetre(QWidget):
     def __init__(self, titre):
         super().__init__()
@@ -86,7 +107,7 @@ class Fenetre(QWidget):
         self.layout = QGridLayout()
 
         #Ajout du logo pieuvre
-        self.label_img  = QLabel()
+        self.label_img = QLabel()
         self.pixmap_img = QPixmap("images/pieuvre.jpg")
         self.label_img.setPixmap(self.pixmap_img)
 
@@ -135,32 +156,11 @@ class Fenetre(QWidget):
         self.setLayout(self.layout)
         self.show()
 
-        # Menus
-
-        # Nouveau Fichier
-        new_action = QAction("&Nouveau", self)
-        new_action.setMenuRole(QAction.NoRole)
-        new_action.setStatusTip("Nouveau fichier")
-        new_action.triggered.connect(self.new)
-
-        # Ouvrir un fichier déjà existant
-        open_action = QAction("&Ouvrir", self)
-        open_action.setMenuRole(QAction.NoRole)
-        open_action.setStatusTip("Ouvrir un fichier")
-        open_action.triggered.connect(self.open)
-
-        # Sauvegarder le fichier courant
-        sauv_action = QAction("&Sauvegarder", self)
-        sauv_action.setMenuRole(QAction.NoRole)
-        sauv_action.setStatusTip("Sauvegarder le fichier courant")
-        sauv_action.triggered.connect(self.save)
-
-        # Fermer l'IDE
-        exit_action = QAction("&Exit", self)
-        exit_action.setMenuRole(QAction.NoRole)
-        exit_action.setShortcut("Ctrl+Q")
-        exit_action.setStatusTip("Quitter l'application")
-        exit_action.triggered.connect(self.quit_func)
+        ## Menus
+        new_action = MyAction(self, "&Nouveau", "Nouveau fichier", self.new, "Ctrl+N")  # Nouveau Fichier
+        open_action = MyAction(self, "&Ouvrir", "Ouvrir un fichier", self.open, "Ctrl+O")  # Ouvrir un fichier déjà existant
+        sauv_action = MyAction(self, "&Sauvegarder", "Sauvegarder le fichier courant", self.save, "Ctrl+S")  # Sauvegarder le fichier courant
+        exit_action = MyAction(self, "&Exit", "Quitter l'application", self.quit_func, "Ctrl+Shift+Q")  # Fermer l'IDE
 
         menu = QMenuBar(self)
 
@@ -169,6 +169,7 @@ class Fenetre(QWidget):
         fichier_menu.addAction(new_action)
         fichier_menu.addAction(open_action)
         fichier_menu.addAction(sauv_action)
+        fichier_menu.addSeparator()
         fichier_menu.addAction(exit_action)
         self.show()
 
