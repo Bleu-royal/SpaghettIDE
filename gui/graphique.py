@@ -120,13 +120,16 @@ class Fenetre(QWidget):
         self.treeview.hideColumn(2)
         self.treeview.hideColumn(3)
         self.treeview.setAnimated(True)
-        #event=...
-        #self.treeview.keyPressEvent(QKeyEvent*event)
-        #QString.str(event.text("COUCOU"))
+        self.filters=[]
+        self.filters.append("*c")
+        self.filters.append("*h")
+        self.model.setNameFilters(self.filters)
+        self.model.setNameFilterDisables(0)
+        #self.model.setFilter(QDir.Filter) 
+        self.model.setReadOnly(False)
         self.treeview.setRootIndex(self.model.index(QDir.currentPath()))
 
         #self.img1 = QPixmap("Dragon.jpg")  # Image de lancement
-        self.ouvrir = QPushButton("Ouvrir")  # Bouton de lancement  --> 1ère apparition
         #self.ouvrir.setIcon(QIcon(self.img1))  # Image sur le bouton
         #self.ouvrir.setIconSize(QSize(self.code.width()*1.5, self.code.height()*1.5))  # Taille de l'image
 
@@ -138,20 +141,20 @@ class Fenetre(QWidget):
         # self.code.setReadOnly(True)
 
         # Bouton temporaire d'ouverture d'un fichier
-        self.ouvrir = QPushButton("Ouvrir")  # --> 2ème apparition c'est normal ????????????
+        self.ouvrir = QPushButton("Ouvrir") 
         # Bouton temporaire de sauvegarde
         self.bouton_sauvegarde = QPushButton("Sauvegarder")
         # Bouton temporaire d'ouverture de nouveau fichier
         self.bouton_nouveau = QPushButton("Nouveau")
 
         # Positionnement des Layouts
-        self.layout.addWidget(self.treeview, 3, 0, 3, 2)
-        self.layout.addWidget(self.label_img, 0, 0, 3, 1)
+        self.layout.addWidget(self.treeview, 1, 0, 5, 2)
+        self.layout.addWidget(self.label_img, 0, 0)
         self.layout.addWidget(self.tab_widget, 0, 2, 6, 10)
         # self.layout.addWidget(self.code, 0, 1, 6, 10)
-        self.layout.addWidget(self.ouvrir, 1, 1)
-        self.layout.addWidget(self.bouton_sauvegarde, 2, 1)
-        self.layout.addWidget(self.bouton_nouveau, 0, 1)
+        #self.layout.addWidget(self.ouvrir, 1, 1)
+        #self.layout.addWidget(self.bouton_sauvegarde, 2, 1)
+        #self.layout.addWidget(self.bouton_nouveau, 0, 1)
 
         self.setLayout(self.layout)
         self.show()
