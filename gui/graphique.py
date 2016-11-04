@@ -44,10 +44,10 @@ class TabWidget(QTabWidget):
         shortcut_save = QShortcut(QKeySequence.Save, self)
         shortcut_save.activated.connect(self.parent.save)
 
-        shortcut_next_tab = QShortcut(QKeySequence('right'), self)
+        shortcut_next_tab = QShortcut(QKeySequence('Alt+tab'), self)
         shortcut_next_tab.activated.connect(self.next_tab)
 
-        shortcut_prev_tab = QShortcut(QKeySequence('left'), self)
+        shortcut_prev_tab = QShortcut(QKeySequence('Alt+Shift+tab'), self)
         shortcut_prev_tab.activated.connect(self.prev_tab)
 
     def close_current_tab(self):
@@ -93,7 +93,7 @@ class MyAction(QAction):
 
 class TreeView(QTreeView):
 
-    def __init__(self, folder_path):
+    def __init__(self):
 
         super().__init__()
         #self.img1 = QPixmap("Dragon.jpg")  # Image de lancement
@@ -101,8 +101,7 @@ class TreeView(QTreeView):
         #self.ouvrir.setIconSize(QSize(self.code.width()*1.5, self.code.height()*1.5))  # Taille de l'image
 
         self.model = QFileSystemModel()
-        # self.model.setRootPath(QDir.currentPath())
-        self.model.setRootPath(QDir(folder_path).absolutePath())
+        self.model.setRootPath(QDir.currentPath())
         self.setModel(self.model)
         self.hideColumn(1)
         self.hideColumn(2)
@@ -114,10 +113,9 @@ class TreeView(QTreeView):
         self.model.setNameFilters(self.filters)
         self.model.setNameFilterDisables(0)
         #self.model.setFilter(QDir.Filter) 
-        # self.model.setReadOnly(False)
+        self.model.setReadOnly(False)
         
-        self.setRootIndex(self.model.index(QDir(folder_path).absolutePath()))
-        # self.setRootIndex(self.model.index(QDir.currentPath()))
+        self.setRootIndex(self.model.index(QDir.currentPath()))
 
 class MenuBar(QMenuBar):
 
@@ -141,16 +139,13 @@ class MenuBar(QMenuBar):
 
 
 class Fenetre(QWidget):
-    def __init__(self, titre, folder_path):
+    def __init__(self, titre):
         super().__init__()
-
 
         self.ecran = QDesktopWidget()
         self.setWindowTitle(titre)
         self.setGeometry(50, 50, self.ecran.screenGeometry().width() - 100, self.ecran.screenGeometry().height() - 100)
         # Taille de la fenêtre
-
-        self.folder_path = folder_path
 
         self.layout = QGridLayout()
 
@@ -159,7 +154,7 @@ class Fenetre(QWidget):
         self.pixmap_img = QPixmap("images/pieuvre.jpg")
         self.label_img.setPixmap(self.pixmap_img)
 
-        self.treeview = TreeView(self.folder_path)     
+        self.treeview = TreeView()     
         
         self.codes = []
         self.highlighters = []
@@ -184,7 +179,7 @@ class Fenetre(QWidget):
         self.close()
 
     def new(self):  # Fonction de création de nouveau fichier reliée au sous-menu "Nouveau"
-        self.addCode("Unamed"+str(len(self.docs)))
+        self.addCode("Unamed"+str(len(self.docs)+1))
         self.docs += [Document(self.codes[-1], "")]
         self.tab_widget.setCurrentIndex(len(self.codes) - 1)
 
@@ -192,42 +187,25 @@ class Fenetre(QWidget):
         idx = self.tab_widget.currentIndex()
         if idx != -1:
             if self.docs[idx].chemin_enregistrement == "":
-                chemin = QFileDialog.getSaveFileName(self, 'Sauvegarder un fichier', "", "Fichier C (*.c) ;; Fichier H (*.h)")[0]
+                chemin = \
+                    QFileDialog.getSaveFileName(self, 'Sauvegarder un fichier', "", "Fichier C (*.c) ;; Fichier H (*.h)")[0]
                 if chemin != "":
-                    if self.folder_path in chemin:
-                        self.docs[idx].set_chemin_enregistrement(chemin)
-                        self.docs[idx].sauvegarde_document(chemin)
-                        self.tab_widget.setTabText(idx, self.docs[idx].nom)
-                    else:
-                        QMessageBox.information(self, "Pb dossier", "Le dossier n'est pas au bon endroit")
+                    self.docs[idx].set_chemin_enregistrement(chemin)
+                    self.docs[idx].sauvegarde_document(chemin)
+                    self.tab_widget.setTabText(idx, self.docs[idx].nom)
             else:
                 self.docs[idx].sauvegarde_document()
 
     def open(self):  # Fonction d'ouverture d'un fichier reliée au sous-menu "Ouvrir un fichier"
         chemin = QFileDialog.getOpenFileName(self, 'Ouvrir un fichier', "", "Fichier C (*.c) ;; Fichier H (*.h)")[0]
         if chemin != "":
-            if self.folder_path in chemin:
-                title = chemin.split("/")[-1]
-                self.addCode(title)
-                self.docs += [Document(self.codes[-1], chemin, True)]
-                self.tab_widget.setCurrentIndex(len(self.codes) - 1)
-            else:
-                QMessageBox.information(self, "Pb dossier", "Le dossier n'est pas au bon endroit")
+            title = chemin.split("/")[-1]
+            self.addCode(title)
+            self.docs += [Document(self.codes[-1], chemin, True)]
+            self.tab_widget.setCurrentIndex(len(self.codes) - 1)
 
     def addCode(self, title):
         self.codes += [Editeur("ABeeZee", "#2E2E2E", "white", 14)]
         self.highlighters += [CodeHighLighter(self.codes[-1].document())]
         self.tab_widget.addTab(self.codes[-1], title)
         self.tab_widget.setCurrentIndex(len(self.codes) - 1)
-
-class Options(QWidget):
-
-    def __init__(self, title):
-        super().__init__()
-
-        self.button = QPushButton(self, text="Ouvrir")
-
-        self.setWindowTitle(title)
-        self.show()
-
-
