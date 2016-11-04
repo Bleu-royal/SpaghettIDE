@@ -126,7 +126,7 @@ class MenuBar(QMenuBar):
         new_action = MyAction(parent, "&Nouveau", "Nouveau fichier", parent.new, "Ctrl+N")  # Nouveau Fichier
         open_action = MyAction(parent, "&Ouvrir", "Ouvrir un fichier", parent.open, "Ctrl+O")  # Ouvrir un fichier déjà existant
         sauv_action = MyAction(parent, "&Sauvegarder", "Sauvegarder le fichier courant", parent.save, "Ctrl+S")  # Sauvegarder le fichier courant
-        exit_action = MyAction(parent, "&Exit", "Quitter l'application", parent.quit_func, "Esc")  # Fermer l'IDE
+        exit_action = MyAction(parent, "&Fermer", "Quitter l'application", parent.quit_func, "Esc")  # Fermer l'IDE
 
         # Menu Fichier et ses sous-menus
         fichier_menu = self.addMenu("&Fichier")
