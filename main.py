@@ -3,7 +3,7 @@ from gui.graphique import *
 from kernel.bind import bind
 
 app = QApplication(sys.argv)
-fenetre = Fenetre("CSHARK (Bleu Royal)")  # Creation of the main window
+fenetre = Fenetre("Cthulhu (Bleu Royal)")  # Creation of the main window
 
 bind(fenetre)  # Connection between buttons and functions
 
