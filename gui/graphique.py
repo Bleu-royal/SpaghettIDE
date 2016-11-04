@@ -160,7 +160,12 @@ class Fenetre(QWidget):
         new_action = MyAction(self, "&Nouveau", "Nouveau fichier", self.new, "Ctrl+N")  # Nouveau Fichier
         open_action = MyAction(self, "&Ouvrir", "Ouvrir un fichier", self.open, "Ctrl+O")  # Ouvrir un fichier déjà existant
         sauv_action = MyAction(self, "&Sauvegarder", "Sauvegarder le fichier courant", self.save, "Ctrl+S")  # Sauvegarder le fichier courant
-        exit_action = MyAction(self, "&Exit", "Quitter l'application", self.quit_func, "Ctrl+Shift+Q")  # Fermer l'IDE
+        exit_action = MyAction(self, "&Exit", "Quitter l'application", self.quit_func, "Ctrl+Esc")  # Fermer l'IDE
+        # exit_action = QAction("&Exit", self)
+        # exit_action.setMenuRole(QAction.NoRole)
+        # exit_action.setStatusTip("Quitter l'application")
+        # exit_action.setShortcut("Ctrl+Q")
+        # exit_action.triggered.connect(self.quit_func)
 
         menu = QMenuBar(self)
 
