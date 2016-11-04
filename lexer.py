@@ -4,6 +4,7 @@ import ply.lex as lex
 
 types = [
     "char",
+    "bool",
     "double",
     "enum",
     "float",
