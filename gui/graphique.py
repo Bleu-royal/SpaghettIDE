@@ -120,11 +120,11 @@ class TreeView(QTreeView):
         self.setRootIndex(self.model.index(QDir.currentPath()))
 
     def mouseDoubleClickEvent(self, event):
-    	path=self.model.filePath(self.currentIndex())
-    	name=self.model.fileName(self.currentIndex())
-    	ext=name.split(".")[-1]
-    	if ext in ["c", "h"]:
-    		self.fenetre.open(path)
+        path = self.model.filePath(self.currentIndex())
+        name = self.model.fileName(self.currentIndex())
+        ext = name.split(".")[-1]
+        if ext in ["c", "h"]:
+            self.fenetre.open(path)
 
 
 
@@ -187,7 +187,15 @@ class Fenetre(QWidget):
         self.show()
 
     def quit_func(self):  # Fonction de fermeture de l'IDE
-        self.close()
+        box = QMessageBox()
+        box.setText("Voulez-vous vraiment fermer notre IDE ?")
+        box.setStandardButtons(QMessageBox.Cancel | QMessageBox.Close)
+        box.setDefaultButton(QMessageBox.Close)
+        box.setEscapeButton(QMessageBox.Cancel)
+        val = box.exec_()
+
+        if val == QMessageBox.Close:
+            self.close()
 
     def new(self):  # Fonction de création de nouveau fichier reliée au sous-menu "Nouveau"
         self.addCode("Unamed"+str(len(self.docs)+1))
@@ -209,7 +217,7 @@ class Fenetre(QWidget):
 
     def open(self, chemin=False):  # Fonction d'ouverture d'un fichier reliée au sous-menu "Ouvrir un fichier"
         if not chemin:
-        	chemin = QFileDialog.getOpenFileName(self, 'Ouvrir un fichier', "", "Fichier C (*.c) ;; Fichier H (*.h)")[0]
+            chemin = QFileDialog.getOpenFileName(self, 'Ouvrir un fichier', "", "Fichier C (*.c) ;; Fichier H (*.h)")[0]
         if chemin != "":
             title = chemin.split("/")[-1]
             self.addCode(title)
