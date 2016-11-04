@@ -93,12 +93,14 @@ class MyAction(QAction):
 
 class TreeView(QTreeView):
 
-    def __init__(self):
+    def __init__(self, fenetre):
 
         super().__init__()
         #self.img1 = QPixmap("Dragon.jpg")  # Image de lancement
         #self.ouvrir.setIcon(QIcon(self.img1))  # Image sur le bouton
         #self.ouvrir.setIconSize(QSize(self.code.width()*1.5, self.code.height()*1.5))  # Taille de l'image
+
+        self.fenetre = fenetre
 
         self.model = QFileSystemModel()
         self.model.setRootPath(QDir.currentPath())
@@ -111,11 +113,20 @@ class TreeView(QTreeView):
         self.filters.append("*c")
         self.filters.append("*h")
         self.model.setNameFilters(self.filters)
-        self.model.setNameFilterDisables(0)
+        #self.model.setNameFilterDisables(0)
         #self.model.setFilter(QDir.Filter) 
         self.model.setReadOnly(False)
         
         self.setRootIndex(self.model.index(QDir.currentPath()))
+
+    def mouseDoubleClickEvent(self, event):
+    	path=self.model.filePath(self.currentIndex())
+    	name=self.model.fileName(self.currentIndex())
+    	ext=name.split(".")[-1]
+    	if ext in ["c", "h"]:
+    		self.fenetre.open(path)
+
+
 
 class MenuBar(QMenuBar):
 
@@ -154,7 +165,7 @@ class Fenetre(QWidget):
         self.pixmap_img = QPixmap("images/pieuvre.jpg")
         self.label_img.setPixmap(self.pixmap_img)
 
-        self.treeview = TreeView()     
+        self.treeview = TreeView(self)     
         
         self.codes = []
         self.highlighters = []
@@ -196,8 +207,9 @@ class Fenetre(QWidget):
             else:
                 self.docs[idx].sauvegarde_document()
 
-    def open(self):  # Fonction d'ouverture d'un fichier reliée au sous-menu "Ouvrir un fichier"
-        chemin = QFileDialog.getOpenFileName(self, 'Ouvrir un fichier', "", "Fichier C (*.c) ;; Fichier H (*.h)")[0]
+    def open(self, chemin=False):  # Fonction d'ouverture d'un fichier reliée au sous-menu "Ouvrir un fichier"
+        if not chemin:
+        	chemin = QFileDialog.getOpenFileName(self, 'Ouvrir un fichier', "", "Fichier C (*.c) ;; Fichier H (*.h)")[0]
         if chemin != "":
             title = chemin.split("/")[-1]
             self.addCode(title)
