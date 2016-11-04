@@ -107,7 +107,7 @@ class TreeView(QTreeView):
         self.hideColumn(2)
         self.hideColumn(3)
         self.setAnimated(True)
-        self.filters=[]
+        self.filters = []
         self.filters.append("*c")
         self.filters.append("*h")
         self.model.setNameFilters(self.filters)
@@ -156,7 +156,7 @@ class Fenetre(QWidget):
         self.splitter = QSplitter()
         self.splitter.addWidget(self.img_treeview_splitter)
         self.splitter.addWidget(self.tab_widget)
-        self.splitter.setSizes([100,400])
+        self.splitter.setSizes([100, 400])
 
         # Bouton temporaire d'ouverture d'un fichier
         self.ouvrir = QPushButton("Ouvrir") 
