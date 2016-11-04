@@ -44,10 +44,10 @@ class TabWidget(QTabWidget):
         shortcut_save = QShortcut(QKeySequence.Save, self)
         shortcut_save.activated.connect(self.parent.save)
 
-        shortcut_next_tab = QShortcut(QKeySequence('alt+tab'), self)
+        shortcut_next_tab = QShortcut(QKeySequence('Alt+tab'), self)
         shortcut_next_tab.activated.connect(self.next_tab)
 
-        shortcut_prev_tab = QShortcut(QKeySequence('alt+shift+tab'), self)
+        shortcut_prev_tab = QShortcut(QKeySequence('Alt+Shift+tab'), self)
         shortcut_prev_tab.activated.connect(self.prev_tab)
 
     def close_current_tab(self):
@@ -109,7 +109,7 @@ class TreeView(QTreeView):
         self.hideColumn(2)
         self.hideColumn(3)
         self.setAnimated(True)
-        self.filters=[]
+        self.filters = []
         self.filters.append("*c")
         self.filters.append("*h")
         self.model.setNameFilters(self.filters)
@@ -137,7 +137,7 @@ class MenuBar(QMenuBar):
         new_action = MyAction(parent, "&Nouveau", "Nouveau fichier", parent.new, "Ctrl+N")  # Nouveau Fichier
         open_action = MyAction(parent, "&Ouvrir", "Ouvrir un fichier", parent.open, "Ctrl+O")  # Ouvrir un fichier déjà existant
         sauv_action = MyAction(parent, "&Sauvegarder", "Sauvegarder le fichier courant", parent.save, "Ctrl+S")  # Sauvegarder le fichier courant
-        exit_action = MyAction(parent, "&Fermer", "Quitter l'application", parent.quit_func, "Ctrl+Shift+Q")  # Fermer l'IDE
+        exit_action = MyAction(parent, "&Fermer", "Quitter l'application", parent.quit_func, "Esc")  # Fermer l'IDE
 
         # Menu Fichier et ses sous-menus
         fichier_menu = self.addMenu("&Fichier")
@@ -176,7 +176,7 @@ class Fenetre(QWidget):
         self.splitter = QSplitter()
         self.splitter.addWidget(self.treeview)
         self.splitter.addWidget(self.tab_widget)
-        self.splitter.setSizes([100,400])
+        self.splitter.setSizes([100, 400])
 
         # Positionnement des Layouts
         self.layout.addWidget(self.splitter)
@@ -190,7 +190,7 @@ class Fenetre(QWidget):
         self.close()
 
     def new(self):  # Fonction de création de nouveau fichier reliée au sous-menu "Nouveau"
-        self.addCode("Unamed")
+        self.addCode("Unamed"+str(len(self.docs)+1))
         self.docs += [Document(self.codes[-1], "")]
         self.tab_widget.setCurrentIndex(len(self.codes) - 1)
 
