@@ -94,6 +94,29 @@ class MyAction(QAction):
         self.setShortcut(shortcut_command)
         self.triggered.connect(func)
 
+class TreeView(QTreeView):
+
+    def __init__(self):
+
+        super().__init__()
+
+        self.model = QFileSystemModel()
+        self.model.setRootPath(QDir.currentPath())
+        self.setModel(self.model)
+        self.hideColumn(1)
+        self.hideColumn(2)
+        self.hideColumn(3)
+        self.setAnimated(True)
+        self.filters=[]
+        self.filters.append("*c")
+        self.filters.append("*h")
+        self.model.setNameFilters(self.filters)
+        self.model.setNameFilterDisables(0)
+        #self.model.setFilter(QDir.Filter) 
+        self.model.setReadOnly(False)
+        
+        self.setRootIndex(self.model.index(QDir.currentPath()))
+
 
 class Fenetre(QWidget):
     def __init__(self, titre):
@@ -106,27 +129,20 @@ class Fenetre(QWidget):
 
         self.layout = QGridLayout()
 
+
         #Ajout du logo pieuvre
         self.label_img = QLabel()
         self.pixmap_img = QPixmap("images/pieuvre.jpg")
         self.label_img.setPixmap(self.pixmap_img)
 
-        #Ajout du navigateur de fichier
-        self.treeview = QTreeView()
-        self.model = QFileSystemModel()
-        self.model.setRootPath(QDir.currentPath())
-        self.treeview.setModel(self.model)
-        self.treeview.hideColumn(1)
-        self.treeview.hideColumn(2)
-        self.treeview.hideColumn(3)
-        self.treeview.setAnimated(True)
-        #event=...
-        #self.treeview.keyPressEvent(QKeyEvent*event)
-        #QString.str(event.text("COUCOU"))
-        self.treeview.setRootIndex(self.model.index(QDir.currentPath()))
+        self.treeview = TreeView()    
+        
+        self.img_treeview_splitter = QSplitter()
+        self.img_treeview_splitter.setOrientation(Qt.Vertical)
+        self.img_treeview_splitter.addWidget(self.label_img) 
+        self.img_treeview_splitter.addWidget(self.treeview)   
 
         #self.img1 = QPixmap("Dragon.jpg")  # Image de lancement
-        self.ouvrir = QPushButton("Ouvrir")  # Bouton de lancement  --> 1ère apparition
         #self.ouvrir.setIcon(QIcon(self.img1))  # Image sur le bouton
         #self.ouvrir.setIconSize(QSize(self.code.width()*1.5, self.code.height()*1.5))  # Taille de l'image
 
@@ -137,21 +153,27 @@ class Fenetre(QWidget):
         self.tab_widget = TabWidget(self)
         # self.code.setReadOnly(True)
 
+        self.splitter = QSplitter()
+        self.splitter.addWidget(self.img_treeview_splitter)
+        self.splitter.addWidget(self.tab_widget)
+        self.splitter.setSizes([100,400])
+
         # Bouton temporaire d'ouverture d'un fichier
-        self.ouvrir = QPushButton("Ouvrir")  # --> 2ème apparition c'est normal ????????????
+        self.ouvrir = QPushButton("Ouvrir") 
         # Bouton temporaire de sauvegarde
         self.bouton_sauvegarde = QPushButton("Sauvegarder")
         # Bouton temporaire d'ouverture de nouveau fichier
         self.bouton_nouveau = QPushButton("Nouveau")
 
         # Positionnement des Layouts
-        self.layout.addWidget(self.treeview, 3, 0, 3, 2)
-        self.layout.addWidget(self.label_img, 0, 0, 3, 1)
-        self.layout.addWidget(self.tab_widget, 0, 2, 6, 10)
+        self.layout.addWidget(self.splitter)
+        #self.layout.addWidget(self.treeview, 1, 0, 5, 2)
+        #self.layout.addWidget(self.label_img, 0, 0)
+        #self.layout.addWidget(self.tab_widget, 0, 2, 6, 10)
         # self.layout.addWidget(self.code, 0, 1, 6, 10)
-        self.layout.addWidget(self.ouvrir, 1, 1)
-        self.layout.addWidget(self.bouton_sauvegarde, 2, 1)
-        self.layout.addWidget(self.bouton_nouveau, 0, 1)
+        #self.layout.addWidget(self.ouvrir, 1, 1)
+        #self.layout.addWidget(self.bouton_sauvegarde, 2, 1)
+        #self.layout.addWidget(self.bouton_nouveau, 0, 1)
 
         self.setLayout(self.layout)
         self.show()
