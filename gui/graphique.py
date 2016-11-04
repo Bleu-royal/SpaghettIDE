@@ -93,38 +93,47 @@ class MyAction(QAction):
 
 class TreeView(QTreeView):
 
-    def __init__(self, fenetre):
+	def __init__(self, fenetre):
 
-        super().__init__()
-        #self.img1 = QPixmap("Dragon.jpg")  # Image de lancement
-        #self.ouvrir.setIcon(QIcon(self.img1))  # Image sur le bouton
-        #self.ouvrir.setIconSize(QSize(self.code.width()*1.5, self.code.height()*1.5))  # Taille de l'image
+		super().__init__()
+		#self.img1 = QPixmap("Dragon.jpg")  # Image de lancement
+		#self.ouvrir.setIcon(QIcon(self.img1))  # Image sur le bouton
+		#self.ouvrir.setIconSize(QSize(self.code.width()*1.5, self.code.height()*1.5))  # Taille de l'image
 
-        self.fenetre = fenetre
+		self.fenetre = fenetre
 
-        self.model = QFileSystemModel()
-        self.model.setRootPath(QDir.currentPath())
-        self.setModel(self.model)
-        self.hideColumn(1)
-        self.hideColumn(2)
-        self.hideColumn(3)
-        self.setAnimated(True)
-        self.filters = []
-        self.filters.append("*c")
-        self.filters.append("*h")
-        self.model.setNameFilters(self.filters)
-        #self.model.setNameFilterDisables(0)
-        #self.model.setFilter(QDir.Filter) 
-        self.model.setReadOnly(False)
-        
-        self.setRootIndex(self.model.index(QDir.currentPath()))
+		self.model = QFileSystemModel()
+		self.model.setRootPath(QDir.currentPath())
+		self.setModel(self.model)
+		self.hideColumn(1)
+		self.hideColumn(2)
+		self.hideColumn(3)
+		self.setAnimated(True)
+		self.filters = []
+		self.filters.append("*c")
+		self.filters.append("*h")
+		self.model.setNameFilters(self.filters)
+		#self.model.setNameFilterDisables(0)
+		#self.model.setFilter(QDir.Filter) 
+		self.model.setReadOnly(False)
 
-    def mouseDoubleClickEvent(self, event):
-    	path=self.model.filePath(self.currentIndex())
-    	name=self.model.fileName(self.currentIndex())
-    	ext=name.split(".")[-1]
-    	if ext in ["c", "h"]:
-    		self.fenetre.open(path)
+		self.setRootIndex(self.model.index(QDir.currentPath()))
+
+	def mouseDoubleClickEvent(self, event):
+		self.open()
+
+	def keyPressEvent(self, event):
+		if event.key() == 16777220:
+			self.open()
+		else:
+			QTreeView.keyPressEvent(self, event)
+
+	def open(self):
+		path=self.model.filePath(self.currentIndex())
+		name=self.model.fileName(self.currentIndex())
+		ext=name.split(".")[-1]
+		if ext in ["c", "h"]:
+			self.fenetre.open(path)
 
 
 
