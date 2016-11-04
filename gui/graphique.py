@@ -92,7 +92,6 @@ class MyAction(QAction):
         self.triggered.connect(func)
 
 class TreeView(QTreeView):
-
     def __init__(self, fenetre):
 
         super().__init__()
@@ -114,18 +113,26 @@ class TreeView(QTreeView):
         self.filters.append("*h")
         self.model.setNameFilters(self.filters)
         #self.model.setNameFilterDisables(0)
-        #self.model.setFilter(QDir.Filter) 
+        #self.model.setFilter(QDir.Filter)
         self.model.setReadOnly(False)
-        
+
         self.setRootIndex(self.model.index(QDir.currentPath()))
 
     def mouseDoubleClickEvent(self, event):
-        path = self.model.filePath(self.currentIndex())
-        name = self.model.fileName(self.currentIndex())
-        ext = name.split(".")[-1]
+        self.open()
+
+    def keyPressEvent(self, event):
+        if event.key() == 16777220:
+            self.open()
+        else:
+            QTreeView.keyPressEvent(self, event)
+
+    def open(self):
+        path=self.model.filePath(self.currentIndex())
+        name=self.model.fileName(self.currentIndex())
+        ext=name.split(".")[-1]
         if ext in ["c", "h"]:
             self.fenetre.open(path)
-
 
 
 class MenuBar(QMenuBar):
