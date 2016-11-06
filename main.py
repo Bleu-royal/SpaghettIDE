@@ -24,7 +24,7 @@ def remove_folder(path):
         if i[0]!='.' and i[-2]!='.' and i[-3]!='.' and i!='README':
             for j in os.listdir(i):
                 if j == '__pycache__':
-                    shutil.rmtree(os.path.abspath(i+"/"+j))
+                    shutil.rmtree(i+"/"+j)
 remove_folder(".")
 
 fenetre = Fenetre("Cthulhu (Bleu Royal)")  # Creation of the main window
