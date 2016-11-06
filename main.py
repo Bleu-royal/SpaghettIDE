@@ -1,6 +1,6 @@
 import sys,os,shutil
 from gui.graphique import *
-#from kernel.bind import bind
+from kernel.bind import bind
 
 app = QApplication(sys.argv)
 """
@@ -28,6 +28,6 @@ def remove_folder(path):
 remove_folder(".")
 
 fenetre = Fenetre("Cthulhu (Bleu Royal)")  # Creation of the main window
-#bind(fenetre)  # Connection between buttons and functions
+bind(fenetre)  # Connection between buttons and functions
 
 sys.exit(app.exec_())
