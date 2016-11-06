@@ -25,6 +25,7 @@ class Editeur(QTextEdit):
 
         self.append("int main ( int argc, char** argv ){\n\n\treturn 0;\n\n}")
 
+
 class TabWidget(QTabWidget):
 
     def __init__(self, parent):
@@ -71,6 +72,7 @@ class TabWidget(QTabWidget):
         idx = self.currentIndex() - 1 if self.currentIndex() >= 1 else self.count() - 1
         self.setCurrentIndex(idx)
 
+
 class MyAction(QAction):
     def __init__(self, papa, name, status, func, shortcut_command=None):
         """
@@ -80,7 +82,7 @@ class MyAction(QAction):
         :type name: str
         :param status:  Truc
         :type status: str
-        :param shortcut_command:  Commande de raccourcis (faculative)
+        :param shortcut_command:  Commande de raccourcis (facultative)
         :type shortcut_command: str
         :param func:  Fonction à exécuter
         """
@@ -91,13 +93,14 @@ class MyAction(QAction):
         self.setShortcut(shortcut_command)
         self.triggered.connect(func)
 
+
 class TreeView(QTreeView):
     def __init__(self, fenetre):
 
         super().__init__()
-        #self.img1 = QPixmap("Dragon.jpg")  # Image de lancement
-        #self.ouvrir.setIcon(QIcon(self.img1))  # Image sur le bouton
-        #self.ouvrir.setIconSize(QSize(self.code.width()*1.5, self.code.height()*1.5))  # Taille de l'image
+        # self.img1 = QPixmap("Dragon.jpg")  # Image de lancement
+        # self.ouvrir.setIcon(QIcon(self.img1))  # Image sur le bouton
+        # self.ouvrir.setIconSize(QSize(self.code.width()*1.5, self.code.height()*1.5))  # Taille de l'image
 
         self.fenetre = fenetre
 
@@ -113,7 +116,7 @@ class TreeView(QTreeView):
         self.filters.append("*h")
         self.model.setNameFilters(self.filters)
         self.model.setNameFilterDisables(False)
-        #self.model.setFilter(QDir.Filter)
+        # self.model.setFilter(QDir.Filter)
         self.model.setReadOnly(False)
         self.setRootIndex(self.model.index(QDir.currentPath()))
 
@@ -127,9 +130,9 @@ class TreeView(QTreeView):
             QTreeView.keyPressEvent(self, event)
 
     def open(self):
-        path=self.model.filePath(self.currentIndex())
-        name=self.model.fileName(self.currentIndex())
-        ext=name.split(".")[-1]
+        path = self.model.filePath(self.currentIndex())
+        name = self.model.fileName(self.currentIndex())
+        ext = name.split(".")[-1]
         if ext in ["c", "h"]:
             self.fenetre.open(path)
 
@@ -140,10 +143,15 @@ class MenuBar(QMenuBar):
         super().__init__(parent)
 
         ## Menus
-        new_action = MyAction(parent, "&Nouveau", "Nouveau fichier", parent.new, "Ctrl+N")  # Nouveau Fichier
-        open_action = MyAction(parent, "&Ouvrir", "Ouvrir un fichier", parent.open, "Ctrl+O")  # Ouvrir un fichier déjà existant
-        sauv_action = MyAction(parent, "&Sauvegarder", "Sauvegarder le fichier courant", parent.save, "Ctrl+S")  # Sauvegarder le fichier courant
-        exit_action = MyAction(parent, "&Fermer", "Quitter l'application", parent.quit_func, "Esc")  # Fermer l'IDE
+
+        # Nouveau Fichier
+        new_action = MyAction(parent, "&Nouveau", "Nouveau fichier", parent.new, "Ctrl+N")
+        # Ouvrir un fichier déjà existant
+        open_action = MyAction(parent, "&Ouvrir", "Ouvrir un fichier", parent.open, "Ctrl+O")
+        # Sauvegarder le fichier courant
+        sauv_action = MyAction(parent, "&Sauvegarder", "Sauvegarder le fichier courant", parent.save, "Ctrl+S")
+        # Fermer l'IDE
+        exit_action = MyAction(parent, "&Fermer", "Quitter l'application", parent.quit_func, "Esc")
 
         # Menu Fichier et ses sous-menus
         fichier_menu = self.addMenu("&Fichier")
@@ -152,7 +160,6 @@ class MenuBar(QMenuBar):
         fichier_menu.addAction(sauv_action)
         fichier_menu.addSeparator()
         fichier_menu.addAction(exit_action)
-
 
 
 class Fenetre(QWidget):
@@ -166,7 +173,7 @@ class Fenetre(QWidget):
 
         self.layout = QGridLayout()
 
-        #Ajout du logo pieuvre
+        # Ajout du logo pieuvre
         self.label_img = QLabel()
         self.pixmap_img = QPixmap("images/pieuvre.jpg")
         self.label_img.setPixmap(self.pixmap_img)
@@ -194,7 +201,7 @@ class Fenetre(QWidget):
 
     def quit_func(self):  # Fonction de fermeture de l'IDE
         box = QMessageBox()
-        box.setText("Voulez-vous vraiment fermer notre IDE ?")
+        box.setText("Voulez-vous vraiment fermer l'IDE ?")
         box.setStandardButtons(QMessageBox.Cancel | QMessageBox.Close)
         box.setDefaultButton(QMessageBox.Close)
         box.setEscapeButton(QMessageBox.Cancel)
