@@ -1,6 +1,6 @@
 # Module relatif à l'interface graphique
 
-import sys,shutil,os
+import sys
 from PySide.QtGui import *
 from PySide.QtCore import *
 from PySide.QtWebKit import *
@@ -9,18 +9,6 @@ sys.path[:0] = ["../"]
 from systeme.couleurs import *
 from systeme.document import *
 from lexer import *
-
-#Fonction permettant de cacher les dossiers __pycache__ et leur contenu en les supprimant à l'exécution du programme
-def remove_folder(path):
-    for i in os.listdir(path):
-        if i == '__pycache__':
-            shutil.rmtree(i)
-    for i in os.listdir(path):
-        if i[0]!='.' and i[-2]!='.' and i[-3]!='.' and i!='README':
-            for j in os.listdir(i):
-                if j == '__pycache__':
-                    shutil.rmtree(os.path.abspath(i+"/"+j))
-remove_folder(".")
 
 sys.path[:0] = ["gui"]
 
