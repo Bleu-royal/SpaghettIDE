@@ -17,14 +17,13 @@ opts.button.clicked.connect(creer_fenetre)"""
 
 #Fonction permettant de cacher les dossiers __pycache__ et leur contenu en les supprimant à l'exécution du programme
 def remove_folder(path):
-    for i in os.listdir(path):
-        if i == '__pycache__':
-            shutil.rmtree(i)
-    for i in os.listdir(path):
-        if i[0]!='.' and i[-2]!='.' and i[-3]!='.' and i!='README':
-            for j in os.listdir(i):
-                if j == '__pycache__':
-                    shutil.rmtree(i+"/"+j)
+    for e in os.listdir(path):
+        if e == "__pycache__":
+            shutil.rmtree(path + "/" + e)
+        else:
+            if os.path.isdir(e):
+                remove_folder(e)
+
 remove_folder(".")
 
 fenetre = Fenetre("Cthulhu (Bleu Royal)")  # Creation of the main window
