@@ -51,7 +51,9 @@ class TabWidget(QTabWidget):
         shortcut_prev_tab = QShortcut(QKeySequence('Alt+Shift+tab'), self)
         shortcut_prev_tab.activated.connect(self.prev_tab)
 
-        self.setStyleSheet("QTabWidget::pane{background-color:transparent;}QTabWidget::tab-bar{left:0;}QTabBar::tab{color:black;background-color:gray;border-bottom: 2px solid transparent;padding:7px 15px;margin-top:0px;border-top-left-radius:10px;border-top-right-radius:10px;}QTabBar::tab:selected, QTabBar::tab:hover{background-color:#2E2E2E; color: white;border-bottom:#2E2E2E;}QTabBar::tab:!selected {margin-top: 5px;}")
+        self.setStyleSheet("QTabWidget::pane{background-image: url(images/medium.jpg);background-repeat: no-repeat;background-position: center}"
+                           "QTabWidget::tab-bar{left:0;}QTabBar::tab{color:black;background-color:gray;border-bottom: 2px solid transparent;padding:7px 15px;margin-top:0px;border-top-left-radius:10px;border-top-right-radius:10px;}QTabBar::tab:selected,"
+                           " QTabBar::tab:hover{background-color:#2E2E2E; color: white;border-bottom:#2E2E2E;}QTabBar::tab:!selected {margin-top: 5px;}")
 
 
     def close_current_tab(self):
@@ -74,6 +76,10 @@ class TabWidget(QTabWidget):
     def prev_tab(self):
         idx = self.currentIndex() - 1 if self.currentIndex() >= 1 else self.count() - 1
         self.setCurrentIndex(idx)
+
+    def mousePressEvent(self, event):
+        if len(self.parent.docs) == 0:
+            self.parent.new()
 
 
 class MyAction(QAction):
