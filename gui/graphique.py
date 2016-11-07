@@ -101,7 +101,7 @@ class TreeView(QTreeView):
         self.fenetre = fenetre
 
         self.model = QFileSystemModel()
-        self.file=QFile()
+        self.file = QFile()
         self.model.setRootPath(QDir.currentPath())
         self.setModel(self.model)
         self.hideColumn(1)
@@ -126,9 +126,9 @@ class TreeView(QTreeView):
             QTreeView.keyPressEvent(self, event)
 
     def open(self):
-        path=self.model.filePath(self.currentIndex())
-        name=self.model.fileName(self.currentIndex())
-        ext=name.split(".")[-1]
+        path = self.model.filePath(self.currentIndex())
+        name = self.model.fileName(self.currentIndex())
+        ext = name.split(".")[-1]
         if ext in ["c", "h"]:
             self.fenetre.open(path)
 
@@ -187,7 +187,9 @@ class Fenetre(QWidget):
         self.layout.addWidget(self.splitter)
         self.setLayout(self.layout)
 
-        menu = MenuBar(self)
+        self.show()
+
+        MenuBar(self)
         
         self.show()
 
