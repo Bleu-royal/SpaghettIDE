@@ -12,6 +12,7 @@ from lexer import *
 
 sys.path[:0] = ["gui"]
 
+
 class Editeur(QTextEdit):
 
     def __init__(self, police, couleur_fond, couleur_text, taille_text):
@@ -104,7 +105,7 @@ class TreeView(QTreeView):
         self.fenetre = fenetre
 
         self.model = QFileSystemModel()
-        self.file=QFile()
+        self.file = QFile()
         self.model.setRootPath(QDir.currentPath())
         self.setModel(self.model)
         self.hideColumn(1)
@@ -195,8 +196,10 @@ class Fenetre(QWidget):
         self.layout.addWidget(self.splitter)
         self.setLayout(self.layout)
 
-        menu = MenuBar(self)
-        
+        self.show()
+
+        MenuBar(self)
+
         self.show()
 
     def quit_func(self):  # Fonction de fermeture de l'IDE
