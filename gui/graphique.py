@@ -119,7 +119,7 @@ class TreeView(QTreeView):
         self.filters.append("*c")
         self.filters.append("*h")
         self.model.setNameFilters(self.filters)
-        self.model.setNameFilterDisables(False)
+        #self.model.setNameFilterDisables(False)
         # self.model.setFilter(QDir.Filter)
         self.model.setReadOnly(False)
         self.setRootIndex(self.model.index(QDir.currentPath()))
