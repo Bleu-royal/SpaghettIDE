@@ -26,7 +26,17 @@ def remove_folder(path):
 
 remove_folder(".")
 
-fenetre = Fenetre("Cthulhu (Bleu Royal)")  # Creation of the main window
-bind(fenetre)  # Connection between buttons and functions
+try:
+    verif = open("lexer.py", "r")
+    verif.close()
 
-sys.exit(app.exec_())
+    fenetre = Fenetre("Cthulhu (Bleu Royal)")  # Creation of the main window
+    bind(fenetre)  # Connection between buttons and functions
+
+    sys.exit(app.exec_())
+except FileNotFoundError:
+    mess = QMessageBox()
+    mess.setText("Veuillez lancer l'IDE via le répertoire du main.py")
+    mess.setStandardButtons(QMessageBox.Close)
+    mess.setDefaultButton(QMessageBox.Close)
+    mess.exec_()

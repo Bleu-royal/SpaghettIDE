@@ -54,7 +54,16 @@ class TabWidget(QTabWidget):
         self.setStyleSheet("QTabWidget::pane{background-image: url(images/medium.jpg);background-repeat: no-repeat;background-position: center}"
                            "QTabWidget::tab-bar{left:0;}QTabBar::tab{color:black;background-color:gray;border-bottom: 2px solid transparent;padding:7px 15px;margin-top:0px;border-top-left-radius:10px;border-top-right-radius:10px;}QTabBar::tab:selected,"
                            " QTabBar::tab:hover{background-color:#2E2E2E; color: white;border-bottom:#2E2E2E;}QTabBar::tab:!selected {margin-top: 5px;}")
+    """
+    def paintEvent(self, event):
+        # 567 × 898 --> Taille de l'image medium.jpg
+        taille = self.size()
+        taille.setWidth(taille.height()/898*567)
+        taille.setHeight(taille.width()/567*898)
 
+        painter = QPainter(self)
+        painter.drawPixmap(taille.width()/2, 0, QPixmap("images/medium.jpg").scaled(taille))
+        super().paintEvent(event)"""
 
     def close_current_tab(self):
 
