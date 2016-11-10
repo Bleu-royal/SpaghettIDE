@@ -34,6 +34,7 @@ try:
     bind(fenetre)  # Connection between buttons and functions
 
     sys.exit(app.exec_())
+    
 except FileNotFoundError:
     mess = QMessageBox()
     mess.setText("Veuillez lancer l'IDE via le répertoire du main.py")
