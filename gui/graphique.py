@@ -218,11 +218,17 @@ class Fenetre(QWidget):
 
 		self.tab_widget = TabWidget(self)
 
+		self.statusbar = QStatusBar()
+
 		self.splitter = QSplitter()
 		self.splitter.addWidget(self.treeview)
 		self.splitter.addWidget(self.tab_widget)
+		self.splitter.addWidget(self.statusbar)
 		self.splitter.setSizes([100, 400])
 
+		#self.statusbar.addWidget(MyReadWriteIndication)
+		self.statusbar.showMessage("Ready")
+		
 		# Positionnement des Layouts
 		self.layout.addWidget(self.splitter)
 		self.setLayout(self.layout)
