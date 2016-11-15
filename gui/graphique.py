@@ -203,7 +203,7 @@ class Fenetre(QWidget):
 		self.setGeometry(50, 50, self.ecran.screenGeometry().width() - 100, self.ecran.screenGeometry().height() - 100)
 		# Taille de la fenêtre
 
-		self.layout = QGridLayout()
+		self.gridLayout = QGridLayout()
 
 		# Ajout du logo pieuvre
 		self.label_img = QLabel()
@@ -230,8 +230,8 @@ class Fenetre(QWidget):
 		self.statusbar.showMessage("Ready")
 		
 		# Positionnement des Layouts
-		self.layout.addWidget(self.splitter)
-		self.setLayout(self.layout)
+		self.gridLayout.addWidget(self.splitter)
+		self.setLayout(self.gridLayout)
 
 		self.show()
 		MenuBar(self)
@@ -277,7 +277,7 @@ class Fenetre(QWidget):
 
 	def addCode(self, title):
 		self.codes += [Editeur("ABeeZee", "#2E2E2E", "white", 14)]
-		self.highlighters += [CodeHighLighter(self.codes[-1].document())]
+		self.highlighters += [CodeHighLighter(self.codes[-1],self.codes[-1].document())]
 		self.tab_widget.addTab(self.codes[-1], title)
 		self.tab_widget.setCurrentIndex(len(self.codes) - 1)
 
