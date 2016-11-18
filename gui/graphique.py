@@ -152,7 +152,11 @@ class TreeView(QTreeView):
 
     def keyPressEvent(self, event):
         if event.key() == 16777220:
-            self.open()
+            name = self.model.fileName(self.currentIndex())
+            if QDir(self.fenetre.workplace_path + name).exists():
+                self.fenetre.project_path = self.fenetre.workplace_path + name
+            else:
+                self.open()
         else:
             QTreeView.keyPressEvent(self, event)
 
@@ -160,7 +164,7 @@ class TreeView(QTreeView):
         path = self.model.filePath(self.currentIndex())
         name = self.model.fileName(self.currentIndex())
         ext = name.split(".")[-1]
-        if ext in ["c", "h"]:
+        if ext in ["c", "h"] and self.fenetre.project_path in path and self.fenetre.path != "":
             self.fenetre.open(path)
 
 
@@ -266,26 +270,32 @@ class Fenetre(QWidget):
         self.tab_widget.setCurrentIndex(len(self.codes) - 1)
 
     def save(self):  # Fonction de sauvegarde reliée au sous-menu "Sauvergarder"
-        idx = self.tab_widget.currentIndex()
-        if idx != -1:
-            if self.docs[idx].chemin_enregistrement == "":
-                chemin = \
-                    QFileDialog.getSaveFileName(self, 'Sauvegarder un fichier', "", "Fichier C (*.c) ;; Fichier H (*.h)")[0]
-                if chemin != "":
-                    self.docs[idx].set_chemin_enregistrement(chemin)
-                    self.docs[idx].sauvegarde_document(chemin)
-                    self.tab_widget.setTabText(idx, self.docs[idx].nom)
-            else:
-                self.docs[idx].sauvegarde_document()
+        if self.project_path != "":
+            idx = self.tab_widget.currentIndex()
+            if idx != -1:
+                if self.docs[idx].chemin_enregistrement == "":
+                    chemin = \
+                        QFileDialog.getSaveFileName(self, 'Sauvegarder un fichier', self.project_path, "Fichier C (*.c) ;; Fichier H (*.h)")[0]
+                    if chemin != "" and self.project_path in chemin:
+                        self.docs[idx].set_chemin_enregistrement(chemin)
+                        self.docs[idx].sauvegarde_document(chemin)
+                        self.tab_widget.setTabText(idx, self.docs[idx].nom)
+                else:
+                    self.docs[idx].sauvegarde_document()
+        else:
+            QMessageBox.critical(self, "Aucun projet ouvert", "Veuillez ouvrir ou creer un projet")
 
     def open(self, chemin=False):  # Fonction d'ouverture d'un fichier reliée au sous-menu "Ouvrir un fichier"
-        if not chemin:
-            chemin = QFileDialog.getOpenFileName(self, 'Ouvrir un fichier', "", "Fichier C (*.c) ;; Fichier H (*.h)")[0]
-        if chemin != "":
-            title = chemin.split("/")[-1]
-            self.addCode(title)
-            self.docs += [Document(self.codes[-1], chemin, True)]
-            self.tab_widget.setCurrentIndex(len(self.codes) - 1)
+        if self.project_path != "":
+            if not chemin:
+                chemin = QFileDialog.getOpenFileName(self, 'Ouvrir un fichier', self.project_path, "Fichier C (*.c) ;; Fichier H (*.h)")[0]
+            if chemin != "" and self.project_path in chemin:
+                title = chemin.split("/")[-1]
+                self.addCode(title)
+                self.docs += [Document(self.codes[-1], chemin, True)]
+                self.tab_widget.setCurrentIndex(len(self.codes) - 1)
+        else:
+            QMessageBox.critical(self, "Aucun projet ouvert", "Veuillez ouvrir ou créer un projet")
 
     def addCode(self, title):
         self.codes += [Editeur("ABeeZee", "#2E2E2E", "white", 14)]
@@ -295,13 +305,13 @@ class Fenetre(QWidget):
 
     def new_project(self):
         project_name=QInputDialog.getText(self, 'Choix du nom du projet', 'Entrez un nom de projet :')
-        while (project_name[0] == '' or "/" in project_name[0]) and  project_name[1]:
+        while (project_name[0] == '' or "/" in project_name[0]) and project_name[1]:
             QMessageBox.critical(self, "Erreur de syntaxe", "Le nom de projet n'est pas valide (veuillez éviter /)")
             project_name=QInputDialog.getText(self, 'Choix du nom du projet', 'Entrez un nom de projet :')
 
         if not QDir(self.workplace_path + project_name[0]).exists():
             QDir(self.workplace_path).mkpath(project_name[0])
-        else: 
+        elif project_path[1]: 
             QMessageBox.critical(self, "Le projet existe déjà", "Veuillez entrer un autre nom de projet")
             self.new_project()
 
