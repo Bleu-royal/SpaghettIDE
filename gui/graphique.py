@@ -164,7 +164,7 @@ class TreeView(QTreeView):
         path = self.model.filePath(self.currentIndex())
         name = self.model.fileName(self.currentIndex())
         ext = name.split(".")[-1]
-        if ext in ["c", "h"] and self.fenetre.project_path in path and self.fenetre.path != "":
+        if ext in ["c", "h"] and self.fenetre.project_path in path and self.fenetre.project_path != "":
             self.fenetre.open(path)
 
 
@@ -280,20 +280,27 @@ class Fenetre(QWidget):
                         self.docs[idx].set_chemin_enregistrement(chemin)
                         self.docs[idx].sauvegarde_document(chemin)
                         self.tab_widget.setTabText(idx, self.docs[idx].nom)
+                    else:
+                        QMessageBox.critical(self, "Impossible de sauvegarder ce document", "Ce document ne fais pas partit du projet courrant")
                 else:
                     self.docs[idx].sauvegarde_document()
         else:
-            QMessageBox.critical(self, "Aucun projet ouvert", "Veuillez ouvrir ou creer un projet")
+            QMessageBox.critical(self, "Aucun projet ouvert", "Veuillez ouvrir ou créer un projet")
 
     def open(self, chemin=False):  # Fonction d'ouverture d'un fichier reliée au sous-menu "Ouvrir un fichier"
         if self.project_path != "":
             if not chemin:
                 chemin = QFileDialog.getOpenFileName(self, 'Ouvrir un fichier', self.project_path, "Fichier C (*.c) ;; Fichier H (*.h)")[0]
+            print("--%s--"%self.project_path, "--%s--"%chemin, sep="\n")
+            if self.project_path in chemin:
+                print("ici")
             if chemin != "" and self.project_path in chemin:
                 title = chemin.split("/")[-1]
                 self.addCode(title)
                 self.docs += [Document(self.codes[-1], chemin, True)]
                 self.tab_widget.setCurrentIndex(len(self.codes) - 1)
+            else:
+                QMessageBox.critical(self, "Impossible d'ouvrir ce document", "Ce document ne fais pas partit du projet courrant")
         else:
             QMessageBox.critical(self, "Aucun projet ouvert", "Veuillez ouvrir ou créer un projet")
 
@@ -321,5 +328,5 @@ class Fenetre(QWidget):
 
     def close_project(self):
 
-        return
+        self.project_path = ""
     
