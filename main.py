@@ -3,6 +3,7 @@ import os
 import shutil
 from gui.graphique import *
 from kernel.bind import bind
+from kernel.workplace import *
 from PySide.QtGui import *
 
 app = QApplication(sys.argv)
@@ -38,6 +39,7 @@ try:
 
     fenetre = Fenetre("Cthulhu (Bleu Royal)")  # Creation of the main window
     bind(fenetre)  # Connection between buttons and functions
+    create_workplace()
 
     sys.exit(app.exec_())
     

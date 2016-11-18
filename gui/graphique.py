@@ -128,7 +128,7 @@ class TreeView(QTreeView):
 
         self.model = QFileSystemModel()
         self.file = QFile()
-        self.model.setRootPath(QDir.currentPath())
+        self.model.setRootPath(self.fenetre.workplace_path)
         self.setModel(self.model)
         self.hideColumn(1)
         self.hideColumn(2)
@@ -141,10 +141,14 @@ class TreeView(QTreeView):
         # self.model.setNameFilterDisables(False)
         # self.model.setFilter(QDir.Filter)
         self.model.setReadOnly(False)
-        self.setRootIndex(self.model.index(QDir.currentPath()))
+        self.setRootIndex(self.model.index(self.fenetre.workplace_path))
 
     def mouseDoubleClickEvent(self, event):
-        self.open()
+        name = self.model.fileName(self.currentIndex())
+        if QDir(self.fenetre.workplace_path + name).exists():
+            self.fenetre.project_path = self.fenetre.workplace_path + name
+        else:
+            self.open()
 
     def keyPressEvent(self, event):
         if event.key() == 16777220:
@@ -199,13 +203,17 @@ class MenuBar(QMenuBar):
 
 
 class Fenetre(QWidget):
-    def __init__(self, titre):
+    def __init__(self, titre, workplace_path=QDir.homePath() + "/workplace/"):
         super().__init__()
 
         self.ecran = QDesktopWidget()
         self.setWindowTitle(titre)
         self.setGeometry(50, 50, self.ecran.screenGeometry().width() - 100, self.ecran.screenGeometry().height() - 100)
         # Taille de la fenêtre
+
+        self.workplace_path = workplace_path
+
+        self.project_path = ""
 
         self.gridLayout = QGridLayout()
 
@@ -286,8 +294,16 @@ class Fenetre(QWidget):
         self.tab_widget.setCurrentIndex(len(self.codes) - 1)
 
     def new_project(self):
+        project_name=QInputDialog.getText(self, 'Choix du nom du projet', 'Entrez un nom de projet :')
+        while (project_name[0] == '' or "/" in project_name[0]) and  project_name[1]:
+            QMessageBox.critical(self, "Erreur de syntaxe", "Le nom de projet n'est pas valide (veuillez éviter /)")
+            project_name=QInputDialog.getText(self, 'Choix du nom du projet', 'Entrez un nom de projet :')
 
-        return
+        if not QDir(self.workplace_path + project_name[0]).exists():
+            QDir(self.workplace_path).mkpath(project_name[0])
+        else: 
+            QMessageBox.critical(self, "Le projet existe déjà", "Veuillez entrer un autre nom de projet")
+            self.new_project()
 
     def open_project(self):
 
