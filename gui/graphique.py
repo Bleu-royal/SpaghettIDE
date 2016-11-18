@@ -1,6 +1,6 @@
 # Module relatif à l'interface graphique
 
-import sys
+import sys,os
 from PySide.QtGui import *
 from PySide.QtCore import *
 
@@ -285,7 +285,7 @@ class Fenetre(QWidget):
 
                         self.statusbar.showMessage(self.docs[idx].nom+" a bien été sauvegardé.", 2000)
                     else:
-                        QMessageBox.critical(self, "Impossible de sauvegarder ce document", "Ce document ne fais pas partit du projet courrant")
+                        QMessageBox.critical(self, "Impossible de sauvegarder ce document", "Ce document ne fais pas partie du projet courant")
                 else:
                     self.docs[idx].sauvegarde_document()
         else:
@@ -328,7 +328,11 @@ class Fenetre(QWidget):
 
     def open_project(self):
 
-        return
+        projet =os.listdir(self.workplace_path)
+        for e in projet:
+            if not os.path.isdir(self.workplace_path +  e):
+                projet.remove(e)
+        print(projet)
 
     def close_project(self):
 
