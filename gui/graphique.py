@@ -235,18 +235,20 @@ class Fenetre(QWidget):
         self.tab_widget = TabWidget(self)
 
         self.statusbar = QStatusBar()
+        self.statusbar.showMessage("Hello !", 4000)
+        self.statusbar.setFixedSize(self.ecran.screenGeometry().width() * 4/5, 20)
+        self.statusbar.setSizeGripEnabled(False)
 
         self.splitter = QSplitter()
         self.splitter.addWidget(self.treeview)
         self.splitter.addWidget(self.tab_widget)
-        self.splitter.addWidget(self.statusbar)
         self.splitter.setSizes([100, 400])
 
         #self.statusbar.addWidget(MyReadWriteIndication)
-        self.statusbar.showMessage("Ready")
 
         # Positionnement des Layouts
         self.gridLayout.addWidget(self.splitter)
+        self.gridLayout.addWidget(self.statusbar)
         self.setLayout(self.gridLayout)
 
         self.show()
@@ -280,6 +282,8 @@ class Fenetre(QWidget):
                         self.docs[idx].set_chemin_enregistrement(chemin)
                         self.docs[idx].sauvegarde_document(chemin)
                         self.tab_widget.setTabText(idx, self.docs[idx].nom)
+
+                        self.statusbar.showMessage(self.docs[idx].nom+" a bien été sauvegardé.", 2000)
                     else:
                         QMessageBox.critical(self, "Impossible de sauvegarder ce document", "Ce document ne fais pas partit du projet courrant")
                 else:
