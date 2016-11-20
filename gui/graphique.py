@@ -58,16 +58,6 @@ class TabWidget(QTabWidget):
                            "QTabBar::tab:selected,"
                            "QTabBar::tab:hover{background-color:#2E2E2E; color: white;border-bottom:#2E2E2E;}"
                            "QTabBar::tab:!selected {margin-top: 5px;}")
-    """
-    def paintEvent(self, event):
-        # 567 × 898 --> Taille de l'image medium.jpg
-        taille = self.size()
-        taille.setWidth(taille.height()/898*567)
-        taille.setHeight(taille.width()/567*898)
-
-        painter = QPainter(self)
-        painter.drawPixmap(taille.width()/2, 0, QPixmap("images/medium.jpg").scaled(taille))
-        super().paintEvent(event)"""
 
     def close_current_tab(self):
 
@@ -81,6 +71,8 @@ class TabWidget(QTabWidget):
 
             self.parent.docs.remove(doc)
             self.parent.codes.remove(code)
+
+            self.parent.statusbar.showMessage("Fermeture de l'onglet courrant.", 2000)
 
     def next_tab(self):
         idx = self.currentIndex() + 1 if self.currentIndex() < self.count() - 1 else 0
@@ -147,6 +139,7 @@ class TreeView(QTreeView):
         name = self.model.fileName(self.currentIndex())
         if QDir(self.fenetre.workplace_path + name).exists():
             self.fenetre.project_path = self.fenetre.workplace_path + name
+            self.fenetre.statusbar.showMessage("Le projet " + name + " a bien été ouvert.", 2000)
         else:
             self.open()
 
@@ -235,7 +228,7 @@ class Fenetre(QWidget):
         self.tab_widget = TabWidget(self)
 
         self.statusbar = QStatusBar()
-        self.statusbar.showMessage("Hello !", 4000)
+        self.statusbar.showMessage("Hello !", 2000)
         self.statusbar.setFixedSize(self.ecran.screenGeometry().width() * 4/5, 20)
         self.statusbar.setSizeGripEnabled(False)
 
@@ -256,6 +249,7 @@ class Fenetre(QWidget):
         self.show()
 
     def quit_func(self):  # Fonction de fermeture de l'IDE
+        self.statusbar.showMessage("Fermeture...")
         box = QMessageBox()
         box.setText("Voulez-vous vraiment fermer l'IDE ?")
         box.setStandardButtons(QMessageBox.Cancel | QMessageBox.Close)
@@ -265,9 +259,13 @@ class Fenetre(QWidget):
 
         if val == QMessageBox.Close:
             self.close()
+        else:
+            self.statusbar.showMessage("... ou pas !!", 1000)
 
     def new(self):  # Fonction de création de nouveau fichier reliée au sous-menu "Nouveau"
-        self.addCode("Unamed"+str(len(self.docs)+1))
+        new = "Unamed"+str(len(self.docs)+1)
+        self.statusbar.showMessage(("Nouveau fichier " + new))
+        self.addCode(new)
         self.docs += [Document(self.codes[-1], "")]
         self.tab_widget.setCurrentIndex(len(self.codes) - 1)
 
@@ -295,46 +293,46 @@ class Fenetre(QWidget):
         if self.project_path != "":
             if not chemin:
                 chemin = QFileDialog.getOpenFileName(self, 'Ouvrir un fichier', self.project_path, "Fichier C (*.c) ;; Fichier H (*.h)")[0]
-            print("--%s--"%self.project_path, "--%s--"%chemin, sep="\n")
+            print("--%s--" % self.project_path, "--%s--" % chemin, sep="\n")
             if self.project_path in chemin:
                 print("ici")
             if chemin != "" and self.project_path in chemin:
                 title = chemin.split("/")[-1]
                 self.addCode(title)
+                self.statusbar.showMessage("Ouverture de "+title, 2000)
                 self.docs += [Document(self.codes[-1], chemin, True)]
                 self.tab_widget.setCurrentIndex(len(self.codes) - 1)
             else:
-                QMessageBox.critical(self, "Impossible d'ouvrir ce document", "Ce document ne fais pas partit du projet courrant")
+                self.statusbar.showMessage("Impossible d'ouvrir ce document car il ne fait pas partit du projet courrant.", 2000)
         else:
-            QMessageBox.critical(self, "Aucun projet ouvert", "Veuillez ouvrir ou créer un projet")
+            self.statusbar.showMessage("Aucun projet ouvert, veuillez ouvrir ou créer un projet.", 2000)
 
     def addCode(self, title):
         self.codes += [Editeur("ABeeZee", "#2E2E2E", "white", 14)]
-        self.highlighters += [CodeHighLighter(self.codes[-1],self.codes[-1].document())]
+        self.highlighters += [CodeHighLighter(self.codes[-1], self.codes[-1].document())]
         self.tab_widget.addTab(self.codes[-1], title)
         self.tab_widget.setCurrentIndex(len(self.codes) - 1)
 
     def new_project(self):
-        project_name=QInputDialog.getText(self, 'Choix du nom du projet', 'Entrez un nom de projet :')
+        project_name = QInputDialog.getText(self, 'Choix du nom du projet', 'Entrez un nom de projet :')
         while (project_name[0] == '' or "/" in project_name[0]) and project_name[1]:
             QMessageBox.critical(self, "Erreur de syntaxe", "Le nom de projet n'est pas valide (veuillez éviter /)")
-            project_name=QInputDialog.getText(self, 'Choix du nom du projet', 'Entrez un nom de projet :')
+            project_name = QInputDialog.getText(self, 'Choix du nom du projet', 'Entrez un nom de projet :')
 
         if not QDir(self.workplace_path + project_name[0]).exists():
             QDir(self.workplace_path).mkpath(project_name[0])
-        elif project_path[1]: 
+        elif self.project_path[1]:
             QMessageBox.critical(self, "Le projet existe déjà", "Veuillez entrer un autre nom de projet")
             self.new_project()
 
     def open_project(self):
 
-        projet =os.listdir(self.workplace_path)
+        projet = os.listdir(self.workplace_path)
         for e in projet:
-            if not os.path.isdir(self.workplace_path +  e):
+            if not os.path.isdir(self.workplace_path + e):
                 projet.remove(e)
         print(projet)
 
     def close_project(self):
 
         self.project_path = ""
-    
