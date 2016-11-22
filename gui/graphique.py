@@ -15,6 +15,21 @@ sys.path[:0] = ["gui"]
 class Editeur(QTextEdit):
 
     def __init__(self, police, couleur_fond, couleur_text, taille_text):
+        """
+        Hérite de QTextEdit.
+        C'est une zone de texte dans laquelle on peut écrire. C'est ce qu'on utilise ici pour la zone où le code est écrit.
+
+        Ici, on modifie ses paramètres en fonction du thème souhaité.
+        :param police: Police d'écriture
+        :type police: str
+        :param couleur_fond: Couleur d'arrière plan de l'éditeur (bakground)
+        :type couleur_fond: str
+        :param couleur_text: Couleur du texte de base
+        :type couleur_text: str
+        :param taille_text: Taille de la police (en points)
+        :type taille_text: int
+        :rtype: None
+        """
         QTextEdit.__init__(self)
 
         self.setStyleSheet("QTextEdit { background-color:" + couleur_fond + ";"
@@ -28,6 +43,15 @@ class Editeur(QTextEdit):
 class TabWidget(QTabWidget):
 
     def __init__(self, parent):
+        """
+        Hérite de QTabWidget.
+        Permet de faire plusieurs onglets de code ( On utilise notre class Editeur ).
+        On définit ici les raccourcis de navigation entre et pour les onglets de code pour fermer, ouvrir, aller au suivant...
+
+        :param parent: Parent de la class ( qui appelle )
+        :type parent: object
+        :rtype: None
+        """
         super().__init__()
 
         self.parent = parent
@@ -60,8 +84,12 @@ class TabWidget(QTabWidget):
                            "QTabBar::tab:!selected {margin-top: 5px;}")
 
     def close_current_tab(self):
+        """
+        Fonction pour fermer l'onglet courant.
 
-        if len(self.parent.codes) != 0:
+        :rtype: None
+        """
+        if len(self.parent.codes) != 0:  # On vérifie que la liste d'onglet n'est pas vide.
             idx = self.currentIndex()
 
             self.removeTab(idx)
@@ -75,14 +103,32 @@ class TabWidget(QTabWidget):
             self.parent.statusbar.showMessage("Fermeture de l'onglet courrant.", 2000)
 
     def next_tab(self):
+        """
+        Afficher l'onglet suivant, relativement à la position courante.
+        Si on est au dernier, on retourne au premier.
+
+        :rtype: None
+        """
         idx = self.currentIndex() + 1 if self.currentIndex() < self.count() - 1 else 0
         self.setCurrentIndex(idx)
 
     def prev_tab(self):
+        """
+        Afficher l'onglet précédent, relativement à la position courante.
+        Si on est au premier, on affiche le dernier.
+
+        :rtype: None
+        """
         idx = self.currentIndex() - 1 if self.currentIndex() >= 1 else self.count() - 1
         self.setCurrentIndex(idx)
 
     def mousePressEvent(self, event):
+        """
+        On créée un nouvel onglet de code lorsqu'on double-clique sur la page vide (si on a pas d'onglet déjà ouvert).
+
+        :param event: Contient les positions x et y de l'endroit où on a cliqué. NON UTILISÉ ICI.
+        :rtype: None
+        """
         if len(self.parent.docs) == 0:
             self.parent.new()
 
@@ -90,6 +136,9 @@ class TabWidget(QTabWidget):
 class MyAction(QAction):
     def __init__(self, papa, name, status, func, shortcut_command=None):
         """
+        Hérite de QAction.
+        Créée ce qui est nécessaire pour faire un nouvel onglet dans la barre de menu, avec le nom, un raccourcis, une fonction à exécuter.
+
         :param papa:  Class qui appelle MyAction (ici Fenetre)
         :type papa: object
         :param name:  Nom à donner à l'action
@@ -99,6 +148,7 @@ class MyAction(QAction):
         :param shortcut_command:  Commande de raccourcis (facultative)
         :type shortcut_command: str
         :param func:  Fonction à exécuter
+        :rtype: None
         """
 
         QAction.__init__(self, name, papa)  # Initialisation de l'action
@@ -110,6 +160,14 @@ class MyAction(QAction):
 
 class TreeView(QTreeView):
     def __init__(self, fenetre):
+        """
+        Hérite de QTreeView.
+        Permet d'afficher le navigateur de fichiers, permettant d'ouvrir et de visualiser les documents d'un ou de plusieurs projets.
+
+        :param fenetre: Fenêtre où est placée le navigateur de fichier (ici : Parent)
+        :type fenetre: object
+        :rtype: None
+        """
 
         super().__init__()
         # self.img1 = QPixmap("Dragon.jpg")  # Image de lancement
@@ -136,6 +194,12 @@ class TreeView(QTreeView):
         self.setRootIndex(self.model.index(self.fenetre.workplace_path))
 
     def mouseDoubleClickEvent(self, event):
+        """
+        Lorsque l'on double-clique sur le navigateur, on ouvre soit un projet, soit un document dans un projet.
+
+        :param event: Contient les positions x et y de l'endroit où on a cliqué. NON UTILISÉ ICI.
+        :rtype: None
+        """
         name = self.model.fileName(self.currentIndex())
         if QDir(self.fenetre.workplace_path + name).exists():
             self.fenetre.project_path = self.fenetre.workplace_path + name
@@ -144,26 +208,49 @@ class TreeView(QTreeView):
             self.open()
 
     def keyPressEvent(self, event):
-        if event.key() == 16777220:
+        """
+        Bind de la touche entrée.
+        Lorsque l'on sélectionne un document et que l'on appuie sur entrée, on ouvre le document ou le projet sélectionné.
+
+        Contient les positions x et y de l'endroit où on a cliqué. NON UTILISÉ ICI.
+        :rtype: None
+        """
+        if event.key() == 16777220:  # Référence de la touche "entrée"
             name = self.model.fileName(self.currentIndex())
             if QDir(self.fenetre.workplace_path + name).exists():
                 self.fenetre.project_path = self.fenetre.workplace_path + name
+                self.fenetre.statusbar.showMessage("Le projet " + name + " a bien été ouvert.", 2000)
             else:
                 self.open()
         else:
             QTreeView.keyPressEvent(self, event)
 
     def open(self):
+        """
+        Ouvre un document si son extension est valide.
+        Appelle la fonction parent pour ouvrir un fichier.
+
+        :rtype: None
+        """
         path = self.model.filePath(self.currentIndex())
         name = self.model.fileName(self.currentIndex())
         ext = name.split(".")[-1]
-        if ext in ["c", "h"] and self.fenetre.project_path in path and self.fenetre.project_path != "":
+        if ext in ("c", "h") and self.fenetre.project_path in path and self.fenetre.project_path != "":
             self.fenetre.open(path)
 
 
 class MenuBar(QMenuBar):
 
     def __init__(self, parent):
+        """
+        Hérite de QMenuBar.
+        C'est ici que la barre de menu est créée.
+        On appelle la class MyAction pour chaque élément du menu que l'on souhaite créer, puis on ajoute ces éléments au menu principal.
+
+        :param parent: Parent de la class ( qui appelle )
+        :type parent: object
+        :rtype: None
+        """
         super().__init__(parent)
 
         ## Menus
@@ -201,6 +288,15 @@ class MenuBar(QMenuBar):
 
 class Fenetre(QWidget):
     def __init__(self, titre, workplace_path=QDir.homePath() + "/workplace/"):
+        """
+        Hérite de QWidget
+        Class principale, dans laquelle tout est rassemblé. On appelle tout ce qui est nécessaire à la création de la fenêtre et au fonctionnement du programme.
+
+        :param titre: Nom de la fenêtre
+        :type titre: str
+        :param workplace_path: Chemin absolu vers l'emplacement où sont placés les projets créés.
+        :rtype: None
+        """
         super().__init__()
 
         self.ecran = QDesktopWidget()
@@ -248,8 +344,15 @@ class Fenetre(QWidget):
         MenuBar(self)
         self.show()
 
-    def quit_func(self):  # Fonction de fermeture de l'IDE
-        self.statusbar.showMessage("Fermeture...")
+    def quit_func(self):
+        """
+        Fonction de fermeture de l'IDE.
+        On affiche une petite boîte pour demander si l'on souhaite vraiment fermer l'IDE.
+        Les touches "return" et "escape" sont reliée resectivement à "Fermer" et "Annuler".
+
+        :rtype: None
+        """
+        self.statusbar.showMessage("Fermeture...")  # Message de status
         box = QMessageBox()
         box.setText("Voulez-vous vraiment fermer l'IDE ?")
         box.setStandardButtons(QMessageBox.Cancel | QMessageBox.Close)
@@ -260,16 +363,30 @@ class Fenetre(QWidget):
         if val == QMessageBox.Close:
             self.close()
         else:
-            self.statusbar.showMessage("... ou pas !!", 1000)
+            self.statusbar.showMessage("... ou pas !!", 1000)  # Message de status
 
-    def new(self):  # Fonction de création de nouveau fichier reliée au sous-menu "Nouveau"
-        new = "Unamed"+str(len(self.docs)+1)
+    def new(self):
+        """
+        Fonction de création de nouveau fichier reliée au sous-menu "Nouveau".
+        On ajoute ici un nouvel onglet à nos codes déjà ouverts ( ou on créée un premier onglet ) qui s'appelle par défaut "Sans nom" + le numéro courant dans la liste des onglets.
+        On appelle la fonction self.addCode()
+
+        :rtype: None
+        """
+        new = "Sans nom"+str(len(self.docs)+1)
         self.statusbar.showMessage(("Nouveau fichier " + new))
         self.addCode(new)
         self.docs += [Document(self.codes[-1], "")]
         self.tab_widget.setCurrentIndex(len(self.codes) - 1)
 
-    def save(self):  # Fonction de sauvegarde reliée au sous-menu "Sauvergarder"
+    def save(self):
+        """
+        Fonction de sauvegarde reliée au sous-menu "Sauvergarder".
+        On sauvegarde un fichier en l'enregistrant dans un projet (ou non).
+        On ouvre une QFileDialog qui affiche le navigateur du système habituel pour enregistrer des documents.
+
+        :return:
+        """
         if self.project_path != "":
             idx = self.tab_widget.currentIndex()
             if idx != -1:
@@ -281,7 +398,7 @@ class Fenetre(QWidget):
                         self.docs[idx].sauvegarde_document(chemin)
                         self.tab_widget.setTabText(idx, self.docs[idx].nom)
 
-                        self.statusbar.showMessage(self.docs[idx].nom+" a bien été sauvegardé.", 2000)
+                        self.statusbar.showMessage(self.docs[idx].nom+" a bien été sauvegardé.", 2000)  # Message de status
                     else:
                         QMessageBox.critical(self, "Impossible de sauvegarder ce document", "Ce document ne fais pas partie du projet courant")
                 else:
@@ -289,7 +406,15 @@ class Fenetre(QWidget):
         else:
             QMessageBox.critical(self, "Aucun projet ouvert", "Veuillez ouvrir ou créer un projet")
 
-    def open(self, chemin=False):  # Fonction d'ouverture d'un fichier reliée au sous-menu "Ouvrir un fichier"
+    def open(self, chemin=False):
+        """
+        Fonction d'ouverture d'un fichier reliée au sous-menu "Ouvrir un fichier"
+        On utilise une QFileDialog qui affiche le navigateur du système habituel pour ouvrir des documents.
+
+        :param chemin: N'existe pas si on appelle via le menu ou le raccourcis clavier. Il est spécifié si il appartient au projet courant et que l'on souhaite l'ouvrir sans passer par la fenetre de dialogue.
+        :type chemin: str
+        :rtype: None
+        """
         if self.project_path != "":
             if not chemin:
                 chemin = QFileDialog.getOpenFileName(self, 'Ouvrir un fichier', self.project_path, "Fichier C (*.c) ;; Fichier H (*.h)")[0]
@@ -299,7 +424,7 @@ class Fenetre(QWidget):
             if chemin != "" and self.project_path in chemin:
                 title = chemin.split("/")[-1]
                 self.addCode(title)
-                self.statusbar.showMessage("Ouverture de "+title, 2000)
+                self.statusbar.showMessage("Ouverture de "+title, 2000)  # Message de status
                 self.docs += [Document(self.codes[-1], chemin, True)]
                 self.tab_widget.setCurrentIndex(len(self.codes) - 1)
             else:
@@ -308,12 +433,25 @@ class Fenetre(QWidget):
             self.statusbar.showMessage("Aucun projet ouvert, veuillez ouvrir ou créer un projet.", 2000)
 
     def addCode(self, title):
+        """
+        Fonction qui se charge d'ajouter à la liste des codes ouverts une nouvelle instance de la class Editeur et de créer un nouvel onglet
+
+        :param title: Nom du document
+        :type title: str
+        :rtype: None
+        """
         self.codes += [Editeur("ABeeZee", "#2E2E2E", "white", 14)]
         self.highlighters += [CodeHighLighter(self.codes[-1], self.codes[-1].document())]
         self.tab_widget.addTab(self.codes[-1], title)
         self.tab_widget.setCurrentIndex(len(self.codes) - 1)
 
     def new_project(self):
+        """
+        Créée un nouveau projet
+        Le projet créé doit avoir un nom différent d'un projet déjà existant, et ne dois pas comporter de "/" dans son nom.
+
+        :rtype: None
+        """
         project_name = QInputDialog.getText(self, 'Choix du nom du projet', 'Entrez un nom de projet :')
         while (project_name[0] == '' or "/" in project_name[0]) and project_name[1]:
             QMessageBox.critical(self, "Erreur de syntaxe", "Le nom de projet n'est pas valide (veuillez éviter /)")
@@ -326,7 +464,10 @@ class Fenetre(QWidget):
             self.new_project()
 
     def open_project(self):
-
+        """
+        Ouvre un projet
+        :rtype: None
+        """
         projet = os.listdir(self.workplace_path)
         for e in projet:
             if not os.path.isdir(self.workplace_path + e):
@@ -334,5 +475,8 @@ class Fenetre(QWidget):
         print(projet)
 
     def close_project(self):
-
+        """
+        Ferme un projet
+        :rtype: None
+        """
         self.project_path = ""

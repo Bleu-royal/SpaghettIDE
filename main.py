@@ -24,6 +24,12 @@ opts.button.clicked.connect(creer_fenetre)
 
 
 def remove_folder(path):
+    """
+    Retire les __pycache__/ des répertoires de projets.
+
+    :param path: Chemin du projet
+    :rtype: None
+    """
     for e in os.listdir(path):
         if e == "__pycache__":
             shutil.rmtree(path + "/" + e)
