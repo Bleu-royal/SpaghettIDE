@@ -342,7 +342,8 @@ class Fenetre(QWidget):
         self.gridLayout.addWidget(self.statusbar)
         self.setLayout(self.gridLayout)
 
-        self.show()
+        if sys.platform == "linux":
+            self.show()
         MenuBar(self)
         self.show()
 
