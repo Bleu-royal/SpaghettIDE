@@ -1,7 +1,12 @@
 from PySide.QtCore import *
 
 def create_workplace():
-	path=QDir.homePath()
+    """
+    Créée un répertoire vide qui va contenir les projets
 
-	if not QDir(path + '/workplace/').exists():
-		QDir(path).mkpath("workplace")
+    :rtype: None
+    """
+    path = QDir.homePath()
+
+    if not QDir(path + '/workplace/').exists():
+        QDir(path).mkpath("workplace")

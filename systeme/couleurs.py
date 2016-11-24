@@ -41,8 +41,6 @@ class CodeHighLighter(QSyntaxHighlighter):
         else:
             self.prop.hide()
 
-
-
         space_remember = []
 
         for i in range(len(text)):
