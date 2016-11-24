@@ -7,6 +7,7 @@ from kernel.workplace import *
 from PySide.QtGui import *
 
 app = QApplication(sys.argv)
+QResource.registerResource("./poulpe.rcc");
 """
 opts = Options("Cthulhu (Bleu Royal)")
 
