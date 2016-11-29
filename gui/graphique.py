@@ -75,7 +75,6 @@ class TabWidget(QTabWidget):
         shortcut_prev_tab.activated.connect(self.prev_tab)
 
         url = QDir().currentPath() + "/images/medium.jpg"
-
         self.setStyleSheet("QTabWidget::pane{background-image: url(%s);"
                            "background-repeat: no-repeat;background-position: center}"
                            "QTabWidget::tab-bar{left:0;}QTabBar::tab{color:black;"
@@ -83,7 +82,7 @@ class TabWidget(QTabWidget):
                            "margin-top:0px;border-top-left-radius:10px;border-top-right-radius:10px;}"
                            "QTabBar::tab:selected,"
                            "QTabBar::tab:hover{background-color:#2E2E2E; color: white;border-bottom:#2E2E2E;}"
-                           "QTabBar::tab:!selected {margin-top: 5px;}"%url)
+                           "QTabBar::tab:!selected {margin-top: 5px;}" % url)
 
     def close_current_tab(self):
         """
