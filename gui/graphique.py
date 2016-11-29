@@ -75,14 +75,14 @@ class TabWidget(QTabWidget):
         shortcut_prev_tab.activated.connect(self.prev_tab)
 
         url = QDir().currentPath() + "/images/medium.jpg"
-        self.setStyleSheet("QTabWidget::pane{background-image: url(%s);"
+        self.setStyleSheet("QTabWidget::pane{background-image: url(:/images/medium.jpg);"
                            "background-repeat: no-repeat;background-position: center}"
                            "QTabWidget::tab-bar{left:0;}QTabBar::tab{color:black;"
                            "background-color:gray;border-bottom: 2px solid transparent;padding:7px 15px;"
                            "margin-top:0px;border-top-left-radius:10px;border-top-right-radius:10px;}"
                            "QTabBar::tab:selected,"
                            "QTabBar::tab:hover{background-color:#2E2E2E; color: white;border-bottom:#2E2E2E;}"
-                           "QTabBar::tab:!selected {margin-top: 5px;}" % url)
+                           "QTabBar::tab:!selected {margin-top: 5px;}")
 
     def close_current_tab(self):
         """
@@ -341,7 +341,8 @@ class Fenetre(QWidget):
         self.gridLayout.addWidget(self.statusbar)
         self.setLayout(self.gridLayout)
 
-        self.show()
+        if sys.platform == "linux":
+            self.show()
         MenuBar(self)
         self.show()
 
