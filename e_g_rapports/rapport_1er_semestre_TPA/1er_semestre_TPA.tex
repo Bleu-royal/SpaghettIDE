@@ -58,11 +58,11 @@
 	Nous avons réparti les différentes tâches à effectuer pour le projet entre les membres du groupe. Certaines sont plus longues ou plus complexes, c'est pourquoi certains membres du groupe on une liste moins remplie que d'autres. Il ne faut donc pas se fier uniquement à cette liste.\\
 	
 	\begin{itemize}
-		\item Alexis : navigation / gestion des projets
-		\item Emma : menu / Architecture / recherche bibliographique
-		\item Théo : Coloration syntaxique / Analyse lexicale / Interface
-		\item Thomas : Documentation / Interface / style texte
-		\item Rapports et présentation : tout le monde 
+		\item Alexis : Navigation / Gestion des projets
+		\item Emma : Découpage en modules / Architecture projet / Recherche bibliographique / Barre de menu
+		\item Théo : Coloration syntaxique / Analyse lexicale / Interface graphique / Gestion (sauvegarde, ouverture) des fichiers
+		\item Thomas : Documentation / Interface graphique / Thème, apparence texte et fenêtre / Barre de status
+		\item Tout le groupe : Rapports et présentation 
 	\end{itemize}
 	
 \section{Détails techniques}
@@ -89,14 +89,79 @@
 		\end{center}
 	\end{figure}
 	
+	\subsection{Bibliographie}
+	
+	Nous avons utilisé deux sites de documentation principalement sur QT et Pyside.
+	\begin{itemize}
+		\item \url{http://srinikom.github.io/pyside-docs/PySide/QtGui/}
+		\item \url{doc.qt.io}
+	\end{itemize}
 	
 \section{Structure générale}
 
 	\subsection{Répartition en modules}
 	
-	\subsection{Différentes tâches}
+		Les différents modules sont répartis par thèmes. Nous avons :
+		\begin{itemize}
+			\item Un module pour l'interface graphique
+			\item Un module pour la gestion des projets
+			\item Un module pour la gestion des fichiers
+			\item Un module pour la coloration syntaxique
+			\item Deux modules pour Lex et Yacc
+			\item Un module pour l'analyse syntaxique
+			\item Un module pour l'autocomplétion
+		\end{itemize}
 	
-		ON EXPLIQUE CHAQUE PARTIE DU CODE
+	\subsection{Module graphique}
+	
+		On retrouve dans ce module tout ce qui est relatif au GUI (l'interface graphique).\\
+		C'est là qu'est créée la fenêtre principale de l'application. Où l'on va pouvoir créer, ouvrir, sauvegarder des fichiers et des projets.\\
+		
+		On y retrouve donc ce qui est nécessaire pour :
+		
+		\begin{itemize}
+		
+			\item Créer une zone de texte. Nous utilisons pour cela l'objet QTextEdit de QT, qui est un widget permettant d'avoir une zone de texte. Nous nous en servons comme fenêtre d'éditeur, c'est donc ici que l'on pourra coder.\\
+			Le thème de l'application, c'est à dire la couleur de fond et de la police ainsi que la police utilisée sont relatif au QTextEdit. C'est également là que la couleur des élément (tokens) sera modifiée par Lex en fonction de leur rôle.\\
+			\begin{center}
+				\includegraphics[scale=1]{images/QTextEdit}
+				\vspace{0.5cm}
+			\end{center}
+			
+			\item Créer plusieurs onglets de code. C'est un QTabWidget que nous utilisons pour cela, il va en fait créer plusieurs QTextEdit (ou en supprimer si on ferme l'onglet), et possède des fonctions et raccourcis pour naviguer entre tous. \\
+			Si on a aucun onglet d'ouvert, on a le logo de notre groupe qui est affiché à la place.\\
+			\begin{center}
+				\includegraphics[scale=0.6]{images/QTabWidget}
+				\vspace{0.5cm}
+			\end{center}
+			
+			\item Créer une barre de menu. Cela permet d'avoir toutes les fonctionnalités et éventuellement des raccourcis. On utilise une QMenuBar pour cela, qui va elle-même utiliser une QAction pour créer une action sur le menu. Une action contient un nom, éventuellement un raccourci et une fonction à exécuter. 
+			\begin{center}
+				\includegraphics[scale=0.6]{images/QMenuBar}
+				\vspace{0.5cm}
+			\end{center}
+			
+			\item Mettre en place le navigateur de fichiers et de projets. On utilise un QTreeView qui nous permet d'afficher l'arborescence des fichiers et projets. C'est ce que l'on utilise pour ouvrir et naviguer dans les projets ouverts.\\
+			\begin{center}
+				\includegraphics[scale=0.6]{images/QTreeView}
+				\vspace{0.6cm}
+			\end{center}
+			
+			\item Modifier la taille du navigateur de fichier/de l'éditeur de code. Pour cela, on utilise un QSplitter.\\
+			
+			\begin{center}
+				\includegraphics[scale=0.6]{images/QSplitter_1}
+				\vspace{0.6cm}
+			\end{center}
+
+			\begin{center}
+				\includegraphics[scale=0.6]{images/QSplitter_2}
+				\vspace{0.6cm}
+			\end{center}
+			
+			\item La fenêtre principale.			
+			
+		\end{itemize}
 	
 	
 \section{Conclusion}
