@@ -77,10 +77,11 @@
 	
 	Nous avons choisi un style de programmation orienté objet, puisque plus logique dans un projet de cette envergure. L'objet nous permet de mettre en application les notions vues en cours. Cela nous permet de personnaliser en ré-implémentant des classes de QT pour les adapter à nos besoins.\\
 	
-	Lex est un programme qui permet de reconaître des tokens qui sont des éléments d'une chaîne de caractères. Cela à l'aide de règles de grammaires que l'on lui passe en entrée.\\
+	Lex est un programme qui permet de reconaître des tokens qui sont des éléments d'une chaîne de caractères. Cela à l'aide de règles lexicales que l'on lui passe en entrée.\\
 	Dans notre cas, nous utilisons Lex pour reconnaître les éléments que l'on écrit, afin de colorier ces derniers en fonction de leur rôle (identifiant, entier, déclaration...). On utilise également la sortie générée que l'on passe à un autre programme : Yacc.\\
 	
 	Yacc permet de générer un arbre syntaxique abstrait qui nous permet de vérifier que la syntaxe de notre code est correcte. Aussi, cela ne permet de proposer une complétion automatique en fonction de ce que l'on écrit.\\
+	On doit également lui passer des règles, qui sont d'ordre grammaticales.
 	
 	\begin{figure}[h!]
 		\begin{center}
@@ -147,7 +148,8 @@
 				\vspace{0.6cm}
 			\end{center}
 			
-			\item Modifier la taille du navigateur de fichier/de l'éditeur de code. Pour cela, on utilise un QSplitter.\\
+			\item Modifier la taille du navigateur de fichier/de l'éditeur de code. Pour cela, on utilise un QSplitter.\\ 
+			Cela peut permettre, en fonction de la taille du projet et des répertoires imbriqués dans d'autres, de visualiser complètement les fichiers. Au on contraire, masquer le navigateur de fichier pour avoir une zone de code plus grande.\\
 			
 			\begin{center}
 				\includegraphics[scale=0.6]{images/QSplitter_1}
@@ -159,10 +161,20 @@
 				\vspace{0.6cm}
 			\end{center}
 			
-			\item La fenêtre principale.			
+			\item Créer la fenêtre principale. On utilise un QWidget, qui est en fait une sorte de parent de tous les objets cités ci-dessus. C'est donc ici que l'on regroupe tout pour mettre en commun afin de faire un affichage propre.
+			\begin{center}
+				\includegraphics[scale=0.3]{images/QWidget}
+				\vspace{0.6cm}
+			\end{center}
 			
 		\end{itemize}
-	
+		
+		Ce module est le plus imposant car la création d'un interface grafique nécessite beaucoup de lignes de codes.
+		
+		\subsection{Module gestion de projets}
+			--> Déplacer les fonctions relatives dans un autre module que GUI
+			
+		\subsection{Module gestion de fichiers}	
 	
 \section{Conclusion}
 	

@@ -376,7 +376,7 @@ class Fenetre(QWidget):
         :rtype: None
         """
         new = "Sans nom"+str(len(self.docs)+1)
-        self.statusbar.showMessage(("Nouveau fichier " + new))
+        self.statusbar.showMessage(("Nouveau fichier " + new), 2000)
         self.addCode(new)
         self.docs += [Document(self.codes[-1], "")]
         self.tab_widget.setCurrentIndex(len(self.codes) - 1)
