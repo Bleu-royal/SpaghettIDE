@@ -39,6 +39,13 @@ class Editeur(QTextEdit):
 
         self.append("int main ( int argc, char** argv ){\n\n\treturn 0;\n\n}")
 
+    def keyPressEvent(self, event):
+
+        QTextEdit.keyPressEvent(self, event)
+
+        if event.key() == 16777220:
+            yaccing(self.toPlainText())
+
 
 class TabWidget(QTabWidget):
 
