@@ -52,10 +52,10 @@
 	
 	\subsection{Déroulement et planning}
 	
-	Nous avons réparti équitablement le travail et le temps de travail de chacun. Malgré le fait que deux membres du groupe (Thomas et Théo) connaissaient déjà la bibliothèque graphique que l'on utilise et partaient donc avec un avantage non-négligeable. \\
-	Les deux autres membres du groupe ont donc été aidés au début afin de leur expliquer les bases et de pouvoir démarrer sans trop de problèmes.\\
+	Nous avons réparti équitablement le travail et le temps de travail de chacun. Il faut préciser que deux membres du groupe (Thomas et Théo) connaissaient déjà la bibliothèque graphique utilisée dans l'IDE, et partaient donc avec un avantage non-négligeable. \\
+	Les deux autres membres du groupe ont donc été aidés afin de leur expliquer les bases et de pouvoir démarrer sans trop de problèmes.\\
 	
-	Nous avons réparti les différentes tâches à effectuer pour le projet entre les membres du groupe. Certaines sont plus longues ou plus complexes, c'est pourquoi certains membres du groupe on une liste moins remplie que d'autres. Il ne faut donc pas se fier uniquement à cette liste.\\
+	Nous avons réparti les différentes tâches à effectuer pour le projet entre les membres du groupe. Certaines sont plus longues ou plus complexes, c'est pourquoi certains membres du groupe ont une liste moins remplie que d'autres. Il ne faut donc pas se fier uniquement à cette liste.\\
 	
 	\begin{itemize}
 		\item Alexis : Navigation / Gestion des projets
@@ -75,18 +75,18 @@
 	
 	\subsection{Techniques employées}
 	
-	Nous avons choisi un style de programmation orienté objet, puisque plus logique dans un projet de cette envergure. L'objet nous permet de mettre en application les notions vues en cours. Cela nous permet de personnaliser en ré-implémentant des classes de QT pour les adapter à nos besoins.\\
+	Nous avons choisi un style de programmation orienté objet, puisque plus logique dans un projet de cette envergure. L'objet nous permet de mettre en application les notions vues en cours. Cela nous permet de personnaliser en les ré-implémentant des classes de QT pour les adapter à nos besoins.\\
 	
-	Lex est un programme qui permet de reconaître des tokens qui sont des éléments d'une chaîne de caractères. Cela à l'aide de règles lexicales que l'on lui passe en entrée.\\
-	Dans notre cas, nous utilisons Lex pour reconnaître les éléments que l'on écrit, afin de colorier ces derniers en fonction de leur rôle (identifiant, entier, déclaration...). On utilise également la sortie générée que l'on passe à un autre programme : Yacc.\\
+	Lex est un programme qui permet de reconnaître des tokens qui sont des éléments d'une chaîne de caractères. Cela à l'aide de règles lexicales que l'on lui passe en entrée.\\
+	Dans notre cas, nous utilisons Lex pour reconnaître les éléments que l'on écrit, afin de colorier ces derniers en fonction de leur rôle (identifiant, entier, déclaration...). Nous utilisons la sortie générée en la passant à un autre programme : Yacc.\\
 	
-	Yacc permet de générer un arbre syntaxique abstrait qui nous permet de vérifier que la syntaxe de notre code est correcte. Aussi, cela ne permet de proposer une complétion automatique en fonction de ce que l'on écrit.\\
-	On doit également lui passer des règles, qui sont d'ordre grammaticales.
+	Yacc permet de générer un arbre syntaxique abstrait qui nous permet de vérifier que la syntaxe de notre code est correcte. Aussi, cela permet de proposer une complétion automatique en fonction de ce que l'on écrit.\\
+	Nous devons également lui passer des règles, qui sont d'ordre grammaticales.
 	
 	\begin{figure}[h!]
 		\begin{center}
 			\includegraphics[scale=0.7]{images/schema_lex_yacc}
-			\caption{Shéma résumant le foncionnement de Lex et Yacc.}
+			\caption{Schéma résumant le fonctionnement de Lex et Yacc.}
 		\end{center}
 	\end{figure}
 	
@@ -116,21 +116,21 @@
 	\subsection{Module graphique}
 	
 		On retrouve dans ce module tout ce qui est relatif au GUI (l'interface graphique).\\
-		C'est là qu'est créée la fenêtre principale de l'application. Où l'on va pouvoir créer, ouvrir, sauvegarder des fichiers et des projets.\\
+		C'est là qu'est créée la fenêtre principale de l'application, où l'on va pouvoir créer, ouvrir, sauvegarder des fichiers et des projets.\\
 		
 		On y retrouve donc ce qui est nécessaire pour :
 		
 		\begin{itemize}
 		
-			\item Créer une zone de texte. Nous utilisons pour cela l'objet QTextEdit de QT, qui est un widget permettant d'avoir une zone de texte. Nous nous en servons comme fenêtre d'éditeur, c'est donc ici que l'on pourra coder.\\
-			Le thème de l'application, c'est à dire la couleur de fond et de la police ainsi que la police utilisée sont relatif au QTextEdit. C'est également là que la couleur des élément (tokens) sera modifiée par Lex en fonction de leur rôle.\\
+			\item Créer une zone de texte. Nous utilisons pour cela l'objet QTextEdit de QT, qui est un widget permettant d'avoir une zone de texte. Nous nous en servons comme fenêtre d'éditeur, c'est donc ici que l'on pourra écrire du code.\\
+			Le thème de l'application, (c'est à dire la couleur de fond et de la police ainsi que cette dernière) est relatif au QTextEdit. C'est également là que la couleur des éléments (tokens) sera modifiée par Lex en fonction de leur rôle.\\
 			\begin{center}
 				\includegraphics[scale=1]{images/QTextEdit}
 				\vspace{0.5cm}
 			\end{center}
 			
-			\item Créer plusieurs onglets de code. C'est un QTabWidget que nous utilisons pour cela, il va en fait créer plusieurs QTextEdit (ou en supprimer si on ferme l'onglet), et possède des fonctions et raccourcis pour naviguer entre tous. \\
-			Si on a aucun onglet d'ouvert, on a le logo de notre groupe qui est affiché à la place.\\
+			\item Créer plusieurs onglets de code. C'est un QTabWidget que nous utilisons pour cela. Il va créer plusieurs QTextEdit (ou en supprimer si on ferme l'onglet), et possède des fonctions et raccourcis pour naviguer entre tous. \\
+			Si aucun onglet n'est ouvert, le logo de notre groupe est affiché à la place.\\
 			\begin{center}
 				\includegraphics[scale=0.6]{images/QTabWidget}
 				\vspace{0.5cm}
@@ -142,14 +142,14 @@
 				\vspace{0.5cm}
 			\end{center}
 			
-			\item Mettre en place le navigateur de fichiers et de projets. On utilise un QTreeView qui nous permet d'afficher l'arborescence des fichiers et projets. C'est ce que l'on utilise pour ouvrir et naviguer dans les projets ouverts.\\
+			\item Mettre en place le navigateur de fichiers et de projets. Nous utilisons un QTreeView qui nous permet d'afficher l'arborescence des fichiers et projets. C'est ce que l'on utilise pour ouvrir et naviguer dans les projets ouverts.\\
 			\begin{center}
 				\includegraphics[scale=0.6]{images/QTreeView}
 				\vspace{0.6cm}
 			\end{center}
 			
-			\item Modifier la taille du navigateur de fichier/de l'éditeur de code. Pour cela, on utilise un QSplitter.\\ 
-			Cela peut permettre, en fonction de la taille du projet et des répertoires imbriqués dans d'autres, de visualiser complètement les fichiers. Au on contraire, masquer le navigateur de fichier pour avoir une zone de code plus grande.\\
+			\item Modifier la taille du navigateur de fichier/de l'éditeur de code. Pour cela, nous utilisons un QSplitter.\\ 
+			Cela peut permettre, en fonction de la taille du projet et des répertoires imbriqués dans d'autres, de visualiser complètement les fichiers. Au contraire, on peut réduire le navigateur de fichier pour avoir une zone de code plus grande.\\
 			
 			\begin{center}
 				\includegraphics[scale=0.6]{images/QSplitter_1}
@@ -161,7 +161,7 @@
 				\vspace{0.6cm}
 			\end{center}
 			
-			\item Créer la fenêtre principale. On utilise un QWidget, qui est en fait une sorte de parent de tous les objets cités ci-dessus. C'est donc ici que l'on regroupe tout pour mettre en commun afin de faire un affichage propre.
+			\item Créer la fenêtre principale. Nous utilisons un QWidget, qui est en fait une sorte de parent de tous les objets cités ci-dessus. C'est donc ici que l'on met tout en commun afin de faire un affichage propre.
 			\begin{center}
 				\includegraphics[scale=0.3]{images/QWidget}
 				\vspace{0.6cm}
@@ -169,7 +169,7 @@
 			
 		\end{itemize}
 		
-		Ce module est le plus imposant car la création d'un interface grafique nécessite beaucoup de lignes de codes.
+		!!! PAS VRAIMENT NÉCESSAIRE !!! Ce module est le plus imposant car la création d'un interface graphique nécessite beaucoup de lignes de codes.
 		
 		\subsection{Module gestion de projets}
 			--> Déplacer les fonctions relatives dans un autre module que GUI
