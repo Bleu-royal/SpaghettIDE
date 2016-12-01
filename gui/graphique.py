@@ -444,9 +444,9 @@ class Fenetre(QWidget):
         if self.project_path != "":
             if not chemin:
                 chemin = QFileDialog.getOpenFileName(self, 'Ouvrir un fichier', self.project_path, "Fichier C (*.c) ;; Fichier H (*.h)")[0]
-            print("--%s--" % self.project_path, "--%s--" % chemin, sep="\n")
             if self.project_path in chemin:
-                print("ici")
+                # print("ici")
+                pass
             if chemin != "" and self.project_path in chemin:
                 if not self.deja_ouvert(chemin):
                     title = chemin.split("/")[-1]
@@ -520,4 +520,12 @@ class Fenetre(QWidget):
         Ferme un projet
         :rtype: None
         """
+
+        self.tab_widget.clear()
         self.project_path = ""
+        self.docs = []
+        self.codes = []
+        self.highlighters = []
+
+
+
