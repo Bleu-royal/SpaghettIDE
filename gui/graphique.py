@@ -1,6 +1,8 @@
 # Module relatif à l'interface graphique
 
 import sys,os
+from datetime import datetime
+
 from PySide.QtGui import *
 from PySide.QtCore import *
 
@@ -201,6 +203,12 @@ class TreeView(QTreeView):
         self.model.setReadOnly(False)
         self.setRootIndex(self.model.index(self.fenetre.workplace_path))
 
+        self.cacher_pas_projet()
+
+    def cacher_pas_projet(self):
+
+        pass
+
     def mouseDoubleClickEvent(self, event):
         """
         Lorsque l'on double-clique sur le navigateur, on ouvre soit un projet, soit un document dans un projet.
@@ -209,7 +217,8 @@ class TreeView(QTreeView):
         :rtype: None
         """
         name = self.model.fileName(self.currentIndex())
-        if QDir(self.fenetre.workplace_path + name).exists():
+        check_file = QFileInfo(self.fenetre.workplace_path + name + "/.conf")
+        if QDir(self.fenetre.workplace_path + name).exists() and check_file.exists() and check_file.isFile():
             self.fenetre.project_path = self.fenetre.workplace_path + name
             self.fenetre.statusbar.showMessage("Le projet " + name + " a bien été ouvert.", 2000)
         else:
@@ -415,6 +424,14 @@ class Fenetre(QWidget):
         else:
             QMessageBox.critical(self, "Aucun projet ouvert", "Veuillez ouvrir ou créer un projet")
 
+    def deja_ouvert(self, chemin):
+
+        for doc in self.docs:
+            if doc.chemin_enregistrement == chemin:
+                return True
+
+        return False
+
     def open(self, chemin=False):
         """
         Fonction d'ouverture d'un fichier reliée au sous-menu "Ouvrir un fichier"
@@ -431,11 +448,14 @@ class Fenetre(QWidget):
             if self.project_path in chemin:
                 print("ici")
             if chemin != "" and self.project_path in chemin:
-                title = chemin.split("/")[-1]
-                self.addCode(title)
-                self.statusbar.showMessage("Ouverture de "+title, 2000)  # Message de status
-                self.docs += [Document(self.codes[-1], chemin, True)]
-                self.tab_widget.setCurrentIndex(len(self.codes) - 1)
+                if not self.deja_ouvert(chemin):
+                    title = chemin.split("/")[-1]
+                    self.addCode(title)
+                    self.statusbar.showMessage("Ouverture de "+title, 2000)  # Message de status
+                    self.docs += [Document(self.codes[-1], chemin, True)]
+                    self.tab_widget.setCurrentIndex(len(self.codes) - 1)
+                else:
+                    self.statusbar.showMessage("Impossible d'ouvrir ce document car il est déjà ouvert.", 2000)
             else:
                 self.statusbar.showMessage("Impossible d'ouvrir ce document car il ne fait pas partit du projet courrant.", 2000)
         else:
@@ -462,13 +482,23 @@ class Fenetre(QWidget):
         :rtype: None
         """
         project_name = QInputDialog.getText(self, 'Choix du nom du projet', 'Entrez un nom de projet :')
+
         while (project_name[0] == '' or "/" in project_name[0]) and project_name[1]:
             QMessageBox.critical(self, "Erreur de syntaxe", "Le nom de projet n'est pas valide (veuillez éviter /)")
             project_name = QInputDialog.getText(self, 'Choix du nom du projet', 'Entrez un nom de projet :')
 
+
         if not QDir(self.workplace_path + project_name[0]).exists():
             QDir(self.workplace_path).mkpath(project_name[0])
-        elif self.project_path[1]:
+
+            date = datetime.now()
+
+            fichier = open("%s/.conf"%(QDir(self.workplace_path + project_name[0]).path()), "w")
+            fichier.write("Created : %s/%s/%s"%(date.day,date.month,date.year))
+            fichier.close()
+
+        # elif self.project_path[1]:
+        elif project_name[1]:
             QMessageBox.critical(self, "Le projet existe déjà", "Veuillez entrer un autre nom de projet")
             self.new_project()
 
@@ -479,8 +509,10 @@ class Fenetre(QWidget):
         """
         projet = os.listdir(self.workplace_path)
         for e in projet:
-            if not os.path.isdir(self.workplace_path + e):
+            check_file = QFileInfo(self.workplace_path + e + "/.conf")
+            if not os.path.isdir(self.workplace_path + e) or not check_file.exists() and not check_file.isFile():
                 projet.remove(e)
+
         print(projet)
 
     def close_project(self):
