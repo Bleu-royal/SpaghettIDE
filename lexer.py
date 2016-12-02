@@ -541,6 +541,7 @@ def p_type_specifier(p):
                     | SHORT
                     | INT
                     | LONG
+                    | BOOL
                     | FLOAT
                     | DOUBLE
                     | SIGNED
