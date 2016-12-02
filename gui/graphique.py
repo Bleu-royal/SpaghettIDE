@@ -487,7 +487,6 @@ class Fenetre(QWidget):
             QMessageBox.critical(self, "Erreur de syntaxe", "Le nom de projet n'est pas valide (veuillez éviter /)")
             project_name = QInputDialog.getText(self, 'Choix du nom du projet', 'Entrez un nom de projet :')
 
-
         if not QDir(self.workplace_path + project_name[0]).exists():
             QDir(self.workplace_path).mkpath(project_name[0])
 
