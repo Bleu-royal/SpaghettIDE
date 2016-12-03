@@ -110,7 +110,7 @@ class TabWidget(QTabWidget):
             self.parent.docs.remove(doc)
             self.parent.codes.remove(code)
 
-            self.parent.statusbar.showMessage("Fermeture de l'onglet courrant.", 2000)
+            self.parent.statusbar.showMessage("Fermeture de l'onglet courant.", 2000)
 
     def next_tab(self):
         """
@@ -286,21 +286,27 @@ class MenuBar(QMenuBar):
         open_fic_action = MyAction(parent, "&Ouvrir", "Ouvrir un fichier", parent.open, "Ctrl+O")
         # Sauvegarder le fichier courant
         sauv_fic_action = MyAction(parent, "&Sauvegarder", "Sauvegarder le fichier courant", parent.save, "Ctrl+S")
+
+        #À Propos de Cthulhu
+        apropos_ide_action = MyAction(parent, "&À Propos", "À propos de Cthulhu", parent.a_propos)
         # Fermer l'IDE
-        exit_ide_action = MyAction(parent, "&Fermer", "Quitter l'application", parent.quit_func, "Esc")
+        exit_ide_action = MyAction(parent, "&Quitter", "Quitter l'application", parent.quit_func, "Esc")
 
         # Menu Fichier et ses sous-menus
         fichier_menu = self.addMenu("&Fichier")
         fichier_menu.addAction(new_fic_action)
         fichier_menu.addAction(open_fic_action)
         fichier_menu.addAction(sauv_fic_action)
-        fichier_menu.addSeparator()
-        fichier_menu.addAction(exit_ide_action)
         # Menu Projet et ses sous-menus
         projet_menu = self.addMenu("&Projet")
         projet_menu.addAction(new_project_action)
         projet_menu.addAction(open_project_action)
         projet_menu.addAction(exit_project_action)
+        # Menu Cthulhu
+        cthulhu_menu = self.addMenu("&Cthulhu")
+        cthulhu_menu.addAction(apropos_ide_action)
+        cthulhu_menu.addAction(exit_ide_action)
+        
 
 
 class Fenetre(QWidget):
@@ -372,7 +378,7 @@ class Fenetre(QWidget):
         """
         self.statusbar.showMessage("Fermeture...")  # Message de status
         box = QMessageBox()
-        box.setText("Voulez-vous vraiment fermer l'IDE ?")
+        box.setText("Voulez-vous vraiment quitter l'IDE ?")
         box.setStandardButtons(QMessageBox.Cancel | QMessageBox.Close)
         box.setDefaultButton(QMessageBox.Close)
         box.setEscapeButton(QMessageBox.Cancel)
@@ -461,6 +467,12 @@ class Fenetre(QWidget):
         else:
             self.statusbar.showMessage("Aucun projet ouvert, veuillez ouvrir ou créer un projet.", 2000)
 
+    def close(self):
+        pass
+
+    def delete(self):
+        pass
+
     def addCode(self, title):
         """
         Fonction qui se charge d'ajouter à la liste des codes ouverts une nouvelle instance de la class Editeur et de créer un nouvel onglet
@@ -525,6 +537,17 @@ class Fenetre(QWidget):
         self.docs = []
         self.codes = []
         self.highlighters = []
+
+    def delete_project(self):
+        pass
+
+    def a_propos(self):
+        """
+        Donne des informations sur l'IDE
+        :rtype: None
+        """
+        QMessageBox.about(self, "À propos de Cthulhu", "Il s'agit d'un IDE avec un éditeur de texte pour du C gérant l'auto-complétion (en utilisant un arbre préfixe et la liste des classes), l'indentation automatique, la reconnaissance des balises et la coloration des ces dernières grâce à l'analyseur lexicale LEX et l'analyseur syntaxique YACC. L'IDE est en plusieurs langues. Il est possible de créer un ou plusieurs projet(s) ainsi donc qu'un ou plusieurs fichier(s) C ou H en tant que contenu, de sauvegarder le travail ainsi effectué et d'ouvrir un projet et un fichier C ou H. On peut ouvrir et/ou créer plusieurs fichiers C ou H avec une navigation par onglets avec le nom du ou des fichier(s). Au niveau de l'interface graphique, nous retrouvons un navigateur de fichier, un compilateur, des boutons, l'éditeur de texte, un menu de navigation ainsi qu'une barre d'état. Notre IDE a pour nom Cthulhu et a un logo composé d'une pieuvre avec une ancre !")
+
 
 
 
