@@ -1,3 +1,5 @@
+from gui.graphique import *
+
 def new(self):
     """
     Fonction de création de nouveau fichier reliée au sous-menu "Nouveau".
@@ -6,6 +8,9 @@ def new(self):
 
     :rtype: None
     """
+
+    Fenetre.init()
+
     new = "Sans nom"+str(len(self.docs)+1)
     self.statusbar.showMessage(("Nouveau fichier " + new), 2000)
     self.addCode(new)
@@ -20,6 +25,9 @@ def save(self):
 
     :return:
     """
+
+    Fenetre.init()
+
     if self.project_path != "":
         idx = self.tab_widget.currentIndex()
         if idx != -1:
@@ -41,6 +49,8 @@ def save(self):
 
 def deja_ouvert(self, chemin):
 
+    Fenetre.init()
+
     for doc in self.docs:
         if doc.chemin_enregistrement == chemin:
             return True
@@ -56,6 +66,9 @@ def open_file(self, chemin=False):
     :type chemin: str
     :rtype: None
     """
+
+    Fenetre.init()
+
     if self.project_path != "":
         if not chemin:
             chemin = QFileDialog.getOpenFileName(self, 'Ouvrir un fichier', self.project_path, "Fichier C (*.c) ;; Fichier H (*.h)")[0]
@@ -77,7 +90,13 @@ def open_file(self, chemin=False):
         self.statusbar.showMessage("Aucun projet ouvert, veuillez ouvrir ou créer un projet.", 2000)
 
 def close(self):
+
+    Fenetre.init()
+
     pass
 
 def delete(self):
+
+    Fenetre.init()
+    
     pass

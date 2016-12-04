@@ -1,3 +1,5 @@
+from gui.graphique import *
+
 # Module relatif au traitement des documents (noms, extension, sauvegarde, chargement...)
 
 class Document:
@@ -38,6 +40,9 @@ def close_current_tab(self):
 
     :rtype: None
     """
+
+    TabWidget.init()
+
     if len(self.parent.codes) != 0:  # On vérifie que la liste d'onglet n'est pas vide.
         idx = self.currentIndex()
 
@@ -58,6 +63,9 @@ def open_document(self):
 
     :rtype: None
     """
+
+    TreeView.init()
+    
     path = self.model.filePath(self.currentIndex())
     name = self.model.fileName(self.currentIndex())
     ext = name.split(".")[-1]

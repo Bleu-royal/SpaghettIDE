@@ -5,6 +5,9 @@ def new_project(self):
 
     :rtype: None
     """
+
+    Fenetre.init()
+
     project_name = QInputDialog.getText(self, 'Choix du nom du projet', 'Entrez un nom de projet :')
 
     while (project_name[0] == '' or "/" in project_name[0]) and project_name[1]:
@@ -30,6 +33,9 @@ def open_project(self):
     Ouvre un projet
     :rtype: None
     """
+
+    Fenetre.init()
+
     projet = os.listdir(self.workplace_path)
     for e in projet:
         check_file = QFileInfo(self.workplace_path + e + "/.conf")
@@ -44,6 +50,8 @@ def close_project(self):
     :rtype: None
     """
 
+    Fenetre.init()
+
     self.tab_widget.clear()
     self.project_path = ""
     self.docs = []
@@ -51,4 +59,7 @@ def close_project(self):
     self.highlighters = []
 
 def delete_project(self):
+
+    Fenetre.init()
+    
     pass

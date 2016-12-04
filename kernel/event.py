@@ -1,11 +1,13 @@
+from gui.graphique import *
+
 def keyPressEvent(self, event):
 
-    QTextEdit.keyPressEvent(self, event)
+        Editeur.__init__()
 
-    if event.key() == 16777220:
-        yaccing(self.toPlainText())
+        QTextEdit.keyPressEvent(self, event)
 
-
+        if event.key() == 16777220:
+            yaccing(self.toPlainText())
 
 def mousePressEvent(self, event):
     """
@@ -14,9 +16,11 @@ def mousePressEvent(self, event):
     :param event: Contient les positions x et y de l'endroit où on a cliqué. NON UTILISÉ ICI.
     :rtype: None
     """
+
+    TabWidget.__init__()
+
     if len(self.parent.docs) == 0:
         self.parent.new()
-
 
 
 def mouseDoubleClickEvent(self, event):
@@ -26,6 +30,9 @@ def mouseDoubleClickEvent(self, event):
     :param event: Contient les positions x et y de l'endroit où on a cliqué. NON UTILISÉ ICI.
     :rtype: None
     """
+
+    TreeView.init()
+
     name = self.model.fileName(self.currentIndex())
     check_file = QFileInfo(self.fenetre.workplace_path + name + "/.conf")
     if QDir(self.fenetre.workplace_path + name).exists() and check_file.exists() and check_file.isFile():
@@ -43,6 +50,9 @@ def keyPressEvent(self, event):
     Contient les positions x et y de l'endroit où on a cliqué. NON UTILISÉ ICI.
     :rtype: None
     """
+
+    TreeView.init()
+
     if event.key() == 16777220:  # Référence de la touche "entrée"
         name = self.model.fileName(self.currentIndex())
         if QDir(self.fenetre.workplace_path + name).exists():
