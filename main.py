@@ -1,15 +1,9 @@
-import sys
-import os
+import sys 
+import os 
 import shutil
-from gui.graphique import *
-from kernel.bind import *
-from kernel.workplace import *
-from kernel.event import *
-from lexer import *
-from systeme.couleurs import *
-from systeme.document import *
-from systeme.fichiers import *
-from systeme.projets import *
+from gui.graphique import *  
+from kernel.bind import bind  
+from kernel.workplace import *  
 from PySide.QtGui import *
 
 app = QApplication(sys.argv)
@@ -31,7 +25,6 @@ def remove_folder(path):
             if os.path.isdir(e):
                 remove_folder(e)
 remove_folder(".")
-
 
 try:
     verif = open("lexer.py", "r")

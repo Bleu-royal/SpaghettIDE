@@ -7,6 +7,7 @@ from PySide.QtGui import *
 from PySide.QtCore import *
 
 sys.path[:0] = ["../"]
+from kernel.event import *
 from systeme.couleurs import *
 from systeme.document import *
 from systeme.fichiers import * 
@@ -306,8 +307,7 @@ class Fenetre(QWidget):
         if val == QMessageBox.Close:
             self.close()
         else:
-            self.statusbar.showMessage("... ou pas !!", 1000)  # Message de status
-
+            self.statusbar.showMessage("... ou pas !!", 1000)  # Message de status    
 
     def addCode(self, title):
         """
