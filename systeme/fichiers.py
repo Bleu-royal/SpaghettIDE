@@ -1,4 +1,9 @@
+# Module relatif à la gestion des fichiers
+
+import sys
+sys.path[:0] = ["../"]
 from gui.graphique import *
+sys.path[:0] = ["systeme"]
 
 def new(self):
     """
@@ -9,7 +14,7 @@ def new(self):
     :rtype: None
     """
 
-    Fenetre.init()
+    Fenetre.__init__()
 
     new = "Sans nom"+str(len(self.docs)+1)
     self.statusbar.showMessage(("Nouveau fichier " + new), 2000)
@@ -26,7 +31,7 @@ def save(self):
     :return:
     """
 
-    Fenetre.init()
+    Fenetre.__init__()
 
     if self.project_path != "":
         idx = self.tab_widget.currentIndex()
@@ -49,7 +54,7 @@ def save(self):
 
 def deja_ouvert(self, chemin):
 
-    Fenetre.init()
+    Fenetre.__init__()
 
     for doc in self.docs:
         if doc.chemin_enregistrement == chemin:
@@ -67,7 +72,7 @@ def open_file(self, chemin=False):
     :rtype: None
     """
 
-    Fenetre.init()
+    Fenetre.__init__()
 
     if self.project_path != "":
         if not chemin:
@@ -91,12 +96,12 @@ def open_file(self, chemin=False):
 
 def close(self):
 
-    Fenetre.init()
+    Fenetre.__init__()
 
     pass
 
 def delete(self):
 
-    Fenetre.init()
+    Fenetre.__init__()
     
     pass

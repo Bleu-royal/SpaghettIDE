@@ -1,3 +1,5 @@
+# Module relatif à l'exécution de l'IDE
+
 import sys 
 import os 
 import shutil

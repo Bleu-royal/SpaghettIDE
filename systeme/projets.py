@@ -1,3 +1,10 @@
+# Module relatif à la gestion des projets
+
+import sys
+sys.path[:0] = ["../"]
+from gui.graphique import *
+sys.path[:0] = ["systeme"]
+
 def new_project(self):
     """
     Créée un nouveau projet
@@ -6,8 +13,8 @@ def new_project(self):
     :rtype: None
     """
 
-    Fenetre.init()
-
+    Fenetre.__init__()
+    
     project_name = QInputDialog.getText(self, 'Choix du nom du projet', 'Entrez un nom de projet :')
 
     while (project_name[0] == '' or "/" in project_name[0]) and project_name[1]:
@@ -34,7 +41,7 @@ def open_project(self):
     :rtype: None
     """
 
-    Fenetre.init()
+    Fenetre.__init__()
 
     projet = os.listdir(self.workplace_path)
     for e in projet:
@@ -50,7 +57,7 @@ def close_project(self):
     :rtype: None
     """
 
-    Fenetre.init()
+    Fenetre.__init__()
 
     self.tab_widget.clear()
     self.project_path = ""
@@ -60,6 +67,6 @@ def close_project(self):
 
 def delete_project(self):
 
-    Fenetre.init()
+    Fenetre.__init__()
     
     pass

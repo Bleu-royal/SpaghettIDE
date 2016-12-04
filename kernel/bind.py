@@ -1,3 +1,5 @@
+# Module relatif aux liens entre fonction et boutons
+
 def bind(fenetre):  # binding
 	pass
 	# fenetre.bouton_sauvegarde.clicked.connect(fenetre.save)

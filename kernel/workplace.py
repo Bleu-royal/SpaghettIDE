@@ -1,3 +1,5 @@
+# Module relatif à la création du dossier Workplace à la racine de l'ordinateur
+
 from PySide.QtCore import *
 
 def create_workplace():

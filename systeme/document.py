@@ -1,6 +1,9 @@
-from gui.graphique import *
-
 # Module relatif au traitement des documents (noms, extension, sauvegarde, chargement...)
+
+import sys
+sys.path[:0] = ["../"]
+from gui.graphique import *
+sys.path[:0] = ["systeme"]
 
 class Document:
     def __init__(self, textEdit, chemin_enregistrement, ouverture=False):  # Sauvegarde des variables dans la classe
@@ -41,7 +44,7 @@ def close_current_tab(self):
     :rtype: None
     """
 
-    TabWidget.init()
+    TabWidget.__init__()
 
     if len(self.parent.codes) != 0:  # On vérifie que la liste d'onglet n'est pas vide.
         idx = self.currentIndex()
@@ -64,7 +67,7 @@ def open_document(self):
     :rtype: None
     """
 
-    TreeView.init()
+    TreeView.__init__()
     
     path = self.model.filePath(self.currentIndex())
     name = self.model.fileName(self.currentIndex())

@@ -1,4 +1,10 @@
+# Module relatif à la gestion des évènements, tels que clics de souris et pression de touches
+
+import sys
+sys.path[:0] = ["../"]
 from gui.graphique import *
+sys.path[:0] = ["kernel"]
+
 
 def keyPressEvent(self, event):
 
@@ -31,7 +37,7 @@ def mouseDoubleClickEvent(self, event):
     :rtype: None
     """
 
-    TreeView.init()
+    TreeView.__init__()
 
     name = self.model.fileName(self.currentIndex())
     check_file = QFileInfo(self.fenetre.workplace_path + name + "/.conf")
@@ -51,7 +57,7 @@ def keyPressEvent(self, event):
     :rtype: None
     """
 
-    TreeView.init()
+    TreeView.__init__()
 
     if event.key() == 16777220:  # Référence de la touche "entrée"
         name = self.model.fileName(self.currentIndex())
