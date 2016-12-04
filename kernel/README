@@ -1,1 +1,1 @@
-Le dossier KERNEL est celui qui s'occupe de relier les boutons de la GUI à leurs fonctions respectives dans le dossier SYSTEME.
+Le dossier KERNEL est celui qui s'occupe de relier les boutons de la GUI à leurs fonctions respectives dans le dossier SYSTEME. Mais il permet également de créer le dossier Workplace à la racine de l’ordinateur afin de créer des projets.

@@ -9,10 +9,11 @@ from PySide.QtCore import *
 sys.path[:0] = ["../"]
 from systeme.couleurs import *
 from systeme.document import *
+from systeme.fichiers import * 
+from systeme.projets import *
 from lexer import *
 
 sys.path[:0] = ["gui"]
-
 
 class Editeur(QTextEdit):
 
@@ -24,7 +25,7 @@ class Editeur(QTextEdit):
         Ici, on modifie ses paramètres en fonction du thème souhaité.
         :param police: Police d'écriture
         :type police: str
-        :param couleur_fond: Couleur d'arrière plan de l'éditeur (bakground)
+        :param couleur_fond: Couleur d'arrière plan de l'éditeur (background)
         :type couleur_fond: str
         :param couleur_text: Couleur du texte de base
         :type couleur_text: str
@@ -40,13 +41,6 @@ class Editeur(QTextEdit):
                            + "font-size:" + str(taille_text) + "pt; }")
 
         self.append("int main ( int argc, char** argv ){\n\n\treturn 0;\n\n}")
-
-    def keyPressEvent(self, event):
-
-        QTextEdit.keyPressEvent(self, event)
-
-        if event.key() == 16777220:
-            yaccing(self.toPlainText())
 
 
 class TabWidget(QTabWidget):
@@ -66,16 +60,16 @@ class TabWidget(QTabWidget):
         self.parent = parent
 
         shortcut_close = QShortcut(QKeySequence.Close, self)
-        shortcut_close.activated.connect(self.close_current_tab)
+        shortcut_close.activated.connect(close_current_tab)
 
         shortcut_open = QShortcut(QKeySequence.Open, self)
-        shortcut_open.activated.connect(self.parent.open)
+        shortcut_open.activated.connect(open_file)
 
         shortcut_new = QShortcut(QKeySequence.New, self)
-        shortcut_new.activated.connect(self.parent.new)
+        shortcut_new.activated.connect(new)
 
         shortcut_save = QShortcut(QKeySequence.Save, self)
-        shortcut_save.activated.connect(self.parent.save)
+        shortcut_save.activated.connect(save)
 
         shortcut_next_tab = QShortcut(QKeySequence('Alt+tab'), self)
         shortcut_next_tab.activated.connect(self.next_tab)
@@ -93,25 +87,7 @@ class TabWidget(QTabWidget):
                            "QTabBar::tab:hover{background-color:#2E2E2E; color: white;border-bottom:#2E2E2E;}"
                            "QTabBar::tab:!selected {margin-top: 5px;}")
 
-    def close_current_tab(self):
-        """
-        Fonction pour fermer l'onglet courant.
-
-        :rtype: None
-        """
-        if len(self.parent.codes) != 0:  # On vérifie que la liste d'onglet n'est pas vide.
-            idx = self.currentIndex()
-
-            self.removeTab(idx)
-
-            doc = self.parent.docs[idx]
-            code = self.parent.codes[idx]
-
-            self.parent.docs.remove(doc)
-            self.parent.codes.remove(code)
-
-            self.parent.statusbar.showMessage("Fermeture de l'onglet courant.", 2000)
-
+    
     def next_tab(self):
         """
         Afficher l'onglet suivant, relativement à la position courante.
@@ -131,16 +107,6 @@ class TabWidget(QTabWidget):
         """
         idx = self.currentIndex() - 1 if self.currentIndex() >= 1 else self.count() - 1
         self.setCurrentIndex(idx)
-
-    def mousePressEvent(self, event):
-        """
-        On créée un nouvel onglet de code lorsqu'on double-clique sur la page vide (si on a pas d'onglet déjà ouvert).
-
-        :param event: Contient les positions x et y de l'endroit où on a cliqué. NON UTILISÉ ICI.
-        :rtype: None
-        """
-        if len(self.parent.docs) == 0:
-            self.parent.new()
 
 
 class MyAction(QAction):
@@ -209,52 +175,6 @@ class TreeView(QTreeView):
 
         pass
 
-    def mouseDoubleClickEvent(self, event):
-        """
-        Lorsque l'on double-clique sur le navigateur, on ouvre soit un projet, soit un document dans un projet.
-
-        :param event: Contient les positions x et y de l'endroit où on a cliqué. NON UTILISÉ ICI.
-        :rtype: None
-        """
-        name = self.model.fileName(self.currentIndex())
-        check_file = QFileInfo(self.fenetre.workplace_path + name + "/.conf")
-        if QDir(self.fenetre.workplace_path + name).exists() and check_file.exists() and check_file.isFile():
-            self.fenetre.project_path = self.fenetre.workplace_path + name
-            self.fenetre.statusbar.showMessage("Le projet " + name + " a bien été ouvert.", 2000)
-        else:
-            self.open()
-
-    def keyPressEvent(self, event):
-        """
-        Bind de la touche entrée.
-        Lorsque l'on sélectionne un document et que l'on appuie sur entrée, on ouvre le document ou le projet sélectionné.
-
-        Contient les positions x et y de l'endroit où on a cliqué. NON UTILISÉ ICI.
-        :rtype: None
-        """
-        if event.key() == 16777220:  # Référence de la touche "entrée"
-            name = self.model.fileName(self.currentIndex())
-            if QDir(self.fenetre.workplace_path + name).exists():
-                self.fenetre.project_path = self.fenetre.workplace_path + name
-                self.fenetre.statusbar.showMessage("Le projet " + name + " a bien été ouvert.", 2000)
-            else:
-                self.open()
-        else:
-            QTreeView.keyPressEvent(self, event)
-
-    def open(self):
-        """
-        Ouvre un document si son extension est valide.
-        Appelle la fonction parent pour ouvrir un fichier.
-
-        :rtype: None
-        """
-        path = self.model.filePath(self.currentIndex())
-        name = self.model.fileName(self.currentIndex())
-        ext = name.split(".")[-1]
-        if ext in ("c", "h") and self.fenetre.project_path in path and self.fenetre.project_path != "":
-            self.fenetre.open(path)
-
 
 class MenuBar(QMenuBar):
 
@@ -272,20 +192,19 @@ class MenuBar(QMenuBar):
 
         ## Menus
 
-        # Nouveau Projet (à relier avec de vraies fonctions qui font des trucs de fifous)
-        # et ptet changer les raccourcis quand on aura de vraies fonctions.
-        new_project_action = MyAction(parent, "&Nouveau Projet", "Nouveau projet", parent.new_project, "Ctrl+M")
+        # Nouveau Projet
+        new_project_action = MyAction(parent, "&Nouveau Projet", "Nouveau projet", new_project, "Ctrl+M")
         # Ouvrir un projet déjà existant
-        open_project_action = MyAction(parent, "&Ouvrir Projet", "Ouvrir un projet", parent.open_project, "Ctrl+L")
+        open_project_action = MyAction(parent, "&Ouvrir Projet", "Ouvrir un projet", open_project, "Ctrl+L")
         # Fermer le projet
-        exit_project_action = MyAction(parent, "&Fermer Projet", "Fermer le projet", parent.close_project, "Ctrl+K")
+        exit_project_action = MyAction(parent, "&Fermer Projet", "Fermer le projet", close_project, "Ctrl+K")
 
         # Nouveau Fichier
-        new_fic_action = MyAction(parent, "&Nouveau", "Nouveau fichier", parent.new, "Ctrl+N")
+        new_fic_action = MyAction(parent, "&Nouveau", "Nouveau fichier", new, "Ctrl+N")
         # Ouvrir un fichier déjà existant
-        open_fic_action = MyAction(parent, "&Ouvrir", "Ouvrir un fichier", parent.open, "Ctrl+O")
+        open_fic_action = MyAction(parent, "&Ouvrir", "Ouvrir un fichier", open_file, "Ctrl+O")
         # Sauvegarder le fichier courant
-        sauv_fic_action = MyAction(parent, "&Sauvegarder", "Sauvegarder le fichier courant", parent.save, "Ctrl+S")
+        sauv_fic_action = MyAction(parent, "&Sauvegarder", "Sauvegarder le fichier courant", save, "Ctrl+S")
 
         #À Propos de Cthulhu
         apropos_ide_action = MyAction(parent, "&À Propos", "À propos de Cthulhu", parent.a_propos)
@@ -389,89 +308,6 @@ class Fenetre(QWidget):
         else:
             self.statusbar.showMessage("... ou pas !!", 1000)  # Message de status
 
-    def new(self):
-        """
-        Fonction de création de nouveau fichier reliée au sous-menu "Nouveau".
-        On ajoute ici un nouvel onglet à nos codes déjà ouverts ( ou on créée un premier onglet ) qui s'appelle par défaut "Sans nom" + le numéro courant dans la liste des onglets.
-        On appelle la fonction self.addCode()
-
-        :rtype: None
-        """
-        new = "Sans nom"+str(len(self.docs)+1)
-        self.statusbar.showMessage(("Nouveau fichier " + new), 2000)
-        self.addCode(new)
-        self.docs += [Document(self.codes[-1], "")]
-        self.tab_widget.setCurrentIndex(len(self.codes) - 1)
-
-    def save(self):
-        """
-        Fonction de sauvegarde reliée au sous-menu "Sauvergarder".
-        On sauvegarde un fichier en l'enregistrant dans un projet (ou non).
-        On ouvre une QFileDialog qui affiche le navigateur du système habituel pour enregistrer des documents.
-
-        :return:
-        """
-        if self.project_path != "":
-            idx = self.tab_widget.currentIndex()
-            if idx != -1:
-                if self.docs[idx].chemin_enregistrement == "":
-                    chemin = \
-                        QFileDialog.getSaveFileName(self, 'Sauvegarder un fichier', self.project_path, "Fichier C (*.c) ;; Fichier H (*.h)")[0]
-                    if chemin != "" and self.project_path in chemin:
-                        self.docs[idx].set_chemin_enregistrement(chemin)
-                        self.docs[idx].sauvegarde_document(chemin)
-                        self.tab_widget.setTabText(idx, self.docs[idx].nom)
-
-                        self.statusbar.showMessage(self.docs[idx].nom+" a bien été sauvegardé.", 2000)  # Message de status
-                    else:
-                        QMessageBox.critical(self, "Impossible de sauvegarder ce document", "Ce document ne fais pas partie du projet courant")
-                else:
-                    self.docs[idx].sauvegarde_document()
-        else:
-            QMessageBox.critical(self, "Aucun projet ouvert", "Veuillez ouvrir ou créer un projet")
-
-    def deja_ouvert(self, chemin):
-
-        for doc in self.docs:
-            if doc.chemin_enregistrement == chemin:
-                return True
-
-        return False
-
-    def open(self, chemin=False):
-        """
-        Fonction d'ouverture d'un fichier reliée au sous-menu "Ouvrir un fichier"
-        On utilise une QFileDialog qui affiche le navigateur du système habituel pour ouvrir des documents.
-
-        :param chemin: N'existe pas si on appelle via le menu ou le raccourcis clavier. Il est spécifié si il appartient au projet courant et que l'on souhaite l'ouvrir sans passer par la fenetre de dialogue.
-        :type chemin: str
-        :rtype: None
-        """
-        if self.project_path != "":
-            if not chemin:
-                chemin = QFileDialog.getOpenFileName(self, 'Ouvrir un fichier', self.project_path, "Fichier C (*.c) ;; Fichier H (*.h)")[0]
-            if self.project_path in chemin:
-                # print("ici")
-                pass
-            if chemin != "" and self.project_path in chemin:
-                if not self.deja_ouvert(chemin):
-                    title = chemin.split("/")[-1]
-                    self.addCode(title)
-                    self.statusbar.showMessage("Ouverture de "+title, 2000)  # Message de status
-                    self.docs += [Document(self.codes[-1], chemin, True)]
-                    self.tab_widget.setCurrentIndex(len(self.codes) - 1)
-                else:
-                    self.statusbar.showMessage("Impossible d'ouvrir ce document car il est déjà ouvert.", 2000)
-            else:
-                self.statusbar.showMessage("Impossible d'ouvrir ce document car il ne fait pas partit du projet courrant.", 2000)
-        else:
-            self.statusbar.showMessage("Aucun projet ouvert, veuillez ouvrir ou créer un projet.", 2000)
-
-    def close(self):
-        pass
-
-    def delete(self):
-        pass
 
     def addCode(self, title):
         """
@@ -486,68 +322,9 @@ class Fenetre(QWidget):
         self.tab_widget.addTab(self.codes[-1], title)
         self.tab_widget.setCurrentIndex(len(self.codes) - 1)
 
-    def new_project(self):
-        """
-        Créée un nouveau projet
-        Le projet créé doit avoir un nom différent d'un projet déjà existant, et ne dois pas comporter de "/" dans son nom.
-
-        :rtype: None
-        """
-        project_name = QInputDialog.getText(self, 'Choix du nom du projet', 'Entrez un nom de projet :')
-
-        while (project_name[0] == '' or "/" in project_name[0]) and project_name[1]:
-            QMessageBox.critical(self, "Erreur de syntaxe", "Le nom de projet n'est pas valide (veuillez éviter /)")
-            project_name = QInputDialog.getText(self, 'Choix du nom du projet', 'Entrez un nom de projet :')
-
-        if not QDir(self.workplace_path + project_name[0]).exists():
-            QDir(self.workplace_path).mkpath(project_name[0])
-
-            date = datetime.now()
-
-            fichier = open("%s/.conf"%(QDir(self.workplace_path + project_name[0]).path()), "w")
-            fichier.write("Created : %s/%s/%s"%(date.day,date.month,date.year))
-            fichier.close()
-
-        # elif self.project_path[1]:
-        elif project_name[1]:
-            QMessageBox.critical(self, "Le projet existe déjà", "Veuillez entrer un autre nom de projet")
-            self.new_project()
-
-    def open_project(self):
-        """
-        Ouvre un projet
-        :rtype: None
-        """
-        projet = os.listdir(self.workplace_path)
-        for e in projet:
-            check_file = QFileInfo(self.workplace_path + e + "/.conf")
-            if not os.path.isdir(self.workplace_path + e) or not check_file.exists() and not check_file.isFile():
-                projet.remove(e)
-
-        print(projet)
-
-    def close_project(self):
-        """
-        Ferme un projet
-        :rtype: None
-        """
-
-        self.tab_widget.clear()
-        self.project_path = ""
-        self.docs = []
-        self.codes = []
-        self.highlighters = []
-
-    def delete_project(self):
-        pass
-
     def a_propos(self):
         """
         Donne des informations sur l'IDE
         :rtype: None
         """
         QMessageBox.about(self, "À propos de Cthulhu", "Il s'agit d'un IDE avec un éditeur de texte pour du C gérant l'auto-complétion (en utilisant un arbre préfixe et la liste des classes), l'indentation automatique, la reconnaissance des balises et la coloration des ces dernières grâce à l'analyseur lexicale LEX et l'analyseur syntaxique YACC. L'IDE est en plusieurs langues. Il est possible de créer un ou plusieurs projet(s) ainsi donc qu'un ou plusieurs fichier(s) C ou H en tant que contenu, de sauvegarder le travail ainsi effectué et d'ouvrir un projet et un fichier C ou H. On peut ouvrir et/ou créer plusieurs fichiers C ou H avec une navigation par onglets avec le nom du ou des fichier(s). Au niveau de l'interface graphique, nous retrouvons un navigateur de fichier, un compilateur, des boutons, l'éditeur de texte, un menu de navigation ainsi qu'une barre d'état. Notre IDE a pour nom Cthulhu et a un logo composé d'une pieuvre avec une ancre !")
-
-
-
-

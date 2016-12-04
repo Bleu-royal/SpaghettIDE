@@ -1,6 +1,5 @@
 # Module relatif au traitement des documents (noms, extension, sauvegarde, chargement...)
 
-
 class Document:
     def __init__(self, textEdit, chemin_enregistrement, ouverture=False):  # Sauvegarde des variables dans la classe
 
@@ -32,3 +31,35 @@ class Document:
         self.chemin_enregistrement = value
         self.nom = self.chemin_enregistrement.split("/")[-1]
         self.extension = self.nom.split(".")[-1]
+
+def close_current_tab(self):
+    """
+    Fonction pour fermer l'onglet courant.
+
+    :rtype: None
+    """
+    if len(self.parent.codes) != 0:  # On vérifie que la liste d'onglet n'est pas vide.
+        idx = self.currentIndex()
+
+        self.removeTab(idx)
+
+        doc = self.parent.docs[idx]
+        code = self.parent.codes[idx]
+
+        self.parent.docs.remove(doc)
+        self.parent.codes.remove(code)
+
+        self.parent.statusbar.showMessage("Fermeture de l'onglet courant.", 2000)
+
+def open_document(self):
+    """
+    Ouvre un document si son extension est valide.
+    Appelle la fonction parent pour ouvrir un fichier.
+
+    :rtype: None
+    """
+    path = self.model.filePath(self.currentIndex())
+    name = self.model.fileName(self.currentIndex())
+    ext = name.split(".")[-1]
+    if ext in ("c", "h") and self.fenetre.project_path in path and self.fenetre.project_path != "":
+        self.fenetre.open(path)

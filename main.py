@@ -2,27 +2,20 @@ import sys
 import os
 import shutil
 from gui.graphique import *
-from kernel.bind import bind
+from kernel.bind import *
 from kernel.workplace import *
+from kernel.event import *
+from lexer import *
+from systeme.couleurs import *
+from systeme.document import *
+from systeme.fichiers import *
+from systeme.projets import *
 from PySide.QtGui import *
 
 app = QApplication(sys.argv)
 QResource.registerResource("./poulpe.rcc");
-"""
-opts = Options("Cthulhu (Bleu Royal)")
-
-def creer_fenetre():
-    folder_path = QFileDialog.getExistingDirectory(opts, 'Ouverture du projet')
-    if folder_path:
-        fenetre = Fenetre("Cthulhu (Bleu Royal)", folder_path)  # Creation of the main window
-        bind(fenetre)  # Connection between buttons and functions
-        opts.close()
-
-opts.button.clicked.connect(creer_fenetre)
-"""
 
 # Fonction permettant de cacher les dossiers __pycache__ et leur contenu en les supprimant à l'exécution du programme
-
 
 def remove_folder(path):
     """
