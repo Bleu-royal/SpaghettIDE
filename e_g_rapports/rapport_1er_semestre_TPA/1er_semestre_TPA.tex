@@ -115,8 +115,9 @@
 		Les différents modules sont répartis par thèmes. Nous avons :
 		\begin{itemize}
 			\item Un module pour l'interface graphique
-			\item Un module pour la gestion des projets
+			\item Un module pour la gestion des évènements
 			\item Un module pour la gestion des fichiers
+			\item Un module pour la gestion des projets
 			\item Un module pour la coloration syntaxique (avec Lex)
 		\end{itemize}
 	
@@ -144,7 +145,7 @@
 				\includegraphics[scale=0.6]{images/QTabWidget}
 				\vspace{0.5cm}
 			\end{center}
-			Nous avons créé une classe "TabWidget" qui hérite de cet objet. Un onglet est en fait un QTextEdit, nous créons donc une nouvelle instance de notre classe "Editeur" pour chaque onglet. Le style des onglets, ainsi que le logo du groupe sont mis en places dans cette classe. On utilise pour cela des stylesheets de CSS.\\
+			Nous avons créé une classe "TabWidget" qui hérite de cet objet. Un onglet est en fait un QTextEdit, nous créons donc une nouvelle instance de notre classe "Editeur" pour chaque onglet. Le style des onglets, ainsi que le logo du groupe sont mis en place dans cette classe. On utilise pour cela des stylesheets de CSS.\\
 			
 			
 			\subsubsection*{Créer une barre de menu}
@@ -158,12 +159,12 @@
 			
 			
 			\subsubsection*{Mettre en place le navigateur de fichiers et de projets}
-			 Nous utilisons un QTreeView qui nous permet d'afficher l'arborescence des fichiers et projets. C'est ce que l'on utilise pour ouvrir et naviguer dans les projets ouverts.\\
+			 Nous utilisons un QTreeView et un modèle QFileSystemModel qui nous permet d'afficher l'arborescence des fichiers et projets. C'est ce que l'on utilise pour ouvrir et naviguer dans les projets ouverts.\\
 			\begin{center}
 				\includegraphics[scale=0.6]{images/QTreeView}
 				\vspace{0.6cm}
 			\end{center}
-			Notre classe "TreeView" hérite de QTreeView et permet d'instancier correctement le navigateur. Par exemple pour lui demander de filtrer les fichiers pour n'afficher que les fichiers en .c et .h. On créée aussi des méthodes pour pouvoir ouvrir des projets et des fichiers en double-cliquant dessus.\\			
+			Notre classe "TreeView" hérite de QTreeView et permet d'instancier correctement le navigateur. Par exemple pour lui demander de filtrer les fichiers pour n'afficher que les fichiers en .c et .h. On créée aussi des méthodes pour pouvoir ouvrir des projets et des fichiers en double-cliquant dessus mais elles sont placées dans un autre module.\\			
 			
 			
 			\subsubsection*{Modifier la taille du navigateur de fichier/de l'éditeur de code}
@@ -202,13 +203,44 @@
 					
 					================ ICI UML ================
 		
-		\subsection{Module gestion de projets}
-			--> Déplacer les fonctions relatives dans un autre module que GUI
+		\subsection{Module gestion des évènements}
+		
+		\subsection{Module gestion des fichiers}
+		
+		\subsection{Module gestion des projets}
+		
+		Dans un IDE, la présence d’un navigateur de fichier s’impose afin d’avoir un certain confort pour parcourir l’arborescence de projets constitués de programmes (de fichiers). Qui dit projets, dit dossiers, dit fichiers, il faut donc afficher ce contenu dans le navigateur de fichiers. Pour intégrer ce dernier dans notre IDE, nous avons utilisé la classe QTreeview et comme modèle QFileSystemModel et nous avons mis en place un filtre afin de naviguer seulement avec des fichiers C et H. La gestion des projets se fait avec un système Workplace, c’est-à-dire que les projets sont crées dans un dossier Workplace à la racine de l’ordinateur. Un fichier de configuration .xml est ajouté automatiquement dans chaque projet, donc dans chaque dossier, lors de sa création afin d’interdire certaines conditions, par exemple la création d’un projet en dehors de l’IDE donc directement dans le dossier Workplace. Dans l’IDE, pour ouvrir un projet et un fichier, il faut cliquer deux fois sur ce dernier ou appuyer sur entrée ou alors directement avec les boutons ouvrir du menu. Il est également possible de créer un projet ou un fichier, de le sauvegarder, de le fermer ou encore de le supprimer avec les boutons prévus à cet effet dans le menu et les raccourcis clavier. 
+Une barre d’état permet de rendre compte, via l’affichage de messages, de ces différentes situations (avec la classe QStatusBar). 
+Nous avons également créer une fonction permettant de cacher les dossiers \_\_pycache\_\_ et leur contenu en les supprimant à l'exécution du programme, notamment afin de ne pas les voir dans le navigateur de fichiers ainsi donc que dans le dossier d’exécution de l’IDE, mais maintenant que les projets et les fichiers sont créé dans le dossier Workplace, à la racine de l’ordinateur donc, il n’y a plus de dossier \_\_pycache\_\_ mais cette fonction sert donc encore pour le dossier d’exécution. Cette fonction a été réalisée en maniant des outils système tels que os et shutil.
+
+			\subsubsection*{Créer un nouveau projet}
+			Nous utilisons une fonction new\_project dans le module projets. Cette dernière s'assure que le projet créé a un nom différent d'un projet déjà existant, et qu'il ne comporte pas de "/" dans son nom. \newpage Tant que ces conditions ne sont pas respectées la fonction demande un nom de projet.\\
 			
-		\subsection{Module gestion de fichiers}	
+			\subsubsection*{Ouvrir un projet}
+			Nous utilisons une fonction open\_project dans le module projets. Cette dernière parcours tous les projets existants et si le projet sélectionné est bien un dossier (contenant un .xml), elle l'ouvre.\\
+			
+			\subsubsection*{Fermer un projet}
+			Nous utilisons une fonction close\_project dans le module projets. Cette dernière réinitialise différentes variables afin de revenir à la configuration initiale, comme si nous venions d'ouvrir l'IDE.\\
+			
+			\subsubsection*{Supprimer un projet}
+			Nous utilisons une fonction delete\_project dans le module projets. Cette dernière ....\\
+			
+		\subsection{Module coloration syntaxique}	
 	
 \section{Conclusion}
 	
 	\subsection{Améliorations}
-
+	Il nous reste à intégrer Yacc à notre IDE au second semestre. Mais nous allons aussi :
+	\begin{itemize}
+			\item Gérer la fermeture de l'IDE lorsque le document n'a pas été sauvegardé
+			\item Numéroter les lignes de l'éditeur de texte
+			\item Intégrer le nombre de lignes à la barre de statut
+			\item Intégrer des boutons de paramètres dans le menu et l'IDE afin de personnaliser ce dernier, par exemple changer le thème.
+			\item Gérer la suppression des projets et des fichiers directement depuis l'IDE
+			\item Gérer la fermeture des fichiers 
+			\item Ajouter un débugger
+			\item Ajouter un compilateur
+			\item Ajouter l'auto-complétion
+			\item Ajouter l'indentation automatique
+	\end{itemize}
 \end{document}
