@@ -1,15 +1,17 @@
 # Module relatif à l'interface graphique
 
-import sys,os
+import sys
+import os
 from datetime import datetime
+from systeme.couleurs import *
+from systeme.document import *
+from lexer import *
 
 from PySide.QtGui import *
 from PySide.QtCore import *
 
 sys.path[:0] = ["../"]
-from systeme.couleurs import *
-from systeme.document import *
-from lexer import *
+
 
 sys.path[:0] = ["gui"]
 
@@ -416,7 +418,8 @@ class Fenetre(QWidget):
             if idx != -1:
                 if self.docs[idx].chemin_enregistrement == "":
                     chemin = \
-                        QFileDialog.getSaveFileName(self, 'Sauvegarder un fichier', self.project_path, "Fichier C (*.c) ;; Fichier H (*.h)")[0]
+                        QFileDialog.getSaveFileName(self, 'Sauvegarder un fichier', self.project_path,
+                                                    "Fichier C (*.c) ;; Fichier H (*.h)")[0]
                     if chemin != "" and self.project_path in chemin:
                         self.docs[idx].set_chemin_enregistrement(chemin)
                         self.docs[idx].sauvegarde_document(chemin)
@@ -424,7 +427,8 @@ class Fenetre(QWidget):
                         # Message de statut
                         self.statusbar.showMessage(self.docs[idx].nom+" a bien été sauvegardé.", 2000)
                     else:
-                        QMessageBox.critical(self, "Impossible de sauvegarder ce document", "Ce document ne fait pas partie du projet courant")
+                        QMessageBox.critical(self, "Impossible de sauvegarder ce document", "Ce document ne fait pas "
+                                                                                            "partie du projet courant")
                 else:
                     self.docs[idx].sauvegarde_document()
         else:
@@ -450,7 +454,8 @@ class Fenetre(QWidget):
         """
         if self.project_path != "":
             if not chemin:
-                chemin = QFileDialog.getOpenFileName(self, 'Ouvrir un fichier', self.project_path, "Fichier C (*.c) ;; Fichier H (*.h)")[0]
+                chemin = QFileDialog.getOpenFileName(self, 'Ouvrir un fichier', self.project_path,
+                                                     "Fichier C (*.c) ;; Fichier H (*.h)")[0]
             if self.project_path in chemin:
                 # print("ici")
                 pass
@@ -464,7 +469,8 @@ class Fenetre(QWidget):
                 else:
                     self.statusbar.showMessage("Impossible d'ouvrir ce document car il est déjà ouvert.", 2000)
             else:
-                self.statusbar.showMessage("Impossible d'ouvrir ce document car il ne fait pas partie du projet courant.", 2000)
+                self.statusbar.showMessage("Impossible d'ouvrir ce document car il ne fait pas partie "
+                                           "du projet courant.", 2000)
         else:
             self.statusbar.showMessage("Aucun projet ouvert, veuillez ouvrir ou créer un projet.", 2000)
 
@@ -501,8 +507,8 @@ class Fenetre(QWidget):
 
             date = datetime.now()
 
-            fichier = open("%s/.conf"%(QDir(self.workplace_path + project_name[0]).path()), "w")
-            fichier.write("Created : %s/%s/%s"%(date.day,date.month,date.year))
+            fichier = open("%s/.conf" % (QDir(self.workplace_path + project_name[0]).path()), "w")
+            fichier.write("Created : %s/%s/%s" % (date.day, date.month, date.year))
             fichier.close()
 
         # elif self.project_path[1]:
@@ -534,6 +540,3 @@ class Fenetre(QWidget):
         self.docs = []
         self.codes = []
         self.highlighters = []
-
-
-
