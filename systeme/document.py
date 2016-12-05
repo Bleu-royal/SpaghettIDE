@@ -1,5 +1,6 @@
 # Module relatif au traitement des documents (noms, extension, sauvegarde, chargement...)
 
+from PySide.QtGui import *
 
 class Document:
     def __init__(self, textEdit, chemin_enregistrement, ouverture=False):  # Sauvegarde des variables dans la classe

@@ -1,6 +1,6 @@
 # Module relatif à l'interface graphique
 
-import sys,os
+import sys, os
 
 from PySide.QtGui import *
 from PySide.QtCore import *
@@ -8,7 +8,6 @@ from PySide.QtCore import *
 sys.path[:0] = ["../"]
 from systeme.couleurs import *
 from systeme.document import *
-from systeme.configuration import *
 from systeme.workplace import *
 
 from lexer import *
@@ -326,8 +325,6 @@ class Fenetre(QWidget):
         self.workplace_path = workplace_path
 
         self.project_path = ""
-
-        self.configurator = Configurator("config.json")
 
         self.gridLayout = QGridLayout()
 

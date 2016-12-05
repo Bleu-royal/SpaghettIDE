@@ -1,6 +1,7 @@
 from PySide.QtCore import *
 from PySide.QtGui import *
 from datetime import datetime
+import os
 
 def create_workplace():
     """
@@ -20,7 +21,6 @@ def newProject(parent):
     while (project_name[0] == '' or "/" in project_name[0]) and project_name[1]:
         QMessageBox.critical(parent, "Erreur de syntaxe", "Le nom de projet n'est pas valide (veuillez éviter /)")
         project_name = QInputDialog.getText(parent, 'Choix du nom du projet', 'Entrez un nom de projet :')
-
 
     if not QDir(parent.workplace_path + project_name[0]).exists():
         QDir(parent.workplace_path).mkpath(project_name[0])
