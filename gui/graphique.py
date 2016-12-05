@@ -1,7 +1,6 @@
 # Module relatif à l'interface graphique
 
 import sys,os
-from datetime import datetime
 
 from PySide.QtGui import *
 from PySide.QtCore import *
@@ -10,6 +9,7 @@ sys.path[:0] = ["../"]
 from systeme.couleurs import *
 from systeme.document import *
 from systeme.configuration import *
+from systeme.workplace import *
 
 from lexer import *
 
@@ -395,11 +395,8 @@ class Fenetre(QWidget):
 
         :rtype: None
         """
-        new = "Sans nom"+str(len(self.docs)+1)
-        self.statusbar.showMessage(("Nouveau fichier " + new), 2000)
-        self.addCode(new)
-        self.docs += [Document(self.codes[-1], "")]
-        self.tab_widget.setCurrentIndex(len(self.codes) - 1)
+        
+        newDocument(self)
 
     def save(self):
         """
@@ -409,32 +406,12 @@ class Fenetre(QWidget):
 
         :return:
         """
-        if self.project_path != "":
-            idx = self.tab_widget.currentIndex()
-            if idx != -1:
-                if self.docs[idx].chemin_enregistrement == "":
-                    chemin = \
-                        QFileDialog.getSaveFileName(self, 'Sauvegarder un fichier', self.project_path, "Fichier C (*.c) ;; Fichier H (*.h)")[0]
-                    if chemin != "" and self.project_path in chemin:
-                        self.docs[idx].set_chemin_enregistrement(chemin)
-                        self.docs[idx].sauvegarde_document(chemin)
-                        self.tab_widget.setTabText(idx, self.docs[idx].nom)
+        
+        saveDocument(self)
 
-                        self.statusbar.showMessage(self.docs[idx].nom+" a bien été sauvegardé.", 2000)  # Message de status
-                    else:
-                        QMessageBox.critical(self, "Impossible de sauvegarder ce document", "Ce document ne fais pas partie du projet courant")
-                else:
-                    self.docs[idx].sauvegarde_document()
-        else:
-            QMessageBox.critical(self, "Aucun projet ouvert", "Veuillez ouvrir ou créer un projet")
+    def dejaOuvert(self, chemin):
 
-    def deja_ouvert(self, chemin):
-
-        for doc in self.docs:
-            if doc.chemin_enregistrement == chemin:
-                return True
-
-        return False
+        return documentDejaOuvert(self, chemin)
 
     def open(self, chemin=False):
         """
@@ -445,25 +422,8 @@ class Fenetre(QWidget):
         :type chemin: str
         :rtype: None
         """
-        if self.project_path != "":
-            if not chemin:
-                chemin = QFileDialog.getOpenFileName(self, 'Ouvrir un fichier', self.project_path, "Fichier C (*.c) ;; Fichier H (*.h)")[0]
-            if self.project_path in chemin:
-                # print("ici")
-                pass
-            if chemin != "" and self.project_path in chemin:
-                if not self.deja_ouvert(chemin):
-                    title = chemin.split("/")[-1]
-                    self.addCode(title)
-                    self.statusbar.showMessage("Ouverture de "+title, 2000)  # Message de status
-                    self.docs += [Document(self.codes[-1], chemin, True)]
-                    self.tab_widget.setCurrentIndex(len(self.codes) - 1)
-                else:
-                    self.statusbar.showMessage("Impossible d'ouvrir ce document car il est déjà ouvert.", 2000)
-            else:
-                self.statusbar.showMessage("Impossible d'ouvrir ce document car il ne fait pas partit du projet courrant.", 2000)
-        else:
-            self.statusbar.showMessage("Aucun projet ouvert, veuillez ouvrir ou créer un projet.", 2000)
+
+        openDocument(self, chemin)
 
     def addCode(self, title):
         """
@@ -485,39 +445,16 @@ class Fenetre(QWidget):
 
         :rtype: None
         """
-        project_name = QInputDialog.getText(self, 'Choix du nom du projet', 'Entrez un nom de projet :')
 
-        while (project_name[0] == '' or "/" in project_name[0]) and project_name[1]:
-            QMessageBox.critical(self, "Erreur de syntaxe", "Le nom de projet n'est pas valide (veuillez éviter /)")
-            project_name = QInputDialog.getText(self, 'Choix du nom du projet', 'Entrez un nom de projet :')
-
-
-        if not QDir(self.workplace_path + project_name[0]).exists():
-            QDir(self.workplace_path).mkpath(project_name[0])
-
-            date = datetime.now()
-
-            fichier = open("%s/.conf"%(QDir(self.workplace_path + project_name[0]).path()), "w")
-            fichier.write("Created : %s/%s/%s"%(date.day,date.month,date.year))
-            fichier.close()
-
-        # elif self.project_path[1]:
-        elif project_name[1]:
-            QMessageBox.critical(self, "Le projet existe déjà", "Veuillez entrer un autre nom de projet")
-            self.new_project()
+        newProject(self)
 
     def open_project(self):
         """
         Ouvre un projet
         :rtype: None
         """
-        projet = os.listdir(self.workplace_path)
-        for e in projet:
-            check_file = QFileInfo(self.workplace_path + e + "/.conf")
-            if not os.path.isdir(self.workplace_path + e) or not check_file.exists() and not check_file.isFile():
-                projet.remove(e)
 
-        print(projet)
+        openProject(self)
 
     def close_project(self):
         """
@@ -525,11 +462,6 @@ class Fenetre(QWidget):
         :rtype: None
         """
 
-        self.tab_widget.clear()
-        self.project_path = ""
-        self.docs = []
-        self.codes = []
-        self.highlighters = []
-
+        closeProject(self)
 
 

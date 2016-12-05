@@ -3,7 +3,7 @@ import os
 import shutil
 from gui.graphique import *
 from kernel.bind import bind
-from kernel.workplace import *
+from systeme.workplace import *
 from PySide.QtGui import *
 
 app = QApplication(sys.argv)
