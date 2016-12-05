@@ -9,12 +9,14 @@ from PySide.QtCore import *
 sys.path[:0] = ["../"]
 from systeme.couleurs import *
 from systeme.document import *
+from systeme.configuration import *
+
 from lexer import *
 
 sys.path[:0] = ["gui"]
 
 
-class Editeur(QTextEdit):
+class Editeur(QPlainTextEdit):
 
     def __init__(self, police, couleur_fond, couleur_text, taille_text):
         """
@@ -32,18 +34,18 @@ class Editeur(QTextEdit):
         :type taille_text: int
         :rtype: None
         """
-        QTextEdit.__init__(self)
+        super().__init__()
 
-        self.setStyleSheet("QTextEdit { background-color:" + couleur_fond + ";"
+        self.setStyleSheet("QPlainTextEdit { background-color:" + couleur_fond + ";"
                            + "font-family:" + police + ";"
                            + "color:" + couleur_text + ";"
                            + "font-size:" + str(taille_text) + "pt; }")
 
-        self.append("int main ( int argc, char** argv ){\n\n\treturn 0;\n\n}")
+        # self.append("int main ( int argc, char** argv ){\n\n\treturn 0;\n\n}")
 
     def keyPressEvent(self, event):
 
-        QTextEdit.keyPressEvent(self, event)
+        super().keyPressEvent(event)
 
         if event.key() == 16777220:
             yaccing(self.toPlainText())
@@ -324,6 +326,8 @@ class Fenetre(QWidget):
         self.workplace_path = workplace_path
 
         self.project_path = ""
+
+        self.configurator = Configurator("config.json")
 
         self.gridLayout = QGridLayout()
 
