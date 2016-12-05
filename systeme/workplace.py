@@ -3,6 +3,7 @@ from PySide.QtGui import *
 from datetime import datetime
 import os
 
+
 def create_workplace():
     """
     Créée un répertoire vide qui va contenir les projets
@@ -15,7 +16,7 @@ def create_workplace():
         QDir(path).mkpath("workplace")
 
 
-def newProject(parent):
+def newproject(parent):
     project_name = QInputDialog.getText(parent, 'Choix du nom du projet', 'Entrez un nom de projet :')
 
     while (project_name[0] == '' or "/" in project_name[0]) and project_name[1]:
@@ -36,7 +37,8 @@ def newProject(parent):
         QMessageBox.critical(parent, "Le projet existe déjà", "Veuillez entrer un autre nom de projet")
         parent.new_project()
 
-def openProject(parent):
+
+def openproject(parent):
 
     projet = os.listdir(parent.workplace_path)
     for e in projet:
@@ -45,7 +47,7 @@ def openProject(parent):
             projet.remove(e)
 
 
-def closeProject(parent):
+def closeproject(parent):
 
     parent.tab_widget.clear()
     parent.project_path = ""
