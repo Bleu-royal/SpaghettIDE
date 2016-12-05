@@ -8,7 +8,7 @@ from PySide.QtCore import *
 sys.path[:0] = ["../"]
 from systeme.couleurs import *
 from systeme.document import *
-from systeme.configuration import *
+# from systeme.configuration import *
 from systeme.workplace import *
 
 from lexer import *
@@ -327,7 +327,7 @@ class Fenetre(QWidget):
 
         self.project_path = ""
 
-        self.configurator = Configurator("config.json")
+        # self.configurator = Configurator("config.json")
 
         self.gridLayout = QGridLayout()
 

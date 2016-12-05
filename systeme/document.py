@@ -94,3 +94,5 @@ def openDocument(parent, chemin):
             parent.statusbar.showMessage("Impossible d'ouvrir ce document car il ne fait pas partit du projet courrant.", 2000)
     else:
         parent.statusbar.showMessage("Aucun projet ouvert, veuillez ouvrir ou créer un projet.", 2000)
+
+        
