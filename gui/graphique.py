@@ -1,6 +1,6 @@
 # Module relatif à l'interface graphique
 
-import sys,os
+import sys, os
 
 from PySide.QtGui import *
 from PySide.QtCore import *
@@ -8,7 +8,10 @@ from PySide.QtCore import *
 sys.path[:0] = ["../"]
 from systeme.couleurs import *
 from systeme.document import *
+<<<<<<< HEAD
 # from systeme.configuration import *
+=======
+>>>>>>> e9b20db0d4a58660d9120d470ecf22ed8cea332e
 from systeme.workplace import *
 
 from lexer import *
@@ -327,8 +330,11 @@ class Fenetre(QWidget):
 
         self.project_path = ""
 
+<<<<<<< HEAD
         # self.configurator = Configurator("config.json")
 
+=======
+>>>>>>> e9b20db0d4a58660d9120d470ecf22ed8cea332e
         self.gridLayout = QGridLayout()
 
         # Ajout du logo pieuvre
