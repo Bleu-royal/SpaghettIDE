@@ -1,0 +1,1 @@
+Le dossier KERNEL est celui qui s'occupe de relier les boutons de la GUI à leurs fonctions respectives dans le dossier SYSTEME. Mais il permet également de gérer les évènements liés au clics de souris et aux pressions de touches.

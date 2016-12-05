@@ -39,7 +39,7 @@ class Document:
 def new_document(parent):
     new = "Sans nom"+str(len(parent.docs)+1)
     parent.statusbar.showMessage(("Nouveau fichier " + new), 2000)
-    parent.addCode(new)
+    parent.add_code(new)
     parent.docs += [Document(parent.codes[-1], "")]
     parent.tab_widget.setCurrentIndex(len(parent.codes) - 1)
 
@@ -89,7 +89,7 @@ def open_document(parent, chemin):
         if chemin != "" and parent.project_path in chemin:
             if not parent.dejaOuvert(chemin):
                 title = chemin.split("/")[-1]
-                parent.addCode(title)
+                parent.add_code(title)
                 parent.statusbar.showMessage("Ouverture de "+title, 2000)  # Message de status
                 parent.docs += [Document(parent.codes[-1], chemin, True)]
                 parent.tab_widget.setCurrentIndex(len(parent.codes) - 1)
@@ -100,3 +100,9 @@ def open_document(parent, chemin):
                                          "du projet courant.", 2000)
     else:
         parent.statusbar.showMessage("Aucun projet ouvert, veuillez ouvrir ou créer un projet.", 2000)
+
+def close_document(parent):
+    pass
+
+def delete_document(parent):
+    pass  

@@ -1,20 +1,14 @@
 # Module relatif à l'interface graphique
 
-import sys
-import os
-
+import sys, os
 from PySide.QtGui import *
 from PySide.QtCore import *
+sys.path[:0] = ["../"]
 from systeme.couleurs import *
 from systeme.document import *
 from systeme.workplace import *
-
 from lexer import *
-
-sys.path[:0] = ["../"]
-
 sys.path[:0] = ["gui"]
-
 
 class Editeur(QPlainTextEdit):
 
@@ -279,8 +273,7 @@ class MenuBar(QMenuBar):
 
         ## Menus
 
-        # Nouveau Projet (à relier avec de vraies fonctions qui font des trucs de fifous)
-        # et ptet changer les raccourcis quand on aura de vraies fonctions.
+        # Nouveau Projet
         new_project_action = MyAction(parent, "&Nouveau Projet", "Nouveau projet", parent.new_project, "Ctrl+M")
         # Ouvrir un projet déjà existant
         open_project_action = MyAction(parent, "&Ouvrir Projet", "Ouvrir un projet", parent.open_project, "Ctrl+L")
@@ -293,21 +286,26 @@ class MenuBar(QMenuBar):
         open_fic_action = MyAction(parent, "&Ouvrir", "Ouvrir un fichier", parent.open, "Ctrl+O")
         # Sauvegarder le fichier courant
         sauv_fic_action = MyAction(parent, "&Sauvegarder", "Sauvegarder le fichier courant", parent.save, "Ctrl+S")
+
+        #À Propos de Cthulhu
+        apropos_ide_action = MyAction(parent, "&À Propos", "À propos de Cthulhu", parent.a_propos)
         # Fermer l'IDE
-        exit_ide_action = MyAction(parent, "&Fermer", "Quitter l'application", parent.quit_func, "Esc")
+        exit_ide_action = MyAction(parent, "&Quitter", "Quitter l'application", parent.quit_func, "Esc")
 
         # Menu Fichier et ses sous-menus
         fichier_menu = self.addMenu("&Fichier")
         fichier_menu.addAction(new_fic_action)
         fichier_menu.addAction(open_fic_action)
         fichier_menu.addAction(sauv_fic_action)
-        fichier_menu.addSeparator()
-        fichier_menu.addAction(exit_ide_action)
         # Menu Projet et ses sous-menus
         projet_menu = self.addMenu("&Projet")
         projet_menu.addAction(new_project_action)
         projet_menu.addAction(open_project_action)
         projet_menu.addAction(exit_project_action)
+        # Menu Cthulhu
+        cthulhu_menu = self.addMenu("&Cthulhu")
+        cthulhu_menu.addAction(apropos_ide_action)
+        cthulhu_menu.addAction(exit_ide_action)
 
 
 class Fenetre(QWidget):
@@ -380,7 +378,7 @@ class Fenetre(QWidget):
         """
         self.statusbar.showMessage("Fermeture...")  # Message de status
         box = QMessageBox()
-        box.setText("Voulez-vous vraiment fermer l'IDE ?")
+        box.setText("Voulez-vous vraiment quitter l'IDE ?")
         box.setStandardButtons(QMessageBox.Cancel | QMessageBox.Close)
         box.setDefaultButton(QMessageBox.Close)
         box.setEscapeButton(QMessageBox.Cancel)
@@ -414,7 +412,7 @@ class Fenetre(QWidget):
         
         save_document(self)
 
-    def dejaOuvert(self, chemin):
+    def deja_ouvert(self, chemin):
 
         return document_deja_ouvert(self, chemin)
 
@@ -432,7 +430,7 @@ class Fenetre(QWidget):
 
         open_document(self, chemin)
 
-    def addCode(self, title):
+    def add_code(self, title):
         """
         Fonction qui se charge d'ajouter à la liste des codes ouverts une nouvelle instance de la classe
         Editeur et de créer un nouvel onglet
@@ -472,3 +470,22 @@ class Fenetre(QWidget):
         """
 
         closeproject(self)
+
+    def delete_project(self):
+        
+        deleteproject(self)
+
+    def close_document(parent):
+        
+        closedocument(self)
+
+    def delete_document(parent):
+        
+        deletedocument(self) 
+
+    def a_propos(self):
+        """
+        Donne des informations sur l'IDE
+        :rtype: None
+        """
+        QMessageBox.about(self, "À propos de Cthulhu", "Il s'agit d'un IDE avec un éditeur de texte pour du C gérant l'auto-complétion (en utilisant un arbre préfixe et la liste des classes), l'indentation automatique, la reconnaissance des balises et la coloration des ces dernières grâce à l'analyseur lexicale LEX et l'analyseur syntaxique YACC. L'IDE est en plusieurs langues. Il est possible de créer un ou plusieurs projet(s) ainsi donc qu'un ou plusieurs fichier(s) C ou H en tant que contenu, de sauvegarder le travail ainsi effectué et d'ouvrir un projet et un fichier C ou H. On peut ouvrir et/ou créer plusieurs fichiers C ou H avec une navigation par onglets avec le nom du ou des fichier(s). Au niveau de l'interface graphique, nous retrouvons un navigateur de fichier, un compilateur, des boutons, l'éditeur de texte, un menu de navigation ainsi qu'une barre d'état. Notre IDE a pour nom Cthulhu et a un logo composé d'une pieuvre avec une ancre !")

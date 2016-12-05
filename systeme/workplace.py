@@ -1,8 +1,9 @@
+# Module relatif à la création du dossier Workplace à la racine de l'ordinateur et à la gestion des projets
+
 from PySide.QtCore import *
 from PySide.QtGui import *
 from datetime import datetime
 import os
-
 
 def create_workplace():
     """
@@ -54,3 +55,6 @@ def closeproject(parent):
     parent.docs = []
     parent.codes = []
     parent.highlighters = []
+
+def deleteproject(parent):
+    pass
