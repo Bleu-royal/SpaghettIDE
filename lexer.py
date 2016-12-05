@@ -1,3 +1,5 @@
+# Module relatif à l'analyseur lexical LEX
+
 import ply.lex as lex
 
 # ----------- LEX -----------#

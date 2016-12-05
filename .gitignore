@@ -13,3 +13,6 @@ __init__.py
 *.log
 *.toc
 *.synctex.gz
+
+parsetab.py
+parser.out
