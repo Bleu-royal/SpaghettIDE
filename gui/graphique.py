@@ -356,7 +356,7 @@ class Fenetre(QWidget):
         self.menuBar = MenuBar(self)
 
         # Positionnement des Layouts
-        self.gridLayout.addWidget(self.menuBar)
+        # self.gridLayout.addWidget(self.menuBar)
         self.gridLayout.addWidget(self.splitter)
         self.gridLayout.addWidget(self.statusbar)
         self.setLayout(self.gridLayout)
@@ -473,11 +473,11 @@ class Fenetre(QWidget):
         
         deleteproject(self)
 
-    def close_document(parent):
+    def close_document(self):
         
         closedocument(self)
 
-    def delete_document(parent):
+    def delete_document(self):
         
         deletedocument(self) 
 
