@@ -14,7 +14,7 @@ sys.path[:0] = ["gui"]
 
 class Editeur(QPlainTextEdit):
 
-    def __init__(self, police, couleur_fond, couleur_text, taille_text):
+    def __init__(self, police, couleur_fond, couleur_texte, taille_texte):
         """
         Hérite de QTextEdit.
         C'est une zone de texte dans laquelle on peut écrire, que l'on utilise ici pour écrire du code.
@@ -34,8 +34,8 @@ class Editeur(QPlainTextEdit):
 
         self.setStyleSheet("QPlainTextEdit { background-color:" + couleur_fond + ";"
                            + "font-family:" + police + ";"
-                           + "color:" + couleur_text + ";"
-                           + "font-size:" + str(taille_text) + "pt; }")
+                           + "color:" + couleur_texte + ";"
+                           + "font-size:" + str(taille_texte) + "pt; }")
 
         # self.append("int main ( int argc, char** argv ){\n\n\treturn 0;\n\n}")
 
@@ -143,7 +143,7 @@ class TabWidget(QTabWidget):
 
 
 class MyAction(QAction):
-    def __init__(self, parent, name, status, func, shortcut_command=None):
+    def __init__(self, parent, name, statut, fonction, shortcut_command=None):
         """
         Hérite de QAction.
         Crée ce qui est nécessaire pour faire un nouvel onglet dans la barre de menu, avec le nom,
@@ -163,9 +163,9 @@ class MyAction(QAction):
 
         QAction.__init__(self, name, parent)  # Initialisation de l'action
         self.setMenuRole(QAction.NoRole)  # Pour que ca fonctionne sur toutes les plateformes
-        self.setStatusTip(status)
+        self.setStatusTip(statut)
         self.setShortcut(shortcut_command)
-        self.triggered.connect(func)
+        self.triggered.connect(fonction)
 
 
 class TreeView(QTreeView):
