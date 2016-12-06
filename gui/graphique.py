@@ -1,31 +1,26 @@
 # Module relatif à l'interface graphique
 
 import sys, os
-
 from PySide.QtGui import *
 from PySide.QtCore import *
-
 sys.path[:0] = ["../"]
 from systeme.couleurs import *
 from systeme.document import *
 from systeme.workplace import *
-
 from lexer import *
-
 sys.path[:0] = ["gui"]
-
 
 class Editeur(QPlainTextEdit):
 
     def __init__(self, police, couleur_fond, couleur_text, taille_text):
         """
         Hérite de QTextEdit.
-        C'est une zone de texte dans laquelle on peut écrire. C'est ce qu'on utilise ici pour la zone où le code est écrit.
+        C'est une zone de texte dans laquelle on peut écrire, que l'on utilise ici pour écrire du code.
 
         Ici, on modifie ses paramètres en fonction du thème souhaité.
         :param police: Police d'écriture
         :type police: str
-        :param couleur_fond: Couleur d'arrière plan de l'éditeur (bakground)
+        :param couleur_fond: Couleur d'arrière plan de l'éditeur (background)
         :type couleur_fond: str
         :param couleur_text: Couleur du texte de base
         :type couleur_text: str
@@ -55,10 +50,11 @@ class TabWidget(QTabWidget):
     def __init__(self, parent):
         """
         Hérite de QTabWidget.
-        Permet de faire plusieurs onglets de code ( On utilise notre class Editeur ).
-        On définit ici les raccourcis de navigation entre et pour les onglets de code pour fermer, ouvrir, aller au suivant...
+        Permet de faire plusieurs onglets de code ( utilisation de la classe Editeur ).
+        On définit ici les raccourcis de navigation entre et pour les onglets
+        pour fermer, ouvrir, aller au suivant...
 
-        :param parent: Parent de la class ( qui appelle )
+        :param parent: Parent de la classe ( qui appelle )
         :type parent: object
         :rtype: None
         """
@@ -85,7 +81,7 @@ class TabWidget(QTabWidget):
         shortcut_prev_tab.activated.connect(self.prev_tab)
 
         url = QDir().currentPath() + "/images/medium.jpg"
-        self.setStyleSheet("QTabWidget::pane{background-image: url(:/images/medium.jpg);"
+        self.setStyleSheet("QTabWidget::pane{background-image: url(images/medium.gif);"
                            "background-repeat: no-repeat;background-position: center}"
                            "QTabWidget::tab-bar{left:0;}QTabBar::tab{color:black;"
                            "background-color:gray;border-bottom: 2px solid transparent;padding:7px 15px;"
@@ -111,7 +107,7 @@ class TabWidget(QTabWidget):
             self.parent.docs.remove(doc)
             self.parent.codes.remove(code)
 
-            self.parent.statusbar.showMessage("Fermeture de l'onglet courrant.", 2000)
+            self.parent.statusbar.showMessage("Fermeture de l'onglet courant.", 2000)
 
     def next_tab(self):
         """
@@ -135,7 +131,7 @@ class TabWidget(QTabWidget):
 
     def mousePressEvent(self, event):
         """
-        On créée un nouvel onglet de code lorsqu'on double-clique sur la page vide (si on a pas d'onglet déjà ouvert).
+        On crée un nouvel onglet de code lorsqu'on double-clique sur la page vide (si on n'a pas d'onglet déjà ouvert).
 
         :param event: Contient les positions x et y de l'endroit où on a cliqué. NON UTILISÉ ICI.
         :rtype: None
@@ -145,24 +141,25 @@ class TabWidget(QTabWidget):
 
 
 class MyAction(QAction):
-    def __init__(self, papa, name, status, func, shortcut_command=None):
+    def __init__(self, parent, name, status, func, shortcut_command=None):
         """
         Hérite de QAction.
-        Créée ce qui est nécessaire pour faire un nouvel onglet dans la barre de menu, avec le nom, un raccourcis, une fonction à exécuter.
+        Crée ce qui est nécessaire pour faire un nouvel onglet dans la barre de menu, avec le nom,
+        un raccourci, une fonction à exécuter.
 
-        :param papa:  Class qui appelle MyAction (ici Fenetre)
-        :type papa: object
+        :param parent:  Classe qui appelle MyAction (ici Fenetre)
+        :type parent: object
         :param name:  Nom à donner à l'action
         :type name: str
         :param status:  Truc
         :type status: str
-        :param shortcut_command:  Commande de raccourcis (facultative)
+        :param shortcut_command:  Commande de raccourci (facultative)
         :type shortcut_command: str
         :param func:  Fonction à exécuter
         :rtype: None
         """
 
-        QAction.__init__(self, name, papa)  # Initialisation de l'action
+        QAction.__init__(self, name, parent)  # Initialisation de l'action
         self.setMenuRole(QAction.NoRole)  # Pour que ca fonctionne sur toutes les plateformes
         self.setStatusTip(status)
         self.setShortcut(shortcut_command)
@@ -173,7 +170,8 @@ class TreeView(QTreeView):
     def __init__(self, fenetre):
         """
         Hérite de QTreeView.
-        Permet d'afficher le navigateur de fichiers, permettant d'ouvrir et de visualiser les documents d'un ou de plusieurs projets.
+        Permet d'afficher le navigateur de fichiers, permettant d'ouvrir et de visualiser les documents
+        d'un ou de plusieurs projets.
 
         :param fenetre: Fenêtre où est placée le navigateur de fichier (ici : Parent)
         :type fenetre: object
@@ -228,18 +226,14 @@ class TreeView(QTreeView):
     def keyPressEvent(self, event):
         """
         Bind de la touche entrée.
-        Lorsque l'on sélectionne un document et que l'on appuie sur entrée, on ouvre le document ou le projet sélectionné.
+        Lorsque l'on sélectionne un document et que l'on appuie sur entrée, on ouvre le document
+        ou le projet sélectionné.
 
         Contient les positions x et y de l'endroit où on a cliqué. NON UTILISÉ ICI.
         :rtype: None
         """
         if event.key() == 16777220:  # Référence de la touche "entrée"
-            name = self.model.fileName(self.currentIndex())
-            if QDir(self.fenetre.workplace_path + name).exists():
-                self.fenetre.project_path = self.fenetre.workplace_path + name
-                self.fenetre.statusbar.showMessage("Le projet " + name + " a bien été ouvert.", 2000)
-            else:
-                self.open()
+            open_project()
         else:
             QTreeView.keyPressEvent(self, event)
 
@@ -263,9 +257,10 @@ class MenuBar(QMenuBar):
         """
         Hérite de QMenuBar.
         C'est ici que la barre de menu est créée.
-        On appelle la class MyAction pour chaque élément du menu que l'on souhaite créer, puis on ajoute ces éléments au menu principal.
+        On appelle la classe MyAction pour chaque élément du menu que l'on souhaite créer, puis on ajoute
+        ces éléments au menu principal.
 
-        :param parent: Parent de la class ( qui appelle )
+        :param parent: Parent de la classe ( qui appelle )
         :type parent: object
         :rtype: None
         """
@@ -273,8 +268,7 @@ class MenuBar(QMenuBar):
 
         ## Menus
 
-        # Nouveau Projet (à relier avec de vraies fonctions qui font des trucs de fifous)
-        # et ptet changer les raccourcis quand on aura de vraies fonctions.
+        # Nouveau Projet
         new_project_action = MyAction(parent, "&Nouveau Projet", "Nouveau projet", parent.new_project, "Ctrl+M")
         # Ouvrir un projet déjà existant
         open_project_action = MyAction(parent, "&Ouvrir Projet", "Ouvrir un projet", parent.open_project, "Ctrl+L")
@@ -287,8 +281,11 @@ class MenuBar(QMenuBar):
         open_fic_action = MyAction(parent, "&Ouvrir", "Ouvrir un fichier", parent.open, "Ctrl+O")
         # Sauvegarder le fichier courant
         sauv_fic_action = MyAction(parent, "&Sauvegarder", "Sauvegarder le fichier courant", parent.save, "Ctrl+S")
+
+        #À Propos de Cthulhu
+        apropos_ide_action = MyAction(parent, "&À Propos", "À propos de SpaghettIDE", parent.a_propos)
         # Fermer l'IDE
-        exit_ide_action = MyAction(parent, "&Fermer", "Quitter l'application", parent.quit_func, "Esc")
+        exit_ide_action = MyAction(parent, "&Fermer", "Fermer l'application", parent.quit_func, "Esc")
 
         # Menu Fichier et ses sous-menus
         fichier_menu = self.addMenu("&Fichier")
@@ -302,13 +299,18 @@ class MenuBar(QMenuBar):
         projet_menu.addAction(new_project_action)
         projet_menu.addAction(open_project_action)
         projet_menu.addAction(exit_project_action)
+        # Menu SpaghettIDE
+        spaghettide_menu = self.addMenu("&SpaghettIDE")
+        spaghettide_menu.addAction(apropos_ide_action)
+  
 
 
 class Fenetre(QWidget):
     def __init__(self, titre, workplace_path=QDir.homePath() + "/workplace/"):
         """
         Hérite de QWidget
-        Class principale, dans laquelle tout est rassemblé. On appelle tout ce qui est nécessaire à la création de la fenêtre et au fonctionnement du programme.
+        Class principale, dans laquelle tout est rassemblé. On appelle tout ce qui est nécessaire à la création
+        de la fenêtre et au fonctionnement du programme.
 
         :param titre: Nom de la fenêtre
         :type titre: str
@@ -329,9 +331,9 @@ class Fenetre(QWidget):
         self.gridLayout = QGridLayout()
 
         # Ajout du logo pieuvre
-        self.label_img = QLabel()
-        self.pixmap_img = QPixmap("images/pieuvre.jpg")
-        self.label_img.setPixmap(self.pixmap_img)
+        # self.label_img = QLabel()
+        # self.pixmap_img = QPixmap("images/pieuvre.jpg")
+        # self.label_img.setPixmap(self.pixmap_img)
 
         self.treeview = TreeView(self)
 
@@ -351,23 +353,27 @@ class Fenetre(QWidget):
         self.splitter.addWidget(self.tab_widget)
         self.splitter.setSizes([100, 400])
 
-        #self.statusbar.addWidget(MyReadWriteIndication)
+        # self.statusbar.addWidget(MyReadWriteIndication)
+
+        self.menuBar = MenuBar(self)
 
         # Positionnement des Layouts
+        self.gridLayout.addWidget(self.menuBar)
         self.gridLayout.addWidget(self.splitter)
         self.gridLayout.addWidget(self.statusbar)
         self.setLayout(self.gridLayout)
 
-        if sys.platform == "linux":
-            self.show()
-        MenuBar(self)
+        # if sys.platform == "linux":
+        #     self.show()
+
+        
         self.show()
 
     def quit_func(self):
         """
         Fonction de fermeture de l'IDE.
         On affiche une petite boîte pour demander si l'on souhaite vraiment fermer l'IDE.
-        Les touches "return" et "escape" sont reliée resectivement à "Fermer" et "Annuler".
+        Les touches "return" et "escape" sont respectivement reliées à "Fermer" et "Annuler".
 
         :rtype: None
         """
@@ -387,13 +393,14 @@ class Fenetre(QWidget):
     def new(self):
         """
         Fonction de création de nouveau fichier reliée au sous-menu "Nouveau".
-        On ajoute ici un nouvel onglet à nos codes déjà ouverts ( ou on créée un premier onglet ) qui s'appelle par défaut "Sans nom" + le numéro courant dans la liste des onglets.
+        On ajoute ici un nouvel onglet à nos codes déjà ouverts ( ou on créée un premier onglet )
+        qui s'appelle par défaut "Sans nom" + le numéro courant dans la liste des onglets.
         On appelle la fonction self.addCode()
 
         :rtype: None
         """
         
-        newDocument(self)
+        new_document(self)
 
     def save(self):
         """
@@ -404,27 +411,30 @@ class Fenetre(QWidget):
         :return:
         """
         
-        saveDocument(self)
+        save_document(self)
 
-    def dejaOuvert(self, chemin):
+    def deja_ouvert(self, chemin):
 
-        return documentDejaOuvert(self, chemin)
+        return document_deja_ouvert(self, chemin)
 
     def open(self, chemin=False):
         """
         Fonction d'ouverture d'un fichier reliée au sous-menu "Ouvrir un fichier"
         On utilise une QFileDialog qui affiche le navigateur du système habituel pour ouvrir des documents.
 
-        :param chemin: N'existe pas si on appelle via le menu ou le raccourcis clavier. Il est spécifié si il appartient au projet courant et que l'on souhaite l'ouvrir sans passer par la fenetre de dialogue.
+        :param chemin: N'existe pas si on appelle via le menu ou le raccourcis clavier. Il est
+        spécifié si il appartient au projet courant et que l'on souhaite l'ouvrir sans passer par
+        la fenetre de dialogue.
         :type chemin: str
         :rtype: None
         """
 
-        openDocument(self, chemin)
+        open_document(self, chemin)
 
-    def addCode(self, title):
+    def add_code(self, title):
         """
-        Fonction qui se charge d'ajouter à la liste des codes ouverts une nouvelle instance de la class Editeur et de créer un nouvel onglet
+        Fonction qui se charge d'ajouter à la liste des codes ouverts une nouvelle instance de la classe
+        Editeur et de créer un nouvel onglet
 
         :param title: Nom du document
         :type title: str
@@ -438,12 +448,13 @@ class Fenetre(QWidget):
     def new_project(self):
         """
         Créée un nouveau projet
-        Le projet créé doit avoir un nom différent d'un projet déjà existant, et ne dois pas comporter de "/" dans son nom.
+        Le projet créé doit avoir un nom différent d'un projet déjà existant,
+        et ne doit pas comporter de "/" dans son nom.
 
         :rtype: None
         """
 
-        newProject(self)
+        newproject(self)
 
     def open_project(self):
         """
@@ -451,7 +462,7 @@ class Fenetre(QWidget):
         :rtype: None
         """
 
-        openProject(self)
+        open_projects(self)
 
     def close_project(self):
         """
@@ -459,6 +470,23 @@ class Fenetre(QWidget):
         :rtype: None
         """
 
-        closeProject(self)
+        closeproject(self)
 
+    def delete_project(self):
+        
+        deleteproject(self)
 
+    def close_document(parent):
+        
+        closedocument(self)
+
+    def delete_document(parent):
+        
+        deletedocument(self) 
+
+    def a_propos(self):
+        """
+        Donne des informations sur l'IDE
+        :rtype: None
+        """
+        QMessageBox.about(self, "À propos de SpaghettIDE ", "Il s'agit d'un IDE avec un éditeur de texte pour du C gérant l'auto-complétion (en utilisant un arbre préfixe et la liste des classes), l'indentation automatique, la reconnaissance des balises et la coloration des ces dernières grâce à l'analyseur lexicale LEX et l'analyseur syntaxique YACC. L'IDE est en plusieurs langues. Il est possible de créer un ou plusieurs projet(s) ainsi donc qu'un ou plusieurs fichier(s) C ou H en tant que contenu, de sauvegarder le travail ainsi effectué et d'ouvrir un projet et un fichier C ou H. On peut ouvrir et/ou créer plusieurs fichiers C ou H avec une navigation par onglets avec le nom du ou des fichier(s). Au niveau de l'interface graphique, nous retrouvons un navigateur de fichier, un compilateur, des boutons, l'éditeur de texte, un menu de navigation ainsi qu'une barre d'état. Notre IDE a pour nom SpaghettIDE et a un logo composé d'une pieuvre avec une ancre !")

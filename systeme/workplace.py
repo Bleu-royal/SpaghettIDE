@@ -1,3 +1,5 @@
+# Module relatif à la création du dossier Workplace à la racine de l'ordinateur et à la gestion des projets
+
 from PySide.QtCore import *
 from PySide.QtGui import *
 from datetime import datetime
@@ -15,7 +17,7 @@ def create_workplace():
         QDir(path).mkpath("workplace")
 
 
-def newProject(parent):
+def newproject(parent):
     project_name = QInputDialog.getText(parent, 'Choix du nom du projet', 'Entrez un nom de projet :')
 
     while (project_name[0] == '' or "/" in project_name[0]) and project_name[1]:
@@ -36,7 +38,8 @@ def newProject(parent):
         QMessageBox.critical(parent, "Le projet existe déjà", "Veuillez entrer un autre nom de projet")
         parent.new_project()
 
-def openProject(parent):
+
+def open_projects(parent):
 
     projet = os.listdir(parent.workplace_path)
     for e in projet:
@@ -44,11 +47,24 @@ def openProject(parent):
         if not os.path.isdir(parent.workplace_path + e) or not check_file.exists() and not check_file.isFile():
             projet.remove(e)
 
+    print(projet)
 
-def closeProject(parent):
+def open_project(parent):
+    name = parent.model.fileName(parent.currentIndex())
+    if QDir(parent.fenetre.workplace_path + name).exists():
+        parent.fenetre.project_path = parent.fenetre.workplace_path + name
+        parent.fenetre.statusbar.showMessage("Le projet " + name + " a bien été ouvert.", 2000)
+    else:
+        parent.open()
+
+
+def closeproject(parent):
 
     parent.tab_widget.clear()
     parent.project_path = ""
     parent.docs = []
     parent.codes = []
     parent.highlighters = []
+
+def deleteproject(parent):
+    pass

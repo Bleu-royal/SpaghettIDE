@@ -5,6 +5,7 @@ from PySide.QtCore import *
 from lexer import *
 from random import randint
 
+
 class Proposition(QTextEdit):
 
     def __init__(self, parent = None):
@@ -13,6 +14,7 @@ class Proposition(QTextEdit):
         self.setMaximumWidth(100)
 
         self.setStyleSheet("QTextEdit{color:white;background-color: purple;}")
+
 
 class CodeHighLighter(QSyntaxHighlighter):
     def __init__(self, editeur, parent=None):  # Parent --> QTextEdit
