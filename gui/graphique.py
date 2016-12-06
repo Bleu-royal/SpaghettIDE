@@ -457,7 +457,6 @@ class Fenetre(QWidget):
         :rtype: None
         """
 
-        print("ici")
         open_projects(self)
 
     def close_project(self):
@@ -485,15 +484,6 @@ class Fenetre(QWidget):
         Donne des informations sur l'IDE
         :rtype: None
         """
-        QMessageBox.about(self, "À propos de SpaghettIDE ",
-                          "Il s'agit d'un IDE avec un éditeur de texte pour du C gérant l'auto-complétion "
-                          "(en utilisant un arbre préfixe et la liste des classes), l'indentation automatique, "
-                          "la reconnaissance des balises et la coloration des ces dernières grâce à l'analyseur "
-                          "lexicale LEX et l'analyseur syntaxique YACC. Il est "
-                          "possible de créer un ou plusieurs projet(s) ainsi donc qu'un ou plusieurs fichier(s) "
-                          "C ou H en tant que contenu, de sauvegarder le travail effectué et d'ouvrir un "
-                          "projet et un fichier C ou H. On peut ouvrir et/ou créer plusieurs fichiers C ou H avec "
-                          "une navigation par onglets avec le nom du ou des fichier(s). Au niveau de l'interface "
-                          "graphique, nous retrouvons un navigateur de fichier, un compilateur, des boutons, l'éditeur "
-                          "de texte, un menu de navigation ainsi qu'une barre d'état. Notre IDE a été réalisé dans le"
-                          "cadre d'un projet en deuxième année de licence informatique, le TPA.")
+        apropos = open("apropos.txt", "r").readline()x
+
+        QMessageBox.about(self, "À propos de SpaghettIDE ", apropos)
