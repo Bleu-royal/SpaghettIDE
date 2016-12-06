@@ -87,7 +87,7 @@ def open_document(parent, chemin):
             # print("ici")
             pass
         if chemin != "" and parent.project_path in chemin:
-            if not parent.dejaOuvert(chemin):
+            if not parent.deja_ouvert(chemin):
                 title = chemin.split("/")[-1]
                 parent.add_code(title)
                 parent.statusbar.showMessage("Ouverture de "+title, 2000)  # Message de status
