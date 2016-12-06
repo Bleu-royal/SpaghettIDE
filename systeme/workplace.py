@@ -39,13 +39,23 @@ def newproject(parent):
         parent.new_project()
 
 
-def openproject(parent):
+def open_projects(parent):
 
     projet = os.listdir(parent.workplace_path)
     for e in projet:
         check_file = QFileInfo(parent.workplace_path + e + "/.conf")
         if not os.path.isdir(parent.workplace_path + e) or not check_file.exists() and not check_file.isFile():
             projet.remove(e)
+
+    print(projet)
+
+def open_project(parent):
+    name = parent.model.fileName(parent.currentIndex())
+    if QDir(parent.fenetre.workplace_path + name).exists():
+        parent.fenetre.project_path = parent.fenetre.workplace_path + name
+        parent.fenetre.statusbar.showMessage("Le projet " + name + " a bien été ouvert.", 2000)
+    else:
+        parent.open()
 
 
 def closeproject(parent):

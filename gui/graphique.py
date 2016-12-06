@@ -233,12 +233,7 @@ class TreeView(QTreeView):
         :rtype: None
         """
         if event.key() == 16777220:  # Référence de la touche "entrée"
-            name = self.model.fileName(self.currentIndex())
-            if QDir(self.fenetre.workplace_path + name).exists():
-                self.fenetre.project_path = self.fenetre.workplace_path + name
-                self.fenetre.statusbar.showMessage("Le projet " + name + " a bien été ouvert.", 2000)
-            else:
-                self.open()
+            open_project()
         else:
             QTreeView.keyPressEvent(self, event)
 
@@ -467,7 +462,7 @@ class Fenetre(QWidget):
         :rtype: None
         """
 
-        openproject(self)
+        open_projects(self)
 
     def close_project(self):
         """
