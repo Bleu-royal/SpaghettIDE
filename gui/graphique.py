@@ -476,11 +476,11 @@ class Fenetre(QWidget):
         
         deleteproject(self)
 
-    def close_document(parent):
+    def close_document(self):
         
         closedocument(self)
 
-    def delete_document(parent):
+    def delete_document(self):
         
         deletedocument(self) 
 
