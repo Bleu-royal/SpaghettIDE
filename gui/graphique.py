@@ -81,7 +81,7 @@ class TabWidget(QTabWidget):
         shortcut_prev_tab.activated.connect(self.prev_tab)
 
         url = QDir().currentPath() + "/images/medium.jpg"
-        self.setStyleSheet("QTabWidget::pane{background-image: url(:/images/medium.jpg);"
+        self.setStyleSheet("QTabWidget::pane{background-image: url(images/medium.gif);"
                            "background-repeat: no-repeat;background-position: center}"
                            "QTabWidget::tab-bar{left:0;}QTabBar::tab{color:black;"
                            "background-color:gray;border-bottom: 2px solid transparent;padding:7px 15px;"
