@@ -4,9 +4,9 @@ from PySide.QtGui import *
 
 
 class Document:
-    def __init__(self, textEdit, chemin_enregistrement, ouverture=False):  # Sauvegarde des variables dans la classe
+    def __init__(self, text_edit, chemin_enregistrement, ouverture=False):  # Sauvegarde des variables dans la classe
 
-        self.textEdit = textEdit
+        self.textEdit = text_edit  # Objet QTextEdit
         self.chemin_enregistrement = chemin_enregistrement
         self.nom = self.chemin_enregistrement.split("/")[-1]  # Recupération du nom du fichier
         self.extension = self.nom.split(".")[-1]  # Recupération de l'extension du fichier
@@ -102,9 +102,9 @@ def open_document(parent, chemin):
         parent.statusbar.showMessage("Aucun projet ouvert, veuillez ouvrir ou créer un projet.", 2000)
 
 
-def close_document(parent):
+def closedocument(parent):
     pass
 
 
-def delete_document(parent):
-    pass  
+def deletedocument(parent):
+    pass
