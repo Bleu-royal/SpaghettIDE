@@ -215,13 +215,7 @@ class TreeView(QTreeView):
         :param event: Contient les positions x et y de l'endroit où on a cliqué. NON UTILISÉ ICI.
         :rtype: None
         """
-        name = self.model.fileName(self.currentIndex())
-        check_file = QFileInfo(self.fenetre.workplace_path + name + "/.conf")
-        if QDir(self.fenetre.workplace_path + name).exists() and check_file.exists() and check_file.isFile():
-            self.fenetre.project_path = self.fenetre.workplace_path + name
-            self.fenetre.statusbar.showMessage("Le projet " + name + " a bien été ouvert.", 2000)
-        else:
-            self.open()
+        open_project(self)
 
     def keyPressEvent(self, event):
         """
@@ -233,7 +227,7 @@ class TreeView(QTreeView):
         :rtype: None
         """
         if event.key() == 16777220:  # Référence de la touche "entrée"
-            open_project()
+            open_project(self)
         else:
             QTreeView.keyPressEvent(self, event)
 
@@ -462,6 +456,7 @@ class Fenetre(QWidget):
         :rtype: None
         """
 
+        print("ici")
         open_projects(self)
 
     def close_project(self):
