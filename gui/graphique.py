@@ -302,8 +302,6 @@ class MenuBar(QMenuBar):
         # Menu SpaghettIDE
         spaghettide_menu = self.addMenu("&SpaghettIDE")
         spaghettide_menu.addAction(apropos_ide_action)
-  
-
 
 class Fenetre(QWidget):
     def __init__(self, titre, workplace_path=QDir.homePath() + "/workplace/"):
@@ -366,7 +364,6 @@ class Fenetre(QWidget):
         # if sys.platform == "linux":
         #     self.show()
 
-        
         self.show()
 
     def quit_func(self):
