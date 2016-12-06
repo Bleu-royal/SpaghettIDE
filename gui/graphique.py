@@ -368,6 +368,8 @@ class Fenetre(QWidget):
 
         # if sys.platform == "linux":
         #     self.show()
+
+        
         self.show()
 
     def quit_func(self):
