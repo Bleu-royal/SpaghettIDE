@@ -483,6 +483,6 @@ class Fenetre(QWidget):
         Donne des informations sur l'IDE
         :rtype: None
         """
-        apropos = open("apropos.txt", "r").readline()x
+        apropos = open("apropos.txt", "r").readline()
 
         QMessageBox.about(self, "À propos de SpaghettIDE ", apropos)
