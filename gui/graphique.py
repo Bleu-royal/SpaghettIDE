@@ -358,14 +358,16 @@ class Fenetre(QWidget):
 
         # self.statusbar.addWidget(MyReadWriteIndication)
 
+        self.menuBar = MenuBar(self)
+
         # Positionnement des Layouts
+        self.gridLayout.addWidget(self.menuBar)
         self.gridLayout.addWidget(self.splitter)
         self.gridLayout.addWidget(self.statusbar)
         self.setLayout(self.gridLayout)
 
-        if sys.platform == "linux":
-            self.show()
-        MenuBar(self)
+        # if sys.platform == "linux":
+        #     self.show()
         self.show()
 
     def quit_func(self):
