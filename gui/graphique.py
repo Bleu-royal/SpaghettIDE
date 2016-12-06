@@ -43,7 +43,6 @@ class Editeur(QPlainTextEdit):
     def keyPressEvent(self, event):
 
         super().keyPressEvent(event)
-        print(type(event))
 
         if event.key() == 16777220:
             yaccing(self.toPlainText())
