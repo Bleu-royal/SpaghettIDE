@@ -3,12 +3,14 @@
 import sys, os
 from PySide.QtGui import *
 from PySide.QtCore import *
-sys.path[:0] = ["../"]
 from systeme.couleurs import *
 from systeme.document import *
 from systeme.workplace import *
 from lexer import *
+
+sys.path[:0] = ["../"]
 sys.path[:0] = ["gui"]
+
 
 class Editeur(QPlainTextEdit):
 
@@ -282,7 +284,7 @@ class MenuBar(QMenuBar):
         # Sauvegarder le fichier courant
         sauv_fic_action = MyAction(parent, "&Sauvegarder", "Sauvegarder le fichier courant", parent.save, "Ctrl+S")
 
-        #À Propos de Cthulhu
+        # À Propos de Cthulhu
         apropos_ide_action = MyAction(parent, "&À Propos", "À propos de SpaghettIDE", parent.a_propos)
         # Fermer l'IDE
         exit_ide_action = MyAction(parent, "&Fermer", "Fermer l'application", parent.quit_func, "Esc")
@@ -302,7 +304,6 @@ class MenuBar(QMenuBar):
         # Menu SpaghettIDE
         spaghettide_menu = self.addMenu("&SpaghettIDE")
         spaghettide_menu.addAction(apropos_ide_action)
-  
 
 
 class Fenetre(QWidget):
@@ -354,7 +355,6 @@ class Fenetre(QWidget):
         self.splitter.setSizes([100, 400])
 
         # self.statusbar.addWidget(MyReadWriteIndication)
-
         self.menuBar = MenuBar(self)
 
         # Positionnement des Layouts
@@ -489,4 +489,15 @@ class Fenetre(QWidget):
         Donne des informations sur l'IDE
         :rtype: None
         """
-        QMessageBox.about(self, "À propos de SpaghettIDE ", "Il s'agit d'un IDE avec un éditeur de texte pour du C gérant l'auto-complétion (en utilisant un arbre préfixe et la liste des classes), l'indentation automatique, la reconnaissance des balises et la coloration des ces dernières grâce à l'analyseur lexicale LEX et l'analyseur syntaxique YACC. L'IDE est en plusieurs langues. Il est possible de créer un ou plusieurs projet(s) ainsi donc qu'un ou plusieurs fichier(s) C ou H en tant que contenu, de sauvegarder le travail ainsi effectué et d'ouvrir un projet et un fichier C ou H. On peut ouvrir et/ou créer plusieurs fichiers C ou H avec une navigation par onglets avec le nom du ou des fichier(s). Au niveau de l'interface graphique, nous retrouvons un navigateur de fichier, un compilateur, des boutons, l'éditeur de texte, un menu de navigation ainsi qu'une barre d'état. Notre IDE a pour nom SpaghettIDE et a un logo composé d'une pieuvre avec une ancre !")
+        QMessageBox.about(self, "À propos de SpaghettIDE ",
+                          "Il s'agit d'un IDE avec un éditeur de texte pour du C gérant l'auto-complétion "
+                          "(en utilisant un arbre préfixe et la liste des classes), l'indentation automatique, "
+                          "la reconnaissance des balises et la coloration des ces dernières grâce à l'analyseur "
+                          "lexicale LEX et l'analyseur syntaxique YACC. Il est "
+                          "possible de créer un ou plusieurs projet(s) ainsi donc qu'un ou plusieurs fichier(s) "
+                          "C ou H en tant que contenu, de sauvegarder le travail effectué et d'ouvrir un "
+                          "projet et un fichier C ou H. On peut ouvrir et/ou créer plusieurs fichiers C ou H avec "
+                          "une navigation par onglets avec le nom du ou des fichier(s). Au niveau de l'interface "
+                          "graphique, nous retrouvons un navigateur de fichier, un compilateur, des boutons, l'éditeur "
+                          "de texte, un menu de navigation ainsi qu'une barre d'état. Notre IDE a été réalisé dans le"
+                          "cadre d'un projet en deuxième année de licence informatique, le TPA.")
