@@ -352,7 +352,6 @@ class Fenetre(QWidget):
         self.splitter.setSizes([100, 400])
 
         # self.statusbar.addWidget(MyReadWriteIndication)
-
         self.menuBar = MenuBar(self)
 
         # Positionnement des Layouts
