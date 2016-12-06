@@ -32,7 +32,7 @@ try:
     verif = open("lexer.py", "r")
     verif.close()
 
-    fenetre = Fenetre("Cthulhu (Bleu Royal)")  # Creation of the main window
+    fenetre = Fenetre("SpaghettIDE (Bleu Royal)")  # Creation of the main window
     bind(fenetre)  # Connection between buttons and functions
     create_workplace()
 

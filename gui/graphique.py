@@ -288,24 +288,26 @@ class MenuBar(QMenuBar):
         sauv_fic_action = MyAction(parent, "&Sauvegarder", "Sauvegarder le fichier courant", parent.save, "Ctrl+S")
 
         #À Propos de Cthulhu
-        apropos_ide_action = MyAction(parent, "&À Propos", "À propos de Cthulhu", parent.a_propos)
+        apropos_ide_action = MyAction(parent, "&À Propos", "À propos de SpaghettIDE", parent.a_propos)
         # Fermer l'IDE
-        exit_ide_action = MyAction(parent, "&Quitter", "Quitter l'application", parent.quit_func, "Esc")
+        exit_ide_action = MyAction(parent, "&Fermer", "Fermer l'application", parent.quit_func, "Esc")
 
         # Menu Fichier et ses sous-menus
         fichier_menu = self.addMenu("&Fichier")
         fichier_menu.addAction(new_fic_action)
         fichier_menu.addAction(open_fic_action)
         fichier_menu.addAction(sauv_fic_action)
+        fichier_menu.addSeparator()
+        fichier_menu.addAction(exit_ide_action)
         # Menu Projet et ses sous-menus
         projet_menu = self.addMenu("&Projet")
         projet_menu.addAction(new_project_action)
         projet_menu.addAction(open_project_action)
         projet_menu.addAction(exit_project_action)
-        # Menu Cthulhu
-        cthulhu_menu = self.addMenu("&Cthulhu")
-        cthulhu_menu.addAction(apropos_ide_action)
-        cthulhu_menu.addAction(exit_ide_action)
+        # Menu SpaghettIDE
+        spaghettide_menu = self.addMenu("&SpaghettIDE")
+        spaghettide_menu.addAction(apropos_ide_action)
+  
 
 
 class Fenetre(QWidget):
@@ -382,7 +384,7 @@ class Fenetre(QWidget):
         """
         self.statusbar.showMessage("Fermeture...")  # Message de status
         box = QMessageBox()
-        box.setText("Voulez-vous vraiment quitter l'IDE ?")
+        box.setText("Voulez-vous vraiment fermer l'IDE ?")
         box.setStandardButtons(QMessageBox.Cancel | QMessageBox.Close)
         box.setDefaultButton(QMessageBox.Close)
         box.setEscapeButton(QMessageBox.Cancel)
