@@ -25,10 +25,10 @@ class Editeur(QPlainTextEdit):
         :type police: str
         :param couleur_fond: Couleur d'arrière plan de l'éditeur (background)
         :type couleur_fond: str
-        :param couleur_text: Couleur du texte de base
-        :type couleur_text: str
-        :param taille_text: Taille de la police (en points)
-        :type taille_text: int
+        :param couleur_texte: Couleur du texte de base
+        :type couleur_texte: str
+        :param taille_texte: Taille de la police (en points)
+        :type taille_texte: int
         :rtype: None
         """
         super().__init__()
@@ -43,6 +43,7 @@ class Editeur(QPlainTextEdit):
     def keyPressEvent(self, event):
 
         super().keyPressEvent(event)
+        print(type(event))
 
         if event.key() == 16777220:
             yaccing(self.toPlainText())
@@ -154,11 +155,11 @@ class MyAction(QAction):
         :type parent: object
         :param name:  Nom à donner à l'action
         :type name: str
-        :param status:  Truc
-        :type status: str
+        :param statut:  Truc
+        :type statut: str
         :param shortcut_command:  Commande de raccourci (facultative)
         :type shortcut_command: str
-        :param func:  Fonction à exécuter
+        :param fonction:  Fonction à exécuter
         :rtype: None
         """
 
