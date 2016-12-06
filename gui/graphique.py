@@ -279,11 +279,13 @@ class MenuBar(QMenuBar):
         open_fic_action = MyAction(parent, "&Ouvrir", "Ouvrir un fichier", parent.open, "Ctrl+O")
         # Sauvegarder le fichier courant
         sauv_fic_action = MyAction(parent, "&Sauvegarder", "Sauvegarder le fichier courant", parent.save, "Ctrl+S")
+        # Fermer l'IDE
+        exit_ide_action = MyAction(parent, "&Fermer", "Fermer l'application", parent.quit_func, "Esc")
 
         # À Propos de Cthulhu
         apropos_ide_action = MyAction(parent, "&À Propos", "À propos de SpaghettIDE", parent.a_propos)
-        # Fermer l'IDE
-        exit_ide_action = MyAction(parent, "&Fermer", "Fermer l'application", parent.quit_func, "Esc")
+        #Help
+        help_ide_action = MyAction(parent, "&Aide", "Aide sur l'IDE", parent.help_func)
 
         # Menu Fichier et ses sous-menus
         fichier_menu = self.addMenu("&Fichier")
@@ -300,6 +302,8 @@ class MenuBar(QMenuBar):
         # Menu SpaghettIDE
         spaghettide_menu = self.addMenu("&SpaghettIDE")
         spaghettide_menu.addAction(apropos_ide_action)
+        spaghettide_menu.addAction(help_ide_action)
+
 
 
 class Fenetre(QWidget):
@@ -484,6 +488,11 @@ class Fenetre(QWidget):
         Donne des informations sur l'IDE
         :rtype: None
         """
-        apropos = open("apropos.txt", "r").readline()
 
-        QMessageBox.about(self, "À propos de SpaghettIDE ", apropos)
+        apropos = open("content/apropos.txt", "r").readlines()
+
+        QMessageBox.about(self, "À propos de SpaghettIDE ", "".join(apropos))
+
+    def help_func(self):
+
+        pass
