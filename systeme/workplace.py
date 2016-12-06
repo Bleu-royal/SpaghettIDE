@@ -5,6 +5,7 @@ from PySide.QtGui import *
 from datetime import datetime
 import os
 
+
 def create_workplace():
     """
     Créée un répertoire vide qui va contenir les projets
@@ -49,6 +50,7 @@ def open_projects(parent):
 
     print(projet)
 
+
 def open_project(parent):
     name = parent.model.fileName(parent.currentIndex())
     if QDir(parent.fenetre.workplace_path + name).exists():
@@ -65,6 +67,7 @@ def closeproject(parent):
     parent.docs = []
     parent.codes = []
     parent.highlighters = []
+
 
 def deleteproject(parent):
     pass

@@ -101,8 +101,10 @@ def open_document(parent, chemin):
     else:
         parent.statusbar.showMessage("Aucun projet ouvert, veuillez ouvrir ou créer un projet.", 2000)
 
+
 def close_document(parent):
     pass
+
 
 def delete_document(parent):
     pass  

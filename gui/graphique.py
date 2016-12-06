@@ -1,6 +1,7 @@
 # Module relatif à l'interface graphique
 
-import sys, os
+import sys
+import os
 from PySide.QtGui import *
 from PySide.QtCore import *
 from systeme.couleurs import *
@@ -360,7 +361,6 @@ class Fenetre(QWidget):
         # if sys.platform == "linux":
         #     self.show()
 
-        
         self.show()
 
     def quit_func(self):
