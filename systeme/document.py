@@ -59,7 +59,7 @@ def save_document(parent):
 
                     parent.statusbar.showMessage(parent.docs[idx].nom+" a bien été sauvegardé.", 2000)
                     # Message de statut
-                else:
+                elif parent.project_path in chemin:
                     QMessageBox.critical(parent, "Impossible de sauvegarder ce document",
                                          "Ce document ne fait pas partie du projet courant")
             else:

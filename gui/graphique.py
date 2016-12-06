@@ -336,9 +336,9 @@ class Fenetre(QWidget):
         self.gridLayout = QGridLayout()
 
         # Ajout du logo pieuvre
-        self.label_img = QLabel()
-        self.pixmap_img = QPixmap("images/pieuvre.jpg")
-        self.label_img.setPixmap(self.pixmap_img)
+        # self.label_img = QLabel()
+        # self.pixmap_img = QPixmap("images/pieuvre.jpg")
+        # self.label_img.setPixmap(self.pixmap_img)
 
         self.treeview = TreeView(self)
 
