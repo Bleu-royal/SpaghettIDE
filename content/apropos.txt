@@ -1,0 +1,14 @@
+Il s'agit d'un IDE réalisé dans le cadre du projet de TPA de L2 INFO.
+
+
+
+Concepteurs : Carreau Alexis / Lécluse Thomas / Mauger Emma / Sarrazin Théo
+
+
+
+Année : 2016-2017                               Version bêta : 0.3
+
+
+
+
+                             Powered by Python
