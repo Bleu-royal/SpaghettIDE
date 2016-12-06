@@ -1,18 +1,21 @@
 # Module relatif à l'interface graphique
 
-import sys, os
+import sys
+import os
 from PySide.QtGui import *
 from PySide.QtCore import *
-sys.path[:0] = ["../"]
 from systeme.couleurs import *
 from systeme.document import *
 from systeme.workplace import *
 from lexer import *
+
+sys.path[:0] = ["../"]
 sys.path[:0] = ["gui"]
+
 
 class Editeur(QPlainTextEdit):
 
-    def __init__(self, police, couleur_fond, couleur_text, taille_text):
+    def __init__(self, police, couleur_fond, couleur_texte, taille_texte):
         """
         Hérite de QTextEdit.
         C'est une zone de texte dans laquelle on peut écrire, que l'on utilise ici pour écrire du code.
@@ -22,24 +25,25 @@ class Editeur(QPlainTextEdit):
         :type police: str
         :param couleur_fond: Couleur d'arrière plan de l'éditeur (background)
         :type couleur_fond: str
-        :param couleur_text: Couleur du texte de base
-        :type couleur_text: str
-        :param taille_text: Taille de la police (en points)
-        :type taille_text: int
+        :param couleur_texte: Couleur du texte de base
+        :type couleur_texte: str
+        :param taille_texte: Taille de la police (en points)
+        :type taille_texte: int
         :rtype: None
         """
         super().__init__()
 
         self.setStyleSheet("QPlainTextEdit { background-color:" + couleur_fond + ";"
                            + "font-family:" + police + ";"
-                           + "color:" + couleur_text + ";"
-                           + "font-size:" + str(taille_text) + "pt; }")
+                           + "color:" + couleur_texte + ";"
+                           + "font-size:" + str(taille_texte) + "pt; }")
 
         # self.append("int main ( int argc, char** argv ){\n\n\treturn 0;\n\n}")
 
     def keyPressEvent(self, event):
 
         super().keyPressEvent(event)
+        print(type(event))
 
         if event.key() == 16777220:
             yaccing(self.toPlainText())
@@ -141,7 +145,7 @@ class TabWidget(QTabWidget):
 
 
 class MyAction(QAction):
-    def __init__(self, parent, name, status, func, shortcut_command=None):
+    def __init__(self, parent, name, statut, fonction, shortcut_command=None):
         """
         Hérite de QAction.
         Crée ce qui est nécessaire pour faire un nouvel onglet dans la barre de menu, avec le nom,
@@ -151,19 +155,19 @@ class MyAction(QAction):
         :type parent: object
         :param name:  Nom à donner à l'action
         :type name: str
-        :param status:  Truc
-        :type status: str
+        :param statut:  Truc
+        :type statut: str
         :param shortcut_command:  Commande de raccourci (facultative)
         :type shortcut_command: str
-        :param func:  Fonction à exécuter
+        :param fonction:  Fonction à exécuter
         :rtype: None
         """
 
         QAction.__init__(self, name, parent)  # Initialisation de l'action
         self.setMenuRole(QAction.NoRole)  # Pour que ca fonctionne sur toutes les plateformes
-        self.setStatusTip(status)
+        self.setStatusTip(statut)
         self.setShortcut(shortcut_command)
-        self.triggered.connect(func)
+        self.triggered.connect(fonction)
 
 
 class TreeView(QTreeView):
@@ -215,13 +219,7 @@ class TreeView(QTreeView):
         :param event: Contient les positions x et y de l'endroit où on a cliqué. NON UTILISÉ ICI.
         :rtype: None
         """
-        name = self.model.fileName(self.currentIndex())
-        check_file = QFileInfo(self.fenetre.workplace_path + name + "/.conf")
-        if QDir(self.fenetre.workplace_path + name).exists() and check_file.exists() and check_file.isFile():
-            self.fenetre.project_path = self.fenetre.workplace_path + name
-            self.fenetre.statusbar.showMessage("Le projet " + name + " a bien été ouvert.", 2000)
-        else:
-            self.open()
+        open_project(self)
 
     def keyPressEvent(self, event):
         """
@@ -233,7 +231,7 @@ class TreeView(QTreeView):
         :rtype: None
         """
         if event.key() == 16777220:  # Référence de la touche "entrée"
-            open_project()
+            open_project(self)
         else:
             QTreeView.keyPressEvent(self, event)
 
@@ -281,11 +279,13 @@ class MenuBar(QMenuBar):
         open_fic_action = MyAction(parent, "&Ouvrir", "Ouvrir un fichier", parent.open, "Ctrl+O")
         # Sauvegarder le fichier courant
         sauv_fic_action = MyAction(parent, "&Sauvegarder", "Sauvegarder le fichier courant", parent.save, "Ctrl+S")
-
-        #À Propos de Cthulhu
-        apropos_ide_action = MyAction(parent, "&À Propos", "À propos de SpaghettIDE", parent.a_propos)
         # Fermer l'IDE
         exit_ide_action = MyAction(parent, "&Fermer", "Fermer l'application", parent.quit_func, "Esc")
+
+        # À Propos de Cthulhu
+        apropos_ide_action = MyAction(parent, "&À Propos", "À propos de SpaghettIDE", parent.a_propos)
+        #Help
+        help_ide_action = MyAction(parent, "&Aide", "Aide sur l'IDE", parent.help_func)
 
         # Menu Fichier et ses sous-menus
         fichier_menu = self.addMenu("&Fichier")
@@ -302,6 +302,7 @@ class MenuBar(QMenuBar):
         # Menu SpaghettIDE
         spaghettide_menu = self.addMenu("&SpaghettIDE")
         spaghettide_menu.addAction(apropos_ide_action)
+        spaghettide_menu.addAction(help_ide_action)
 
 class Fenetre(QWidget):
     def __init__(self, titre, workplace_path=QDir.homePath() + "/workplace/"):
@@ -485,4 +486,11 @@ class Fenetre(QWidget):
         Donne des informations sur l'IDE
         :rtype: None
         """
-        QMessageBox.about(self, "À propos de SpaghettIDE ", "Il s'agit d'un IDE avec un éditeur de texte pour du C gérant l'auto-complétion (en utilisant un arbre préfixe et la liste des classes), l'indentation automatique, la reconnaissance des balises et la coloration des ces dernières grâce à l'analyseur lexicale LEX et l'analyseur syntaxique YACC. L'IDE est en plusieurs langues. Il est possible de créer un ou plusieurs projet(s) ainsi donc qu'un ou plusieurs fichier(s) C ou H en tant que contenu, de sauvegarder le travail ainsi effectué et d'ouvrir un projet et un fichier C ou H. On peut ouvrir et/ou créer plusieurs fichiers C ou H avec une navigation par onglets avec le nom du ou des fichier(s). Au niveau de l'interface graphique, nous retrouvons un navigateur de fichier, un compilateur, des boutons, l'éditeur de texte, un menu de navigation ainsi qu'une barre d'état. Notre IDE a pour nom SpaghettIDE et a un logo composé d'une pieuvre avec une ancre !")
+
+        apropos = open("content/apropos.txt", "r").readlines()
+
+        QMessageBox.about(self, "À propos de SpaghettIDE ", "".join(apropos))
+
+    def help_func(self):
+
+        pass
