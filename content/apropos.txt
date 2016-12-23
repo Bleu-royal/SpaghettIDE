@@ -2,7 +2,11 @@ Il s'agit d'un IDE réalisé dans le cadre du projet de TPA de L2 INFO.
 
 
 
-Concepteurs : Carreau Alexis / Lécluse Thomas / Mauger Emma / Sarrazin Théo
+                                Concepteurs : 		
+• Carreau Alexis
+• Lécluse Thomas
+• Mauger Emma
+• Sarrazin Théo
 
 
 

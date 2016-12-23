@@ -1,5 +1,5 @@
 {
-  "BACKGROUND": [50, 50, 50],
+  "BACKGROUND": [100, 100, 100],
   "ITEMS":[230, 230, 230],
   "ITEMSHOVER": [0, 200, 200]
 }

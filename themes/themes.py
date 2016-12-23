@@ -2,6 +2,11 @@
 
 import json
 
+def change_theme(theme):
+    file = open("themes/current_theme.txt", "w")
+    file.write(theme)  # We change the current theme
+    file.close()
+
 def get_current_theme():
     """
     Give the currrent theme of the application
@@ -20,7 +25,8 @@ def get_color_from_theme(what):
     Used to get colors of items depending of the selected theme
 
     token --> Coloration of tokens depending of their types.
-    treeview --> Coloration of elements in the file searcher.
+    treeview --> Coloration of elements in the TreeView (file searcher).
+    statusbar --> Coloration of elements in the status bar.
 
     :return: dict
     """

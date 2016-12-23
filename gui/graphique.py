@@ -280,6 +280,7 @@ class MenuBar(QMenuBar):
         :rtype: None
         """
         super().__init__(parent)
+        self.master = parent
 
         ## Menus
 
@@ -321,6 +322,42 @@ class MenuBar(QMenuBar):
         spaghettide_menu.addAction(apropos_ide_action)
         spaghettide_menu.addAction(help_ide_action)
 
+        # Menu Thèmes
+        theme_menu = self.addMenu("&Thème")
+        groupe_theme = QActionGroup(parent)
+
+        theme_basic = MyAction(parent, "&Thème Basique", "Thème Basique", self.to_basic)
+        theme_pimp = MyAction(parent, "&Thème Pimp", "Thème pimp", self.to_pimp)
+
+        self.set_group(theme_basic, groupe_theme, theme_menu, "basic")
+        self.set_group(theme_pimp, groupe_theme, theme_menu, "pimp")
+
+    def set_group(self, action, groupe, parent, name):
+        """
+        Create a groupe of action (especially for themes)
+
+        :param action: Action to add in a group
+        :param groupe: Group
+        :param parent: Menu where is the groupe
+        :param name: Name of the theme
+        """
+        action.setCheckable(True)
+        if name == get_current_theme():
+            action.setChecked(True)
+        groupe.addAction(action)
+        parent.addAction(action)
+
+    def to_basic(self):
+        change_theme("basic")
+        self.message_redemarrer()
+
+    def to_pimp(self):
+        change_theme("pimp")
+        self.message_redemarrer()
+
+    def message_redemarrer(self):
+        QMessageBox.critical(self.master, "Redémarrer", "Veuillez relancer l'application pour que le thème soit actualisé.")
+
 class Fenetre(QWidget):
     def __init__(self, titre, workplace_path=QDir.homePath() + "/workplace/"):
         """
@@ -337,6 +374,7 @@ class Fenetre(QWidget):
 
         self.ecran = QDesktopWidget()
         self.setWindowTitle(titre)
+        self.setStyleSheet("QObject::pane{background: darkgrey;}")
         self.setGeometry(20, 50, self.ecran.screenGeometry().width() - 100, self.ecran.screenGeometry().height() - 100)
         # Taille de la fenêtre
 
@@ -364,11 +402,14 @@ class Fenetre(QWidget):
         self.splitter.addWidget(self.treeview)
         self.splitter.addWidget(self.tab_widget)
         self.splitter.setSizes([100, 400])
-        self.splitter.setMinimumHeight(self.height()-50)
+        self.splitter.setMinimumSize(self.width(), self.height()-50)
 
         self.statusbar = QStatusBar()
+        status_color = get_color_from_theme("statusbar")
+        self.statusbar.setStyleSheet("background: "+get_rgb(status_color["BACKGROUND"])+";"
+                                     "color: "+get_rgb(status_color["TEXT"])+";")
         self.statusbar.showMessage("Hello !", 2000)
-        self.statusbar.setFixedSize(self.width(), 20)
+        self.statusbar.setFixedHeight(30)
         self.statusbar.setSizeGripEnabled(False)
 
         # self.statusbar.addWidget(MyReadWriteIndication)
@@ -512,4 +553,5 @@ class Fenetre(QWidget):
 
     def help_func(self):
 
+        self.statusbar.showMessage("AIDEZ MOIIIIIIII", 1000)
         pass
