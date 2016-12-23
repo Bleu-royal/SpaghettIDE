@@ -1,0 +1,7 @@
+{
+    "IDENTIFIER": [255, 255, 255],
+    "KEYWORD": [246, 45, 115],
+    "STRING_LITERAL": [230, 218, 123],
+    "COMMENT": [117, 113, 95],
+    "CONSTANT": [74, 133, 252]
+}

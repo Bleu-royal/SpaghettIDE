@@ -1,6 +1,23 @@
 # Module relatif à l'analyseur lexical LEX
 
 import ply.lex as lex
+import json
+
+def get_color_theme():
+    """
+    Used to get the current theme selected for the colors of the tokens
+
+    :return: dict
+    """
+    file = open("themes/current_theme.txt", "r")
+    current_theme_file = file.read()  # We load the current theme
+    file.close()
+
+    tokens_color = open("themes/"+current_theme_file, "r")
+    dict_tokens_colors = json.load(tokens_color)
+    tokens_color.close()
+
+    return dict_tokens_colors
 
 # ----------- LEX -----------#
 
@@ -150,15 +167,17 @@ tokens = [
              "COMMENT",
          ] + list(keywords.values())
 
-tokenColor = {
+tokenColor = get_color_theme()
+
+"""{
 
     "IDENTIFIER": [255, 255, 255],
     "KEYWORD": [246, 45, 115],
-    "STRING_LITERAL" : [230, 218, 123],
-    "COMMENT" : [117, 113, 95],
-    "CONSTANT" : [174, 133, 252],
+    "STRING_LITERAL": [230, 218, 123],
+    "COMMENT": [117, 113, 95],
+    "CONSTANT": [174, 133, 252]
 
-}
+}"""
 
 t_STRING_LITERAL = r"[A-Za-z_]?\"(\.|[^\"])*\""
 t_ELLIPSIS = r"\.\.\."
