@@ -1,23 +1,7 @@
 # Module relatif à l'analyseur lexical LEX
 
 import ply.lex as lex
-import json
-
-def get_color_theme():
-    """
-    Used to get the current theme selected for the colors of the tokens
-
-    :return: dict
-    """
-    file = open("themes/current_theme.txt", "r")
-    current_theme_file = file.read()  # We load the current theme
-    file.close()
-
-    tokens_color = open("themes/"+current_theme_file, "r")
-    dict_tokens_colors = json.load(tokens_color)
-    tokens_color.close()
-
-    return dict_tokens_colors
+from themes.themes import *
 
 # ----------- LEX -----------#
 
@@ -167,7 +151,7 @@ tokens = [
              "COMMENT",
          ] + list(keywords.values())
 
-tokenColor = get_color_theme()
+tokenColor = get_color_from_theme("token")
 
 """{
 

@@ -8,6 +8,7 @@ from systeme.couleurs import *
 from systeme.document import *
 from systeme.workplace import *
 from lexer import *
+from themes.themes import *
 
 sys.path[:0] = ["../"]
 sys.path[:0] = ["gui"]
@@ -191,7 +192,7 @@ class TreeView(QTreeView):
 
         self.fenetre = fenetre
 
-        self.setStyleSheet("background-color: rgb(50, 50, 50); color: white")
+        #self.setStyleSheet("background-color: rgb(50, 50, 50); color: white")
 
         self.model = QFileSystemModel()
         self.file = QFile()
@@ -201,9 +202,10 @@ class TreeView(QTreeView):
         for i in range(1, 4):
             self.hideColumn(i)
 
-        self.setAnimated(True)
+        self.setAnimated(True)  # Animations
+
         self.filters = []
-        extentions = ("*c", "*h", "*txt")
+        extentions = ("*c", "*h")
         for ext in extentions:
             self.filters.append(ext)
 
@@ -212,6 +214,11 @@ class TreeView(QTreeView):
         # self.model.setFilter(QDir.Filter)
         self.model.setReadOnly(False)
         self.setRootIndex(self.model.index(self.fenetre.workplace_path))
+
+        colors = get_color_from_theme("treeview")
+        self.setStyleSheet("QTreeView{background: "+get_rgb(colors["BACKGROUND"])+";}"
+                           "QTreeView::item{color: "+get_rgb(colors["ITEMS"])+";}"
+                           "QTreeView::item:hover{color: "+get_rgb(colors["ITEMSHOVER"])+";}")
 
         self.cacher_pas_projet()
 
@@ -338,6 +345,7 @@ class Fenetre(QWidget):
         self.project_path = ""
 
         self.gridLayout = QGridLayout()
+        self.gridLayout.setContentsMargins(0, 0, 0, 0)  # No spacing around widgets
 
         # Ajout du logo pieuvre
         # self.label_img = QLabel()
