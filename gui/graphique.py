@@ -83,6 +83,9 @@ class TabWidget(QTabWidget):
         shortcut_prev_tab = QShortcut(QKeySequence('Alt+Shift+tab'), self)
         shortcut_prev_tab.activated.connect(self.prev_tab)
 
+        self.set_style()
+
+    def set_style(self):
         url = QDir().currentPath() + "/images/medium.jpg"
         self.setStyleSheet("QTabWidget::pane{background-image: url(images/medium.gif);"
                            "background-repeat: no-repeat;background-position: center}"
@@ -188,17 +191,22 @@ class TreeView(QTreeView):
 
         self.fenetre = fenetre
 
+        self.setStyleSheet("background-color: rgb(50, 50, 50); color: white")
+
         self.model = QFileSystemModel()
         self.file = QFile()
         self.model.setRootPath(self.fenetre.workplace_path)
         self.setModel(self.model)
-        self.hideColumn(1)
-        self.hideColumn(2)
-        self.hideColumn(3)
+
+        for i in range(1, 4):
+            self.hideColumn(i)
+
         self.setAnimated(True)
         self.filters = []
-        self.filters.append("*c")
-        self.filters.append("*h")
+        extentions = ("*c", "*h", "*txt")
+        for ext in extentions:
+            self.filters.append(ext)
+
         self.model.setNameFilters(self.filters)
         # self.model.setNameFilterDisables(False)
         # self.model.setFilter(QDir.Filter)
@@ -244,8 +252,11 @@ class TreeView(QTreeView):
         path = self.model.filePath(self.currentIndex())
         name = self.model.fileName(self.currentIndex())
         ext = name.split(".")[-1]
-        if ext in ("c", "h") and self.fenetre.project_path in path and self.fenetre.project_path != "":
+        if ext in ("c", "h"):
             self.fenetre.open(path)
+        else:
+            QMessageBox.critical(self.fenetre, "Erreur d'ouverture", "L'extention séléctionnée n'est pas lisible par notre IDE.\n\n"
+                                                                     "Pour le moment...")
 
 
 class MenuBar(QMenuBar):
@@ -319,7 +330,7 @@ class Fenetre(QWidget):
 
         self.ecran = QDesktopWidget()
         self.setWindowTitle(titre)
-        self.setGeometry(50, 50, self.ecran.screenGeometry().width() - 100, self.ecran.screenGeometry().height() - 100)
+        self.setGeometry(20, 50, self.ecran.screenGeometry().width() - 100, self.ecran.screenGeometry().height() - 100)
         # Taille de la fenêtre
 
         self.workplace_path = workplace_path
@@ -341,15 +352,16 @@ class Fenetre(QWidget):
 
         self.tab_widget = TabWidget(self)
 
-        self.statusbar = QStatusBar()
-        self.statusbar.showMessage("Hello !", 2000)
-        self.statusbar.setFixedSize(self.ecran.screenGeometry().width() * 4/5, 20)
-        self.statusbar.setSizeGripEnabled(False)
-
         self.splitter = QSplitter()
         self.splitter.addWidget(self.treeview)
         self.splitter.addWidget(self.tab_widget)
         self.splitter.setSizes([100, 400])
+        self.splitter.setMinimumHeight(self.height()-50)
+
+        self.statusbar = QStatusBar()
+        self.statusbar.showMessage("Hello !", 2000)
+        self.statusbar.setFixedSize(self.width(), 20)
+        self.statusbar.setSizeGripEnabled(False)
 
         # self.statusbar.addWidget(MyReadWriteIndication)
         self.menuBar = MenuBar(self)
