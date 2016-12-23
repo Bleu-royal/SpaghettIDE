@@ -244,9 +244,9 @@ def colorate(data):
         token = lexer.token()
         if not token: break
         if token.type.lower() in types:
-            res += [[token.value, [107, 217, 237]]]
+            res += [[token.value, tokenColor["TYPE"]]]
         elif token.type.lower() in operandes:
-            res += [[token.value, [246, 45, 115]]]
+            res += [[token.value, tokenColor["OP"]]]
         elif token.type == "IDENTIFIER" and token.value in know_functions:
             res += [[token.value, [107, 217, 237]]]
         elif token.type == "IDENTIFIER" and token.value in know_const:

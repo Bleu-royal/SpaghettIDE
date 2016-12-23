@@ -1,0 +1,9 @@
+{
+  "text-back-color": [31, 31, 31],
+  "text-color": [255, 255, 255],
+  "tab-color": [0, 0, 0],
+  "tab-back-color": [100, 100, 100],
+  "tab-hover-back-color": [31, 31, 31],
+  "tab-hover-color": [255, 255, 255],
+  "tab-hover-bord-bot-color": [0, 0, 0]
+}

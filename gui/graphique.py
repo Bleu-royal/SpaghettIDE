@@ -88,13 +88,17 @@ class TabWidget(QTabWidget):
 
     def set_style(self):
         url = QDir().currentPath() + "/images/medium.jpg"
+        c = get_color_from_theme("textedit")
         self.setStyleSheet("QTabWidget::pane{background-image: url(images/medium.gif);"
                            "background-repeat: no-repeat;background-position: center}"
-                           "QTabWidget::tab-bar{left:0;}QTabBar::tab{color:black;"
-                           "background-color:gray;border-bottom: 2px solid transparent;padding:7px 15px;"
+                           "QTabWidget::tab-bar{left:0;}QTabBar::tab{color: "+get_rgb(c["tab-color"])+";"
+                           "background-color:"+get_rgb(c["tab-back-color"])+";"
+                           "border-bottom: 2px solid transparent;padding:7px 15px;"
                            "margin-top:0px;border-top-left-radius:10px;border-top-right-radius:10px;}"
                            "QTabBar::tab:selected,"
-                           "QTabBar::tab:hover{background-color:#2E2E2E; color: white;border-bottom:#2E2E2E;}"
+                           "QTabBar::tab:hover{background-color:"+get_rgb(c["tab-hover-back-color"])+";"
+                           "color: "+get_rgb(c["tab-hover-color"])+";"
+                           "border-bottom:"+get_rgb(c["tab-hover-bord-bot-color"])+";}"
                            "QTabBar::tab:!selected {margin-top: 5px;}")
 
     def close_current_tab(self):
@@ -497,7 +501,8 @@ class Fenetre(QWidget):
         :type title: str
         :rtype: None
         """
-        self.codes += [Editeur("ABeeZee", "#2E2E2E", "white", 14)]
+        c = get_color_from_theme("textedit")
+        self.codes += [Editeur("ABeeZee", get_rgb(c["text-back-color"]), get_rgb(c["text-color"]), 14)]
         self.highlighters += [CodeHighLighter(self.codes[-1], self.codes[-1].document())]
         self.tab_widget.addTab(self.codes[-1], title)
         self.tab_widget.setCurrentIndex(len(self.codes) - 1)

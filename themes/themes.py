@@ -27,6 +27,7 @@ def get_color_from_theme(what):
     token --> Coloration of tokens depending of their types.
     treeview --> Coloration of elements in the TreeView (file searcher).
     statusbar --> Coloration of elements in the status bar.
+    textedit --> Colors of the tabs and the background of the textedit area.
 
     :return: dict
     """
