@@ -1,5 +1,6 @@
-Il s'agit d'un IDE réalisé dans le cadre du projet de TPA de L2 INFO.
+À propos de SpaghettIDE©
 
+Il s'agit d'un IDE réalisé dans le cadre du projet de TPA de L2 INFO.
 
 
                                 Concepteurs : 		
