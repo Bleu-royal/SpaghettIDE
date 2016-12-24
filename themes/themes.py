@@ -17,7 +17,11 @@ def get_current_theme():
     current_theme_dir = file.read()  # We load the current theme
     file.close()
 
-    return current_theme_dir
+    if current_theme_dir not in ("basic", "pimp", "forest"):
+        change_theme("basic")
+        return get_current_theme()
+    else:
+        return current_theme_dir
 
 
 def get_color_from_theme(what):

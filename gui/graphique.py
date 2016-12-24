@@ -9,6 +9,7 @@ from systeme.document import *
 from systeme.workplace import *
 from lexer import *
 from themes.themes import *
+from language.language import *
 
 sys.path[:0] = ["../"]
 sys.path[:0] = ["gui"]
@@ -286,81 +287,114 @@ class MenuBar(QMenuBar):
         super().__init__(parent)
         self.master = parent
 
-        ## Menus
-
         # Nouveau Projet
         new_project_action = MyAction(parent, "&Nouveau Projet", "Nouveau projet", parent.new_project, "Ctrl+M")
-        # Ouvrir un projet déjà existant
         open_project_action = MyAction(parent, "&Ouvrir Projet", "Ouvrir un projet", parent.open_project, "Ctrl+L")
-        # Fermer le projet
         exit_project_action = MyAction(parent, "&Fermer Projet", "Fermer le projet", parent.close_project, "Ctrl+K")
 
         # Nouveau Fichier
         new_fic_action = MyAction(parent, "&Nouveau", "Nouveau fichier", parent.new, "Ctrl+N")
-        # Ouvrir un fichier déjà existant
         open_fic_action = MyAction(parent, "&Ouvrir", "Ouvrir un fichier", parent.open, "Ctrl+O")
-        # Sauvegarder le fichier courant
         sauv_fic_action = MyAction(parent, "&Sauvegarder", "Sauvegarder le fichier courant", parent.save, "Ctrl+S")
-        # Fermer l'IDE
         exit_ide_action = MyAction(parent, "&Fermer", "Fermer l'application", parent.quit_func, "Esc")
 
-        # À Propos de Cthulhu
+        # Menu divers
         apropos_ide_action = MyAction(parent, "&À Propos", "À propos de SpaghettIDE", parent.a_propos)
-        #Help
         help_ide_action = MyAction(parent, "&Aide", "Aide sur l'IDE", parent.help_func)
 
-        # Menu Fichier et ses sous-menus
+        ##### Menu Fichier et ses sous-menus ####
         fichier_menu = self.addMenu("&Fichier")
-        fichier_menu.addAction(new_fic_action)
-        fichier_menu.addAction(open_fic_action)
-        fichier_menu.addAction(sauv_fic_action)
-        fichier_menu.addSeparator()
-        fichier_menu.addAction(exit_ide_action)
-        # Menu Projet et ses sous-menus
+        self.set_actions(fichier_menu, new_fic_action, open_fic_action, sauv_fic_action, "sep", exit_ide_action)
+
+        #### Menu Projet et ses sous-menus ####
         projet_menu = self.addMenu("&Projet")
-        projet_menu.addAction(new_project_action)
-        projet_menu.addAction(open_project_action)
-        projet_menu.addAction(exit_project_action)
-        # Menu SpaghettIDE
-        spaghettide_menu = self.addMenu("&SpaghettIDE")
-        spaghettide_menu.addAction(apropos_ide_action)
-        spaghettide_menu.addAction(help_ide_action)
+        self.set_actions(projet_menu, new_project_action, open_project_action, exit_project_action)
 
-        # Menu Thèmes
-        theme_menu = self.addMenu("&Thème")
+        #### Menu Apparence ####
+        apparence_menu = self.addMenu("&Apparence")
+
+        # Thèmes
         groupe_theme = QActionGroup(parent)
-
-        theme_basic = MyAction(parent, "&Thème Basique", "Thème Basique", self.to_basic)
+        theme_basic = MyAction(parent, "&Thème Basique", "Thème basique", self.to_basic)
         theme_pimp = MyAction(parent, "&Thème Pimp", "Thème pimp", self.to_pimp)
+        theme_forest = MyAction(parent, "&Thème Forêt", "Thème forêt", self.to_forest)
 
-        self.set_group(theme_basic, groupe_theme, theme_menu, "basic")
-        self.set_group(theme_pimp, groupe_theme, theme_menu, "pimp")
+        self.set_group(theme_basic, groupe_theme, apparence_menu, "basic")
+        self.set_group(theme_pimp, groupe_theme, apparence_menu, "pimp")
+        self.set_group(theme_forest, groupe_theme, apparence_menu, "forest")
 
-    def set_group(self, action, groupe, parent, name):
+        apparence_menu.addSeparator()
+
+        #Langues
+        groupe_langue = QActionGroup(parent)
+        fr = MyAction(parent, "&Français", "Français", self.to_fr)
+        en = MyAction(parent, "&English", "English", self.to_en)
+
+        self.set_group(fr, groupe_langue, apparence_menu, "fr")
+        self.set_group(en, groupe_langue, apparence_menu, "en")
+
+        #### Menu SpaghettIDE ####
+        spaghettide_menu = self.addMenu("&SpaghettIDE")
+        self.set_actions(spaghettide_menu, apropos_ide_action, help_ide_action)
+
+    def set_actions(self, menu, *args):
+        """
+        Sets all actions to a menu
+
+        :param menu: Menu where actions will be added (QMenuBar)
+        :type menu: object
+        :param args: List of actions you wanna add
+        :type args: list
+        :rtype: None
+        """
+        for a in args:
+            if a == "sep":
+                menu.addSeparator()
+            else:
+                menu.addAction(a)
+
+    def set_group(self, action, groupe, menu, name):
         """
         Create a groupe of action (especially for themes)
 
         :param action: Action to add in a group
         :param groupe: Group
-        :param parent: Menu where is the groupe
+        :param menu: Menu where is the groupe
         :param name: Name of the theme
         """
         action.setCheckable(True)
-        if name == get_current_theme():
+        if name in (get_current_theme(), get_current_language()):
             action.setChecked(True)
         groupe.addAction(action)
-        parent.addAction(action)
+        menu.addAction(action)
+
+    # Themes
+    def __change_theme_to(self, theme):
+        if get_current_theme() != theme:
+            change_theme(theme)
+            self.message_redemarrer()
 
     def to_basic(self):
-        change_theme("basic")
-        self.message_redemarrer()
+        self.__change_theme_to("basic")
 
     def to_pimp(self):
-        change_theme("pimp")
-        self.message_redemarrer()
+        self.__change_theme_to("pimp")
+
+    def to_forest(self):
+        self.__change_theme_to("forest")
+
+    # Languages
+    def to_fr(self):
+        if get_current_language() != "fr":
+            self.master.statusbar.showMessage("Changement en langue Française à venir.", 2000)
+
+    def to_en(self):
+        if get_current_language() != "en":
+            self.master.statusbar.showMessage("English language comming soon !", 2000)
 
     def message_redemarrer(self):
         QMessageBox.critical(self.master, "Redémarrer", "Veuillez relancer l'application pour que le thème soit actualisé.")
+
 
 class Fenetre(QWidget):
     def __init__(self, titre, workplace_path=QDir.homePath() + "/workplace/"):
@@ -429,27 +463,6 @@ class Fenetre(QWidget):
         #     self.show()
 
         self.show()
-
-    def quit_func(self):
-        """
-        Fonction de fermeture de l'IDE.
-        On affiche une petite boîte pour demander si l'on souhaite vraiment fermer l'IDE.
-        Les touches "return" et "escape" sont respectivement reliées à "Fermer" et "Annuler".
-
-        :rtype: None
-        """
-        self.statusbar.showMessage("Fermeture...")  # Message de status
-        box = QMessageBox()
-        box.setText("Voulez-vous vraiment fermer l'IDE ?")
-        box.setStandardButtons(QMessageBox.Cancel | QMessageBox.Close)
-        box.setDefaultButton(QMessageBox.Close)
-        box.setEscapeButton(QMessageBox.Cancel)
-        val = box.exec_()
-
-        if val == QMessageBox.Close:
-            self.close()
-        else:
-            self.statusbar.showMessage("... ou pas !!", 1000)  # Message de status
 
     def new(self):
         """
@@ -560,3 +573,26 @@ class Fenetre(QWidget):
 
         self.statusbar.showMessage("AIDEZ MOIIIIIIII", 1000)
         pass
+
+    def quit_func(self):
+        """
+        Fonction de fermeture de l'IDE.
+        On affiche une petite boîte pour demander si l'on souhaite vraiment fermer l'IDE.
+        Les touches "return" et "escape" sont respectivement reliées à "Fermer" et "Annuler".
+
+        :rtype: None
+        """
+        self.statusbar.showMessage("Fermeture...")  # Message de status
+        box = QMessageBox()
+        box.setText("Voulez-vous vraiment fermer l'IDE ?")
+        box.setStandardButtons(QMessageBox.Cancel | QMessageBox.Close)
+        box.setDefaultButton(QMessageBox.Close)
+        box.setEscapeButton(QMessageBox.Cancel)
+        val = box.exec_()
+
+        if val == QMessageBox.Close:
+            self.restart = False
+            self.close()
+        else:
+            self.statusbar.showMessage("... ou pas !!", 1000)  # Message de status
+
