@@ -318,11 +318,13 @@ class MenuBar(QMenuBar):
         theme_basic = MyAction(parent, "&Thème Basique", "Thème basique", self.to_basic)
         theme_pimp = MyAction(parent, "&Thème Pimp", "Thème pimp", self.to_pimp)
         theme_forest = MyAction(parent, "&Thème Forêt", "Thème forêt", self.to_forest)
+        theme_ocean = MyAction(parent, "&Thème Océan", "Thème océan", self.to_ocean)
         # autre_theme = MyAction(parent, "&nom theme", "nom theme", self.fonction_a_relier)
 
         self.set_group(theme_basic, groupe_theme, apparence_menu, "basic")
         self.set_group(theme_pimp, groupe_theme, apparence_menu, "pimp")
         self.set_group(theme_forest, groupe_theme, apparence_menu, "forest")
+        self.set_group(theme_ocean, groupe_theme, apparence_menu, "ocean")
         # self.set_group(autre_theme, groupe_theme, apparence_menu, "nom theme")
 
         apparence_menu.addSeparator()
@@ -385,6 +387,9 @@ class MenuBar(QMenuBar):
     def to_forest(self):
         self.__change_theme_to("forest")
 
+    def to_ocean(self):
+        self.__change_theme_to("ocean")
+
     # Languages
     def to_fr(self):
         if get_current_language() != "fr":
@@ -414,7 +419,7 @@ class Fenetre(QWidget):
 
         self.ecran = QDesktopWidget()
         self.setWindowTitle(titre)
-        self.setStyleSheet("QObject::pane{background: darkgrey;}")
+        self.setStyleSheet("QObject::pane{background: "+get_rgb(get_color_from_theme("textedit")["text-back-color"])+";}")
         self.setGeometry(20, 50, self.ecran.screenGeometry().width() - 100, self.ecran.screenGeometry().height() - 100)
         # Taille de la fenêtre
 

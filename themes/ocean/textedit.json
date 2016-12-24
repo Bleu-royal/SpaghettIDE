@@ -1,0 +1,37 @@
+{
+  "tab-back-color": [
+    66,
+    66,
+    111
+  ],
+  "text-color": [
+    0,
+    0,
+    0
+  ],
+  "tab-hover-bord-bot-color": [
+    0,
+    0,
+    0
+  ],
+  "tab-hover-back-color": [
+    65,
+    143,
+    155
+  ],
+  "text-back-color": [
+    51,
+    153,
+    255
+  ],
+  "tab-hover-color": [
+    165,
+    243,
+    100
+  ],
+  "tab-color": [
+    165,
+    243,
+    255
+  ]
+}
