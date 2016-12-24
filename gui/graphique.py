@@ -318,10 +318,12 @@ class MenuBar(QMenuBar):
         theme_basic = MyAction(parent, "&Thème Basique", "Thème basique", self.to_basic)
         theme_pimp = MyAction(parent, "&Thème Pimp", "Thème pimp", self.to_pimp)
         theme_forest = MyAction(parent, "&Thème Forêt", "Thème forêt", self.to_forest)
+        # autre_theme = MyAction(parent, "&nom theme", "nom theme", self.fonction_a_relier)
 
         self.set_group(theme_basic, groupe_theme, apparence_menu, "basic")
         self.set_group(theme_pimp, groupe_theme, apparence_menu, "pimp")
         self.set_group(theme_forest, groupe_theme, apparence_menu, "forest")
+        # self.set_group(autre_theme, groupe_theme, apparence_menu, "nom theme")
 
         apparence_menu.addSeparator()
 

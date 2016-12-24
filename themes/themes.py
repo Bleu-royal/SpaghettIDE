@@ -1,6 +1,7 @@
 # Gestion des thèmes
 
 import json
+import os
 
 def change_theme(theme):
     file = open("themes/current_theme.txt", "w")
@@ -17,7 +18,7 @@ def get_current_theme():
     current_theme_dir = file.read()  # We load the current theme
     file.close()
 
-    if current_theme_dir not in ("basic", "pimp", "forest"):
+    if current_theme_dir not in os.listdir("themes"):  # If the theme doesn't exists, we use the basic theme.
         change_theme("basic")
         return get_current_theme()
     else:
