@@ -4,24 +4,19 @@
     13,
     22
   ],
-  "tab-hover-back-color": [
-    165,
-    38,
-    10
+  "text-color": [
+    255,
+    255,
+    255
   ],
-  "tab-hover-bord-bot-color": [
-    0,
-    0,
-    0
+  "tab-color": [
+    255,
+    255,
+    255
   ],
   "tab-back-color": [
     204,
     85,
-    0
-  ],
-  "tab-color": [
-    0,
-    0,
     0
   ],
   "tab-hover-color": [
@@ -29,9 +24,14 @@
     0,
     0
   ],
-  "text-color": [
-    0,
-    0,
-    0
+  "tab-hover-back-color": [
+    150,
+    131,
+    255
+  ],
+  "tab-hover-bord-bot-color": [
+    150,
+    131,
+    255
   ]
 }
