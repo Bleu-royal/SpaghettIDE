@@ -5,6 +5,12 @@ from themes.themes import *
 
 # ----------- LEX -----------#
 
+tokenColor = get_color_from_theme("token")
+
+def update_token_color():
+    global tokenColor
+    tokenColor = get_color_from_theme("token")
+
 types = [
     "char",
     "bool",
@@ -150,8 +156,6 @@ tokens = [
              "INTER",
              "COMMENT",
          ] + list(keywords.values())
-
-tokenColor = get_color_from_theme("token")
 
 """{
 
