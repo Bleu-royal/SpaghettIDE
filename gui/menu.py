@@ -143,8 +143,11 @@ class MenuBar(QMenuBar):
     def __change_theme_to(self, theme):
         if get_current_theme() != theme:
             change_theme(theme)
-            self.message_redemarrer()
-            self.master.maj_style()
+            self.master.full_maj_style()
+
+        self.master.statusbar.showMessage("Thème actuel : " + theme +
+                                          ". La coloration lexicale sera actualisée lorsque vous écrirez un caractère.",
+                                          4000)
 
     def to_basic(self):
         self.__change_theme_to("basic")
@@ -172,7 +175,3 @@ class MenuBar(QMenuBar):
     def to_en(self):
         if get_current_language() != "en":
             self.master.statusbar.showMessage("English language comming soon !", 2000)
-
-    def message_redemarrer(self):
-        QMessageBox.critical(self.master, "Redémarrer", "Veuillez relancer l'application pour que le thème "
-                                                        "soit actualisé.")

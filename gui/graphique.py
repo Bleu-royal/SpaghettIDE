@@ -24,7 +24,7 @@ sys.path[:0] = ["gui"]
 
 
 class Editeur(QPlainTextEdit):
-    def __init__(self, police, couleur_fond, couleur_texte, taille_texte):
+    def __init__(self, police, taille_texte):
         """
         Hérite de QTextEdit.
         C'est une zone de texte dans laquelle on peut écrire, que l'on utilise ici pour écrire du code.
@@ -41,11 +41,10 @@ class Editeur(QPlainTextEdit):
         :rtype: None
         """
         super().__init__()
+        self.police = police
+        self.taille_texte = taille_texte
 
-        self.setStyleSheet("QPlainTextEdit { background-color:" + couleur_fond + ";"
-                           + "font-family:" + police + ";"
-                           + "color:" + couleur_texte + ";"
-                           + "font-size:" + str(taille_texte) + "pt; }")
+        self.maj_style()
 
     # self.append("int main ( int argc, char** argv ){\n\n\treturn 0;\n\n}")
 
@@ -54,6 +53,14 @@ class Editeur(QPlainTextEdit):
 
         if event.key() == 16777220:
             yaccing(self.toPlainText())
+
+    def maj_style(self):
+        c = get_color_from_theme("textedit")
+
+        self.setStyleSheet("QPlainTextEdit { background-color:" + get_rgb(c["text-back-color"]) + ";"
+                           + "font-family:" + self.police + ";"
+                           + "color:" + get_rgb(c["text-color"]) + ";"
+                           + "font-size:" + str(self.taille_texte) + "pt; }")
 
 
 class Fenetre(QWidget):
@@ -72,8 +79,6 @@ class Fenetre(QWidget):
 
         self.ecran = QDesktopWidget()
         self.setWindowTitle(titre)
-        self.setStyleSheet("QObject::pane{background: " + get_rgb(get_color_from_theme("textedit")
-                                                                  ["text-back-color"]) + ";}")
         self.setGeometry(20, 50, self.ecran.screenGeometry().width() - 100, self.ecran.screenGeometry().height() - 100)
         # Taille de la fenêtre
 
@@ -104,9 +109,6 @@ class Fenetre(QWidget):
         self.splitter.setMinimumSize(self.width(), self.height() - 50)
 
         self.statusbar = QStatusBar()
-        status_color = get_color_from_theme("statusbar")
-        self.statusbar.setStyleSheet("background: " + get_rgb(status_color["BACKGROUND"]) + ";""color: " +
-                                     get_rgb(status_color["TEXT"]) + ";")
         self.statusbar.showMessage("Hello !", 2000)
         self.statusbar.setFixedHeight(30)
         self.statusbar.setSizeGripEnabled(False)
@@ -124,6 +126,8 @@ class Fenetre(QWidget):
         #     self.show()
 
         self.show()
+
+        self.maj_style()
 
     def new(self):
         """
@@ -175,8 +179,7 @@ class Fenetre(QWidget):
         :type title: str
         :rtype: None
         """
-        c = get_color_from_theme("textedit")
-        self.codes += [Editeur("ABeeZee", get_rgb(c["text-back-color"]), get_rgb(c["text-color"]), 14)]
+        self.codes += [Editeur("ABeeZee", 14)]
         self.highlighters += [CodeHighLighter(self.codes[-1], self.codes[-1].document())]
         self.tab_widget.addTab(self.codes[-1], title)
         self.tab_widget.setCurrentIndex(len(self.codes) - 1)
@@ -235,12 +238,29 @@ class Fenetre(QWidget):
         self.statusbar.showMessage("AIDEZ MOIIIIIIII", 1000)
         pass
 
+    # Thèmes
     def maj_style(self):
+
+        self.setStyleSheet("QObject::pane{background: " + get_rgb(get_color_from_theme("textedit")
+                                                                  ["text-back-color"]) + ";}")
+
+        # Status bar : there is no class for it, so we define it's theme in the main graphic function.
+        status_color = get_color_from_theme("statusbar")
+        self.statusbar.setStyleSheet("background: " + get_rgb(status_color["BACKGROUND"]) + ";""color: " +
+                                     get_rgb(status_color["TEXT"]) + ";")
+
+        for onglets_ouverts in self.codes:
+            onglets_ouverts.maj_style()
+
+    def full_maj_style(self):
         """
         updating style --> theme
         :return:
         """
-        self.treeview.maj_style()
+        l_objects = (self.treeview, self, self.tab_widget)
+        for o in l_objects:
+            o.maj_style()
+
         update_token_color()
 
     def quit_func(self):

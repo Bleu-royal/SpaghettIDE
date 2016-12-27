@@ -42,9 +42,9 @@ class TabWidget(QTabWidget):
         shortcut_prev_tab = QShortcut(QKeySequence('Alt+Shift+tab'), self)
         shortcut_prev_tab.activated.connect(self.prev_tab)
 
-        self.set_style()
+        self.maj_style()
 
-    def set_style(self):
+    def maj_style(self):
         url = QDir().currentPath() + "/images/medium.jpg"
         c = get_color_from_theme("textedit")
         self.setStyleSheet("QTabWidget::pane{background-image: url(images/medium.gif);"
