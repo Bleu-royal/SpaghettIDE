@@ -76,6 +76,9 @@ class MenuBar(QMenuBar):
         # # # Menu Apparence # # #
         apparence_menu = self.addMenu("&Apparence")
 
+        clair = apparence_menu.addMenu("&Thème clair")
+        fonce = apparence_menu.addMenu("&Thème foncé")
+
         # Thèmes
         groupe_theme = QActionGroup(parent)
         theme_basic = MyAction(parent, "&Thème Basique", "Thème Basique", self.to_basic)
@@ -87,13 +90,13 @@ class MenuBar(QMenuBar):
         theme_pastel = MyAction(parent, "&Thème Pastel", "Thème Pastel", self.to_pastel)
         # autre_theme = MyAction(parent, "&nom theme", "nom theme", self.fonction_a_relier)
 
-        self.set_group(theme_basic, groupe_theme, apparence_menu, "basic")
-        self.set_group(theme_pimp, groupe_theme, apparence_menu, "pimp")
-        self.set_group(theme_forest, groupe_theme, apparence_menu, "forest")
-        self.set_group(theme_ocean, groupe_theme, apparence_menu, "ocean")
-        self.set_group(theme_galaxy, groupe_theme, apparence_menu, "galaxy")
-        self.set_group(theme_blackwhite, groupe_theme, apparence_menu, "black_white")
-        self.set_group(theme_pastel, groupe_theme, apparence_menu, "pastel")
+        self.set_group(theme_basic, groupe_theme, fonce, "basic")
+        self.set_group(theme_pimp, groupe_theme, clair, "pimp")
+        self.set_group(theme_forest, groupe_theme, fonce, "forest")
+        self.set_group(theme_ocean, groupe_theme, clair, "ocean")
+        self.set_group(theme_galaxy, groupe_theme, fonce, "galaxy")
+        self.set_group(theme_blackwhite, groupe_theme, fonce, "black_white")
+        self.set_group(theme_pastel, groupe_theme, clair, "pastel")
         # self.set_group(autre_theme, groupe_theme, apparence_menu, "nom theme")
 
         apparence_menu.addSeparator()
@@ -126,20 +129,20 @@ class MenuBar(QMenuBar):
             else:
                 menu.addAction(a)
 
-    def set_group(self, action, groupe, menu, name):
+    def set_group(self, action, groupe, sous_groupe, name):
         """
         Create a groupe of action (especially for themes)
 
         :param action: Action to add in a group
         :param groupe: Group
-        :param menu: Menu where is the groupe
+        :param sous_groupe: Secondary menu where will be aded the action
         :param name: Name of the theme
         """
         action.setCheckable(True)
         if name in (get_current_theme(), get_current_language()):
             action.setChecked(True)
         groupe.addAction(action)
-        menu.addAction(action)
+        sous_groupe.addAction(action)
 
     # Themes
     def __change_theme_to(self, theme):
