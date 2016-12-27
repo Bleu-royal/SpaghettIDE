@@ -83,7 +83,8 @@ class MenuBar(QMenuBar):
         theme_forest = MyAction(parent, "&Thème Forêt", "Thème Forêt", self.to_forest)
         theme_ocean = MyAction(parent, "&Thème Océan", "Thème Océan", self.to_ocean)
         theme_galaxy = MyAction(parent, "&Thème Galaxie", "Thème Galaxie", self.to_galaxy)
-        theme_blackwhite = MyAction(parent, "&Thème Black & White", "Thème Black & White", self.to_blackwhite)
+        theme_blackwhite = MyAction(parent, "&Thème Black n White", "Thème Black n White", self.to_blackwhite)
+        theme_pastel = MyAction(parent, "&Thème Pastel", "Thème Pastel", self.to_pastel)
         # autre_theme = MyAction(parent, "&nom theme", "nom theme", self.fonction_a_relier)
 
         self.set_group(theme_basic, groupe_theme, apparence_menu, "basic")
@@ -92,6 +93,7 @@ class MenuBar(QMenuBar):
         self.set_group(theme_ocean, groupe_theme, apparence_menu, "ocean")
         self.set_group(theme_galaxy, groupe_theme, apparence_menu, "galaxy")
         self.set_group(theme_blackwhite, groupe_theme, apparence_menu, "black_white")
+        self.set_group(theme_pastel, groupe_theme, apparence_menu, "pastel")
         # self.set_group(autre_theme, groupe_theme, apparence_menu, "nom theme")
 
         apparence_menu.addSeparator()
@@ -145,9 +147,9 @@ class MenuBar(QMenuBar):
             change_theme(theme)
             self.master.full_maj_style()
 
-        self.master.statusbar.showMessage("Thème actuel : " + theme +
-                                          ". La coloration lexicale sera actualisée lorsque vous écrirez un caractère.",
-                                          4000)
+            self.master.statusbar.showMessage("Thème actuel : " + theme +
+                                              ". La coloration lexicale sera actualisée lorsque "
+                                              "vous écrirez un caractère.", 4000)
 
     def to_basic(self):
         self.__change_theme_to("basic")
@@ -166,6 +168,9 @@ class MenuBar(QMenuBar):
 
     def to_blackwhite(self):
         self.__change_theme_to("black_white")
+
+    def to_pastel(self):
+        self.__change_theme_to("pastel")
 
     # Languages
     def to_fr(self):

@@ -260,7 +260,11 @@ def colorate(data):
         elif token.type in tokenColor:
             res += [[token.value, tokenColor[token.type]]]
         else:
-            res += [[token.value, [255, 255, 255]]]
+            if "PONCT" not in tokenColor:
+                ponct = [255, 255, 255]
+            else:
+                ponct = tokenColor["PONCT"]
+            res += [[token.value, ponct]]
     return res
 
 
