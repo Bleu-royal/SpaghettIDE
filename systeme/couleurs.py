@@ -62,3 +62,9 @@ class CodeHighLighter(QSyntaxHighlighter):
 
             self.setFormat(current_pos, len(word), QColor.fromRgb(color[0], color[1], color[2]))
             current_pos += len(word)
+
+        if self.editeur.yacc_erreurs != []:
+            textFormat = QTextCharFormat()
+            textFormat.setFontUnderline(True)
+            textFormat.setUnderlineColor(QColor.fromRgb(255, 0, 0))
+            self.setFormat(0, len(text), textFormat)

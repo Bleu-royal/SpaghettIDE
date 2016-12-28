@@ -269,6 +269,7 @@ def colorate(data):
 
 
 lignes = {}
+erreurs = []
 
 start = "translation_unit"
 
@@ -932,13 +933,21 @@ def p_function_definition(p):
 
 def p_error(p):
   if p:
+    global erreurs
+    erreurs += [p.lineno]
     print("---------------Syntax error in input : ", p.lineno, p.type, p.value)
 
 
 def yaccing(data):
-    import ply.yacc as yacc
-    parser = yacc.yacc()
-    parser.parse(data, tracking=True)
 
-    for i in sorted([int(i) for i in list(lignes.keys())]):
-      print("ligne numero %s: %s"%(i+1, lignes[str(i)]), "\n\n")
+  global erreurs
+  erreurs = []
+
+  import ply.yacc as yacc
+  parser = yacc.yacc()
+  parser.parse(data, tracking=True)
+
+  for i in sorted([int(i) for i in list(lignes.keys())]):
+    print("ligne numero %s: %s"%(i+1, lignes[str(i)]), "\n\n")
+
+  return erreurs

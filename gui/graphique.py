@@ -44,15 +44,19 @@ class Editeur(QPlainTextEdit):
         self.police = police
         self.taille_texte = taille_texte
 
+        self.yacc_erreurs = []
+
         self.maj_style()
 
     # self.append("int main ( int argc, char** argv ){\n\n\treturn 0;\n\n}")
 
     def keyPressEvent(self, event):
-        super().keyPressEvent(event)
 
         if event.key() == 16777220:
-            yaccing(self.toPlainText())
+            self.yacc_erreurs = yaccing(self.toPlainText())
+
+        super().keyPressEvent(event)
+
 
     def maj_style(self):
         c = get_color_from_theme("textedit")
