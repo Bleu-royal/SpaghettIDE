@@ -4,6 +4,7 @@ from PySide.QtCore import *
 from PySide.QtGui import *
 from datetime import datetime
 import os
+from lexer import *
 
 
 def create_workplace():
@@ -30,8 +31,8 @@ def newproject(parent):
 
         date = datetime.now()
 
-        fichier = open("%s/.conf"%(QDir(parent.workplace_path + project_name[0]).path()), "w")
-        fichier.write("Created : %s/%s/%s"%(date.day,date.month,date.year))
+        fichier = open("%s/.conf" % (QDir(parent.workplace_path + project_name[0]).path()), "w")
+        fichier.write("Created : %s/%s/%s" % (date.day, date.month, date.year))
         fichier.close()
 
     # elif parent.project_path[1]:
@@ -41,7 +42,6 @@ def newproject(parent):
 
 
 def open_projects(parent):
-
     projet = os.listdir(parent.workplace_path)
     for e in projet:
         check_file = QFileInfo(parent.workplace_path + e + "/.conf")
@@ -56,12 +56,78 @@ def open_project(parent):
     if QDir(parent.fenetre.workplace_path + name).exists():
         parent.fenetre.project_path = parent.fenetre.workplace_path + name
         parent.fenetre.statusbar.showMessage("Le projet " + name + " a bien été ouvert.", 2000)
+
+        project_files = get_project_files(parent.fenetre.project_path + "/")
+        return get_def_functions(project_files)
+
     else:
         parent.open()
 
 
-def closeproject(parent):
+def get_project_files(path):
+    res = []
 
+    for e in os.listdir(path):
+
+        if os.path.isfile(path + e):
+            if e.split(".")[-1] == "c" or e.split(".")[-1] == "h":
+                res += [path + e]
+        else:
+            res += get_project_files("%s%s/" % (path, e))
+
+    return res
+
+
+def get_def_functions(files):
+    types = ["char", "bool", "double", "enum", "float", "int", "long", "short", "signed", "unsigned", "void"]
+
+    res = []
+
+    functions_by_files = yaccing_for_functions(files)
+
+    for file_ in functions_by_files:
+        fichier = open(file_, 'r')
+        data = fichier.read()
+        fichier.close()
+
+        data_split = data.replace("\t", "").split("\n")
+        for ligne in functions_by_files[file_]:
+            tmp = data_split[int(ligne) - 1]
+
+            for e in types:
+                tmp = tmp.replace("%s " % e, "")
+
+            tmp = tmp.replace(" ", "").replace(",", "|").replace("(", "|").replace(")", "").replace(";", "")
+            tmp = tmp.split("{")[0]
+
+            res += [tmp.split("|")]
+
+            for i in range(len(res)):
+                res[i] = res[i][:-1] if res[i][-1] == "" else res[i]
+
+    return res
+
+
+def yaccing_for_functions(files):
+    res = {}
+
+    for file_ in files:
+        fichier = open(file_, "r")
+        data = fichier.read()
+        fichier.close()
+        lignes = yaccing(data, False)
+
+        for ligne in lignes:
+            if "function_definition" in lignes[ligne]:
+                if file_ in res:
+                    res[file_] += [int(ligne) + 1]
+                else:
+                    res[file_] = [int(ligne) + 1]
+
+    return res
+
+
+def closeproject(parent):
     parent.tab_widget.clear()
     parent.project_path = ""
     parent.docs = []

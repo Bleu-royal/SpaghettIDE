@@ -99,10 +99,12 @@ class TabWidget(QTabWidget):
 
     def mousePressEvent(self, event):
         """
-        On crée un nouvel onglet de code lorsqu'on double-clique sur la page vide (si on n'a pas d'onglet déjà ouvert).
+        On crée un nouvel onglet de code lorsqu'on double-clique sur la page vide (si on n'a pas d'onglet déjà ouvert) et si on projet est ouvert.
 
         :param event: Contient les positions x et y de l'endroit où on a cliqué. NON UTILISÉ ICI.
         :rtype: None
         """
         if len(self.parent.docs) == 0:
-            self.parent.new()
+            if self.parent.project_path != "":self.parent.new()
+            else:self.parent.statusbar.showMessage("Veuillez ouvrir un projet.", 2000)
+

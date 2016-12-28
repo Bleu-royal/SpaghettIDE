@@ -22,9 +22,8 @@ from gui.onglet import *
 sys.path[:0] = ["../"]
 sys.path[:0] = ["gui"]
 
-
 class Editeur(QPlainTextEdit):
-    def __init__(self, police, taille_texte):
+    def __init__(self, police, taille_texte, def_functions):
         """
         Hérite de QTextEdit.
         C'est une zone de texte dans laquelle on peut écrire, que l'on utilise ici pour écrire du code.
@@ -43,6 +42,7 @@ class Editeur(QPlainTextEdit):
         super().__init__()
         self.police = police
         self.taille_texte = taille_texte
+        self.def_functions = def_functions
 
         self.yacc_erreurs = []
 
@@ -89,6 +89,7 @@ class Fenetre(QWidget):
         self.workplace_path = workplace_path
 
         self.project_path = ""
+        self.def_functions = ""
 
         self.gridLayout = QGridLayout()
         self.gridLayout.setContentsMargins(0, 0, 0, 0)  # No spacing around widgets
@@ -183,7 +184,7 @@ class Fenetre(QWidget):
         :type title: str
         :rtype: None
         """
-        self.codes += [Editeur("ABeeZee", 14)]
+        self.codes += [Editeur("ABeeZee", 14, self.def_functions)]
         self.highlighters += [CodeHighLighter(self.codes[-1], self.codes[-1].document())]
         self.tab_widget.addTab(self.codes[-1], title)
         self.tab_widget.setCurrentIndex(len(self.codes) - 1)

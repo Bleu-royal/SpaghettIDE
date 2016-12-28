@@ -70,7 +70,9 @@ class TreeView(QTreeView):
         :param event: Contient les positions x et y de l'endroit où on a cliqué. NON UTILISÉ ICI.
         :rtype: None
         """
-        open_project(self)
+        def_functions = open_project(self)
+        self.fenetre.def_functions = def_functions
+
 
     def keyPressEvent(self, event):
         """
