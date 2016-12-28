@@ -184,6 +184,7 @@ class Fenetre(QWidget):
         :type title: str
         :rtype: None
         """
+        print("New Editeur", self.def_functions)
         self.codes += [Editeur("ABeeZee", 14, self.def_functions)]
         self.highlighters += [CodeHighLighter(self.codes[-1], self.codes[-1].document())]
         self.tab_widget.addTab(self.codes[-1], title)

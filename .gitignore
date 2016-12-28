@@ -16,3 +16,5 @@ __init__.py
 
 parsetab.py
 parser.out
+
+themes/current_theme.txt

@@ -59,7 +59,6 @@ def open_project(parent):
 
         project_files = get_project_files(parent.fenetre.project_path + "/")
         return get_def_functions(project_files)
-
     else:
         parent.open()
 

@@ -71,7 +71,7 @@ class TreeView(QTreeView):
         :rtype: None
         """
         def_functions = open_project(self)
-        self.fenetre.def_functions = def_functions
+        if def_functions != None:self.fenetre.def_functions = def_functions
 
 
     def keyPressEvent(self, event):
