@@ -64,14 +64,13 @@ class CodeHighLighter(QSyntaxHighlighter):
             current_pos += len(word)
 
         yacc_erreurs = self.editeur.yacc_erreurs
-        print(yacc_erreurs)
 
         if yacc_erreurs != []:
             textFormat = QTextCharFormat()
             textFormat.setFontUnderline(True)
             textFormat.setUnderlineColor(QColor.fromRgb(255, 0, 0))
             
-            if text[yacc_erreurs[0][1]: yacc_erreurs[0][2]].strip() == "":
+            if text[yacc_erreurs[0][1]: yacc_erreurs[0][1] + yacc_erreurs[0][2] + 1].strip() == "":
                 self.setFormat(0, len(text), textFormat)
             else:
                 self.setFormat(yacc_erreurs[0][1], yacc_erreurs[0][2], textFormat)
