@@ -57,7 +57,6 @@ class Editeur(QPlainTextEdit):
 
         super().keyPressEvent(event)
 
-
     def maj_style(self):
         c = get_color_from_theme("textedit")
 
@@ -66,21 +65,6 @@ class Editeur(QPlainTextEdit):
                            + "color:" + get_rgb(c["text-color"]) + ";"
                            + "font-size:" + str(self.taille_texte) + "pt; }")
 
-    def indent(self):
-
-        text = self.toPlainText()
-
-        lines = text.split("\n")
-
-        indent_level = 0
-
-        for i,line in enumerate(lines):
-            indent_level -= "}" in line
-            if indent_level > 0:
-                lines[i] = "\t" * indent_level + line.replace("\t", "")
-            indent_level += "{" in line
-
-        self.setPlainText("\n".join(lines))
 
 
 class Fenetre(QWidget):
@@ -153,7 +137,11 @@ class Fenetre(QWidget):
 
     def indent(self):
         idx = self.tab_widget.currentIndex()
-        self.codes[idx].indent()
+        currentEdit = self.codes[idx]
+
+        text = currentEdit.toPlainText()
+
+        currentEdit.setPlainText(indent(text))
 
     def new(self):
         """

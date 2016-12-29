@@ -35,6 +35,18 @@ class Document:
         self.nom = self.chemin_enregistrement.split("/")[-1]
         self.extension = self.nom.split(".")[-1]
 
+def indent(text):
+    lines = text.split("\n")
+
+    indent_level = 0
+
+    for i,line in enumerate(lines):
+        indent_level -= "}" in line
+        if indent_level > 0:
+            lines[i] = "\t" * indent_level + line.replace("\t", "")
+        indent_level += "{" in line
+
+    return "\n".join(lines)
 
 def new_document(parent):
     new = "Sans nom " + str(len(parent.docs) + 1)
