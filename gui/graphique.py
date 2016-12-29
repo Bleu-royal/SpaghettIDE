@@ -137,11 +137,7 @@ class Fenetre(QWidget):
 
     def indent(self):
         idx = self.tab_widget.currentIndex()
-        currentEdit = self.codes[idx]
-
-        text = currentEdit.toPlainText()
-
-        currentEdit.setPlainText(indent(text))
+        self.docs[idx].indent()
 
     def new(self):
         """

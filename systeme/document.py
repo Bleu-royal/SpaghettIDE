@@ -6,11 +6,11 @@ from PySide.QtGui import *
 class Document:
     def __init__(self, text_edit, chemin_enregistrement, ouverture=False):  # Sauvegarde des variables dans la classe
 
-        self.textEdit = text_edit  # Objet QTextEdit
+        self.text_edit = text_edit  # Objet QTextEdit
         self.chemin_enregistrement = chemin_enregistrement
         self.nom = self.chemin_enregistrement.split("/")[-1]  # Recupération du nom du fichier
         self.extension = self.nom.split(".")[-1]  # Recupération de l'extension du fichier
-        self.nombre_lignes = self.textEdit.document().lineCount()
+        self.nombre_lignes = self.text_edit.document().lineCount()
         # Obtention du nombre de lignes presentes dans le QTextEdit
 
         if ouverture:
@@ -20,14 +20,14 @@ class Document:
         fichier = open(self.chemin_enregistrement, "r")
         code = fichier.read()  # lecture du fichier
         fichier.close()
-        self.textEdit.setPlainText(code)
+        self.text_edit.setPlainText(code)
 
     def sauvegarde_document(self, path=False):
         if not path:
             fichier = open(self.chemin_enregistrement, "w")
         else:
             fichier = open(path, "w")
-        fichier.write(self.textEdit.toPlainText())  # Ecriture du fichier.
+        fichier.write(self.text_edit.toPlainText())  # Ecriture du fichier.
         fichier.close()
 
     def set_chemin_enregistrement(self, value):
@@ -35,18 +35,27 @@ class Document:
         self.nom = self.chemin_enregistrement.split("/")[-1]
         self.extension = self.nom.split(".")[-1]
 
-def indent(text):
-    lines = text.split("\n")
+    def indent(self):
 
-    indent_level = 0
+        line_number = self.text_edit.textCursor().blockNumber() #Obtention du numero de la ligne
 
-    for i,line in enumerate(lines):
-        indent_level -= "}" in line
-        if indent_level > 0:
-            lines[i] = "\t" * indent_level + line.replace("\t", "")
-        indent_level += "{" in line
+        text = self.text_edit.toPlainText()
+        lines = text.split("\n")
 
-    return "\n".join(lines)
+        indent_level = 0
+
+        for i,line in enumerate(lines): 
+            indent_level -= "}" in line #Si il y'a un accolade fermante on retire un niveau d'indentation
+            if indent_level > 0:                                        # Si il y'a besoin d'indentation,
+                lines[i] = "\t" * indent_level + line.replace("\t", "") # On ajout indent_level fois un '\t' au debut de la ligne 
+                                                                        # a laquelle on retire tous les '\t' deja present.
+            indent_level += "{" in line #Si il y'a un accolade ouvrante on ajoute un niveau d'indentation
+
+        self.text_edit.setPlainText("\n".join(lines))
+
+        for i in range(line_number):    #On remet le cursor au bon endroit
+            self.text_edit.moveCursor(QTextCursor.Down)
+            self.text_edit.moveCursor(QTextCursor.EndOfLine)
 
 def new_document(parent):
     new = "Sans nom " + str(len(parent.docs) + 1)
