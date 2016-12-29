@@ -73,7 +73,6 @@ class TreeView(QTreeView):
         def_functions = open_project(self)
         if def_functions != None:self.fenetre.def_functions = def_functions
 
-
     def keyPressEvent(self, event):
         """
         Bind de la touche entrée.

@@ -14,9 +14,13 @@ def get_current_theme():
 
     :rtype: str
     """
-    file = open("themes/current_theme.txt", "r")
-    current_theme_dir = file.read()  # We load the current theme
-    file.close()
+    try:
+        file = open("themes/current_theme.txt", "r")
+        current_theme_dir = file.read()  # We load the current theme
+        file.close()
+    except:  # Si le fichier n'existe pas
+        change_theme("basic")
+        return get_current_theme()
 
     if current_theme_dir not in os.listdir("themes"):  # If the theme doesn't exists, we use the basic theme.
         change_theme("basic")
