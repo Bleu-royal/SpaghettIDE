@@ -4,15 +4,44 @@ from PySide.QtGui import *
 from PySide.QtCore import *
 from lexer import *
 from random import randint
+from copy import deepcopy
 
 
 class Proposition(QTextEdit):
-    def __init__(self, parent=None):
+    def __init__(self, parent, font_size=16):
         super().__init__(parent)
+        
+        self.parent = parent
+        self.font_size = font_size
+
         self.setReadOnly(True)
         self.setMaximumWidth(100)
 
-        self.setStyleSheet("QTextEdit{color:white;background-color: purple;}")
+        self.props = []
+        self.props_files = []
+        self.current_pos = []
+
+        self.setStyleSheet("QTextEdit{color:white;background-color: purple;font-size:%spx;}"%self.font_size)
+        # self.setCursor(QCursor(Qt.PointingHandCursor))
+
+    def mouseDoubleClickEvent(self, event):
+        idx = (event.y() // (self.font_size+5))
+        if idx in range(len(self.props)):
+            prop = self.props[idx]
+
+            h = deepcopy(self.current_pos[1])
+            l = self.current_pos[0] + len(prop)
+            lines = self.parent.toPlainText().split("\n")
+            if prop in self.props_files:
+                lines[h] = " ".join(lines[h].split(" ")[:-1]) + " " + prop 
+            else:
+                lines[h] = lines[h] + prop 
+            self.parent.setPlainText("\n".join(lines))
+            for i in range(h):
+                self.parent.moveCursor(QTextCursor.Down)
+            for i in range(l+1):
+                self.parent.moveCursor(QTextCursor.Right)
+
 
 
 class CodeHighLighter(QSyntaxHighlighter):
@@ -23,7 +52,7 @@ class CodeHighLighter(QSyntaxHighlighter):
 
         self.prop = Proposition(self.editeur)
 
-        self.props = ["int\nvoid\nbool\nchar", "(\n{\n", "+\n-\n*\n/"]
+        self.props = ["int\nvoid\nbool\nchar", "(\n{", "+\n-\n*\n/"]
 
     def compare(self, word):
 
@@ -31,33 +60,42 @@ class CodeHighLighter(QSyntaxHighlighter):
         
         if word != "":
             for def_function in self.editeur.def_functions:
-                if ((def_function[0] in word and word.isalnum()) or word in def_function[0]) and not def_function[0] in res: res += [def_function[0]]
+                if word in def_function[0] and not def_function[0] in res and def_function[0] != word: res += [def_function[0]]
         return res
 
     def highlightBlock(self, text):  # Appelée lorsqu'on change du texte dans le QTextEdit
 
         word = text.split(" ")[-1]
         possibilities = self.compare(word)
-        
-        cursor_position = self.editeur.textCursor().columnNumber() - 1
+
+
+        textCursor = self.editeur.textCursor()
+        cursor_position = textCursor.columnNumber() - 1
 
         self.prop.setPlainText("")
+        self.prop.props = []
+        self.prop.current_pos = [cursor_position, textCursor.blockNumber()]
+        self.prop.hide()
+
+        if possibilities != [] and lexing(word) == "identifier":
+            self.prop.props += possibilities
+            self.prop.props_files += possibilities
+            self.prop.append("\n".join(possibilities))
+            self.prop.show()
+
+        if len(text) > 0 and cursor_position in range(len(text)) and text[cursor_position] == " ":
+            possibilities = self.props[randint(0, len(self.props) - 1)]
+            self.prop.props += possibilities.split("\n")
+            self.prop.append(possibilities)
+            self.prop.show()
+
+        
         x = self.editeur.cursorRect().x() + 10
         y = self.editeur.cursorRect().y()
         self.prop.move(x, y)
         self.editeur.setFocus()
-        self.prop.hide()
-
-        if possibilities != [] and lexing(word) == "identifier":
-            self.prop.append("\n".join(possibilities))
-            self.prop.show()
 
 
-        if len(text) > 0 and text[cursor_position] == " ":
-            self.prop.append(self.props[randint(0, len(self.props) - 1)])
-            self.prop.show()
-
-        
         space_remember = []
 
         for i in range(len(text)):
