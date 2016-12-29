@@ -122,7 +122,8 @@ class Fenetre(QWidget):
         self.menuBar = MenuBar(self)
 
         # Positionnement des Layouts
-        # self.gridLayout.addWidget(self.menuBar)
+        if "win" in sys.platform.lower():
+            self.gridLayout.addWidget(self.menuBar)
         self.gridLayout.addWidget(self.splitter)
         self.gridLayout.addWidget(self.statusbar)
         self.setLayout(self.gridLayout)
