@@ -37,7 +37,7 @@ class Document:
 
 
 def new_document(parent):
-    new = "Sans nom"+str(len(parent.docs)+1)
+    new = "Sans nom " + str(len(parent.docs) + 1)
     parent.statusbar.showMessage(("Nouveau fichier " + new), 2000)
     parent.add_code(new)
     parent.docs += [Document(parent.codes[-1], "")]
