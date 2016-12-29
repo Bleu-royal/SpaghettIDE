@@ -55,6 +55,7 @@ class Editeur(QPlainTextEdit):
         if event.key() == 16777220:
             self.yacc_erreurs = yaccing(self.toPlainText())
 
+
         super().keyPressEvent(event)
 
     def maj_style(self):

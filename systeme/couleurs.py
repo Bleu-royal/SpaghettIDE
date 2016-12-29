@@ -38,25 +38,26 @@ class CodeHighLighter(QSyntaxHighlighter):
 
         word = text.split(" ")[-1]
         possibilities = self.compare(word)
+        
+        cursor_position = self.editeur.textCursor().columnNumber() - 1
+
+        self.prop.setPlainText("")
+        x = self.editeur.cursorRect().x() + 10
+        y = self.editeur.cursorRect().y()
+        self.prop.move(x, y)
+        self.editeur.setFocus()
+        self.prop.hide()
 
         if possibilities != [] and lexing(word) == "identifier":
-
-            self.prop.setPlainText("")
             self.prop.append("\n".join(possibilities))
-
-            if len(text) > 0 and text[-1] == " ":
-                self.prop.append(self.props[randint(0, len(self.props) - 1)])
-
-            x = self.editeur.cursorRect().x() + 10
-            y = self.editeur.cursorRect().y()
-            self.prop.move(x, y)
-
             self.prop.show()
-            self.editeur.setFocus()
 
-        else:
-            self.prop.hide()
 
+        if len(text) > 0 and text[cursor_position] == " ":
+            self.prop.append(self.props[randint(0, len(self.props) - 1)])
+            self.prop.show()
+
+        
         space_remember = []
 
         for i in range(len(text)):

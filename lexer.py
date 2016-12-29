@@ -71,6 +71,7 @@ know_const = [
 ]
 
 keywords = {
+    "#include" : "INCLUDE",
     "auto": "AUTO",
     "bool": "BOOL",
     "break": "BREAK",
@@ -107,6 +108,7 @@ keywords = {
 }
 
 tokens = [
+             "INCLUDE_STRING",
              "IDENTIFIER",
              "CONSTANT",
              "STRING_LITERAL",
@@ -169,6 +171,9 @@ tokens = [
 
 }"""
 
+t_INCLUDE = r"\#include"
+t_INCLUDE_STRING = r"<[A-Za-z_]+.h>"
+
 t_STRING_LITERAL = r"[A-Za-z_]?\"(\.|[^\"])*\""
 t_ELLIPSIS = r"\.\.\."
 t_RIGHT_ASSIGN = r">>="
@@ -220,7 +225,6 @@ t_OR = r"\|"
 t_INTER = r"\?"
 t_CONSTANT = r'[0-9]+'
 t_COMMENT = r'(//.*)|(/\*(.)*\*/)'
-
 
 def t_IDENTIFIER(t):
     r"[A-Za-z_][A-Za-z0-9_]*"
@@ -279,7 +283,6 @@ lignes = {}
 erreurs = []
 
 start = "translation_unit"
-
 
 def p_primary_expression(p):
     '''primary_expression : IDENTIFIER
