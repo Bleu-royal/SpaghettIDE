@@ -24,17 +24,17 @@ class TabWidget(QTabWidget):
 
         self.parent = parent
 
-        shortcut_close = QShortcut(QKeySequence.Close, self)
-        shortcut_close.activated.connect(self.close_current_tab)
+        # shortcut_close = QShortcut(QKeySequence.Close, self)
+        # shortcut_close.activated.connect(self.close_current_tab)
 
-        shortcut_open = QShortcut(QKeySequence.Open, self)
-        shortcut_open.activated.connect(self.parent.open)
+        # shortcut_open = QShortcut(QKeySequence.Open, self)
+        # shortcut_open.activated.connect(self.parent.open)
 
-        shortcut_new = QShortcut(QKeySequence.New, self)
-        shortcut_new.activated.connect(self.parent.new)
+        # shortcut_new = QShortcut(QKeySequence.New, self)
+        # shortcut_new.activated.connect(self.parent.new)
 
-        shortcut_save = QShortcut(QKeySequence.Save, self)
-        shortcut_save.activated.connect(self.parent.save)
+        # shortcut_save = QShortcut(QKeySequence.Save, self)
+        # shortcut_save.activated.connect(self.parent.save)
 
         shortcut_next_tab = QShortcut(QKeySequence('Alt+tab'), self)
         shortcut_next_tab.activated.connect(self.next_tab)

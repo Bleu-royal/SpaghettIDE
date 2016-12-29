@@ -59,6 +59,7 @@ class MenuBar(QMenuBar):
         new_fic_action = MyAction(parent, "&Nouveau", "Nouveau fichier", parent.new, "Ctrl+N")
         open_fic_action = MyAction(parent, "&Ouvrir", "Ouvrir un fichier", parent.open, "Ctrl+O")
         sauv_fic_action = MyAction(parent, "&Sauvegarder", "Sauvegarder le fichier courant", parent.save, "Ctrl+S")
+        close_fic_action = MyAction(parent, "&Fermer", "Fermer le fichier courant", parent.close_current_tab, "Ctrl+W")
         exit_ide_action = MyAction(parent, "&Fermer", "Fermer l'application", parent.quit_func, "Esc")
        
         # Nouveau Edition
@@ -70,7 +71,7 @@ class MenuBar(QMenuBar):
 
         # # # Menu Fichier et ses sous-menus # # #
         fichier_menu = self.addMenu("&Fichier")
-        self.set_actions(fichier_menu, new_fic_action, open_fic_action, sauv_fic_action, "sep", exit_ide_action)
+        self.set_actions(fichier_menu, new_fic_action, open_fic_action, sauv_fic_action, close_fic_action, "sep", exit_ide_action)
 
         # # # Menu Edition et ses sous-menus # # #
 

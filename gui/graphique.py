@@ -164,8 +164,10 @@ class Fenetre(QWidget):
 
         :rtype: None
         """
-
-        new_document(self)
+        if self.project_path != "":
+            new_document(self)
+        else:
+            self.statusbar.showMessage("Veuillez ouvrir un projet.", 1000)
 
     def save(self):
         """
@@ -177,6 +179,9 @@ class Fenetre(QWidget):
         """
 
         save_document(self)
+
+    def close_current_tab(self):
+        self.tab_widget.close_current_tab()
 
     def deja_ouvert(self, chemin):
 
