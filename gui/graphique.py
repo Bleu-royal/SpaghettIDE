@@ -23,6 +23,9 @@ sys.path[:0] = ["../"]
 sys.path[:0] = ["gui"]
 
 class Editeur(QPlainTextEdit):
+
+    tabPress = Signal(QKeyEvent)
+
     def __init__(self, police, taille_texte, def_functions):
         """
         Hérite de QTextEdit.
@@ -50,11 +53,14 @@ class Editeur(QPlainTextEdit):
 
     # self.append("int main ( int argc, char** argv ){\n\n\treturn 0;\n\n}")
 
-    def keyPressEvent(self, event):
+    def keyPressEvent(self, event, complete=False):
 
         if event.key() == 16777220:
             self.yacc_erreurs = yaccing(self.toPlainText())
 
+        if event.key() == 32 and event.nativeModifiers() == 514 and not complete:
+            self.tabPress.emit(event)
+            return False
 
         super().keyPressEvent(event)
 
@@ -197,6 +203,7 @@ class Fenetre(QWidget):
         """
         self.codes += [Editeur("ABeeZee", 14, self.def_functions)]
         self.highlighters += [CodeHighLighter(self.codes[-1], self.codes[-1].document())]
+        self.codes[-1].tabPress.connect(self.highlighters[-1].test)
         self.tab_widget.addTab(self.codes[-1], title)
         self.tab_widget.setCurrentIndex(len(self.codes) - 1)
 

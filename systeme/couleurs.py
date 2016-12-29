@@ -26,9 +26,11 @@ class Proposition(QTextEdit):
 
     def mouseDoubleClickEvent(self, event):
         idx = (event.y() // (self.font_size+5))
+        self.complete(idx)
+
+    def complete(self, idx=0):
         if idx in range(len(self.props)):
             prop = self.props[idx]
-
             h = deepcopy(self.current_pos[1])
             l = self.current_pos[0] + len(prop)
             lines = self.parent.toPlainText().split("\n")
@@ -65,17 +67,16 @@ class CodeHighLighter(QSyntaxHighlighter):
 
     def highlightBlock(self, text):  # Appelée lorsqu'on change du texte dans le QTextEdit
 
-        word = text.split(" ")[-1]
-        possibilities = self.compare(word)
-
-
         textCursor = self.editeur.textCursor()
         cursor_position = textCursor.columnNumber() - 1
+        self.prop.current_pos = [cursor_position, textCursor.blockNumber()]
 
         self.prop.setPlainText("")
         self.prop.props = []
-        self.prop.current_pos = [cursor_position, textCursor.blockNumber()]
         self.prop.hide()
+        
+        word = text.split(" ")[-1]
+        possibilities = self.compare(word)
 
         if possibilities != [] and lexing(word) == "identifier":
             self.prop.props += possibilities
@@ -89,12 +90,10 @@ class CodeHighLighter(QSyntaxHighlighter):
             self.prop.append(possibilities)
             self.prop.show()
 
-        
         x = self.editeur.cursorRect().x() + 10
         y = self.editeur.cursorRect().y()
         self.prop.move(x, y)
         self.editeur.setFocus()
-
 
         space_remember = []
 
@@ -127,3 +126,9 @@ class CodeHighLighter(QSyntaxHighlighter):
                 self.setFormat(0, len(text), textFormat)
             else:
                 self.setFormat(yacc_erreurs[0][1], yacc_erreurs[0][2], textFormat)
+
+    def test(self, event):
+        if self.prop.props != []:
+            self.prop.complete()
+        else:
+            self.editeur.keyPressEvent(event, True)
