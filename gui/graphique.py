@@ -66,6 +66,22 @@ class Editeur(QPlainTextEdit):
                            + "color:" + get_rgb(c["text-color"]) + ";"
                            + "font-size:" + str(self.taille_texte) + "pt; }")
 
+    def indent(self):
+
+        text = self.toPlainText()
+
+        lines = text.split("\n")
+
+        indent_level = 0
+
+        for i,line in enumerate(lines):
+            indent_level -= "}" in line
+            if indent_level > 0:
+                lines[i] = "\t" * indent_level + line.replace("\t", "")
+            indent_level += "{" in line
+
+        self.setPlainText("\n".join(lines))
+
 
 class Fenetre(QWidget):
     def __init__(self, titre, workplace_path=QDir.homePath() + "/workplace/"):
@@ -134,6 +150,10 @@ class Fenetre(QWidget):
         self.show()
 
         self.maj_style()
+
+    def indent(self):
+        idx = self.tab_widget.currentIndex()
+        self.codes[idx].indent()
 
     def new(self):
         """
@@ -242,7 +262,6 @@ class Fenetre(QWidget):
     def help_func(self):
 
         self.statusbar.showMessage("AIDEZ MOIIIIIIII", 1000)
-        pass
 
     # Thèmes
     def maj_style(self):

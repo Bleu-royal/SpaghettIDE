@@ -60,6 +60,9 @@ class MenuBar(QMenuBar):
         open_fic_action = MyAction(parent, "&Ouvrir", "Ouvrir un fichier", parent.open, "Ctrl+O")
         sauv_fic_action = MyAction(parent, "&Sauvegarder", "Sauvegarder le fichier courant", parent.save, "Ctrl+S")
         exit_ide_action = MyAction(parent, "&Fermer", "Fermer l'application", parent.quit_func, "Esc")
+       
+        # Nouveau Edition
+        indent_action = MyAction(parent, "&Indenter le fichier", "Indentation automatique du fichier", parent.indent,"Ctrl+Alt+L")
 
         # Menu divers
         apropos_ide_action = MyAction(parent, "&À Propos", "À propos de SpaghettIDE", parent.a_propos)
@@ -68,6 +71,11 @@ class MenuBar(QMenuBar):
         # # # Menu Fichier et ses sous-menus # # #
         fichier_menu = self.addMenu("&Fichier")
         self.set_actions(fichier_menu, new_fic_action, open_fic_action, sauv_fic_action, "sep", exit_ide_action)
+
+        # # # Menu Edition et ses sous-menus # # #
+
+        edition_menu = self.addMenu("&Edition")
+        self.set_actions(edition_menu, indent_action)
 
         # # # Menu Projet et ses sous-menus # # #
         projet_menu = self.addMenu("&Projet")
