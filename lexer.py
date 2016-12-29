@@ -1004,7 +1004,7 @@ def p_function_definition(p):
 
 
 def p_error(p):
-    if p:
+    if p and p.type != "COMMENT":
         global erreurs
         erreurs += [[p.lineno, p.lexpos, len(p.value)]]
         print("---------------Syntax error in input : ", p.lineno, p.type, p.value, p.lexpos)
