@@ -111,7 +111,7 @@ class Fenetre(QWidget):
         if "darwin" in sys.platform:
             ###########################################################################################################
             ###########################################################################################################
-            self.assistance_vocale = True  # Faire en fonction d'un fichier de configuration
+            self.assistance_vocale = False  # Faire en fonction d'un fichier de configuration
             ###########################################################################################################
             ###########################################################################################################
 
@@ -191,7 +191,7 @@ class Fenetre(QWidget):
             else:
                 self.assistance_vocale = True
                 self.status_message("Assistance vocale activée.")
-                
+
     def new(self):
         """
         Fonction de création de nouveau fichier reliée au sous-menu "Nouveau".

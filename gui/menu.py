@@ -74,7 +74,7 @@ class MenuBar(QMenuBar):
         assist_voc_action.setCheckable(True)
         ###############################################################################################################
         ###############################################################################################################
-        assist_voc_action.setChecked(True)  # Faire en fonction d'un fichier de configuration
+        assist_voc_action.setChecked(False)  # Faire en fonction d'un fichier de configuration
         ###############################################################################################################
         ###############################################################################################################
         if "darwin" not in sys.platform:
