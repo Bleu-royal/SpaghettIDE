@@ -7,7 +7,7 @@ from random import randint
 from copy import deepcopy
 
 
-class Proposition(QTextEdit):
+class Proposition(QTextEdit):  # ON DEVRAIT PAS PLUTOT UTILISER UNE QLISTVIEW ?
     def __init__(self, parent, font_size=16):
         super().__init__(parent)
         
