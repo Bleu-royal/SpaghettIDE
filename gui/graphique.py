@@ -138,7 +138,12 @@ class Fenetre(QWidget):
         self.splitter.setMinimumSize(self.width(), self.height() - 50)
 
         self.statusbar = QStatusBar()
-        self.status_message("Bienvenue !")
+
+        name = ""
+        if "darwin" in sys.platform:
+            name = self.workplace_path.split("/")[-3]
+
+        self.status_message("Bienvenue %s!"%name)
         self.statusbar.setFixedHeight(30)
         self.statusbar.setSizeGripEnabled(False)
 
@@ -148,6 +153,7 @@ class Fenetre(QWidget):
         # Positionnement des Layouts
         if "win" in sys.platform.lower():
             self.gridLayout.addWidget(self.menuBar)
+
         self.gridLayout.addWidget(self.splitter)
         self.gridLayout.addWidget(self.statusbar)
         self.setLayout(self.gridLayout)

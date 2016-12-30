@@ -85,6 +85,8 @@ def save_document(parent):
                                          "Ce document ne fait pas partie du projet courant")
             else:
                 parent.docs[idx].sauvegarde_document()
+                parent.status_message(parent.docs[idx].nom+" a bien été sauvegardé.", 2000)
+
     else:
         QMessageBox.critical(parent, "Aucun projet ouvert", "Veuillez ouvrir ou créer un projet")
 
