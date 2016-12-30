@@ -7,25 +7,28 @@ from random import randint
 from copy import deepcopy
 
 
-class Proposition(QTextEdit):
+class Proposition(QListWidget):
     def __init__(self, parent, font_size=16):
         super().__init__(parent)
         
         self.parent = parent
         self.font_size = font_size
 
-        self.setReadOnly(True)
-        self.setMaximumWidth(100)
+        # self.setReadOnly(True)
+        # self.setMaximumWidth(100)
 
         self.props = []
         self.props_files = []
         self.current_pos = []
 
-        self.setStyleSheet("QTextEdit{color:white;background-color: purple;font-size:%spx;}"%self.font_size)
-        # self.setCursor(QCursor(Qt.PointingHandCursor))
+        self.setStyleSheet("QListView{color:white;background-color: purple;font-size:%spx;}"%self.font_size)
+
+    def addElement(self, elements):
+        for element in elements:
+            self.addItem(QListWidgetItem(element))
 
     def mouseDoubleClickEvent(self, event):
-        idx = (event.y() // (self.font_size+5))
+        idx = self.currentRow()
         self.complete(idx)
 
     def complete(self, idx=0):
@@ -71,7 +74,7 @@ class CodeHighLighter(QSyntaxHighlighter):
         cursor_position = textCursor.columnNumber() - 1
         self.prop.current_pos = [cursor_position, textCursor.blockNumber()]
 
-        self.prop.setPlainText("")
+        self.prop.clear()
         self.prop.props = []
         self.prop.hide()
         
@@ -81,13 +84,13 @@ class CodeHighLighter(QSyntaxHighlighter):
         if possibilities != [] and lexing(word) == "identifier":
             self.prop.props += possibilities
             self.prop.props_files += possibilities
-            self.prop.append("\n".join(possibilities))
+            self.prop.addElement(possibilities)
             self.prop.show()
 
         if len(text) > 0 and cursor_position in range(len(text)) and text[cursor_position] == " ":
-            possibilities = self.props[randint(0, len(self.props) - 1)]
-            self.prop.props += possibilities.split("\n")
-            self.prop.append(possibilities)
+            possibilities = self.props[randint(0, len(self.props) - 1)].split("\n")
+            self.prop.props += possibilities
+            self.prop.addElement(possibilities)
             self.prop.show()
 
         x = self.editeur.cursorRect().x() + 10
@@ -127,8 +130,6 @@ class CodeHighLighter(QSyntaxHighlighter):
             else:
                 self.setFormat(yacc_erreurs[0][1], yacc_erreurs[0][2], textFormat)
 
-    def test(self, event):
+    def test(self):
         if self.prop.props != []:
             self.prop.complete()
-        else:
-            self.editeur.keyPressEvent(event, True)
