@@ -46,9 +46,7 @@ class Document:
 
         for i,line in enumerate(lines): 
             indent_level -= "}" in line #Si il y'a un accolade fermante on retire un niveau d'indentation
-            if indent_level > 0:                                        # Si il y'a besoin d'indentation,
-                lines[i] = "\t" * indent_level + line.replace("\t", "") # On ajout indent_level fois un '\t' au debut de la ligne 
-                                                                        # a laquelle on retire tous les '\t' deja present.
+            lines[i] = "\t" * indent_level + line.replace("\t", "") # On ajout indent_level fois un '\t' au debut de la ligne 
             indent_level += "{" in line #Si il y'a un accolade ouvrante on ajoute un niveau d'indentation
 
         self.text_edit.setPlainText("\n".join(lines))
