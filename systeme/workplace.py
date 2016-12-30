@@ -55,7 +55,7 @@ def open_project(parent):
     name = parent.model.fileName(parent.currentIndex())
     if QDir(parent.fenetre.workplace_path + name).exists():
         parent.fenetre.project_path = parent.fenetre.workplace_path + name
-        parent.fenetre.statusbar.showMessage("Le projet " + name + " a bien été ouvert.", 2000)
+        parent.fenetre.status_message("Le projet " + name + " a bien été ouvert.", 2000)
 
         project_files = get_project_files(parent.fenetre.project_path + "/")
         return get_def_functions(project_files)

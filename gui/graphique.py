@@ -122,7 +122,7 @@ class Fenetre(QWidget):
         self.splitter.setMinimumSize(self.width(), self.height() - 50)
 
         self.statusbar = QStatusBar()
-        self.statusbar.showMessage("Hello !", 2000)
+        self.statusbar.showMessage("Bienvenue !", 2000)
         self.statusbar.setFixedHeight(30)
         self.statusbar.setSizeGripEnabled(False)
 
@@ -147,6 +147,23 @@ class Fenetre(QWidget):
         idx = self.tab_widget.currentIndex()
         self.docs[idx].indent()
 
+    def status_message(self, message, time=2000):
+        """
+        Shows a message in the status bar
+        :param message: Message to show
+        :type message: str
+        :param time: Time of printed message
+        :type time: int
+        :rtype: None
+        """
+
+        if time != -1:
+            self.statusbar.showMessage(message, time)
+            if "darwin" in sys.platform:
+                os.system("say " + message)
+        else:
+            self.statusbar.showMessage(message)
+
     def new(self):
         """
         Fonction de création de nouveau fichier reliée au sous-menu "Nouveau".
@@ -159,7 +176,7 @@ class Fenetre(QWidget):
         if self.project_path != "":
             new_document(self)
         else:
-            self.statusbar.showMessage("Veuillez ouvrir un projet.", 1000)
+            self.status_message("Veuillez ouvrir un projet.", 1000)
 
     def save(self):
         """
@@ -259,7 +276,7 @@ class Fenetre(QWidget):
 
     def help_func(self):
 
-        self.statusbar.showMessage("AIDEZ MOIIIIIIII", 1000)
+        self.status_message("AIDEZ MOIIIIIIII", 1000)
 
     # Thèmes
     def maj_style(self):
@@ -294,7 +311,7 @@ class Fenetre(QWidget):
 
         :rtype: None
         """
-        self.statusbar.showMessage("Fermeture...")  # Message de status
+        self.status_message("Fermeture...", -1)  # Message de status
         box = QMessageBox()
         box.setText("Voulez-vous vraiment fermer l'IDE ?")
         box.setStandardButtons(QMessageBox.Cancel | QMessageBox.Close)
@@ -306,4 +323,4 @@ class Fenetre(QWidget):
             self.restart = False
             self.close()
         else:
-            self.statusbar.showMessage("... ou pas !!", 1000)  # Message de status
+            self.status_message("... ou pas !!", 1000)  # Message de status

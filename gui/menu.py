@@ -159,7 +159,7 @@ class MenuBar(QMenuBar):
             change_theme(theme)
             self.master.full_maj_style()
 
-            self.master.statusbar.showMessage("Thème actuel : " + theme +
+            self.master.status_message("Thème actuel : " + theme +
                                               ". La coloration lexicale sera actualisée lorsque "
                                               "vous écrirez un caractère.", 4000)
 
@@ -187,8 +187,8 @@ class MenuBar(QMenuBar):
     # Languages
     def to_fr(self):
         if get_current_language() != "fr":
-            self.master.statusbar.showMessage("Changement en langue Française à venir.", 2000)
+            self.master.status_message("Changement en langue Française à venir.")
 
     def to_en(self):
         if get_current_language() != "en":
-            self.master.statusbar.showMessage("English language comming soon !", 2000)
+            self.master.status_message("English language comming soon !")

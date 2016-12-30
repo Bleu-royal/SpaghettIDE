@@ -59,7 +59,7 @@ class Document:
 
 def new_document(parent):
     new = "Sans nom " + str(len(parent.docs) + 1)
-    parent.statusbar.showMessage(("Nouveau fichier " + new), 2000)
+    parent.status_message(("Nouveau fichier " + new), 2000)
     parent.add_code(new)
     parent.docs += [Document(parent.codes[-1], "")]
     parent.tab_widget.setCurrentIndex(len(parent.codes) - 1)
@@ -78,7 +78,7 @@ def save_document(parent):
                     parent.docs[idx].sauvegarde_document(chemin)
                     parent.tab_widget.setTabText(idx, parent.docs[idx].nom)
 
-                    parent.statusbar.showMessage(parent.docs[idx].nom+" a bien été sauvegardé.", 2000)
+                    parent.status_message(parent.docs[idx].nom+" a bien été sauvegardé.", 2000)
                     # Message de statut
                 elif parent.project_path in chemin:
                     QMessageBox.critical(parent, "Impossible de sauvegarder ce document",
@@ -111,16 +111,16 @@ def open_document(parent, chemin):
             if not parent.deja_ouvert(chemin):
                 title = chemin.split("/")[-1]
                 parent.add_code(title)
-                parent.statusbar.showMessage("Ouverture de "+title, 2000)  # Message de status
+                parent.status_message("Ouverture de "+title, 2000)  # Message de status
                 parent.docs += [Document(parent.codes[-1], chemin, True)]
                 parent.tab_widget.setCurrentIndex(len(parent.codes) - 1)
             else:
-                parent.statusbar.showMessage("Impossible d'ouvrir ce document car il est déjà ouvert.", 2000)
+                parent.status_message("Impossible d'ouvrir ce document car il est déjà ouvert.", 2000)
         else:
-            parent.statusbar.showMessage("Impossible d'ouvrir ce document car il ne fait pas partie "
+            parent.status_message("Impossible d'ouvrir ce document car il ne fait pas partie "
                                          "du projet courant.", 2000)
     else:
-        parent.statusbar.showMessage("Aucun projet ouvert, veuillez ouvrir ou créer un projet.", 2000)
+        parent.status_message("Aucun projet ouvert, veuillez ouvrir ou créer un projet.", 2000)
 
 
 def closedocument(parent):

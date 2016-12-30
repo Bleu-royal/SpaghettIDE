@@ -75,7 +75,7 @@ class TabWidget(QTabWidget):
             self.parent.docs.remove(doc)
             self.parent.codes.remove(code)
 
-            self.parent.statusbar.showMessage("Fermeture de l'onglet courant.", 2000)
+            self.parent.status_message("Fermeture de l'onglet courant.")
 
     def next_tab(self):
         """
@@ -106,5 +106,5 @@ class TabWidget(QTabWidget):
         """
         if len(self.parent.docs) == 0:
             if self.parent.project_path != "":self.parent.new()
-            else:self.parent.statusbar.showMessage("Veuillez ouvrir un projet.", 2000)
+            else:self.parent.status_message("Veuillez ouvrir un projet.")
 
