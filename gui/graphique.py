@@ -336,6 +336,13 @@ class Fenetre(QWidget):
             o.maj_style()
 
         update_token_color()
+        self.token_recoloration()
+
+    def token_recoloration(self):
+        for code in self.codes: # For each Editor instance, we change the text to recolorate it
+            code.setPlainText(code.toPlainText())
+
+
 
     def quit_func(self):
         """

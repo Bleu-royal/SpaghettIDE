@@ -44,9 +44,6 @@ class Proposition(QListWidget):
 
             l = self.current_pos[0] + len(prop) - len(line_splite[self.place])
 
-            print(line_splite[:self.place])
-            print(line_splite[self.place:])
-
             space = " " if len(line_splite) > 1 else ""
 
             if prop in self.props_files:
@@ -169,5 +166,6 @@ class CodeHighLighter(QSyntaxHighlighter):
     def get_index(self, text, cursor_position):
         idx = 0
         for i in range(cursor_position):
-            idx += text[i] == " "
+            if i in range(len(text)):
+                idx += text[i] == " "
         return idx
