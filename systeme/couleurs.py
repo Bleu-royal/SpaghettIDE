@@ -64,8 +64,12 @@ class CodeHighLighter(QSyntaxHighlighter):
         res = []
         
         if word != "":
+            for keyword in self.editeur.keywords:
+                if word in keyword and not keyword in res and keyword != word: res += [keyword]
+                
             for def_function in self.editeur.def_functions:
                 if word in def_function[0] and not def_function[0] in res and def_function[0] != word: res += [def_function[0]]
+
         return res
 
     def highlightBlock(self, text):  # Appelée lorsqu'on change du texte dans le QTextEdit
@@ -88,10 +92,11 @@ class CodeHighLighter(QSyntaxHighlighter):
             self.prop.show()
 
         if len(text) > 0 and cursor_position in range(len(text)) and text[cursor_position] == " ":
-            possibilities = self.props[randint(0, len(self.props) - 1)].split("\n")
-            self.prop.props += possibilities
-            self.prop.addElement(possibilities)
-            self.prop.show()
+            # possibilities = self.props[randint(0, len(self.props) - 1)].split("\n")
+            # self.prop.props += possibilities
+            # self.prop.addElement(possibilities)
+            # self.prop.show()
+            pass # ajout des propositions de yacc
 
         x = self.editeur.cursorRect().x() + 10
         y = self.editeur.cursorRect().y()

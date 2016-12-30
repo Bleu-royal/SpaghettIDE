@@ -26,7 +26,7 @@ class Editeur(QTextEdit):
 
     tabPress = Signal()
 
-    def __init__(self, police, taille_texte, def_functions):
+    def __init__(self, police, taille_texte, def_functions, keywords):
         """
         Hérite de QTextEdit.
         C'est une zone de texte dans laquelle on peut écrire, que l'on utilise ici pour écrire du code.
@@ -46,6 +46,7 @@ class Editeur(QTextEdit):
         self.police = police
         self.taille_texte = taille_texte
         self.def_functions = def_functions
+        self.keywords = keywords
 
         self.yacc_erreurs = []
 
@@ -201,7 +202,7 @@ class Fenetre(QWidget):
         :type title: str
         :rtype: None
         """
-        self.codes += [Editeur("ABeeZee", 14, self.def_functions)]
+        self.codes += [Editeur("ABeeZee", 14, self.def_functions, keywords)]
         self.highlighters += [CodeHighLighter(self.codes[-1], self.codes[-1].document())]
         self.codes[-1].tabPress.connect(self.highlighters[-1].test)
         self.tab_widget.addTab(self.codes[-1], title)
