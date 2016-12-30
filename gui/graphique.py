@@ -2,6 +2,7 @@
 
 import sys
 import os
+from threading import *
 from PySide.QtGui import *
 from PySide.QtCore import *
 
@@ -21,6 +22,14 @@ from gui.onglet import *
 
 sys.path[:0] = ["../"]
 sys.path[:0] = ["gui"]
+
+class SayMessage(Thread):
+    def __init__(self, message):
+        Thread.__init__(self, name="Message")
+        self.message = message
+
+    def run(self):
+        os.system("say " + self.message)
 
 class Editeur(QTextEdit):
 
@@ -99,6 +108,13 @@ class Fenetre(QWidget):
         self.project_path = ""
         self.def_functions = ""
 
+        if "darwin" in sys.platform:
+            ###########################################################################################################
+            ###########################################################################################################
+            self.assistance_vocale = True  # Faire en fonction d'un fichier de configuration
+            ###########################################################################################################
+            ###########################################################################################################
+
         self.gridLayout = QGridLayout()
         self.gridLayout.setContentsMargins(0, 0, 0, 0)  # No spacing around widgets
 
@@ -122,7 +138,7 @@ class Fenetre(QWidget):
         self.splitter.setMinimumSize(self.width(), self.height() - 50)
 
         self.statusbar = QStatusBar()
-        self.statusbar.showMessage("Bienvenue !", 2000)
+        self.status_message("Bienvenue !")
         self.statusbar.setFixedHeight(30)
         self.statusbar.setSizeGripEnabled(False)
 
@@ -147,7 +163,7 @@ class Fenetre(QWidget):
         idx = self.tab_widget.currentIndex()
         self.docs[idx].indent()
 
-    def status_message(self, message, time=2000):
+    def status_message(self, message, time=2000, say=True):
         """
         Shows a message in the status bar
         :param message: Message to show
@@ -157,12 +173,19 @@ class Fenetre(QWidget):
         :rtype: None
         """
 
-        if time != -1:
-            self.statusbar.showMessage(message, time)
+        if say and time != -1:
             if "darwin" in sys.platform:
-                os.system("say " + message)
+                if self.assistance_vocale:
+                    self.blabla = SayMessage(message)
+                    self.blabla.start()
+
+            self.statusbar.showMessage(message, time)
         else:
             self.statusbar.showMessage(message)
+
+    def assist_voc(self):
+        if "darwin" in sys.platform:
+            self.assistance_vocale = not self.assistance_vocale
 
     def new(self):
         """
@@ -311,7 +334,7 @@ class Fenetre(QWidget):
 
         :rtype: None
         """
-        self.status_message("Fermeture...", -1)  # Message de status
+        self.status_message("Fermeture...", -1, False)  # Message de status
         box = QMessageBox()
         box.setText("Voulez-vous vraiment fermer l'IDE ?")
         box.setStandardButtons(QMessageBox.Cancel | QMessageBox.Close)
@@ -323,4 +346,4 @@ class Fenetre(QWidget):
             self.restart = False
             self.close()
         else:
-            self.status_message("... ou pas !!", 1000)  # Message de status
+            self.status_message("... ou pas !!", 1000, False)  # Message de status

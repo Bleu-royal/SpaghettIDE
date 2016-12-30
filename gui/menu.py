@@ -50,28 +50,40 @@ class MenuBar(QMenuBar):
         super().__init__(parent)
         self.master = parent
 
-        # Nouveau Projet
+        # Projet
         new_project_action = MyAction(parent, "&Nouveau Projet", "Nouveau projet", parent.new_project, "Ctrl+M")
         open_project_action = MyAction(parent, "&Ouvrir Projet", "Ouvrir un projet", parent.open_project, "Ctrl+L")
         exit_project_action = MyAction(parent, "&Fermer Projet", "Fermer le projet", parent.close_project, "Ctrl+K")
 
-        # Nouveau Fichier
+        # Fichier
         new_fic_action = MyAction(parent, "&Nouveau", "Nouveau fichier", parent.new, "Ctrl+N")
         open_fic_action = MyAction(parent, "&Ouvrir", "Ouvrir un fichier", parent.open, "Ctrl+O")
         sauv_fic_action = MyAction(parent, "&Sauvegarder", "Sauvegarder le fichier courant", parent.save, "Ctrl+S")
         close_fic_action = MyAction(parent, "&Fermer", "Fermer le fichier courant", parent.close_current_tab, "Ctrl+W")
         exit_ide_action = MyAction(parent, "&Fermer", "Fermer l'application", parent.quit_func, "Esc")
        
-        # Nouveau Edition
-        indent_action = MyAction(parent, "&Indenter le fichier", "Indentation automatique du fichier", parent.indent,"Ctrl+Alt+L")
+        # Edition
+        indent_action = MyAction(parent, "&Indenter le fichier", "Indentation automatique du fichier", parent.indent, "Ctrl+Alt+L")
 
         # Menu divers
         apropos_ide_action = MyAction(parent, "&À Propos", "À propos de SpaghettIDE", parent.a_propos)
         help_ide_action = MyAction(parent, "&Aide", "Aide sur l'IDE", parent.help_func)
 
+        # Assistance vocale
+        assist_voc_action = MyAction(parent, "&Assistance Vocale", "Assictance vocale", parent.assist_voc, "Ctrl+Alt+A")
+        assist_voc_action.setCheckable(True)
+        ###############################################################################################################
+        ###############################################################################################################
+        assist_voc_action.setChecked(True)  # Faire en fonction d'un fichier de configuration
+        ###############################################################################################################
+        ###############################################################################################################
+        if "darwin" not in sys.platform:
+            assist_voc_action.setDisabled(True)
+
         # # # Menu Fichier et ses sous-menus # # #
         fichier_menu = self.addMenu("&Fichier")
-        self.set_actions(fichier_menu, new_fic_action, open_fic_action, sauv_fic_action, close_fic_action, "sep", exit_ide_action)
+        self.set_actions(fichier_menu, new_fic_action, open_fic_action, sauv_fic_action, close_fic_action, "sep",
+                         assist_voc_action, "sep", exit_ide_action)
 
         # # # Menu Edition et ses sous-menus # # #
 

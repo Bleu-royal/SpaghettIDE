@@ -75,7 +75,7 @@ class TabWidget(QTabWidget):
             self.parent.docs.remove(doc)
             self.parent.codes.remove(code)
 
-            self.parent.status_message("Fermeture de l'onglet courant.")
+            self.parent.status_message("Le fichier sélectionné a bien été fermé.")
 
     def next_tab(self):
         """
