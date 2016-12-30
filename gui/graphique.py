@@ -22,11 +22,11 @@ from gui.onglet import *
 sys.path[:0] = ["../"]
 sys.path[:0] = ["gui"]
 
-class Editeur(QPlainTextEdit):
+class Editeur(QTextEdit):
 
-    tabPress = Signal(QKeyEvent)
+    tabPress = Signal()
 
-    def __init__(self, police, taille_texte, def_functions):
+    def __init__(self, police, taille_texte, def_functions, keywords):
         """
         Hérite de QTextEdit.
         C'est une zone de texte dans laquelle on peut écrire, que l'on utilise ici pour écrire du code.
@@ -46,20 +46,21 @@ class Editeur(QPlainTextEdit):
         self.police = police
         self.taille_texte = taille_texte
         self.def_functions = def_functions
+        self.keywords = keywords
 
         self.yacc_erreurs = []
 
         self.maj_style()
 
-    # self.append("int main ( int argc, char** argv ){\n\n\treturn 0;\n\n}")
+        self.append("int main ( int argc, char** argv ){\n\n\treturn 0;\n\n}")
 
     def keyPressEvent(self, event, complete=False):
 
         if event.key() == 16777220:
             self.yacc_erreurs = yaccing(self.toPlainText())
 
-        if event.key() == 32 and event.nativeModifiers() == 514 and not complete:
-            self.tabPress.emit(event)
+        if ("darwin" in sys.platform and event.nativeModifiers() == 4096) or  (not "darwin" in sys.platform and event.key() == 32 and event.nativeModifiers() == 514):
+            self.tabPress.emit()
             return False
 
         super().keyPressEvent(event)
@@ -67,7 +68,7 @@ class Editeur(QPlainTextEdit):
     def maj_style(self):
         c = get_color_from_theme("textedit")
 
-        self.setStyleSheet("QPlainTextEdit { background-color:" + get_rgb(c["text-back-color"]) + ";"
+        self.setStyleSheet("QTextEdit { background-color:" + get_rgb(c["text-back-color"]) + ";"
                            + "font-family:" + self.police + ";"
                            + "color:" + get_rgb(c["text-color"]) + ";"
                            + "font-size:" + str(self.taille_texte) + "pt; }")
@@ -201,7 +202,7 @@ class Fenetre(QWidget):
         :type title: str
         :rtype: None
         """
-        self.codes += [Editeur("ABeeZee", 14, self.def_functions)]
+        self.codes += [Editeur("ABeeZee", 14, self.def_functions, keywords)]
         self.highlighters += [CodeHighLighter(self.codes[-1], self.codes[-1].document())]
         self.codes[-1].tabPress.connect(self.highlighters[-1].test)
         self.tab_widget.addTab(self.codes[-1], title)
