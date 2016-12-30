@@ -46,7 +46,7 @@ class Document:
 
         for i,line in enumerate(lines): 
             indent_level -= "}" in line #Si il y'a un accolade fermante on retire un niveau d'indentation
-            lines[i] = "\t" * indent_level + line.replace("\t", "") # On ajout indent_level fois un '\t' au debut de la ligne 
+            if lines[i].strip() != "" : lines[i] = "\t" * indent_level + self.remove_tabs(line) # On ajout indent_level fois un '\t' au debut de la ligne 
             indent_level += "{" in line #Si il y'a un accolade ouvrante on ajoute un niveau d'indentation
 
         self.text_edit.setPlainText("\n".join(lines))
@@ -54,6 +54,12 @@ class Document:
         for i in range(line_number):    #On remet le cursor au bon endroit
             self.text_edit.moveCursor(QTextCursor.Down)
             self.text_edit.moveCursor(QTextCursor.EndOfLine)
+
+    def remove_tabs(self, text):
+        idx = 0
+        while text[idx] == "\t" and idx in range(len(text)):
+            idx += 1
+        return text[idx:]
 
 def new_document(parent):
     new = "Sans nom " + str(len(parent.docs) + 1)
