@@ -52,7 +52,7 @@ class MenuBar(QMenuBar):
 
         # Projet
         new_project_action = MyAction(parent, "&Nouveau Projet", "Nouveau projet", parent.new_project, "Ctrl+M")
-        open_project_action = MyAction(parent, "&Ouvrir Projet", "Ouvrir un projet", parent.open_project, "Ctrl+L")
+        open_project_action = MyAction(parent, "&Ouvrir Projet", "Ouvrir un projet", parent.open_project, "Ctrl+P")
         exit_project_action = MyAction(parent, "&Fermer Projet", "Fermer le projet", parent.close_project, "Ctrl+K")
 
         # Fichier
@@ -64,6 +64,9 @@ class MenuBar(QMenuBar):
        
         # Edition
         indent_action = MyAction(parent, "&Indenter le fichier", "Indentation automatique du fichier", parent.indent, "Ctrl+Alt+L")
+        select_current_line_action = MyAction(parent, "&Selectionner la ligne courrante", "Selectionnier la ligne courrante", parent.select_current_line, "Ctrl+L")
+        select_current_word_action = MyAction(parent, "&Selectionner le mot courrante", "Selectionnier le mot courrante", parent.select_current_word, "Ctrl+D")
+        duplicate_action = MyAction(parent, "&Dupliquer", "Dupliquer", parent.duplicate, "Ctrl+Shift+D")
 
         # Menu divers
         apropos_ide_action = MyAction(parent, "&À Propos", "À propos de SpaghettIDE", parent.a_propos)
@@ -89,6 +92,9 @@ class MenuBar(QMenuBar):
 
         edition_menu = self.addMenu("&Edition")
         self.set_actions(edition_menu, indent_action)
+        self.set_actions(edition_menu, select_current_line_action)
+        self.set_actions(edition_menu, select_current_word_action)
+        self.set_actions(edition_menu, duplicate_action)
 
         # # # Menu Projet et ses sous-menus # # #
         projet_menu = self.addMenu("&Projet")

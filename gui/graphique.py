@@ -27,7 +27,7 @@ class Editeur(QTextEdit):
 
     tabPress = Signal()
 
-    def __init__(self, police, taille_texte, def_functions, keywords, parent):
+    def __init__(self, police, taille_texte, def_functions, keywords, parent, snippets):
         """
         Hérite de QTextEdit.
         C'est une zone de texte dans laquelle on peut écrire, que l'on utilise ici pour écrire du code.
@@ -50,6 +50,7 @@ class Editeur(QTextEdit):
         self.taille_texte = taille_texte
         self.def_functions = def_functions
         self.keywords = keywords
+        self.snippets = snippets
 
         self.yacc_erreurs = []
 
@@ -57,13 +58,37 @@ class Editeur(QTextEdit):
 
         self.append("int main ( int argc, char** argv ){\n\n\treturn 0;\n\n}")
 
-    def keyPressEvent(self, event, complete=False):
+
+    def keyPressEvent(self, event):
 
         self.parent.defaut_info_message()  # Actualisation des infos de base dès que l'on tape sur une touche
 
         if event.key() == 16777220:
             print("yaccing")
             # self.yacc_erreurs = yaccing(self.toPlainText())
+        elif event.key() == 16777217:
+            textCursor = self.textCursor()
+            textCursor.select(QTextCursor.WordUnderCursor)
+            word = textCursor.selectedText()
+            if word in self.snippets:
+                infos = self.snippets[word]
+                textCursor.removeSelectedText()
+                textCursor.insertText(infos[0])
+
+                self.parent.indent()
+
+                for i in range(infos[1]):
+                    self.moveCursor(QTextCursor.Up)
+
+                for i in range(infos[2]):
+                    self.moveCursor(QTextCursor.Right)
+
+                textCursor = self.textCursor()
+                textCursor.select(QTextCursor.WordUnderCursor)
+                self.setTextCursor(textCursor)
+
+
+                return False
 
         if ("darwin" in sys.platform and event.nativeModifiers() == 4096) or (not "darwin" in sys.platform and event.key() == 32 and event.nativeModifiers() == 514):
             self.tabPress.emit()
@@ -85,6 +110,27 @@ class Editeur(QTextEdit):
         else:
             self.parent.info_message(str(nb_prop) + " proposition" + "s" * (nb_prop != 1))
 
+    def select_current_line(self):
+        textCursor = self.textCursor()
+        textCursor.select(QTextCursor.LineUnderCursor)
+
+        self.setTextCursor(textCursor)
+
+    def select_current_word(self):
+        textCursor = self.textCursor()
+        textCursor.select(QTextCursor.WordUnderCursor)
+
+        self.setTextCursor(textCursor)
+
+    def duplicate(self):
+        textCursor = self.textCursor()
+        return_ = " "
+
+        if textCursor.selectedText() == "":
+            textCursor.select(QTextCursor.LineUnderCursor)
+            return_ = "\n"
+
+        textCursor.insertText(textCursor.selectedText() + return_ + textCursor.selectedText())
 
 class StatusBar(QStatusBar):
     def __init__(self, width=None):
@@ -124,6 +170,7 @@ class Fenetre(QWidget):
 
         self.project_path = ""
         self.def_functions = ""
+        self.snippets = self.get_snippets()
 
         if "darwin" in sys.platform:
             ###########################################################################################################
@@ -181,6 +228,29 @@ class Fenetre(QWidget):
         self.show()
 
         self.maj_style()
+
+    def get_snippets(self):
+
+        try:
+            fichier = open("snippets.json", "r")
+            res = json.loads(fichier.read())
+            fichier.close()
+        except:
+            res = []
+
+        return res
+
+    def duplicate(self):
+        idx = self.tab_widget.currentIndex()
+        self.codes[idx].duplicate()
+
+    def select_current_word(self):
+        idx = self.tab_widget.currentIndex()
+        self.codes[idx].select_current_word()
+
+    def select_current_line(self):
+        idx = self.tab_widget.currentIndex()
+        self.codes[idx].select_current_line()
 
     def indent(self):
         idx = self.tab_widget.currentIndex()
@@ -284,7 +354,7 @@ class Fenetre(QWidget):
         :type title: str
         :rtype: None
         """
-        self.codes += [Editeur("ABeeZee", 14, self.def_functions, keywords, self)]
+        self.codes += [Editeur("ABeeZee", 14, self.def_functions, keywords, self, self.snippets)]
         self.highlighters += [CodeHighLighter(self.codes[-1], self.codes[-1].document())]
         self.codes[-1].tabPress.connect(self.highlighters[-1].test)
         self.tab_widget.addTab(self.codes[-1], title)
