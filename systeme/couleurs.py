@@ -117,7 +117,6 @@ class CodeHighLighter(QSyntaxHighlighter):
         idx = self.get_index(text, cursor_position)
         self.prop.place = idx
 
-
         word = text.split(" ")[idx].replace("\t","")
         possibilities = self.compare(word)
 
@@ -170,6 +169,8 @@ class CodeHighLighter(QSyntaxHighlighter):
                 self.setFormat(0, len(text), textFormat)
             else:
                 self.setFormat(yacc_erreurs[0][1], yacc_erreurs[0][2], textFormat)
+
+        self.editeur.show_nb_prop(len(self.prop.props))  # Disp the number of propsitions
 
     def test(self):
         if self.prop.props != []:

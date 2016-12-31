@@ -35,7 +35,7 @@ class Editeur(QTextEdit):
 
     tabPress = Signal()
 
-    def __init__(self, police, taille_texte, def_functions, keywords):
+    def __init__(self, police, taille_texte, def_functions, keywords, parent):
         """
         Hérite de QTextEdit.
         C'est une zone de texte dans laquelle on peut écrire, que l'on utilise ici pour écrire du code.
@@ -52,6 +52,8 @@ class Editeur(QTextEdit):
         :rtype: None
         """
         super().__init__()
+        self.parent = parent
+
         self.police = police
         self.taille_texte = taille_texte
         self.def_functions = def_functions
@@ -68,7 +70,7 @@ class Editeur(QTextEdit):
         if event.key() == 16777220:
             self.yacc_erreurs = yaccing(self.toPlainText())
 
-        if ("darwin" in sys.platform and event.nativeModifiers() == 4096) or  (not "darwin" in sys.platform and event.key() == 32 and event.nativeModifiers() == 514):
+        if ("darwin" in sys.platform and event.nativeModifiers() == 4096) or (not "darwin" in sys.platform and event.key() == 32 and event.nativeModifiers() == 514):
             self.tabPress.emit()
             return False
 
@@ -82,7 +84,27 @@ class Editeur(QTextEdit):
                            + "color:" + get_rgb(c["text-color"]) + ";"
                            + "font-size:" + str(self.taille_texte) + "pt; }")
 
+    def show_nb_prop(self, nb_prop):
+        if nb_prop == 0:
+            self.parent.info_message("empty")
+        else:
+            self.parent.info_message(str(nb_prop) + " proposition" + "s" * (nb_prop != 1))
 
+
+class StatusBar(QStatusBar):
+    def __init__(self, width=None):
+        QStatusBar.__init__(self)
+        if width is not None:
+            self.setFixedWidth(width)
+        self.setFixedHeight(30)
+        self.setSizeGripEnabled(False)
+
+        self.maj_style()
+
+    def maj_style(self):
+        status_color = get_color_from_theme("statusbar")
+        self.setStyleSheet("QStatusBar {background: " + get_rgb(status_color["BACKGROUND"]) + ";""color: " +
+                                     get_rgb(status_color["TEXT"]) + ";}")
 
 class Fenetre(QWidget):
     def __init__(self, titre, workplace_path=QDir.homePath() + "/workplace/"):
@@ -123,7 +145,6 @@ class Fenetre(QWidget):
         # self.pixmap_img = QPixmap("images/pieuvre.jpg")
         # self.label_img.setPixmap(self.pixmap_img)
 
-
         self.treeview = TreeView(self)
 
         self.codes = []
@@ -138,15 +159,14 @@ class Fenetre(QWidget):
         self.splitter.setSizes([100, 400])
         self.splitter.setMinimumSize(self.width(), self.height() - 50)
 
-        self.statusbar = QStatusBar()
+        self.statusbar = StatusBar()
+        self.infobar = StatusBar(200)
 
         name = ""
         if "darwin" in sys.platform:
             name = self.workplace_path.split("/")[-3]
 
         self.status_message("Bienvenue %s!"%name)
-        self.statusbar.setFixedHeight(30)
-        self.statusbar.setSizeGripEnabled(False)
 
         # self.statusbar.addWidget(MyReadWriteIndication)
         self.menuBar = MenuBar(self)
@@ -155,8 +175,9 @@ class Fenetre(QWidget):
         if "win" in sys.platform.lower():
             self.gridLayout.addWidget(self.menuBar)
 
-        self.gridLayout.addWidget(self.splitter)
-        self.gridLayout.addWidget(self.statusbar)
+        self.gridLayout.addWidget(self.splitter, 0, 0, 1, 2)
+        self.gridLayout.addWidget(self.statusbar, 1, 0)
+        self.gridLayout.addWidget(self.infobar, 1, 1)
         self.setLayout(self.gridLayout)
 
         # if sys.platform == "linux":
@@ -169,6 +190,14 @@ class Fenetre(QWidget):
     def indent(self):
         idx = self.tab_widget.currentIndex()
         self.docs[idx].indent()
+
+    def info_message(self, message, time=-1):
+        if message == "empty":
+            self.infobar.showMessage("", 1)
+        elif time == -1:
+            self.infobar.showMessage(message)
+        else:
+            self.infobar.showMessage(message, time)
 
     def status_message(self, message, time=2000, say=True):
         """
@@ -186,6 +215,8 @@ class Fenetre(QWidget):
                     self.blabla = SayMessage(message)
                     self.blabla.start()
 
+            self.statusbar.showMessage(message, time)
+        elif time != -1:
             self.statusbar.showMessage(message, time)
         else:
             self.statusbar.showMessage(message)
@@ -254,7 +285,7 @@ class Fenetre(QWidget):
         :type title: str
         :rtype: None
         """
-        self.codes += [Editeur("ABeeZee", 14, self.def_functions, keywords)]
+        self.codes += [Editeur("ABeeZee", 14, self.def_functions, keywords, self)]
         self.highlighters += [CodeHighLighter(self.codes[-1], self.codes[-1].document())]
         self.codes[-1].tabPress.connect(self.highlighters[-1].test)
         self.tab_widget.addTab(self.codes[-1], title)
@@ -319,11 +350,6 @@ class Fenetre(QWidget):
         self.setStyleSheet("QObject::pane{background: " + get_rgb(get_color_from_theme("textedit")
                                                                   ["text-back-color"]) + ";}")
 
-        # Status bar : there is no class for it, so we define it's theme in the main graphic function.
-        status_color = get_color_from_theme("statusbar")
-        self.statusbar.setStyleSheet("background: " + get_rgb(status_color["BACKGROUND"]) + ";""color: " +
-                                     get_rgb(status_color["TEXT"]) + ";")
-
         for onglets_ouverts in self.codes:
             onglets_ouverts.maj_style()
 
@@ -332,7 +358,7 @@ class Fenetre(QWidget):
         updating style --> theme
         :return:
         """
-        l_objects = (self.treeview, self, self.tab_widget)
+        l_objects = (self.treeview, self, self.tab_widget, self.statusbar, self.infobar)
         for o in l_objects:
             o.maj_style()
 
@@ -340,10 +366,8 @@ class Fenetre(QWidget):
         self.token_recoloration()
 
     def token_recoloration(self):
-        for code in self.codes: # For each Editor instance, we change the text to recolorate it
+        for code in self.codes:  # For each Editor instance, we change the text to recolorate it
             code.setPlainText(code.toPlainText())
-
-
 
     def quit_func(self):
         """
