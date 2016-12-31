@@ -52,7 +52,8 @@ class Editeur(QTextEdit):
         self.keywords = keywords
         self.snippets = snippets
 
-        self.yacc_erreurs = []
+        self.yacc_errors = []
+        self.last_yacc_errors = []
 
         self.maj_style()
 
@@ -65,7 +66,13 @@ class Editeur(QTextEdit):
 
         if event.key() == 16777220:
             print("yaccing")
-            # self.yacc_erreurs = yaccing(self.toPlainText())
+            # self.last_yacc_errors = self.yacc_errors
+            # self.yacc_errors = yaccing(self.toPlainText())
+
+            if self.last_yacc_errors != self.yacc_errors:
+                idx = self.parent.tab_widget.currentIndex()
+                self.parent.highlighters[idx].rehighlight()
+
         elif event.key() == 16777217:
             textCursor = self.textCursor()
             textCursor.select(QTextCursor.WordUnderCursor)
@@ -124,7 +131,7 @@ class Editeur(QTextEdit):
 
     def duplicate(self):
         textCursor = self.textCursor()
-        return_ = " "
+        return_ = ""
 
         if textCursor.selectedText() == "":
             textCursor.select(QTextCursor.LineUnderCursor)
@@ -137,6 +144,7 @@ class StatusBar(QStatusBar):
         QStatusBar.__init__(self)
         if width is not None:
             self.setFixedWidth(width)
+
         self.setFixedHeight(30)
         self.setSizeGripEnabled(False)
 
@@ -435,8 +443,8 @@ class Fenetre(QWidget):
         self.token_recoloration()
 
     def token_recoloration(self):
-        for code in self.codes:  # For each Editor instance, we change the text to recolorate it
-            code.setPlainText(code.toPlainText())
+        for highlighter in self.highlighters:  # For each Editor instance, we change the text to recolorate it
+            highlighter.rehighlight()
 
     def quit_func(self):
         """

@@ -59,9 +59,7 @@ class CodeHighLighter(QSyntaxHighlighter):
         super().__init__(parent)
 
         self.editeur = editeur
-
         self.prop = Proposition(self.editeur)
-
         self.props = ["int\nvoid\nbool\nchar", "(\n{", "+\n-\n*\n/"]
 
     def compare(self, word):
@@ -129,17 +127,29 @@ class CodeHighLighter(QSyntaxHighlighter):
             self.setFormat(current_pos, len(word), QColor.fromRgb(color[0], color[1], color[2]))
             current_pos += len(word)
 
-        yacc_erreurs = self.editeur.yacc_erreurs
 
-        if yacc_erreurs != []:
+        yacc_errors = self.editeur.yacc_errors
+
+        if yacc_errors != []:
             textFormat = QTextCharFormat()
             textFormat.setFontUnderline(True)
             textFormat.setUnderlineColor(QColor.fromRgb(255, 0, 0))
 
-            if text[yacc_erreurs[0][1]: yacc_erreurs[0][1] + yacc_erreurs[0][2] + 1].strip() == "":
-                self.setFormat(0, len(text), textFormat)
-            else:
-                self.setFormat(yacc_erreurs[0][1], yacc_erreurs[0][2], textFormat)
+            text_split = self.editeur.toPlainText().split("\n")
+            line = yacc_errors[0][0]
+            char = yacc_errors[0][1]
+            end = yacc_errors[0][1]
+
+
+            start = 0
+            for i in range(line):
+                start += len(text_split[i])
+                start += 1
+
+            start -= 1
+
+            if line in range(len(text_split)) and text in text_split[line] and text != "":
+                self.setFormat(char-start, end, textFormat)
 
         self.editeur.show_nb_prop(len(self.prop.props))  # Disp the number of propsitions
 
