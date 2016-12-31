@@ -10,11 +10,13 @@ class Document:
         self.chemin_enregistrement = chemin_enregistrement
         self.nom = self.chemin_enregistrement.split("/")[-1]  # Recupération du nom du fichier
         self.extension = self.nom.split(".")[-1]  # Recupération de l'extension du fichier
-        self.nombre_lignes = self.text_edit.document().lineCount()
-        # Obtention du nombre de lignes presentes dans le QTextEdit
 
         if ouverture:
             self.ouverture_document()
+
+    def get_nb_lignes(self):
+        # Obtention du nombre de lignes presentes dans le QTextEdit
+        return self.text_edit.document().lineCount()
 
     def ouverture_document(self):
         fichier = open(self.chemin_enregistrement, "r")

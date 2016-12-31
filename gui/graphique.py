@@ -2,7 +2,6 @@
 
 import sys
 import os
-from threading import *
 from PySide.QtGui import *
 from PySide.QtCore import *
 
@@ -13,6 +12,7 @@ from language.language import *
 # Importation du module relatif à la coloration lexicale et de la gestion des documents
 from systeme.couleurs import *
 from systeme.document import *
+from systeme.parallele import *
 from systeme.workplace import *
 
 # Importation des modules du menu, des onglets et du navigateur de fichiers
@@ -22,14 +22,6 @@ from gui.onglet import *
 
 sys.path[:0] = ["../"]
 sys.path[:0] = ["gui"]
-
-class SayMessage(Thread):
-    def __init__(self, message):
-        Thread.__init__(self, name="Message")
-        self.message = message
-
-    def run(self):
-        os.system("say " + self.message)
 
 class Editeur(QTextEdit):
 
@@ -67,8 +59,11 @@ class Editeur(QTextEdit):
 
     def keyPressEvent(self, event, complete=False):
 
+        self.parent.defaut_info_message()  # Actualisation des infos de base dès que l'on tape sur une touche
+
         if event.key() == 16777220:
-            self.yacc_erreurs = yaccing(self.toPlainText())
+            print("yaccing")
+            # self.yacc_erreurs = yaccing(self.toPlainText())
 
         if ("darwin" in sys.platform and event.nativeModifiers() == 4096) or (not "darwin" in sys.platform and event.key() == 32 and event.nativeModifiers() == 514):
             self.tabPress.emit()
@@ -193,11 +188,15 @@ class Fenetre(QWidget):
 
     def info_message(self, message, time=-1):
         if message == "empty":
-            self.infobar.showMessage("", 1)
+            self.defaut_info_message()
         elif time == -1:
             self.infobar.showMessage(message)
         else:
             self.infobar.showMessage(message, time)
+
+    def defaut_info_message(self):
+        info = DefautInfo(self)
+        info.start()
 
     def status_message(self, message, time=2000, say=True):
         """
