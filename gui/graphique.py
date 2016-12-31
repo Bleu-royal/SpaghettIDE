@@ -123,6 +123,7 @@ class Fenetre(QWidget):
         # self.pixmap_img = QPixmap("images/pieuvre.jpg")
         # self.label_img.setPixmap(self.pixmap_img)
 
+
         self.treeview = TreeView(self)
 
         self.codes = []

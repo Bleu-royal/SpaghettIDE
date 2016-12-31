@@ -22,7 +22,19 @@ class Proposition(QListWidget):
         self.current_pos = []
         self.place = 0
 
-        self.setStyleSheet("QListView{color:white;background-color: purple;font-size:%spx;}"%self.font_size)
+        self.maj_style()
+
+    def maj_style(self):
+        self.setStyleSheet("QListView{"
+                           "color:white;"
+                           "background-color: grey;"
+                           "font-size:%spx;"
+                           "}"
+                           "QListView::item:hover{"
+                           "color:grey;"
+                           "background-color:white;"
+                           "}"
+                           %self.font_size)
 
     def addElement(self, elements):
         for element in elements:
