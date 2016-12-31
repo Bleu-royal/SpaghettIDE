@@ -19,8 +19,6 @@ class Proposition(QListWidget):
 
         self.props = []
         self.props_files = []
-        self.current_pos = []
-        self.place = 0
 
         self.maj_style()
 
@@ -45,40 +43,15 @@ class Proposition(QListWidget):
         self.complete(idx)
 
     def complete(self, idx=0):
-        if idx in range(len(self.props)):
-            prop = self.props[idx]
+        prop = self.props[idx]
+        
+        textCursor = self.parent.textCursor()
 
-            h = deepcopy(self.current_pos[1])
+        if prop in self.props_files:
+            textCursor.select(QTextCursor.WordUnderCursor)
+            textCursor.removeSelectedText()
 
-            lines = self.parent.toPlainText().split("\n")
-
-            line_splite = lines[h].replace("\t","").split(" ")
-
-            l = self.current_pos[0] + len(prop) - len(line_splite[self.place])
-
-            space = " " if len(line_splite) > 1 else ""
-
-            if prop in self.props_files:
-                nb_tab = self.get_nb_tab(lines[h])
-                lines[h] ="\t" * nb_tab +  " ".join(line_splite[:self.place]) + space + prop + " " +" ".join(line_splite[self.place+1:])
-            else:
-                lines[h] = lines[h] + prop 
-            self.parent.setPlainText("\n".join(lines))
-
-            for i in range(h):
-                self.parent.moveCursor(QTextCursor.Down)
-
-            for i in range(l+1):
-                self.parent.moveCursor(QTextCursor.Right)
-
-    def get_nb_tab(self, text):
-        res = 0
-        for e in text:
-            if e == "\t":
-                res += 1
-            else:
-                return res
-        return res
+        textCursor.insertText(prop)
 
 
 class CodeHighLighter(QSyntaxHighlighter):
@@ -106,18 +79,16 @@ class CodeHighLighter(QSyntaxHighlighter):
 
     def highlightBlock(self, text):  # Appelée lorsqu'on change du texte dans le QTextEdit
 
-        textCursor = self.editeur.textCursor()
-        cursor_position = textCursor.columnNumber() - 1
-        self.prop.current_pos = [cursor_position, textCursor.blockNumber()]
-
         self.prop.clear()
         self.prop.props = []
         self.prop.hide()
-        
-        idx = self.get_index(text, cursor_position)
-        self.prop.place = idx
 
-        word = text.split(" ")[idx].replace("\t","")
+        textCursor = self.editeur.textCursor()
+        textCursor.select(QTextCursor.WordUnderCursor)
+        word = textCursor.selectedText()
+
+        cursor_position = textCursor.columnNumber() - 1
+
         possibilities = self.compare(word)
 
         if possibilities != [] and lexing(word) == "identifier":
@@ -175,10 +146,3 @@ class CodeHighLighter(QSyntaxHighlighter):
     def test(self):
         if self.prop.props != []:
             self.prop.complete()
-
-    def get_index(self, text, cursor_position):
-        idx = 0
-        for i in range(cursor_position):
-            if i in range(len(text)):
-                idx += text[i] == " "
-        return idx
