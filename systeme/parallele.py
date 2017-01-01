@@ -27,5 +27,7 @@ class DefautInfo(Thread):
         self.parent = parent
 
     def run(self):
-        nblignes = self.parent.docs[self.parent.tab_widget.currentIndex()].get_nb_lignes()
-        self.parent.infobar.showMessage(str(nblignes) + " lignes")
+        idx = self.parent.tab_widget.currentIndex()
+        if idx in range(len(self.parent.docs)):
+            nblignes = self.parent.docs[idx].get_nb_lignes()
+            self.parent.infobar.showMessage(str(nblignes) + " lignes")

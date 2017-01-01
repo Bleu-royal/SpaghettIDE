@@ -57,13 +57,13 @@ class Editeur(QTextEdit):
 
         self.maj_style()
 
-        self.append("int main ( int argc, char** argv ){\n\n\treturn 0;\n\n}")
+        # self.append("int main ( int argc, char** argv ){\n\n\treturn 0;\n\n}")
 
     def keyPressEvent(self, event):
 
         self.parent.defaut_info_message()  # Actualisation des infos de base dès que l'on tape sur une touche
 
-        if event.key() == 16777220:
+        if event.key() == 16777220: #enter key
             print("yaccing")
             # self.last_yacc_errors = self.yacc_errors
             # self.yacc_errors = yaccing(self.toPlainText())
@@ -72,34 +72,39 @@ class Editeur(QTextEdit):
                 idx = self.parent.tab_widget.currentIndex()
                 self.parent.highlighters[idx].rehighlight()
 
-        elif event.key() == 16777217:
-            textCursor = self.textCursor()
-            textCursor.select(QTextCursor.WordUnderCursor)
-            word = textCursor.selectedText()
-            if word in self.snippets:
-                infos = self.snippets[word]
-                textCursor.removeSelectedText()
-                textCursor.insertText(infos[0])
+        elif event.key() == 16777217: #tab key
 
-                self.parent.indent()
-
-                for i in range(infos[1]):
-                    self.moveCursor(QTextCursor.Up)
-
-                for i in range(infos[2]):
-                    self.moveCursor(QTextCursor.Right)
-
-                textCursor = self.textCursor()
-                textCursor.select(QTextCursor.WordUnderCursor)
-                self.setTextCursor(textCursor)
-
-                return False
+            if self.use_snippets():return True 
 
         if ("darwin" in sys.platform and event.nativeModifiers() == 4096) or (not "darwin" in sys.platform and event.key() == 32 and event.nativeModifiers() == 514):
             self.tabPress.emit()
             return False
 
         super().keyPressEvent(event)
+
+    def use_snippets(self):
+
+        textCursor = self.textCursor()
+        textCursor.select(QTextCursor.WordUnderCursor)
+        word = textCursor.selectedText()
+        if word in self.snippets:
+            infos = self.snippets[word]
+            textCursor.removeSelectedText()
+            textCursor.insertText(infos[0])
+
+            self.parent.indent()
+
+            for i in range(infos[1]):
+                self.moveCursor(QTextCursor.Up)
+
+            for i in range(infos[2]):
+                self.moveCursor(QTextCursor.Right)
+
+            textCursor = self.textCursor()
+            textCursor.select(QTextCursor.WordUnderCursor)
+            self.setTextCursor(textCursor)
+
+            return True
 
     def maj_style(self):
         c = get_color_from_theme("textedit")
