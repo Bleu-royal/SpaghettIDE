@@ -53,10 +53,12 @@ class SearchDialog(QDialog):
 
     def keyPressEvent(self, event):
 
-        if ("darwin" in sys.platform and event.nativeModifiers() == 512) or (not "darwin" in sys.platform and event.key() == 16777220 and event.nativeModifiers() == 514):
+        if event.key() == 16777216: # if esc key pressed then quit
+            self.done(0)
+        elif ("darwin" in sys.platform and event.nativeModifiers() == 512) or (not "darwin" in sys.platform and event.key() == 16777220 and event.nativeModifiers() == 514): #if shift+enter pressed then search result backward
             self.research_prev()
 
-        elif event.key() == 16777220:
+        elif event.key() == 16777220: #if enter is pressed then search result
             self.research_next()
 
 

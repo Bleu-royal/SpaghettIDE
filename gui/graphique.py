@@ -363,7 +363,7 @@ class Fenetre(QWidget):
         :type title: str
         :rtype: None
         """
-        self.codes += [Editeur("ABeeZee", 14, self.def_functions, keywords, self, self.snippets)]
+        self.codes += [Editeur("ABeeZee", 14, self.def_functions, list(keywords.keys()) + know_functions, self, self.snippets)]
         self.highlighters += [CodeHighLighter(self.codes[-1], self.codes[-1].document())]
         self.codes[-1].tabPress.connect(self.highlighters[-1].test)
         self.tab_widget.addTab(self.codes[-1], title)
