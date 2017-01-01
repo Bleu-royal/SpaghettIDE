@@ -137,6 +137,35 @@ class Editeur(QTextEdit):
 
         textCursor.insertText(textCursor.selectedText() + return_ + textCursor.selectedText())
 
+    def comment_selection(self):
+        textCursor = self.textCursor()
+
+        if textCursor.selectedText() == "":
+            textCursor.select(QTextCursor.LineUnderCursor)
+
+        text = textCursor.selectedText()
+        textCursor.removeSelectedText()
+
+        lines = text.split("\u2029") # \u2029 -> \n
+
+        is_commented = self.check_comment(lines)
+
+        for i in range(len(lines)):
+            if lines[i].strip() != "":
+                if is_commented:
+                    lines[i] = lines[i][2:]
+                else:
+                    lines[i] = "//" + lines[i]
+
+        textCursor.insertText("\n".join(lines))
+
+    def check_comment(self, lines):
+        for line in lines:
+            if line[:2] != "//" and line.strip() != "":
+                return False
+        return True 
+
+
 class StatusBar(QStatusBar):
     def __init__(self, width=None):
         QStatusBar.__init__(self)
@@ -234,6 +263,11 @@ class Fenetre(QWidget):
         self.show()
 
         self.maj_style()
+
+    def comment_selection(self):
+        idx = self.tab_widget.currentIndex()
+        if idx != -1 : self.codes[idx].comment_selection()
+
 
     def find(self):
         find_dialog(self)
