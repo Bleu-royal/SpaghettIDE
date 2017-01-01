@@ -44,13 +44,15 @@ class Editeur(QTextEdit):
         :rtype: None
         """
         super().__init__()
-        self.parent = parent
 
+        self.parent = parent
         self.police = police
         self.taille_texte = taille_texte
         self.def_functions = def_functions
         self.keywords = keywords
         self.snippets = snippets
+
+        self.setTabStopWidth(20)
 
         self.yacc_errors = []
         self.last_yacc_errors = []
