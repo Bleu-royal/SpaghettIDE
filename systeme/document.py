@@ -2,6 +2,7 @@
 
 from PySide.QtGui import *
 from PySide.QtCore import *
+import sys
 
 class SearchDialog(QDialog):
 
@@ -22,18 +23,25 @@ class SearchDialog(QDialog):
         self.prev_button.clicked.connect(self.research_prev)
         self.next_button.clicked.connect(self.research_next)
 
+        self.button_widget = QWidget()
+        self.button_layout = QHBoxLayout()
+
+        self.button_layout.addWidget(self.prev_button)
+        self.button_layout.addWidget(self.next_button)
+
+        self.button_widget.setLayout(self.button_layout)
+
         self.layout.addWidget(self.line_edit)
         self.layout.addWidget(self.case_sensitive_checkbox)
-
-        self.layout.addWidget(self.prev_button)
-        self.layout.addWidget(self.next_button)
+        self.layout.addWidget(self.button_widget)
 
         self.setLayout(self.layout)
+
+        self.line_edit.setFocus()
 
     def research(self, prev=False):
 
         text = self.line_edit.text()
-
         if text.strip() != "":
             self.searchEvent.emit(self.parent, text, prev, self.case_sensitive_checkbox.isChecked())
 
@@ -43,6 +51,13 @@ class SearchDialog(QDialog):
     def research_prev(self):
         self.research(True)
 
+    def keyPressEvent(self, event):
+
+        if ("darwin" in sys.platform and event.nativeModifiers() == 512) or (not "darwin" in sys.platform and event.key() == 16777220 and event.nativeModifiers() == 514):
+            self.research_prev()
+
+        elif event.key() == 16777220:
+            self.research_next()
 
 
 class Document:
