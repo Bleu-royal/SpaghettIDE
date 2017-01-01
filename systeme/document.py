@@ -1,6 +1,48 @@
 # Module relatif au traitement des documents (noms, extension, sauvegarde, chargement...)
 
 from PySide.QtGui import *
+from PySide.QtCore import *
+
+class SearchDialog(QDialog):
+
+    searchEvent = Signal(QWidget, str, bool, bool)
+
+    def __init__(self, parent):
+        super().__init__(parent)
+
+        self.parent = parent
+
+        self.layout = QVBoxLayout()
+
+        self.line_edit = QLineEdit()
+        self.case_sensitive_checkbox = QCheckBox(text="Case sensitive")
+        self.prev_button = QPushButton(text="Précédent")
+        self.next_button = QPushButton(text="Suivant")
+
+        self.prev_button.clicked.connect(self.research_prev)
+        self.next_button.clicked.connect(self.research_next)
+
+        self.layout.addWidget(self.line_edit)
+        self.layout.addWidget(self.case_sensitive_checkbox)
+
+        self.layout.addWidget(self.prev_button)
+        self.layout.addWidget(self.next_button)
+
+        self.setLayout(self.layout)
+
+    def research(self, prev=False):
+
+        text = self.line_edit.text()
+
+        if text.strip() != "":
+            self.searchEvent.emit(self.parent, text, prev, self.case_sensitive_checkbox.isChecked())
+
+    def research_next(self):
+        self.research()
+
+    def research_prev(self):
+        self.research(True)
+
 
 
 class Document:
@@ -137,3 +179,27 @@ def closedocument(parent):
 
 def deletedocument(parent):
     pass
+
+def find_dialog(parent):
+    idx = parent.tab_widget.currentIndex()
+    if idx != -1:
+        dial = SearchDialog(parent)
+        dial.searchEvent.connect(find)
+        dial.exec()
+
+def find(parent, text, back, case):
+
+    idx = parent.tab_widget.currentIndex()
+
+    flags = False
+    if back:
+        flags = QTextDocument.FindBackward
+    if case:
+        if flags:
+            flags |= QTextDocument.FindCaseSensitively
+        else:
+            flags = QTextDocument.FindCaseSensitively
+
+    parent.codes[idx].find(text, flags)
+
+

@@ -67,6 +67,7 @@ class MenuBar(QMenuBar):
         select_current_line_action = MyAction(parent, "&Selectionner la ligne courante", "Selectionner la ligne courante", parent.select_current_line, "Ctrl+L")
         select_current_word_action = MyAction(parent, "&Selectionner le mot courant", "Selectionner le mot courant", parent.select_current_word, "Ctrl+D")
         duplicate_action = MyAction(parent, "&Dupliquer", "Dupliquer", parent.duplicate, "Ctrl+Shift+D")
+        find_action = MyAction(parent, "&Rechercher", "Rechercher", parent.find, "Ctrl+F")
 
         # Menu divers
         apropos_ide_action = MyAction(parent, "&À Propos", "À propos de SpaghettIDE", parent.a_propos)
@@ -95,6 +96,7 @@ class MenuBar(QMenuBar):
         self.set_actions(edition_menu, select_current_line_action)
         self.set_actions(edition_menu, select_current_word_action)
         self.set_actions(edition_menu, duplicate_action)
+        self.set_actions(edition_menu, find_action)
 
         # # # Menu Projet et ses sous-menus # # #
         projet_menu = self.addMenu("&Projet")

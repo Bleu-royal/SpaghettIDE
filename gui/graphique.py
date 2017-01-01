@@ -235,6 +235,9 @@ class Fenetre(QWidget):
 
         self.maj_style()
 
+    def find(self):
+        find_dialog(self)
+
     def get_snippets(self):
 
         try:
@@ -248,19 +251,19 @@ class Fenetre(QWidget):
 
     def duplicate(self):
         idx = self.tab_widget.currentIndex()
-        self.codes[idx].duplicate()
+        if idx != -1 : self.codes[idx].duplicate()
 
     def select_current_word(self):
         idx = self.tab_widget.currentIndex()
-        self.codes[idx].select_current_word()
+        if idx != -1 : self.codes[idx].select_current_word()
 
     def select_current_line(self):
         idx = self.tab_widget.currentIndex()
-        self.codes[idx].select_current_line()
+        if idx != -1 : self.codes[idx].select_current_line()
 
     def indent(self):
         idx = self.tab_widget.currentIndex()
-        self.docs[idx].indent()
+        if idx != -1 : self.docs[idx].indent()
 
     def info_message(self, message, time=-1):
         if message == "empty":
