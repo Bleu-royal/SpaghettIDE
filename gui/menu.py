@@ -64,8 +64,8 @@ class MenuBar(QMenuBar):
        
         # Edition
         indent_action = MyAction(parent, "&Indenter le fichier", "Indentation automatique du fichier", parent.indent, "Ctrl+Alt+L")
-        select_current_line_action = MyAction(parent, "&Selectionner la ligne courrante", "Selectionnier la ligne courrante", parent.select_current_line, "Ctrl+L")
-        select_current_word_action = MyAction(parent, "&Selectionner le mot courrante", "Selectionnier le mot courrante", parent.select_current_word, "Ctrl+D")
+        select_current_line_action = MyAction(parent, "&Selectionner la ligne courante", "Selectionner la ligne courante", parent.select_current_line, "Ctrl+L")
+        select_current_word_action = MyAction(parent, "&Selectionner le mot courant", "Selectionner le mot courant", parent.select_current_word, "Ctrl+D")
         duplicate_action = MyAction(parent, "&Dupliquer", "Dupliquer", parent.duplicate, "Ctrl+Shift+D")
 
         # Menu divers
