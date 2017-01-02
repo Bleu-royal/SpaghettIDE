@@ -85,10 +85,14 @@ def open_project(parent):
 
         memory = Mem()
 
-        gdf = ProgressOpening(ProgressWin, project_files, memory, parent)
-        gdf.start()  # Processing of the opening project function
-        disp_gdf = ProgressDisp(memory, parent)
-        disp_gdf.start()  # Dispays of the files studied
+        try:
+            gdf = ProgressOpening(ProgressWin, project_files, memory, parent)
+            gdf.start()  # Processing of the opening project function
+            disp_gdf = ProgressDisp(memory, parent)
+            disp_gdf.start()  # Dispays of the files studied
+        except:
+            ProgressWin(project_files, memory)
+            parent.function_declarations.emit(memory.res)
 
     else:
         parent.open()
