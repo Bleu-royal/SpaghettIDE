@@ -70,7 +70,7 @@ class Editeur(QTextEdit):
 
             # process_yacc = Yaccer(self)  # Module parallele --> Sur un Thread
             # process_yacc.start()
-            
+
             self.last_yacc_errors = self.yacc_errors
             self.yacc_errors = yaccing(self.toPlainText())
 
@@ -314,6 +314,7 @@ class Fenetre(QWidget):
 
     # Messages in status bars
     def info_message(self, message, time=-1):
+        self.infobar.clearMessage()
         if message == "empty":
             self.defaut_info_message()
         elif time == -1:
@@ -342,6 +343,7 @@ class Fenetre(QWidget):
         :type time: int
         :rtype: None
         """
+        self.statusbar.clearMessage()
         if say and time != -1:
             if "darwin" in sys.platform:
                 if self.assistance_vocale:

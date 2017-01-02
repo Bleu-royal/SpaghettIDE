@@ -115,7 +115,7 @@ class Document:
 
         indent_level = 0
 
-        for i,line in enumerate(lines): 
+        for i, line in enumerate(lines):
             indent_level -= "}" in line  #Si il y'a un accolade fermante on retire un niveau d'indentation
             if lines[i].strip() != "": lines[i] = "\t" * indent_level + self.remove_tabs(line)  # On ajout indent_level fois un '\t' au debut de la ligne
             indent_level += "{" in line  #Si il y'a un accolade ouvrante on ajoute un niveau d'indentation
