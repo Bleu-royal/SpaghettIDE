@@ -62,15 +62,12 @@ class ProgressDisp(Thread):
         prev = ""
         prev_val = 0
         while self.memo.res is None:
-            if "darwin" in sys.platform:
-                if self.memo.message != prev: #and self.parent.empty_status_message():
-                    self.parent.fenetre.status_message(self.memo.message, -1, False)
-                    prev = self.memo.message
+            if self.memo.message != prev: #and self.parent.empty_status_message():
+                self.parent.fenetre.status_message(self.memo.message, -1, False)
+                prev = self.memo.message
 
-                if self.memo.progress != prev_val:
-                    self.parent.fenetre.progress_bar.setValue(self.memo.progress)
-                    prev_val = self.memo.progress
+            if self.memo.progress != prev_val:
+                self.parent.fenetre.progress_bar.setValue(self.memo.progress)
+                prev_val = self.memo.progress
 
-                sleep(0.01)
-            else:
-                sleep(0.1)
+            sleep(0.01)
