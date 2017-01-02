@@ -67,16 +67,16 @@ class Editeur(QTextEdit):
         self.parent.defaut_info_message()  # Actualisation des infos de base dès que l'on tape sur une touche
 
         if event.key() == 16777220:  # enter key
-            try:
-                process_yacc = Yaccer(self)  # Module parallele --> Sur un Thread
-                process_yacc.start()
-            except:
-                self.last_yacc_errors = self.yacc_errors
-                self.yacc_errors = yaccing(self.toPlainText())
 
-                if self.last_yacc_errors != self.yacc_errors:
-                    idx = self.parent.get_idx()
-                    self.parent.highlighters[idx].rehighlight()
+            # process_yacc = Yaccer(self)  # Module parallele --> Sur un Thread
+            # process_yacc.start()
+            
+            self.last_yacc_errors = self.yacc_errors
+            self.yacc_errors = yaccing(self.toPlainText())
+
+            if self.last_yacc_errors != self.yacc_errors:
+                idx = self.parent.get_idx()
+                self.parent.highlighters[idx].rehighlight()
 
         elif event.key() == 16777217:  # tab key
 
