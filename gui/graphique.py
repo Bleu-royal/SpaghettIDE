@@ -310,8 +310,9 @@ class Fenetre(QWidget):
             self.infobar.showMessage(message, time)
 
     def defaut_info_message(self):
-        info = DefautInfo(self)
-        info.start()
+        # info = DefautInfo(self)
+        # info.start()
+        pass
 
     def show_nb_found(self, text):
         n = self.codes[self.get_idx()].toPlainText().count(text)

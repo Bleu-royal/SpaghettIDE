@@ -19,7 +19,7 @@ class SayMessage(Thread):
         os.system("say " + self.message)
 
 
-class DefautInfo(Thread):
+class DefautInfo(Thread): # Pose problème
     def __init__(self, parent):
         """
         Default information of the infobar
