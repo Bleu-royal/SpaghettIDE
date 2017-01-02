@@ -2,6 +2,7 @@ from threading import *
 import os
 
 from lexer import yaccing
+from time import sleep
 
 class SayMessage(Thread):
     def __init__(self, message):
@@ -81,4 +82,4 @@ class ProgressDisp(Thread):
             if self.memo.message != prev:
                 self.parent.fenetre.status_message(self.memo.message, -1, False)
                 prev = self.memo.message
-
+            sleep(0.01)

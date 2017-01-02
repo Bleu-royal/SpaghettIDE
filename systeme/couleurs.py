@@ -127,7 +127,6 @@ class CodeHighLighter(QSyntaxHighlighter):
             self.setFormat(current_pos, len(word), QColor.fromRgb(color[0], color[1], color[2]))
             current_pos += len(word)
 
-
         yacc_errors = self.editeur.yacc_errors
 
         if yacc_errors != []:
@@ -139,7 +138,6 @@ class CodeHighLighter(QSyntaxHighlighter):
             line = yacc_errors[0][0]
             char = yacc_errors[0][1]
             end = yacc_errors[0][1]
-
 
             start = 0
             for i in range(line):
