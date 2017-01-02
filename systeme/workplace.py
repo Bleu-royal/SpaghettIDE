@@ -80,6 +80,8 @@ def open_project(parent):
     name = parent.model.fileName(parent.currentIndex())
     if QDir(parent.fenetre.workplace_path + name).exists():
 
+        parent.fenetre.show_progress_bar()
+
         parent.fenetre.project_path = parent.fenetre.workplace_path + name
         project_files = get_project_files(parent.fenetre.project_path + "/")
 

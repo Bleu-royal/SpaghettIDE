@@ -57,7 +57,7 @@ class TreeView(QTreeView):
 
         self.cacher_pas_projet()
 
-        self.function_declarations.connect(self.load_project_fin)
+        self.function_declarations.connect(self.load_project)
 
     def maj_style(self):
         colors = get_color_from_theme("treeview")
@@ -74,7 +74,7 @@ class TreeView(QTreeView):
         :param event: Contient les positions x et y de l'endroit où on a cliqué. NON UTILISÉ ICI.
         :rtype: None
         """
-        self.load_project()
+        open_project(self)
 
     def keyPressEvent(self, event):
         """
@@ -86,15 +86,11 @@ class TreeView(QTreeView):
         :rtype: None
         """
         if event.key() == 16777220:  # Référence de la touche "entrée"
-            self.load_project()
+            open_project(self)
         else:
             QTreeView.keyPressEvent(self, event)
 
-    def load_project(self):
-        self.fenetre.show_progress_bar()
-        open_project(self)
-
-    def load_project_fin(self, func_decla):
+    def load_project(self, func_decla):
         """
         Calls open_project() in workplace module using a thread.
 
