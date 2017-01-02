@@ -1,4 +1,5 @@
 from threading import *
+from lexer import yaccing
 import os
 
 class SayMessage(Thread):
@@ -20,6 +21,7 @@ class DefautInfo(Thread):
     def __init__(self, parent):
         """
         Default information of the infobar
+
         :param parent:
         :return:
         """
@@ -31,3 +33,23 @@ class DefautInfo(Thread):
         if idx in range(len(self.parent.docs)):
             nblignes = self.parent.docs[idx].get_nb_lignes()
             self.parent.infobar.showMessage(str(nblignes) + " lignes")
+
+
+class Yaccer(Thread):
+    def __init__(self, parent):
+        """
+        Yacc processing
+
+        :param parent:
+        :return:
+        """
+        Thread.__init__(self, name="Yacc")
+        self.parent = parent
+
+    def run(self):
+        self.last_yacc_errors = self.parent.yacc_errors
+        self.parent.yacc_errors = yaccing(self.parent.toPlainText())
+
+        if self.last_yacc_errors != self.parent.yacc_errors:
+            idx = self.parent.parent.get_idx()
+            self.parent.parent.highlighters[idx].rehighlight()

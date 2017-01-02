@@ -58,6 +58,7 @@ class Editeur(QTextEdit):
         self.last_yacc_errors = []
 
         self.maj_style()
+        self.setFocus()
 
         # self.append("int main ( int argc, char** argv ){\n\n\treturn 0;\n\n}")
 
@@ -65,18 +66,13 @@ class Editeur(QTextEdit):
 
         self.parent.defaut_info_message()  # Actualisation des infos de base dès que l'on tape sur une touche
 
-        if event.key() == 16777220: #enter key
-            print("yaccing")
-            # self.last_yacc_errors = self.yacc_errors
-            # self.yacc_errors = yaccing(self.toPlainText())
+        if event.key() == 16777220:  # enter key
+            process_yacc = Yaccer(self)  # Module parallele --> Sur un Thread
+            process_yacc.start()
 
-            if self.last_yacc_errors != self.yacc_errors:
-                idx = self.parent.tab_widget.currentIndex()
-                self.parent.highlighters[idx].rehighlight()
+        elif event.key() == 16777217:  # tab key
 
-        elif event.key() == 16777217: #tab key
-
-            if self.use_snippets():return True 
+            if self.use_snippets(): return True
 
         if ("darwin" in sys.platform and event.nativeModifiers() == 4096) or (not "darwin" in sys.platform and event.key() == 32 and event.nativeModifiers() == 514):
             self.tabPress.emit()
@@ -273,8 +269,7 @@ class Fenetre(QWidget):
 
     def comment_selection(self):
         idx = self.tab_widget.currentIndex()
-        if idx != -1 : self.codes[idx].comment_selection()
-
+        if idx != -1: self.codes[idx].comment_selection()
 
     def find(self):
         find_dialog(self)
@@ -290,22 +285,22 @@ class Fenetre(QWidget):
 
         return res
 
+    def get_idx(self):
+        return self.tab_widget.currentIndex()
+
     def duplicate(self):
-        idx = self.tab_widget.currentIndex()
-        if idx != -1 : self.codes[idx].duplicate()
+        if self.get_idx() != -1: self.codes[self.get_idx()].duplicate()
 
     def select_current_word(self):
-        idx = self.tab_widget.currentIndex()
-        if idx != -1 : self.codes[idx].select_current_word()
+        if self.get_idx() != -1: self.codes[self.get_idx()].select_current_word()
 
     def select_current_line(self):
-        idx = self.tab_widget.currentIndex()
-        if idx != -1 : self.codes[idx].select_current_line()
+        if self.get_idx() != -1: self.codes[self.get_idx()].select_current_line()
 
     def indent(self):
-        idx = self.tab_widget.currentIndex()
-        if idx != -1 : self.docs[idx].indent()
+        if self.get_idx() != -1: self.docs[self.get_idx()].indent()
 
+    # Messages in status bars
     def info_message(self, message, time=-1):
         if message == "empty":
             self.defaut_info_message()
@@ -317,6 +312,10 @@ class Fenetre(QWidget):
     def defaut_info_message(self):
         info = DefautInfo(self)
         info.start()
+
+    def show_nb_found(self, text):
+        n = self.codes[self.get_idx()].toPlainText().count(text)
+        self.info_message(str(n) + " occurence%s de '%s'" % ("s" * (n != 1), text))
 
     def status_message(self, message, time=2000, say=True):
         """

@@ -9,6 +9,16 @@ class SearchDialog(QDialog):
     searchEvent = Signal(QWidget, str, bool, bool)
 
     def __init__(self, parent):
+        """
+        Creates a small window with a line to enter a word or an expression that you want to find if it exists in your
+        code tab.
+        It uses a signal "searchEvent" that is connected to a function not related with this class which will do the
+        searching operation.
+
+        :param parent: Object parent which is calling the function (Fenetre)
+        :type parent: object
+        :rtype: None
+        """
         super().__init__(parent)
 
         self.parent = parent
@@ -44,6 +54,7 @@ class SearchDialog(QDialog):
         text = self.line_edit.text()
         if text.strip() != "":
             self.searchEvent.emit(self.parent, text, prev, self.case_sensitive_checkbox.isChecked())
+            self.parent.show_nb_found(text)
 
     def research_next(self):
         self.research()
@@ -53,12 +64,13 @@ class SearchDialog(QDialog):
 
     def keyPressEvent(self, event):
 
-        if event.key() == 16777216: # if esc key pressed then quit
+        if event.key() == 16777216:  # if esc key pressed then quit
             self.done(0)
+            self.parent.defaut_info_message()
         elif ("darwin" in sys.platform and event.nativeModifiers() == 512) or (not "darwin" in sys.platform and event.key() == 16777220 and event.nativeModifiers() == 514): #if shift+enter pressed then search result backward
             self.research_prev()
 
-        elif event.key() == 16777220: #if enter is pressed then search result
+        elif event.key() == 16777220:  # if enter is pressed then search result
             self.research_next()
 
 
@@ -106,13 +118,13 @@ class Document:
         indent_level = 0
 
         for i,line in enumerate(lines): 
-            indent_level -= "}" in line #Si il y'a un accolade fermante on retire un niveau d'indentation
-            if lines[i].strip() != "" : lines[i] = "\t" * indent_level + self.remove_tabs(line) # On ajout indent_level fois un '\t' au debut de la ligne 
-            indent_level += "{" in line #Si il y'a un accolade ouvrante on ajoute un niveau d'indentation
+            indent_level -= "}" in line  #Si il y'a un accolade fermante on retire un niveau d'indentation
+            if lines[i].strip() != "": lines[i] = "\t" * indent_level + self.remove_tabs(line)  # On ajout indent_level fois un '\t' au debut de la ligne
+            indent_level += "{" in line  #Si il y'a un accolade ouvrante on ajoute un niveau d'indentation
 
         self.text_edit.setPlainText("\n".join(lines))
 
-        for i in range(line_number):    #On remet le cursor au bon endroit
+        for i in range(line_number):  #On remet le cursor au bon endroit
             self.text_edit.moveCursor(QTextCursor.Down)
             self.text_edit.moveCursor(QTextCursor.EndOfLine)
 
@@ -198,6 +210,12 @@ def deletedocument(parent):
     pass
 
 def find_dialog(parent):
+    """
+    Run a little window to enter text that you want to find in your code
+
+    :param parent: Object parent which is calling the function (Fenetre)
+    :rtype: None
+    """
     idx = parent.tab_widget.currentIndex()
     if idx != -1:
         dial = SearchDialog(parent)
@@ -205,6 +223,19 @@ def find_dialog(parent):
         dial.exec()
 
 def find(parent, text, back, case):
+    """
+    Finds if it exists a word or an expression in a tab which contains code.
+
+    :param parent: Object parent which is calling the function (Fenetre)
+    :type parent: object
+    :param text: text you wanna find
+    :type text: str
+    :param back: Find backwards or upwards
+    :type back: bool
+    :param case:  Case sensitive
+    :type case: bool
+    :return:
+    """
 
     idx = parent.tab_widget.currentIndex()
 
@@ -218,5 +249,3 @@ def find(parent, text, back, case):
             flags = QTextDocument.FindCaseSensitively
 
     parent.codes[idx].find(text, flags)
-
-
