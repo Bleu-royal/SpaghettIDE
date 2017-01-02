@@ -67,8 +67,16 @@ class Editeur(QTextEdit):
         self.parent.defaut_info_message()  # Actualisation des infos de base dès que l'on tape sur une touche
 
         if event.key() == 16777220:  # enter key
-            process_yacc = Yaccer(self)  # Module parallele --> Sur un Thread
-            process_yacc.start()
+            try:
+                process_yacc = Yaccer(self)  # Module parallele --> Sur un Thread
+                process_yacc.start()
+            except:
+                self.last_yacc_errors = self.yacc_errors
+                self.yacc_errors = yaccing(self.toPlainText())
+
+                if self.last_yacc_errors != self.yacc_errors:
+                    idx = self.parent.get_idx()
+                    self.parent.highlighters[idx].rehighlight()
 
         elif event.key() == 16777217:  # tab key
 
@@ -310,16 +318,18 @@ class Fenetre(QWidget):
             self.infobar.showMessage(message, time)
 
     def defaut_info_message(self):
-        info = DefautInfo(self)
-        info.start()
+        try:
+            info = DefautInfo(self)
+            info.start()
+        except:
+            idx = self.tab_widget.currentIndex()
+            if idx in range(len(self.docs)):
+                nblignes = self.docs[idx].get_nb_lignes()
+                self.infobar.showMessage(str(nblignes) + " ligne%s" % ("s" * (nblignes != 1)))
 
     def show_nb_found(self, text):
         n = self.codes[self.get_idx()].toPlainText().count(text)
         self.info_message(str(n) + " occurence%s de '%s'" % ("s" * (n != 1), text))
-
-    def show_open(self, message):
-        print(message)
-        self.status_message(message, -1, False)
 
     def status_message(self, message, time=2000, say=True):
         """
