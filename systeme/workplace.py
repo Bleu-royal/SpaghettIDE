@@ -130,7 +130,13 @@ class GetDefFonctions(QObject):
         ## Yaccing for functions
         res = {}
 
+        l = len(self.files)
+        incr = 100/l
+
+        i = 0
         for file_ in self.files:
+            i += 1
+            self.parent.update_progress(i*incr)
             self.parent.update_text("Ouverture du projet...  --- PROCESS : Traitement du fichier %s" %file_)
 
             fichier = open(file_, "r")
@@ -190,6 +196,9 @@ class ProgressWin(QObject):
         if m != self.prev_text:
             self.memory.message = m
             self.prev_text = m
+
+    def update_progress(self, n):
+        self.memory.progress = n
 
     def resultat(self, res):
         self.memory.res = res

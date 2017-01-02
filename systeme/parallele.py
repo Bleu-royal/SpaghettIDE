@@ -1,5 +1,5 @@
 from threading import *
-import os
+import os, sys
 
 from lexer import yaccing
 from time import sleep
@@ -60,8 +60,15 @@ class ProgressDisp(Thread):
 
     def run(self):
         prev = ""
+        prev_val = 0
         while self.memo.res is None:
-            if self.memo.message != prev: #and self.parent.empty_status_message():
-                self.parent.fenetre.status_message(self.memo.message, -1, False)
-                prev = self.memo.message
+            if "darwin" in sys.platform:
+                if self.memo.message != prev: #and self.parent.empty_status_message():
+                    self.parent.fenetre.status_message(self.memo.message, -1, False)
+                    prev = self.memo.message
+
+            if self.memo.progress != prev_val:
+                self.parent.fenetre.progress_bar.setValue(self.memo.progress)
+                prev_val = self.memo.progress
+
             sleep(0.01)

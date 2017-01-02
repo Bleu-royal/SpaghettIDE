@@ -250,6 +250,10 @@ class Fenetre(QWidget):
         self.statusbar = StatusBar()
         self.infobar = StatusBar(200)
 
+        self.progress_bar = QProgressBar()
+        self.progress_bar.setRange(0, 100)
+        self.progress_bar.setValue(0)
+
         name = ""
         if "darwin" in sys.platform:
             name = self.workplace_path.split("/")[-3]
@@ -311,6 +315,14 @@ class Fenetre(QWidget):
 
     def indent(self):
         if self.get_idx() != -1: self.docs[self.get_idx()].indent()
+
+    def show_progress_bar(self):
+        self.infobar.addWidget(self.progress_bar)
+        self.progress_bar.show()
+
+    def hide_progress_bar(self):
+        self.progress_bar.setValue(0)
+        self.infobar.removeWidget(self.progress_bar)
 
     # Messages in status bars
     def info_message(self, message, time=-1):
