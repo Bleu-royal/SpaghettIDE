@@ -19,24 +19,6 @@ class SayMessage(Thread):
         os.system("say " + self.message)
 
 
-class DefautInfo(Thread):
-    def __init__(self, parent):
-        """
-        Default information of the infobar
-
-        :param parent:
-        :return:
-        """
-        Thread.__init__(self, name="Defaut info")
-        self.parent = parent
-
-    def run(self):
-        idx = self.parent.tab_widget.currentIndex()
-        if idx in range(len(self.parent.docs)):
-            nblignes = self.parent.docs[idx].get_nb_lignes()
-            self.parent.infobar.showMessage(str(nblignes) + " ligne%s" % ("s" * (nblignes != 1)))
-
-
 class Yaccer(Thread):
     def __init__(self, parent):
         """
