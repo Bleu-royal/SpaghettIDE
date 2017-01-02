@@ -75,6 +75,7 @@ class Mem:
         self.message = ""
         self.progress = 0
 
+
 def open_project(parent):
     name = parent.model.fileName(parent.currentIndex())
     if QDir(parent.fenetre.workplace_path + name).exists():
@@ -89,9 +90,15 @@ def open_project(parent):
         disp_gdf = ProgressDisp(memory, parent)
         disp_gdf.start()  # Dispays of the files studied
 
-        return memory.res
     else:
         parent.open()
+
+def actualise(memo, parent):
+    prev = ""
+    while memo.res is None:
+        if memo.message != prev:
+            parent.fenetre.status_message(memo.message, -1, False)
+            prev = memo.message
 
 
 def get_project_files(path):
@@ -173,13 +180,6 @@ class ProgressWin(QObject):
         # Lancement des opérations
         self.process = GetDefFonctions(liste, self)
         self.process.resultat.connect(self.resultat)
-
-        # Thread acceuillant la tache a accomplir
-        self.thread = QThread(self)
-        # On déplace le calcul dans le thread
-        self.process.moveToThread(self.thread)
-        # Le démarrage de thread ne démarre pas la tache
-        self.thread.start()
         self.process.run()
 
     def update_text(self, m):

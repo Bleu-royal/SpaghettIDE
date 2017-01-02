@@ -96,7 +96,6 @@ class TreeView(QTreeView):
 
         :return:
         """
-        print(func_decla)
         if func_decla != None:
             self.fenetre.def_functions = func_decla
             self.fenetre.status_message("Le projet sélectionné a bien été ouvert")
