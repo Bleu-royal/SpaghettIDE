@@ -252,7 +252,6 @@ class Fenetre(QWidget):
 
         self.progress_bar = QProgressBar()
         self.progress_bar.setRange(0, 100)
-        self.progress_bar.setValue(0)
 
         name = ""
         if "darwin" in sys.platform:
@@ -317,11 +316,12 @@ class Fenetre(QWidget):
         if self.get_idx() != -1: self.docs[self.get_idx()].indent()
 
     def show_progress_bar(self):
+        self.progress_bar.setValue(0)
         self.infobar.addWidget(self.progress_bar)
         self.progress_bar.show()
 
     def hide_progress_bar(self):
-        self.progress_bar.setValue(0)
+        self.progress_bar.setValue(100)
         self.infobar.removeWidget(self.progress_bar)
 
     # Messages in status bars

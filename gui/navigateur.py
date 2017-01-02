@@ -74,7 +74,6 @@ class TreeView(QTreeView):
         :param event: Contient les positions x et y de l'endroit où on a cliqué. NON UTILISÉ ICI.
         :rtype: None
         """
-        self.fenetre.show_progress_bar()
         self.load_project()
 
     def keyPressEvent(self, event):
@@ -92,6 +91,7 @@ class TreeView(QTreeView):
             QTreeView.keyPressEvent(self, event)
 
     def load_project(self):
+        self.fenetre.show_progress_bar()
         open_project(self)
 
     def load_project_fin(self, func_decla):
@@ -103,7 +103,6 @@ class TreeView(QTreeView):
         if func_decla != None:
             self.fenetre.def_functions = func_decla
             self.fenetre.status_message("Le projet sélectionné a bien été ouvert")
-            self.fenetre.progress_bar.setValue(100)
             self.fenetre.hide_progress_bar()
 
     def open(self):
