@@ -116,7 +116,7 @@ class Editeur(QTextEdit):
         if nb_prop == 0:
             self.parent.info_message("empty")
         else:
-            self.parent.info_message(str(nb_prop) + " proposition" + "s" * (nb_prop != 1))
+            self.parent.info_message(str(nb_prop) + " proposition%s" % ("s" * (nb_prop != 1)))
 
     def select_current_line(self):
         textCursor = self.textCursor()
@@ -246,7 +246,7 @@ class Fenetre(QWidget):
         if "darwin" in sys.platform:
             name = self.workplace_path.split("/")[-3]
 
-        self.status_message("Bienvenue %s!"%name)
+        self.status_message("Bienvenue %s!" % name)
 
         # self.statusbar.addWidget(MyReadWriteIndication)
         self.menuBar = MenuBar(self)

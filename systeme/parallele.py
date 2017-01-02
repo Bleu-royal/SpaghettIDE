@@ -32,7 +32,7 @@ class DefautInfo(Thread):
         idx = self.parent.tab_widget.currentIndex()
         if idx in range(len(self.parent.docs)):
             nblignes = self.parent.docs[idx].get_nb_lignes()
-            self.parent.infobar.showMessage(str(nblignes) + " lignes")
+            self.parent.infobar.showMessage(str(nblignes) + " ligne%s" % ("s" * (nblignes != 1)))
 
 
 class Yaccer(Thread):
