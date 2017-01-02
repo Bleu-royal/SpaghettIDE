@@ -103,6 +103,7 @@ class TreeView(QTreeView):
         if func_decla != None:
             self.fenetre.def_functions = func_decla
             self.fenetre.status_message("Le projet sélectionné a bien été ouvert")
+            self.fenetre.progress_bar.setValue(100)
             self.fenetre.hide_progress_bar()
 
     def open(self):
