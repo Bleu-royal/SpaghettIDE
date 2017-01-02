@@ -147,7 +147,7 @@ def save_document(parent):
             if parent.docs[idx].chemin_enregistrement == "":
                 chemin = \
                     QFileDialog.getSaveFileName(parent, 'Sauvegarder un fichier', parent.project_path,
-                                                "Fichier C (*.c) ;; Fichier H (*.h)")[0]
+                                                "Fichier C (*.c);;Fichier H (*.h)")[0]
                 if chemin != "" and parent.project_path in chemin:
                     parent.docs[idx].set_chemin_enregistrement(chemin)
                     parent.docs[idx].sauvegarde_document(chemin)
@@ -180,7 +180,7 @@ def open_document(parent, chemin):
     if parent.project_path != "":
         if not chemin:
             chemin = QFileDialog.getOpenFileName(parent, 'Ouvrir un fichier', parent.project_path,
-                                                 "Fichier C (*.c) ;; Fichier H (*.h)")[0]
+                                                 "Fichier C (*.c);;Fichier H (*.h)")[0]
         if parent.project_path in chemin:
             # print("ici")
             pass
