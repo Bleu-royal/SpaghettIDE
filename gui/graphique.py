@@ -318,16 +318,17 @@ class Fenetre(QWidget):
             self.infobar.showMessage(message, time)
 
     def defaut_info_message(self):
-        try:
-            info = DefautInfo(self)
-            info.start()
-        except:
-            idx = self.tab_widget.currentIndex()
-            if idx in range(len(self.docs)):
-                nblignes = self.docs[idx].get_nb_lignes()
-                self.infobar.showMessage(str(nblignes) + " ligne%s" % ("s" * (nblignes != 1)))
+        # try:
+        #     info = DefautInfo(self)
+        #     info.start()
+        # except:
+        #     idx = self.tab_widget.currentIndex()
+        #     if idx in range(len(self.docs)):
+        #         nblignes = self.docs[idx].get_nb_lignes()
+        #         self.infobar.showMessage(str(nblignes) + " ligne%s" % ("s" * (nblignes != 1)))
         # info = DefautInfo(self)
         # info.start()
+        pass
 
     def show_nb_found(self, text):
         n = self.codes[self.get_idx()].toPlainText().count(text)
