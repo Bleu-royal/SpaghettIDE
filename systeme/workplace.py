@@ -3,8 +3,26 @@
 from PySide.QtCore import *
 from PySide.QtGui import *
 from datetime import datetime
-import os
+import os, sys
 from lexer import *
+
+from systeme.parallele import ProgressOpening, ProgressDisp
+
+class MessageInfo(QDialog):
+    def __init__(self, message):
+        QDialog.__init__(self)
+
+        m = QLabel(message)
+
+        p = QProgressBar()
+        p.setMinimum(0)
+        p.setMaximum(100)
+        p.setValue(0)
+
+        layout = QHBoxLayout()
+        layout.addWidget(m)
+        layout.addWidget(p)
+        self.setLayout(layout)
 
 
 def create_workplace():
@@ -51,14 +69,27 @@ def open_projects(parent):
     print(projet)
 
 
+class Mem:
+    def __init__(self):
+        self.res = None
+        self.message = ""
+        self.progress = 0
+
 def open_project(parent):
     name = parent.model.fileName(parent.currentIndex())
     if QDir(parent.fenetre.workplace_path + name).exists():
-        parent.fenetre.project_path = parent.fenetre.workplace_path + name
-        parent.fenetre.status_message("Le projet " + name + " a bien été ouvert.", 2000)
 
+        parent.fenetre.project_path = parent.fenetre.workplace_path + name
         project_files = get_project_files(parent.fenetre.project_path + "/")
-        return get_def_functions(project_files)
+
+        memory = Mem()
+
+        gdf = ProgressOpening(ProgressWin, project_files, memory, parent)
+        gdf.start()  # Processing of the opening project function
+        disp_gdf = ProgressDisp(memory, parent)
+        disp_gdf.start()  # Dispays of the files studied
+
+        return memory.res
     else:
         parent.open()
 
@@ -67,7 +98,6 @@ def get_project_files(path):
     res = []
 
     for e in os.listdir(path):
-
         if os.path.isfile(path + e):
             if e.split(".")[-1] == "c" or e.split(".")[-1] == "h":
                 res += [path + e]
@@ -77,53 +107,88 @@ def get_project_files(path):
     return res
 
 
-def get_def_functions(files):
-    types = ["char", "bool", "double", "enum", "float", "int", "long", "short", "signed", "unsigned", "void"]
+class GetDefFonctions(QObject):
+    resultat = Signal(list)
 
-    res = []
+    def __init__(self, files, parent):
+        QObject.__init__(self)
+        self.files = files
+        self.parent = parent
 
-    functions_by_files = yaccing_for_functions(files)
+    def run(self):
+        ## Yaccing for functions
+        res = {}
 
-    for file_ in functions_by_files:
-        fichier = open(file_, 'r')
-        data = fichier.read()
-        fichier.close()
+        for file_ in self.files:
+            self.parent.update_text("Ouverture du projet...  --- PROCESS : Traitement du fichier %s" %file_)
 
-        data_split = data.replace("\t", "").split("\n")
-        for ligne in functions_by_files[file_]:
-            tmp = data_split[int(ligne) - 1]
+            fichier = open(file_, "r")
+            data = fichier.read()
+            fichier.close()
+            lignes = yaccing(data, False)
 
-            for e in types:
-                tmp = tmp.replace("%s " % e, "")
+            for ligne in lignes:
+                if "function_definition" in lignes[ligne]:
+                    if file_ in res:
+                        res[file_] += [int(ligne) + 1]
+                    else:
+                        res[file_] = [int(ligne) + 1]
 
-            tmp = tmp.replace(" ", "").replace(",", "|").replace("(", "|").replace(")", "").replace(";", "")
-            tmp = tmp.split("{")[0]
+        funct_by_files = res
 
-            res += [tmp.split("|")]
+        ## Get Definitions of Functions
+        types = ["char", "bool", "double", "enum", "float", "int", "long", "short", "signed", "unsigned", "void"]
+        res = []
 
-            for i in range(len(res)):
-                res[i] = res[i][:-1] if res[i][-1] == "" else res[i]
+        for file_ in funct_by_files:
+            fichier = open(file_, 'r')
+            data = fichier.read()
+            fichier.close()
 
-    return res
+            data_split = data.replace("\t", "").split("\n")
+            for ligne in funct_by_files[file_]:
+                tmp = data_split[int(ligne) - 1]
+
+                for e in types:
+                    tmp = tmp.replace("%s " % e, "")
+
+                tmp = tmp.replace(" ", "").replace(",", "|").replace("(", "|").replace(")", "").replace(";", "")
+                tmp = tmp.split("{")[0]
+
+                res += [tmp.split("|")]
+
+                for i in range(len(res)):
+                    res[i] = res[i][:-1] if res[i][-1] == "" else res[i]
+
+        self.resultat.emit(res)
 
 
-def yaccing_for_functions(files):
-    res = {}
+class ProgressWin(QObject):
+    def __init__(self, liste, memory):
+        QObject.__init__(self)
 
-    for file_ in files:
-        fichier = open(file_, "r")
-        data = fichier.read()
-        fichier.close()
-        lignes = yaccing(data, False)
+        self.memory = memory
+        self.prev_text = ""
 
-        for ligne in lignes:
-            if "function_definition" in lignes[ligne]:
-                if file_ in res:
-                    res[file_] += [int(ligne) + 1]
-                else:
-                    res[file_] = [int(ligne) + 1]
+        # Lancement des opérations
+        self.process = GetDefFonctions(liste, self)
+        self.process.resultat.connect(self.resultat)
 
-    return res
+        # Thread acceuillant la tache a accomplir
+        self.thread = QThread(self)
+        # On déplace le calcul dans le thread
+        self.process.moveToThread(self.thread)
+        # Le démarrage de thread ne démarre pas la tache
+        self.thread.start()
+        self.process.run()
+
+    def update_text(self, m):
+        if m != self.prev_text:
+            self.memory.message = m
+            self.prev_text = m
+
+    def resultat(self, res):
+        self.memory.res = res
 
 
 def closeproject(parent):

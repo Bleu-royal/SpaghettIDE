@@ -10,6 +10,8 @@ sys.path[:0] = ["gui"]
 
 
 class TreeView(QTreeView):
+    function_declarations = Signal(list)
+
     def __init__(self, fenetre):
         """
         Hérite de QTreeView.
@@ -17,7 +19,7 @@ class TreeView(QTreeView):
         d'un ou de plusieurs projets.
 
         :param fenetre: Fenêtre où est placée le navigateur de fichier (ici : Parent)
-        :type fenetre: object
+        :type fenetre: Fenetre
         :rtype: None
         """
 
@@ -55,6 +57,8 @@ class TreeView(QTreeView):
 
         self.cacher_pas_projet()
 
+        self.function_declarations.connect(self.load_project)
+
     def maj_style(self):
         colors = get_color_from_theme("treeview")
         self.setStyleSheet("QTreeView{background: " + get_rgb(colors["BACKGROUND"]) +
@@ -70,8 +74,7 @@ class TreeView(QTreeView):
         :param event: Contient les positions x et y de l'endroit où on a cliqué. NON UTILISÉ ICI.
         :rtype: None
         """
-        def_functions = open_project(self)
-        if def_functions != None:self.fenetre.def_functions = def_functions
+        open_project(self)
 
     def keyPressEvent(self, event):
         """
@@ -86,6 +89,17 @@ class TreeView(QTreeView):
             open_project(self)
         else:
             QTreeView.keyPressEvent(self, event)
+
+    def load_project(self, func_decla):
+        """
+        Calls open_project() in workplace module using a thread.
+
+        :return:
+        """
+        print(func_decla)
+        if func_decla != None:
+            self.fenetre.def_functions = func_decla
+            self.fenetre.status_message("Le projet sélectionné a bien été ouvert")
 
     def open(self):
         """

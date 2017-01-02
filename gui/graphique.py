@@ -9,11 +9,11 @@ from lexer import *
 from themes.themes import *
 from language.language import *
 
+from systeme.workplace import *
 # Importation du module relatif à la coloration lexicale et de la gestion des documents
 from systeme.couleurs import *
 from systeme.document import *
 from systeme.parallele import *
-from systeme.workplace import *
 
 # Importation des modules du menu, des onglets et du navigateur de fichiers
 from gui.menu import *
@@ -317,16 +317,20 @@ class Fenetre(QWidget):
         n = self.codes[self.get_idx()].toPlainText().count(text)
         self.info_message(str(n) + " occurence%s de '%s'" % ("s" * (n != 1), text))
 
+    def show_open(self, message):
+        print(message)
+        self.status_message(message, -1, False)
+
     def status_message(self, message, time=2000, say=True):
         """
         Shows a message in the status bar
+
         :param message: Message to show
         :type message: str
         :param time: Time of printed message
         :type time: int
         :rtype: None
         """
-
         if say and time != -1:
             if "darwin" in sys.platform:
                 if self.assistance_vocale:

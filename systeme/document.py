@@ -16,7 +16,7 @@ class SearchDialog(QDialog):
         searching operation.
 
         :param parent: Object parent which is calling the function (Fenetre)
-        :type parent: object
+        :type parent: Fenetre
         :rtype: None
         """
         super().__init__(parent)
@@ -27,23 +27,21 @@ class SearchDialog(QDialog):
 
         self.line_edit = QLineEdit()
         self.case_sensitive_checkbox = QCheckBox(text="Case sensitive")
+        self.case_sensitive_checkbox.setChecked(True)
         self.prev_button = QPushButton(text="Précédent")
         self.next_button = QPushButton(text="Suivant")
 
         self.prev_button.clicked.connect(self.research_prev)
         self.next_button.clicked.connect(self.research_next)
 
-        self.button_widget = QWidget()
         self.button_layout = QHBoxLayout()
 
         self.button_layout.addWidget(self.prev_button)
         self.button_layout.addWidget(self.next_button)
 
-        self.button_widget.setLayout(self.button_layout)
-
         self.layout.addWidget(self.line_edit)
         self.layout.addWidget(self.case_sensitive_checkbox)
-        self.layout.addWidget(self.button_widget)
+        self.layout.addLayout(self.button_layout)
 
         self.setLayout(self.layout)
 
@@ -67,7 +65,7 @@ class SearchDialog(QDialog):
         if event.key() == 16777216:  # if esc key pressed then quit
             self.done(0)
             self.parent.defaut_info_message()
-        elif ("darwin" in sys.platform and event.nativeModifiers() == 512) or (not "darwin" in sys.platform and event.key() == 16777220 and event.nativeModifiers() == 514): #if shift+enter pressed then search result backward
+        elif ("darwin" in sys.platform and event.nativeModifiers() == 512) or (not "darwin" in sys.platform and event.key() == 16777220 and event.nativeModifiers() == 514):  # if shift+enter pressed then search result backward
             self.research_prev()
 
         elif event.key() == 16777220:  # if enter is pressed then search result
@@ -227,10 +225,10 @@ def find(parent, text, back, case):
     Finds if it exists a word or an expression in a tab which contains code.
 
     :param parent: Object parent which is calling the function (Fenetre)
-    :type parent: object
+    :type parent: Fenetre
     :param text: text you wanna find
     :type text: str
-    :param back: Find backwards or upwards
+    :param back: Find backwards or forwards
     :type back: bool
     :param case:  Case sensitive
     :type case: bool
