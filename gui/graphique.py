@@ -326,6 +326,8 @@ class Fenetre(QWidget):
             if idx in range(len(self.docs)):
                 nblignes = self.docs[idx].get_nb_lignes()
                 self.infobar.showMessage(str(nblignes) + " ligne%s" % ("s" * (nblignes != 1)))
+        # info = DefautInfo(self)
+        # info.start()
 
     def show_nb_found(self, text):
         n = self.codes[self.get_idx()].toPlainText().count(text)
