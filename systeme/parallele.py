@@ -67,8 +67,10 @@ class ProgressDisp(Thread):
                     self.parent.fenetre.status_message(self.memo.message, -1, False)
                     prev = self.memo.message
 
-            if self.memo.progress != prev_val:
-                self.parent.fenetre.progress_bar.setValue(self.memo.progress)
-                prev_val = self.memo.progress
+                if self.memo.progress != prev_val:
+                    self.parent.fenetre.progress_bar.setValue(self.memo.progress)
+                    prev_val = self.memo.progress
 
-            sleep(0.01)
+                sleep(0.01)
+            else:
+                sleep(0.1)
