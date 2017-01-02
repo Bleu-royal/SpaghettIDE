@@ -79,7 +79,7 @@ class ProgressDisp(Thread):
     def run(self):
         prev = ""
         while self.memo.res is None:
-            if self.memo.message != prev and self.parent.empty_status_message():
-                # self.parent.fenetre.status_message(self.memo.message, -1, False)
+            if self.memo.message != prev: #and self.parent.empty_status_message():
+                self.parent.fenetre.status_message(self.memo.message, -1, False)
                 prev = self.memo.message
             sleep(0.01)
