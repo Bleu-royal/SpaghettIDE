@@ -93,12 +93,8 @@ class MenuBar(QMenuBar):
         # # # Menu Edition et ses sous-menus # # #
 
         edition_menu = self.addMenu("&Edition")
-        self.set_actions(edition_menu, indent_action)
-        self.set_actions(edition_menu, select_current_line_action)
-        self.set_actions(edition_menu, select_current_word_action)
-        self.set_actions(edition_menu, duplicate_action)
-        self.set_actions(edition_menu, find_action)
-        self.set_actions(edition_menu, comment_selection_action)
+        self.set_actions(edition_menu, select_current_line_action, select_current_word_action, duplicate_action, "sep",
+                         find_action, "sep", indent_action, comment_selection_action)
 
         # # # Menu Projet et ses sous-menus # # #
         projet_menu = self.addMenu("&Projet")
@@ -181,9 +177,8 @@ class MenuBar(QMenuBar):
             change_theme(theme)
             self.master.full_maj_style()
 
-            self.master.status_message("Thème actuel : " + theme +
-                                              ". La coloration lexicale sera actualisée lorsque "
-                                              "vous écrirez un caractère.", 4000)
+            self.master.status_message("Thème actuel : " + theme + ". La coloration lexicale sera actualisée lorsque "
+                                       "vous écrirez un caractère.", 4000)
 
     def to_basic(self):
         self.__change_theme_to("basic")
