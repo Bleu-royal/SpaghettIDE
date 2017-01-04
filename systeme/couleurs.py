@@ -147,6 +147,7 @@ class CodeHighLighter(QSyntaxHighlighter):
             start -= 1
 
             if line in range(len(text_split)) and text in text_split[line] and text != "":
+                print("format")
                 self.setFormat(char-start, end, textFormat)
 
         self.editeur.show_nb_prop(len(self.prop.props))  # Disp the number of propsitions
