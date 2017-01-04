@@ -316,6 +316,7 @@ class Fenetre(QWidget):
         if self.get_idx() != -1: self.docs[self.get_idx()].indent()
 
     def show_progress_bar(self):
+        self.infobar.clearMessage()
         self.progress_bar.setValue(0)
         self.infobar.addWidget(self.progress_bar)
         self.progress_bar.show()
@@ -337,9 +338,11 @@ class Fenetre(QWidget):
     def defaut_info_message(self):
 
         idx = self.tab_widget.currentIndex()
-        if idx in range(len(self.docs)):
+        if idx in range(len(self.docs)) and len(self.docs) > 0:
             nblignes = self.docs[idx].get_nb_lignes()
             self.infobar.showMessage(str(nblignes) + " ligne%s" % ("s" * (nblignes != 1)))
+        else:
+            self.infobar.clearMessage()
 
     def show_nb_found(self, text):
         n = self.codes[self.get_idx()].toPlainText().count(text)
