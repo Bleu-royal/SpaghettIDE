@@ -135,6 +135,7 @@ class Document:
 def new_document(parent):
     new = "Sans nom " + str(len(parent.docs) + 1)
     parent.status_message(("Nouveau fichier " + new), 2000)
+    parent.defaut_info_message()
     parent.add_code(new)
     parent.docs += [Document(parent.codes[-1], "")]
     parent.tab_widget.setCurrentIndex(len(parent.codes) - 1)
@@ -191,6 +192,7 @@ def open_document(parent, chemin):
                 parent.status_message("Ouverture de "+title, 2000)  # Message de status
                 parent.docs += [Document(parent.codes[-1], chemin, True)]
                 parent.tab_widget.setCurrentIndex(len(parent.codes) - 1)
+                parent.defaut_info_message()
             else:
                 parent.status_message("Impossible d'ouvrir ce document car il est déjà ouvert.", 2000)
         else:
