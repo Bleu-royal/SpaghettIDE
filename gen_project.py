@@ -1,7 +1,7 @@
 from PySide.QtCore import *
-from PySide.QtGui import *
 
 from datetime import datetime
+import sys
 
 project = ""
 
@@ -28,5 +28,14 @@ def create_files(n):
         f = open("%s/file%s.c" % (project, str(i)), "w")
         f.close()
 
-create_empty()
-create_files(100)
+
+if __name__ == "__main__":
+    n = 100
+    if len(sys.argv) == 2:
+        try:
+            n = int(sys.argv[1])
+        except:
+            print("L'argument doit être un entier. On prend 100 par défaut.")
+
+    create_empty()
+    create_files(n)
