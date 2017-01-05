@@ -4,6 +4,8 @@ from PySide.QtGui import *
 from PySide.QtCore import *
 import sys
 
+import gui.style.style as style
+
 class SearchDialog(QDialog):
 
     searchEvent = Signal(QWidget, str, bool, bool)
@@ -31,6 +33,8 @@ class SearchDialog(QDialog):
         self.prev_button = QPushButton(text="Précédent")
         self.next_button = QPushButton(text="Suivant")
 
+        self.setStyleSheet(style.get("buttons", "window", "check_box", "line_edit"))
+
         self.prev_button.clicked.connect(self.research_prev)
         self.next_button.clicked.connect(self.research_next)
 
@@ -44,8 +48,6 @@ class SearchDialog(QDialog):
         self.layout.addLayout(self.button_layout)
 
         self.setLayout(self.layout)
-
-        self.line_edit.setFocus()
 
     def research(self, prev=False):
 

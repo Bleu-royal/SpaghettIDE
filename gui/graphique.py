@@ -7,6 +7,7 @@ from PySide.QtCore import *
 
 from lexer import *
 from themes.themes import *
+import gui.style.style as style
 from language.language import *
 
 from systeme.workplace import *
@@ -252,6 +253,7 @@ class Fenetre(QWidget):
 
         self.progress_bar = QProgressBar()
         self.progress_bar.setRange(0, 100)
+        self.progress_bar.setStyleSheet(style.get("progress_bar"))
 
         name = ""
         if "darwin" in sys.platform:
@@ -318,6 +320,7 @@ class Fenetre(QWidget):
     def show_progress_bar(self):
         self.infobar.clearMessage()
         self.progress_bar.setValue(0)
+        self.progress_bar.setTextVisible(True)
         self.infobar.addWidget(self.progress_bar)
         self.progress_bar.show()
 
@@ -532,6 +535,7 @@ class Fenetre(QWidget):
         box.setStandardButtons(QMessageBox.Cancel | QMessageBox.Close)
         box.setDefaultButton(QMessageBox.Close)
         box.setEscapeButton(QMessageBox.Cancel)
+        box.setStyleSheet(style.get("buttons", "window"))
         val = box.exec_()
 
         if val == QMessageBox.Close:

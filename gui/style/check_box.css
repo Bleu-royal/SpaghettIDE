@@ -1,0 +1,6 @@
+QCheckBox {
+    color: rgb(243, 175, 53);
+}
+QCheckBox:hover {
+    color: rgb(243, 200, 53);
+}
