@@ -8,23 +8,6 @@ from lexer import *
 
 from systeme.parallele import ProgressOpening, ProgressDisp
 
-class MessageInfo(QDialog):
-    def __init__(self, message):
-        QDialog.__init__(self)
-
-        m = QLabel(message)
-
-        p = QProgressBar()
-        p.setMinimum(0)
-        p.setMaximum(100)
-        p.setValue(0)
-
-        layout = QHBoxLayout()
-        layout.addWidget(m)
-        layout.addWidget(p)
-        self.setLayout(layout)
-
-
 def create_workplace():
     """
     Créée un répertoire vide qui va contenir les projets
