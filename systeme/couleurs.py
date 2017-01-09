@@ -130,16 +130,23 @@ class CodeHighLighter(QSyntaxHighlighter):
         yacc_errors = self.editeur.yacc_errors
 
 
+        lines = self.editeur.toPlainText().split("\n")
+
+        current_line = 0
+        for i,line in enumerate(lines):
+            if line == text:
+                current_line = i
+
         if yacc_errors != []:
+            line = yacc_errors[0][0]
+            char = yacc_errors[0][1]
             value = yacc_errors[0][2]
-            if value in text:
+            if value in text and current_line == line - 1:
                 textFormat = QTextCharFormat()
                 textFormat.setFontUnderline(True)
                 textFormat.setUnderlineColor(QColor.fromRgb(255, 0, 0))
 
                 text_split = self.editeur.toPlainText().split("\n")
-                line = yacc_errors[0][0]
-                char = yacc_errors[0][1]
 
                 self.setFormat(0, len(text_split[line-1]), textFormat)
 
