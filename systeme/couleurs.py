@@ -129,28 +129,28 @@ class CodeHighLighter(QSyntaxHighlighter):
 
         yacc_errors = self.editeur.yacc_errors
 
-        if yacc_errors != []:
-            textFormat = QTextCharFormat()
-            textFormat.setFontUnderline(True)
-            textFormat.setUnderlineColor(QColor.fromRgb(255, 0, 0))
 
-            text_split = self.editeur.toPlainText().split("\n")
+        lines = self.editeur.toPlainText().split("\n")
+
+        current_line = 0
+        for i,line in enumerate(lines):
+            if line == text:
+                current_line = i
+
+        if yacc_errors != []:
             line = yacc_errors[0][0]
             char = yacc_errors[0][1]
-            end = yacc_errors[0][1]
+            value = yacc_errors[0][2]
+            if value in text and current_line == line - 1:
+                textFormat = QTextCharFormat()
+                textFormat.setFontUnderline(True)
+                textFormat.setUnderlineColor(QColor.fromRgb(255, 0, 0))
 
-            start = 0
-            for i in range(line):
-                start += len(text_split[i])
-                start += 1
+                text_split = self.editeur.toPlainText().split("\n")
 
-            start -= 1
+                self.setFormat(0, len(text_split[line-1]), textFormat)
 
-            if line in range(len(text_split)) and text in text_split[line] and text != "":
-                print("format")
-                self.setFormat(char-start, end, textFormat)
-
-        self.editeur.show_nb_prop(len(self.prop.props))  # Disp the number of propsitions
+            self.editeur.show_nb_prop(len(self.prop.props))  # Disp the number of propsitions
 
     def test(self):
         if self.prop.props != []:
