@@ -37,18 +37,6 @@ class MyAction(QAction):
         self.triggered.connect(fonction)
 
 
-class MenuBouton(QPushButton):
-    def __init__(self, parent):
-        QPushButton.__init__(self, "Compiler")
-        self.parent = parent
-
-        self.setMaximumHeight(40)
-        self.setStyleSheet(style.get("buttons"))
-
-    def enterEvent(self, e):
-        self.setCursor(Qt.PointingHandCursor)
-
-
 class MenuBar(QMenuBar):
     def __init__(self, parent):
         """

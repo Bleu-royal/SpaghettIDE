@@ -235,7 +235,6 @@ class Fenetre(QWidget):
         # self.label_img.setPixmap(self.pixmap_img)
 
         self.treeview = TreeView(self)
-        self.fonctions = MenuBouton(self)
 
         self.codes = []
         self.highlighters = []
@@ -243,13 +242,8 @@ class Fenetre(QWidget):
 
         self.tab_widget = TabWidget(self)
 
-        self.gauche = QSplitter()
-        self.gauche.setOrientation(Qt.Vertical)
-        self.gauche.addWidget(self.treeview)
-        self.gauche.addWidget(self.fonctions)
-
         self.splitter = QSplitter()
-        self.splitter.addWidget(self.gauche)
+        self.splitter.addWidget(self.treeview)
         self.splitter.addWidget(self.tab_widget)
         self.splitter.setSizes([100, 400])
         self.splitter.setMinimumSize(self.width(), self.height() - 50)
@@ -526,9 +520,6 @@ class Fenetre(QWidget):
     def token_recoloration(self):
         for highlighter in self.highlighters:  # For each Editor instance, we change the text to recolorate it
             highlighter.rehighlight()
-
-    def compiler(self):
-        pass
 
     def quit_func(self):
         """
