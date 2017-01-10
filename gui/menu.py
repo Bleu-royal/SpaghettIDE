@@ -1,6 +1,8 @@
 import sys
 from PySide.QtGui import *
 from PySide.QtCore import *
+
+import gui.style.style as style
 from systeme.workplace import *
 from themes.themes import *
 from language.language import *
@@ -33,6 +35,18 @@ class MyAction(QAction):
         self.setStatusTip(statut)
         self.setShortcut(shortcut_command)
         self.triggered.connect(fonction)
+
+
+class MenuBouton(QPushButton):
+    def __init__(self, parent):
+        QPushButton.__init__(self, "Compiler")
+        self.parent = parent
+
+        self.setMaximumHeight(40)
+        self.setStyleSheet(style.get("buttons"))
+
+    def enterEvent(self, e):
+        self.setCursor(Qt.PointingHandCursor)
 
 
 class MenuBar(QMenuBar):

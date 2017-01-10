@@ -17,7 +17,7 @@ class TabWidget(QTabWidget):
         pour fermer, ouvrir, aller au suivant...
 
         :param parent: Parent de la classe ( qui appelle )
-        :type parent: object
+        :type parent: Fenetre
         :rtype: None
         """
         super().__init__()
@@ -106,6 +106,8 @@ class TabWidget(QTabWidget):
         :rtype: None
         """
         if len(self.parent.docs) == 0:
-            if self.parent.project_path != "":self.parent.new()
-            else:self.parent.status_message("Veuillez ouvrir un projet.")
+            if self.parent.project_path != "": self.parent.new()
+            else: self.parent.status_message("Veuillez ouvrir un projet.")
 
+    def enterEvent(self, e):
+        self.setCursor(Qt.PointingHandCursor)
