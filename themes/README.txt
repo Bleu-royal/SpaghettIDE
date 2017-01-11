@@ -39,14 +39,10 @@ You can create a new theme using the create_theme.py file. Just run it in a cons
 Finally, you want to add it in the menu bar. To do so, you need to add it manually in the graphique.py module.
 
 First, create an Action :
-new_theme = MyAction(parent, "&theme name", "theme name", self.fonction_to_bind)
+new_theme = MyAction(parent, "&theme name", "theme name", lambda: self.__change_theme_to("theme name"))
 
 Then, add it to the theme group :
 self.set_group(new_theme, groupe_theme, apparence_menu, "theme name")
-
-And don’t forget to make the bind function :
-def to_newTheme(self):
-    self.__change_theme_to("theme name")
 
 
 ==================================
@@ -91,11 +87,7 @@ Vous pouvez créer votre propre thème. Pour cela, lancez le fichier « create_
 Enfin, pour afficher votre nouveau thème dans la barre de menu, vous devez aller dans le module graphique, et l’ajouter manuellement.
 
 Pour cela créez une action pour ce thème :
-autre_theme = MyAction(parent, "&nom theme", "nom theme", self.fonction_a_relier)
+autre_theme = MyAction(parent, "&nom theme", "nom theme", lambda: self.__change_theme_to("nom theme"))
 
 Ajoutez l’action au groupe des thèmes : 
 self.set_group(autre_theme, groupe_theme, apparence_menu, "nom theme")
-
-Et n’oubliez pas de définir la fonction qui va relier le thème, par exemple :
-def to_autreTheme(self):
-    self.__change_theme_to("nom theme")

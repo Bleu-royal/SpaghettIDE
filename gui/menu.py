@@ -110,14 +110,14 @@ class MenuBar(QMenuBar):
 
         # Thèmes
         groupe_theme = QActionGroup(parent)
-        theme_basic = MyAction(parent, "&Thème Basique", "Thème Basique", self.to_basic)
-        theme_pimp = MyAction(parent, "&Thème Pimp", "Thème Pimp", self.to_pimp)
-        theme_forest = MyAction(parent, "&Thème Forêt", "Thème Forêt", self.to_forest)
-        theme_ocean = MyAction(parent, "&Thème Océan", "Thème Océan", self.to_ocean)
-        theme_galaxy = MyAction(parent, "&Thème Galaxie", "Thème Galaxie", self.to_galaxy)
-        theme_blackwhite = MyAction(parent, "&Thème Black n White", "Thème Black n White", self.to_blackwhite)
-        theme_pastel = MyAction(parent, "&Thème Pastel", "Thème Pastel", self.to_pastel)
-        # autre_theme = MyAction(parent, "&nom theme", "nom theme", self.fonction_a_relier)
+        theme_basic = MyAction(parent, "&Thème Basique", "Thème Basique", lambda: self.__change_theme_to("basic"))
+        theme_pimp = MyAction(parent, "&Thème Pimp", "Thème Pimp", lambda: self.__change_theme_to("pimp"))
+        theme_forest = MyAction(parent, "&Thème Forêt", "Thème Forêt", lambda: self.__change_theme_to("forest"))
+        theme_ocean = MyAction(parent, "&Thème Océan", "Thème Océan", lambda: self.__change_theme_to("ocean"))
+        theme_galaxy = MyAction(parent, "&Thème Galaxie", "Thème Galaxie", lambda: self.__change_theme_to("galaxy"))
+        theme_blackwhite = MyAction(parent, "&Thème Black n White", "Thème Black n White", lambda: self.__change_theme_to("black_white"))
+        theme_pastel = MyAction(parent, "&Thème Pastel", "Thème Pastel", lambda: self.__change_theme_to("pastel"))
+        # autre_theme = MyAction(parent, "&nom theme", "nom theme", lambda: self.__change_theme_to("nom theme"))
 
         self.set_group(theme_basic, groupe_theme, fonce, "basic")
         self.set_group(theme_pimp, groupe_theme, clair, "pimp")
@@ -181,27 +181,6 @@ class MenuBar(QMenuBar):
 
             self.master.status_message("Thème actuel : " + theme + ". La coloration lexicale sera actualisée lorsque "
                                        "vous écrirez un caractère.", 4000)
-
-    def to_basic(self):
-        self.__change_theme_to("basic")
-
-    def to_pimp(self):
-        self.__change_theme_to("pimp")
-
-    def to_forest(self):
-        self.__change_theme_to("forest")
-
-    def to_ocean(self):
-        self.__change_theme_to("ocean")
-
-    def to_galaxy(self):
-        self.__change_theme_to("galaxy")
-
-    def to_blackwhite(self):
-        self.__change_theme_to("black_white")
-
-    def to_pastel(self):
-        self.__change_theme_to("pastel")
 
     # Languages
     def to_fr(self):
