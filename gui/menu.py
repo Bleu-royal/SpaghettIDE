@@ -65,12 +65,20 @@ class MenuBar(QMenuBar):
         exit_ide_action = MyAction(parent, "&Fermer", "Fermer l'application", parent.quit_func, "Esc")
        
         # Edition
-        indent_action = MyAction(parent, "&Indenter le fichier", "Indentation automatique du fichier", parent.indent, "Ctrl+Alt+L")
-        select_current_line_action = MyAction(parent, "&Selectionner la ligne courante", "Selectionner la ligne courante", parent.select_current_line, "Ctrl+L")
-        select_current_word_action = MyAction(parent, "&Selectionner le mot courant", "Selectionner le mot courant", parent.select_current_word, "Ctrl+D")
+        indent_action = MyAction(parent, "&Indenter le fichier", "Indentation automatique du fichier",
+                                 parent.indent, "Ctrl+Alt+L")
+        
+        select_current_line_action = MyAction(parent, "&Sélectionner la ligne courante",
+                                              "Sélectionner la ligne courante", parent.select_current_line, "Ctrl+L")
+        
+        select_current_word_action = MyAction(parent, "&Sélectionner le mot courant", "Sélectionner le mot courant",
+                                              parent.select_current_word, "Ctrl+D")
         duplicate_action = MyAction(parent, "&Dupliquer", "Dupliquer", parent.duplicate, "Ctrl+Shift+D")
+        
         find_action = MyAction(parent, "&Rechercher", "Rechercher", parent.find, "Ctrl+F")
-        comment_selection_action = MyAction(parent, "&Commenter la selection", "Commenter", parent.comment_selection, "Ctrl+Shift+:")
+        
+        comment_selection_action = MyAction(parent, "&Commenter la selection", "Commenter", parent.comment_selection,
+                                            "Ctrl+Shift+:")
 
         # Menu divers
         apropos_ide_action = MyAction(parent, "&À Propos", "À propos de SpaghettIDE", parent.a_propos)
@@ -78,7 +86,7 @@ class MenuBar(QMenuBar):
         site_ide_action = MyAction(parent, "&Site", "Site", parent.site)
 
         # Assistance vocale
-        assist_voc_action = MyAction(parent, "&Assistance Vocale", "Assictance vocale", parent.assist_voc, "Ctrl+Alt+A")
+        assist_voc_action = MyAction(parent, "&Assistance Vocale", "Assistance vocale", parent.assist_voc, "Ctrl+Alt+A")
         assist_voc_action.setCheckable(True)
         
         ###############################################################################################################
@@ -118,7 +126,8 @@ class MenuBar(QMenuBar):
         theme_forest = MyAction(parent, "&Thème Forêt", "Thème Forêt", lambda: self.__change_theme_to("forest"))
         theme_ocean = MyAction(parent, "&Thème Océan", "Thème Océan", lambda: self.__change_theme_to("ocean"))
         theme_galaxy = MyAction(parent, "&Thème Galaxie", "Thème Galaxie", lambda: self.__change_theme_to("galaxy"))
-        theme_blackwhite = MyAction(parent, "&Thème Black n White", "Thème Black n White", lambda: self.__change_theme_to("black_white"))
+        theme_blackwhite = MyAction(parent, "&Thème Black n White", "Thème Black n White",
+                                    lambda: self.__change_theme_to("black_white"))
         theme_pastel = MyAction(parent, "&Thème Pastel", "Thème Pastel", lambda: self.__change_theme_to("pastel"))
         # autre_theme = MyAction(parent, "&nom theme", "nom theme", lambda: self.__change_theme_to("nom theme"))
 

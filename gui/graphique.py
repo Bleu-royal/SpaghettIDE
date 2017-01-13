@@ -24,6 +24,7 @@ from gui.onglet import *
 sys.path[:0] = ["../"]
 sys.path[:0] = ["gui"]
 
+
 class Editeur(QTextEdit):
 
 	tabPress = Signal()
@@ -83,7 +84,8 @@ class Editeur(QTextEdit):
 
 			if self.use_snippets(): return True
 
-		if ("darwin" in sys.platform and event.nativeModifiers() == 4096) or (not "darwin" in sys.platform and event.key() == 32 and event.nativeModifiers() == 514):
+		if ("darwin" in sys.platform and event.nativeModifiers() == 4096) or \
+				(not "darwin" in sys.platform and event.key() == 32 and event.nativeModifiers() == 514):
 			self.tabPress.emit()
 			return False
 
@@ -192,7 +194,8 @@ class StatusBar(QStatusBar):
 	def maj_style(self):
 		status_color = get_color_from_theme("statusbar")
 		self.setStyleSheet("QStatusBar {background: " + get_rgb(status_color["BACKGROUND"]) + ";""color: " +
-									 get_rgb(status_color["TEXT"]) + ";}")
+		                   get_rgb(status_color["TEXT"]) + ";}")
+
 
 class Fenetre(QWidget):
 	def __init__(self, titre, workplace_path=QDir.homePath() + "/workplace/"):
@@ -220,6 +223,7 @@ class Fenetre(QWidget):
 		self.snippets = self.get_snippets()
 
 		if "darwin" in sys.platform:
+			
 			###########################################################################################################
 			###########################################################################################################
 			self.assistance_vocale = False  # Faire en fonction d'un fichier de configuration
@@ -349,7 +353,7 @@ class Fenetre(QWidget):
 
 	def show_nb_found(self, text):
 		n = self.codes[self.get_idx()].toPlainText().count(text)
-		self.info_message(str(n) + " occurence%s de '%s'" % ("s" * (n != 1), text))
+		self.info_message(str(n) + " occurrence%s de '%s'" % ("s" * (n != 1), text))
 
 	def status_message(self, message, time=2000, say=True):
 		"""
@@ -437,7 +441,8 @@ class Fenetre(QWidget):
 		:type title: str
 		:rtype: None
 		"""
-		self.codes += [Editeur("ABeeZee", 14, self.def_functions, list(keywords.keys()) + know_functions, self, self.snippets)]
+		self.codes += [Editeur("ABeeZee", 14, self.def_functions, list(keywords.keys()) +
+		                       know_functions, self, self.snippets)]
 		self.highlighters += [CodeHighLighter(self.codes[-1], self.codes[-1].document())]
 		self.codes[-1].tabPress.connect(self.highlighters[-1].test)
 		self.tab_widget.addTab(self.codes[-1], title)
@@ -534,7 +539,7 @@ class Fenetre(QWidget):
 
 		:rtype: None
 		"""
-		self.status_message("Fermeture...", -1, False)  # Message de status
+		self.status_message("Fermeture...", -1, False)  # Message de statut
 		box = QMessageBox()
 		box.setText("Voulez-vous vraiment fermer l'IDE ?")
 		box.setStandardButtons(QMessageBox.Cancel | QMessageBox.Close)
@@ -547,4 +552,4 @@ class Fenetre(QWidget):
 			self.restart = False
 			self.close()
 		else:
-			self.status_message("... ou pas !!", 1000, False)  # Message de status
+			self.status_message("... ou pas !!", 1000, False)  # Message de statut
