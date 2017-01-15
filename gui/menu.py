@@ -82,8 +82,9 @@ class MenuBar(QMenuBar):
 
         # Menu divers
         apropos_ide_action = MyAction(parent, "&À Propos", "À propos de SpaghettIDE", parent.a_propos)
+        site_ide_action = MyAction(parent, "&Notre site", "Site", parent.site)
         help_ide_action = MyAction(parent, "&Aide", "Aide sur l'IDE", parent.help_func)
-        site_ide_action = MyAction(parent, "&Site", "Site", parent.site)
+        
 
         # Assistance vocale
         assist_voc_action = MyAction(parent, "&Assistance Vocale", "Assistance vocale", parent.assist_voc, "Ctrl+Alt+A")
@@ -152,7 +153,7 @@ class MenuBar(QMenuBar):
 
         # # # Menu SpaghettIDE # # #
         spaghettide_menu = self.addMenu("&SpaghettIDE")
-        self.set_actions(spaghettide_menu, apropos_ide_action, help_ide_action, site_ide_action)
+        self.set_actions(spaghettide_menu, apropos_ide_action, site_ide_action, help_ide_action)
 
     def set_actions(self, menu, *args):
         """

@@ -499,12 +499,25 @@ class Fenetre(QWidget):
 
 	def help_func(self):
 
-		self.status_message("AIDEZ MOIIIIIIII", 1000)
-		
+		if "darwin" in sys.platform:
+			os.system("open https://doc.qt.io/") 
+
+		if "linux2" in sys.platform:
+			os.system("xdg-open https://doc.qt.io/")
+
+		if "win32" in sys.platform:
+			os.system("start https://doc.qt.io/")
+			
 	def site(self):
 		
 		if "darwin" in sys.platform:
-			pass
+			os.system("open http://tpa.raspaccess.pro") 
+
+		if "linux2" in sys.platform:
+			os.system("xdg-open http://tpa.raspaccess.pro")
+
+		if "win32" in sys.platform:
+			os.system("start http://tpa.raspaccess.pro")
 
 	# Thèmes
 	def maj_style(self):
