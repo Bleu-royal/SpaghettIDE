@@ -54,7 +54,7 @@ class MenuBar(QMenuBar):
 
         # Projet
         new_project_action = MyAction(parent, "&Nouveau Projet", "Nouveau projet", parent.new_project, "Ctrl+M")
-        open_project_action = MyAction(parent, "&Ouvrir Projet", "Ouvrir un projet", parent.open_project, "Ctrl+P")
+        #open_project_action = MyAction(parent, "&Ouvrir Projet", "Ouvrir un projet", parent.open_project, "Ctrl+P")
         exit_project_action = MyAction(parent, "&Fermer Projet", "Fermer le projet", parent.close_project, "Ctrl+K")
 
         # Fichier
@@ -82,8 +82,9 @@ class MenuBar(QMenuBar):
 
         # Menu divers
         apropos_ide_action = MyAction(parent, "&À Propos", "À propos de SpaghettIDE", parent.a_propos)
+        site_ide_action = MyAction(parent, "&Notre site", "Site", parent.site)
         help_ide_action = MyAction(parent, "&Aide", "Aide sur l'IDE", parent.help_func)
-        site_ide_action = MyAction(parent, "&Site", "Site", parent.site)
+        
 
         # Assistance vocale
         assist_voc_action = MyAction(parent, "&Assistance Vocale", "Assistance vocale", parent.assist_voc, "Ctrl+Alt+A")
@@ -111,7 +112,7 @@ class MenuBar(QMenuBar):
 
         # # # Menu Projet et ses sous-menus # # #
         projet_menu = self.addMenu("&Projet")
-        self.set_actions(projet_menu, new_project_action, open_project_action, exit_project_action)
+        self.set_actions(projet_menu, new_project_action, exit_project_action)#, open_project_action, )
 
         # # # Menu Apparence # # #
         apparence_menu = self.addMenu("&Apparence")
@@ -152,7 +153,7 @@ class MenuBar(QMenuBar):
 
         # # # Menu SpaghettIDE # # #
         spaghettide_menu = self.addMenu("&SpaghettIDE")
-        self.set_actions(spaghettide_menu, apropos_ide_action, help_ide_action, site_ide_action)
+        self.set_actions(spaghettide_menu, apropos_ide_action, site_ide_action, help_ide_action)
 
     def set_actions(self, menu, *args):
         """

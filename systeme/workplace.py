@@ -42,14 +42,14 @@ def newproject(parent):
         parent.new_project()
 
 
-def open_projects(parent):
-    projet = os.listdir(parent.workplace_path)
-    for e in projet:
-        check_file = QFileInfo(parent.workplace_path + e + "/.conf")
-        if not os.path.isdir(parent.workplace_path + e) or not check_file.exists() and not check_file.isFile():
-            projet.remove(e)
+# def open_projects(parent):
+#     projet = os.listdir(parent.workplace_path)
+#     for e in projet:
+#         check_file = QFileInfo(parent.workplace_path + e + "/.conf")
+#         if not os.path.isdir(parent.workplace_path + e) or not check_file.exists() and not check_file.isFile():
+#             projet.remove(e)
 
-    print(projet)
+#     print(projet)
 
 
 class Mem:
