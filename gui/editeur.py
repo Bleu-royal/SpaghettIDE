@@ -6,19 +6,6 @@ from PySide.QtCore import *
 from lexer import *
 from themes.themes import *
 import gui.style.style as style
-from language.language import *
-
-from systeme.workplace import *
-# Importation du module relatif à la coloration lexicale et de la gestion des documents
-from systeme.couleurs import *
-from systeme.document import *
-from systeme.parallele import *
-
-# Importation des modules du menu, des onglets et du navigateur de fichiers
-from gui.menu import *
-from gui.navigateur import *
-from gui.onglet import *
-
 sys.path[:0] = ["../"]
 sys.path[:0] = ["gui"]
 

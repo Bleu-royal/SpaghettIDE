@@ -3,10 +3,12 @@
 import json
 import os
 
+
 def change_theme(theme):
     file = open("themes/current_theme.txt", "w")
     file.write(theme)  # We change the current theme
     file.close()
+
 
 def get_current_theme():
     """
@@ -47,6 +49,7 @@ def get_color_from_theme(what):
     dico.close()
 
     return dict_colors
+
 
 def get_rgb(l):
     """

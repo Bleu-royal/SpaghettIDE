@@ -3,10 +3,12 @@
 from PySide.QtCore import *
 from PySide.QtGui import *
 from datetime import datetime
-import os, sys
+import os
+import sys
 from lexer import *
 
 from systeme.parallele import ProgressOpening, ProgressDisp
+
 
 def create_workplace():
     """
@@ -74,13 +76,14 @@ def open_project(parent):
             gdf = ProgressOpening(ProgressWin, project_files, memory, parent)
             gdf.start()  # Processing of the opening project function
             disp_gdf = ProgressDisp(memory, parent)
-            disp_gdf.start()  # Dispays of the files studied
+            disp_gdf.start()  # Displays of the files studied
         else:
             ProgressWin(project_files, memory)
             parent.function_declarations.emit(memory.res)
 
     else:
         parent.open()
+
 
 def actualise(memo, parent):
     prev = ""
@@ -112,7 +115,7 @@ class GetDefFonctions(QObject):
         self.parent = parent
 
     def run(self):
-        ## Yaccing for functions
+        # # Yaccing for functions
         res = {}
 
         l = len(self.files)
@@ -138,7 +141,7 @@ class GetDefFonctions(QObject):
 
         funct_by_files = res
 
-        ## Get Definitions of Functions
+        # # Get Definitions of Functions
         types = ["char", "bool", "double", "enum", "float", "int", "long", "short", "signed", "unsigned", "void"]
         res = []
 
