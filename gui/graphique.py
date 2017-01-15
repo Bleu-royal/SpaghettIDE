@@ -364,7 +364,7 @@ class Fenetre(QWidget):
 		if "darwin" in sys.platform:
 			os.system("open https://doc.qt.io/")
 
-		if "linux2" in sys.platform:
+		if "linux" in sys.platform:
 			os.system("xdg-open https://doc.qt.io/")
 
 		if "win32" in sys.platform:
