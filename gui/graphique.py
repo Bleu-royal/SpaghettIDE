@@ -197,6 +197,19 @@ class StatusBar(QStatusBar):
                            get_rgb(status_color["TEXT"]) + ";}")
 
 
+class Bouton(QPushButton):
+
+    def __init__(self, nom, fonction):
+        QPushButton.__init__(self, nom)
+
+        self.setFixedHeight(40)
+        self.clicked.connect(fonction)
+        self.setStyleSheet(style.get("buttons"))
+
+    def enterEvent(self, event):
+        self.setCursor(Qt.PointingHandCursor)
+
+
 class Fenetre(QWidget):
     def __init__(self, titre, workplace_path=QDir.homePath() + "/workplace/"):
         """
@@ -246,8 +259,16 @@ class Fenetre(QWidget):
 
         self.tab_widget = TabWidget(self)
 
+        # Le bouton
+        self.bouton_analyse = Bouton("Analyse", self.analyse)
+
+        self.split_gauche = QSplitter()
+        self.split_gauche.addWidget(self.treeview)
+        self.split_gauche.addWidget(self.bouton_analyse)
+        self.split_gauche.setOrientation(Qt.Vertical)
+
         self.splitter = QSplitter()
-        self.splitter.addWidget(self.treeview)
+        self.splitter.addWidget(self.split_gauche)
         self.splitter.addWidget(self.tab_widget)
         self.splitter.setSizes([100, 400])
         self.splitter.setMinimumSize(self.width(), self.height() - 50)
@@ -497,6 +518,22 @@ class Fenetre(QWidget):
 
         QMessageBox.about(self, "À propos de SpaghettIDE ", "".join(apropos))
 
+    # Bouton
+
+    def analyse(self):
+        """ Cette fonction est reliée au bouton Analyse """
+        self.status_message("Le bouton analyse a été pressé COMME UN CITRON !!")
+        pass
+
+    # Thèmes
+    def maj_style(self):
+
+        self.setStyleSheet("QObject::pane{background: " + get_rgb(get_color_from_theme("textedit")
+                                                                  ["text-back-color"]) + ";}")
+
+        for onglets_ouverts in self.codes:
+            onglets_ouverts.maj_style()
+
     def help_func(self):
 
         if "darwin" in sys.platform:
@@ -513,7 +550,7 @@ class Fenetre(QWidget):
         if "darwin" in sys.platform:
             os.system("open http://tpa.raspaccess.pro")
 
-        if "linux2" in sys.platform:
+        if "linux" in sys.platform:
             os.system("xdg-open http://tpa.raspaccess.pro")
 
         if "win32" in sys.platform:

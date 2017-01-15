@@ -5,6 +5,7 @@ def __load(file, ext=".css", path="gui/style/"):
 
     return txt
 
+
 def get(*args):
     ch = ""
     for element in args:
