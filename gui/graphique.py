@@ -266,6 +266,8 @@ class Fenetre(QWidget):
         self.split_gauche.addWidget(self.treeview)
         self.split_gauche.addWidget(self.bouton_analyse)
         self.split_gauche.setOrientation(Qt.Vertical)
+        self.split_gauche.setChildrenCollapsible(False)
+        self.split_gauche.setHandleWidth(1)
 
         self.splitter = QSplitter()
         self.splitter.addWidget(self.split_gauche)
