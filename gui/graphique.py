@@ -459,13 +459,13 @@ class Fenetre(QWidget):
 
 		newproject(self)
 
-	def open_project(self):
-		"""
-		Ouvre un projet
-		:rtype: None
-		"""
+	# def open_project(self):
+	# 	"""
+	# 	Ouvre un projet
+	# 	:rtype: None
+	# 	"""
 
-		open_projects(self)
+	# 	open_projects(self)
 
 	def close_project(self):
 		"""
