@@ -9,7 +9,6 @@ from systeme.workplace import *
 from PySide.QtGui import *
 
 app = QApplication(sys.argv)
-QResource.registerResource("./poulpe.rcc");
 
 # Fonction permettant de cacher les dossiers __pycache__ et leur contenu en les supprimant à l'exécution du programme
 
@@ -35,7 +34,7 @@ try:
     fenetre = Fenetre("SpaghettIDE (Bleu Royal)")  # Creation of the main window
     bind(fenetre)  # Connection between buttons and functions
     create_workplace()
-
+    
     sys.exit(app.exec_())
     
 except FileNotFoundError:

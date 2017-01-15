@@ -552,4 +552,4 @@ class Fenetre(QWidget):
 			self.restart = False
 			self.close()
 		else:
-			self.status_message("... ou pas !!", 1000, False)  # Message de statut
+			self.status_message("... ou pas !!", 1000, False)  # Message de statut 
