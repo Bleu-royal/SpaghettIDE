@@ -195,6 +195,19 @@ class StatusBar(QStatusBar):
 		status_color = get_color_from_theme("statusbar")
 		self.setStyleSheet("QStatusBar {background: " + get_rgb(status_color["BACKGROUND"]) + ";""color: " +
 		                   get_rgb(status_color["TEXT"]) + ";}")
+		
+
+class Bouton(QPushButton):
+	
+	def __init__(self, nom, fonction):
+		QPushButton.__init__(self, nom)
+		
+		self.setFixedHeight(40)
+		self.clicked.connect(fonction)
+		self.setStyleSheet(style.get("buttons"))
+		
+	def enterEvent(self, event):
+		self.setCursor(Qt.PointingHandCursor)
 
 
 class Fenetre(QWidget):
@@ -245,9 +258,17 @@ class Fenetre(QWidget):
 		self.docs = []
 
 		self.tab_widget = TabWidget(self)
-
+		
+		# Le bouton
+		self.bouton_analyse = Bouton("Analyse", self.analyse)
+		
+		self.split_gauche = QSplitter()
+		self.split_gauche.addWidget(self.treeview)
+		self.split_gauche.addWidget(self.bouton_analyse)
+		self.split_gauche.setOrientation(Qt.Vertical)
+		
 		self.splitter = QSplitter()
-		self.splitter.addWidget(self.treeview)
+		self.splitter.addWidget(self.split_gauche)
 		self.splitter.addWidget(self.tab_widget)
 		self.splitter.setSizes([100, 400])
 		self.splitter.setMinimumSize(self.width(), self.height() - 50)
@@ -505,6 +526,13 @@ class Fenetre(QWidget):
 		
 		if "darwin" in sys.platform:
 			pass
+		
+	# Bouton
+	
+	def analyse(self):
+		""" Cette fonction est reliée au bouton Analyse """
+		self.status_message("Le bouton analyse a été pressé COMME UN CITRON !!")
+		pass
 
 	# Thèmes
 	def maj_style(self):
