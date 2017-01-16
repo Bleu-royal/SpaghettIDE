@@ -24,7 +24,6 @@ from gui.onglet import *
 sys.path[:0] = ["../"]
 sys.path[:0] = ["gui"]
 
-
 class Editeur(QTextEdit):
 
     tabPress = Signal()
