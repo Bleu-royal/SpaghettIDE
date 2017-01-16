@@ -1,12 +1,19 @@
 # Gestion des thèmes
 
+from xml import *
 import json
 import os
 
+file_xml = "./themes/current_theme.xml"
+
+
 def change_theme(theme):
-    file = open("themes/current_theme.txt", "w")
-    file.write(theme)  # We change the current theme
-    file.close()
+
+    tree = etree.parse(file_xml)
+    root = tree.getroot()
+    mode = root.find('nom')
+    mode.text = theme
+    tree.write(file_xml)
 
 def get_current_theme():
     """
@@ -14,10 +21,10 @@ def get_current_theme():
 
     :rtype: str
     """
+
     try:
-        file = open("themes/current_theme.txt", "r")
-        current_theme_dir = file.read()  # We load the current theme
-        file.close()
+        theme = open_theme(file_xml)
+        current_theme_dir = str(theme)  # We load the current theme
     except:  # Si le fichier n'existe pas
         change_theme("basic")
         return get_current_theme()
@@ -47,6 +54,7 @@ def get_color_from_theme(what):
     dico.close()
 
     return dict_colors
+
 
 def get_rgb(l):
     """

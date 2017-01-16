@@ -16,10 +16,14 @@ from systeme.couleurs import *
 from systeme.document import *
 from systeme.parallele import *
 
-# Importation des modules du menu, des onglets et du navigateur de fichiers
+# Importation des modules du menu, des onglets, du navigateur de fichiers, de l'éditeur
+# de la barre de statut et des boutons
 from gui.menu import *
 from gui.navigateur import *
 from gui.onglet import *
+from gui.editeur import *
+from gui.statusbar import *
+from gui.bouton import *
 
 sys.path[:0] = ["../"]
 sys.path[:0] = ["gui"]
@@ -261,6 +265,7 @@ class Fenetre(QWidget):
         # Le bouton
         self.bouton_analyse = Bouton("Analyse", self.analyse)
 
+        # Le QSplitter contenant le QTreeView et le QPushButton
         self.split_gauche = QSplitter()
         self.split_gauche.addWidget(self.treeview)
         self.split_gauche.addWidget(self.bouton_analyse)
@@ -268,15 +273,18 @@ class Fenetre(QWidget):
         self.split_gauche.setChildrenCollapsible(False)
         self.split_gauche.setHandleWidth(1)
 
+        # Le QSplitter contenant le QTabWidget et le QSplitter (cf. ci-dessus)
         self.splitter = QSplitter()
         self.splitter.addWidget(self.split_gauche)
         self.splitter.addWidget(self.tab_widget)
         self.splitter.setSizes([100, 400])
         self.splitter.setMinimumSize(self.width(), self.height() - 50)
 
+        # Les barres de statut
         self.statusbar = StatusBar()
         self.infobar = StatusBar(200)
 
+        # La barre de progression
         self.progress_bar = QProgressBar()
         self.progress_bar.setRange(0, 100)
         self.progress_bar.setStyleSheet(style.get("progress_bar"))
@@ -540,7 +548,7 @@ class Fenetre(QWidget):
         if "darwin" in sys.platform:
             os.system("open https://doc.qt.io/")
 
-        if "linux2" in sys.platform:
+        if "linux" in sys.platform:
             os.system("xdg-open https://doc.qt.io/")
 
         if "win32" in sys.platform:
