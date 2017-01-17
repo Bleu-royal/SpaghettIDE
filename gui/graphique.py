@@ -527,6 +527,17 @@ class Fenetre(QWidget):
 
         QMessageBox.about(self, "À propos de SpaghettIDE ", "".join(apropos))
 
+    def contact(self):
+        
+        if "darwin" in sys.platform:
+            os.system("open mailto:contact@spaghettide.com")
+
+        if "linux" in sys.platform:
+            os.system("xdg-open mailto:contact@spaghettide.com")
+
+        if "win32" in sys.platform:
+            os.system("start mailto:contact@spaghettide.com")
+
     # Bouton
 
     def analyse(self):
