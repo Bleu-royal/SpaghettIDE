@@ -8,12 +8,20 @@ file_xml = "./themes/current_theme.xml"
 
 
 def change_theme(theme):
+    try:
+        tree = etree.parse(file_xml)
+        root = tree.getroot()
+        mode = root.find('nom')
+        mode.text = theme
+        tree.write(file_xml)
+    except:
+        new = open(file_xml, "w")
+        new.write("<theme>\n"
+                  "     <nom></nom>\n"
+                  "</theme>")
+        new.close()
+        change_theme("basic")
 
-    tree = etree.parse(file_xml)
-    root = tree.getroot()
-    mode = root.find('nom')
-    mode.text = theme
-    tree.write(file_xml)
 
 def get_current_theme():
     """
