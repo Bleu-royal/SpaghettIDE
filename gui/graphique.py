@@ -557,13 +557,13 @@ class Fenetre(QWidget):
     def site(self):
 
         if "darwin" in sys.platform:
-            os.system("open http://tpa.raspaccess.pro")
+            os.system("open http://www.spaghettide.com")
 
         if "linux" in sys.platform:
-            os.system("xdg-open http://tpa.raspaccess.pro")
+            os.system("xdg-open http://www.spaghettide.com")
 
         if "win32" in sys.platform:
-            os.system("start http://tpa.raspaccess.pro")
+            os.system("start http://www.spaghettide.com")
 
     # Thèmes
     def maj_style(self):
