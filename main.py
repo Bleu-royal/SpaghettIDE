@@ -34,7 +34,7 @@ try:
     fenetre = Fenetre("SpaghettIDE (Bleu Royal)")  # Creation of the main window
     bind(fenetre)  # Connection between buttons and functions
     create_workplace()
-    
+
     sys.exit(app.exec_())
     
 except FileNotFoundError:

@@ -291,7 +291,7 @@ class Fenetre(QWidget):
 
         name = ""
         if "darwin" in sys.platform:
-            name = self.workplace_path.split("/")[-3]
+            name = os.environ["USER"]
 
         self.status_message("Bienvenue %s!" % name)
 
