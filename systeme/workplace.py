@@ -111,7 +111,8 @@ class GetDefFonctions(QObject):
         res = {}
 
         l = len(self.files)
-        incr = 100/l
+        if l>0: incr = 100/l
+        else: incr = 100
 
         i = 0
         for file_ in self.files:
