@@ -131,7 +131,7 @@ class MenuBar(QMenuBar):
         theme_blackwhite = MyAction(parent, "&Thème Black n White", "Thème Black n White",
                                     lambda: self.__change_theme_to("black_white"))
         theme_pastel = MyAction(parent, "&Thème Pastel", "Thème Pastel", lambda: self.__change_theme_to("pastel"))
-        # autre_theme = MyAction(parent, "&nom theme", "nom theme", lambda: self.__change_theme_to("nom theme"))
+        # nomTheme = MyAction(parent, "&monNouveauTheme", "monNouveauTheme", lambda: self.__change_theme_to("monNouveauTheme"))
 
         self.set_group(theme_basic, groupe_theme, fonce, "basic")
         self.set_group(theme_pimp, groupe_theme, clair, "pimp")
@@ -140,7 +140,7 @@ class MenuBar(QMenuBar):
         self.set_group(theme_galaxy, groupe_theme, fonce, "galaxy")
         self.set_group(theme_blackwhite, groupe_theme, fonce, "black_white")
         self.set_group(theme_pastel, groupe_theme, clair, "pastel")
-        # self.set_group(autre_theme, groupe_theme, apparence_menu, "nom theme")
+        # self.set_group(nomTheme, groupe_theme, apparence_menu, "monNouveauTheme")
 
         apparence_menu.addSeparator()
 
