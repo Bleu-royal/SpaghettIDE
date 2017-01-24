@@ -3,26 +3,20 @@
 
 from lxml import etree
 
-# import xml.etree.ElementTree
-# from xml.dom import minidom
-
-# file_xml = '/themes/current_theme.xml'
-
-# def get(file_xml):
-
-#     doc = minidom.parse(file_xml)
-
-#     e = xml.etree.ElementTree.parse(file_xml).getroot()
-
-#     print(doc)
-#     print(e)
-
-def open_theme(file_xml):
-
-    tree = etree.parse(file_xml)
-    root = tree.getroot()
-    mode = root.find('nom')
-    return str(mode.text)
+def open_xml():
+	configuration = {}
+	tree = etree.parse("conf.xml")
+	root = tree.getroot()
+	for child in root.getchildren():
+		configuration[child.tag] = child.text
+	return configuration
 
 
-    
+def write_xml(config, value):
+	tree = etree.parse("conf.xml")
+	root = tree.getroot()
+	for child in root.getchildren():
+		if child.tag == config:
+			mode = root.find(config)
+	mode.text = value
+	tree.write("conf.xml")
