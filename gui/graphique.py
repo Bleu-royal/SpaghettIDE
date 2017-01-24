@@ -4,6 +4,7 @@ import sys
 import os
 from PySide.QtGui import *
 from PySide.QtCore import *
+# from time import time
 
 from lexer import *
 from themes.themes import *
@@ -459,8 +460,10 @@ class Fenetre(QWidget):
         :type chemin: str
         :rtype: None
         """
-
+        # debut = time()
         open_document(self, chemin)
+        # fin = time()
+        # self.info_message(str(round((fin-debut), 3)), 1000)
 
     def add_code(self, title):
         """

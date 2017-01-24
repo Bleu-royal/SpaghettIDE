@@ -85,14 +85,6 @@ def open_project(parent):
         parent.open()
 
 
-def actualise(memo, parent):
-    prev = ""
-    while memo.res is None:
-        if memo.message != prev:
-            parent.fenetre.status_message(memo.message, -1, False)
-            prev = memo.message
-
-
 def get_project_files(path):
     res = []
 

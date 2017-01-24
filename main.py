@@ -7,6 +7,7 @@ from gui.graphique import *
 from kernel.bind import bind  
 from systeme.workplace import *  
 from PySide.QtGui import *
+from gui.chargement import Loading
 
 app = QApplication(sys.argv)
 
@@ -34,7 +35,10 @@ try:
     fenetre = Fenetre("SpaghettIDE (Bleu Royal)")  # Creation of the main window
     bind(fenetre)  # Connection between buttons and functions
     create_workplace()
-    
+
+    load = Loading()
+    load.exec()
+
     sys.exit(app.exec_())
     
 except FileNotFoundError:
