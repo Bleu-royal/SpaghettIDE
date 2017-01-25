@@ -3,6 +3,17 @@
 
 from lxml import etree
 
+try :
+    open("conf.xml")
+    #tree = etree.parse("conf.xml")
+except :
+    new = open("conf.xml", "w")
+    new.write("<configuration>\n"
+              "     <theme>basic</theme>\n"
+              "     <assistance_vocale>False</assistance_vocale>\n"
+              "</configuration>")
+    new.close()
+
 def open_xml():
 	configuration = {}
 	tree = etree.parse("conf.xml")

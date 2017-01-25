@@ -47,13 +47,3 @@ except FileNotFoundError:
     mess.setStandardButtons(QMessageBox.Close)
     mess.setDefaultButton(QMessageBox.Close)
     mess.exec_()
-
-try :
-    open("conf.xml")
-except :
-    new = open(file_xml, "w")
-    new.write("<configuration>\n"
-              "     <theme>basic</theme>\n"
-              "     <assistance_vocale>False</assistance_vocale>\n"
-              "</configuration>")
-    new.close()
