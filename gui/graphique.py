@@ -239,14 +239,6 @@ class Fenetre(QWidget):
         self.def_functions = ""
         self.snippets = self.get_snippets()
 
-        if "darwin" in sys.platform:
-
-            ###########################################################################################################
-            ###########################################################################################################
-            self.assistance_vocale = False  # Faire en fonction d'un fichier de configuration
-            ###########################################################################################################
-            ###########################################################################################################
-
         self.gridLayout = QGridLayout()
         self.gridLayout.setContentsMargins(0, 0, 0, 0)  # No spacing around widgets
 
@@ -399,7 +391,8 @@ class Fenetre(QWidget):
         self.statusbar.clearMessage()
         if say and time != -1:
             if "darwin" in sys.platform:
-                if self.assistance_vocale:
+                configuration = open_xml()
+                if configuration['assistance_vocale'] == 'True':
                     self.blabla = SayMessage(message)
                     self.blabla.start()
             self.statusbar.showMessage(message, time)
@@ -410,11 +403,12 @@ class Fenetre(QWidget):
 
     def assist_voc(self):
         if "darwin" in sys.platform:
-            if self.assistance_vocale:
+            configuration = open_xml()
+            if configuration['assistance_vocale'] == 'True':
                 self.status_message("Assistance vocale désactivée.")
-                self.assistance_vocale = False
+                write_xml("assistance_vocale", "False")
             else:
-                self.assistance_vocale = True
+                write_xml("assistance_vocale", "True")
                 self.status_message("Assistance vocale activée.")
 
     def new(self):

@@ -4,24 +4,10 @@ from xml import *
 import json
 import os
 
-file_xml = "./themes/current_theme.xml"
-
-
 def change_theme(theme):
-    try:
-        tree = etree.parse(file_xml)
-        root = tree.getroot()
-        mode = root.find('nom')
-        mode.text = theme
-        tree.write(file_xml)
-    except:
-        new = open(file_xml, "w")
-        new.write("<theme>\n"
-                  "     <nom></nom>\n"
-                  "</theme>")
-        new.close()
-        change_theme("basic")
 
+    write_xml('theme', theme)
+    
 
 def get_current_theme():
     """
@@ -31,8 +17,8 @@ def get_current_theme():
     """
 
     try:
-        theme = open_theme(file_xml)
-        current_theme_dir = str(theme)  # We load the current theme
+        configuration = open_xml()
+        current_theme_dir = str(configuration['theme'])  # We load the current theme
     except:  # Si le fichier n'existe pas
         change_theme("basic")
         return get_current_theme()
