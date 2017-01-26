@@ -91,12 +91,12 @@ class MenuBar(QMenuBar):
         assist_voc_action = MyAction(parent, "&Assistance Vocale", "Assistance vocale", parent.assist_voc, "Ctrl+Alt+A")
         assist_voc_action.setCheckable(True)
         
-        ###############################################################################################################
-        ###############################################################################################################
-        assist_voc_action.setChecked(False)  # Faire en fonction d'un fichier de configuration
-        ###############################################################################################################
-        ###############################################################################################################
-        
+        configuration = open_xml()
+        if configuration['assistance_vocale'] == 'False':
+            assist_voc_action.setChecked(False)
+        else:
+            assist_voc_action.setChecked(True)
+
         if "darwin" not in sys.platform:
             assist_voc_action.setDisabled(True)
 
