@@ -6,6 +6,8 @@ from lexer import *
 from random import randint
 from copy import deepcopy
 
+import lexerAR as AR
+
 
 class Proposition(QListWidget):
     def __init__(self, parent, font_size=16):
@@ -101,6 +103,17 @@ class CodeHighLighter(QSyntaxHighlighter):
             # self.prop.addElement(possibilities)
             # self.prop.show()
             pass # ajout des propositions de yacc
+
+        if len(text) == 0:
+            last_char = " "
+        else:
+            last_char = text[-1]
+
+        if last_char in [str(i) for i in range(10)] or last_char in "/+*-":
+            poss = AR.parse(text)
+            self.prop.props += poss
+            self.prop.addElement(poss)
+            self.prop.show()
 
         x = self.editeur.cursorRect().x() + 10
         y = self.editeur.cursorRect().y()

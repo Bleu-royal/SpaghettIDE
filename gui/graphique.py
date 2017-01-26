@@ -7,6 +7,7 @@ from PySide.QtCore import *
 # from time import time
 
 from lexer import *
+import lexerAR as AR
 from themes.themes import *
 import gui.style.style as style
 from language.language import *
