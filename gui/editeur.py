@@ -50,6 +50,7 @@ class Editeur(QTextEdit):
 		# self.append("int main ( int argc, char** argv ){\n\n\treturn 0;\n\n}")
 		
 	def analyse(self):
+		""" Cette fonction est liée au bouton Analyse si il y a au moins un éditeur d'ouvert. """
 	
 		self.parent.defaut_info_message()  # Actualisation des infos de base dès que l'on tape sur une touche
 		
