@@ -163,7 +163,7 @@ class CodeHighLighter(QSyntaxHighlighter):
 
                 self.setFormat(0, len(text_split[line-1]), textFormat)
 
-            self.editeur.show_nb_prop(len(self.prop.props))  # Disp the number of propsitions
+        self.editeur.show_nb_prop(len(self.prop.props))  # Disp the number of propsitions
 
     def test(self):
         if self.prop.props != []:
