@@ -251,3 +251,5 @@ def find(parent, text, back, case):
             flags = QTextDocument.FindCaseSensitively
 
     parent.codes[idx].find(text, flags)
+
+
