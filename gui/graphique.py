@@ -25,7 +25,8 @@ from gui.navigateur import *
 from gui.onglet import *
 from gui.editeur import *
 from gui.statusbar import *
-from gui.bouton import *
+from gui.bouton import Bouton
+from gui.label import Label
 
 sys.path[:0] = ["../"]
 sys.path[:0] = ["gui"]
@@ -72,6 +73,9 @@ class Fenetre(QWidget):
 
         self.tab_widget = TabWidget(self)
 
+        self.cheminee = Label(self, "Aie ! Ça brule !!")
+        self.cheminee.setFixedHeight(1)
+
         self.inspecteur = QTextEdit()
         self.inspecteur.setStyleSheet("QObject::pane{background: " + get_rgb(get_color_from_theme("treeview")
                                                                   ["BACKGROUND"]) + ";}")
@@ -92,6 +96,7 @@ class Fenetre(QWidget):
 
         # Le QSplitter contenant le QTreeView et le QPushButton
         self.split_gauche = QSplitter()
+        self.split_gauche.addWidget(self.cheminee)
         self.split_gauche.addWidget(self.inspecteur)
         self.split_gauche.addWidget(self.treeview)
         self.split_gauche.addWidget(self.boutons)
@@ -157,7 +162,7 @@ class Fenetre(QWidget):
             widgets = ["Navigateur", "Inspecteur"]
             actual = self.bouton_change.text()
             self.bouton_change.setText(widgets[(widgets.index(actual) + 1) % len(widgets)])
-            self.status_message(self.bouton_change.text() + " est maintenant affiché à la place de" + actual)
+            self.status_message(self.bouton_change.text() + " est maintenant affiché à la place de " + actual)
 
             if actual == widgets[0]:
                 self.inspecteur.setMaximumHeight(self.ecran.screenGeometry().height())
@@ -444,9 +449,32 @@ class Fenetre(QWidget):
         update_token_color()
         self.token_recoloration()
 
+    def show_cheminee(self):
+        """
+        Shows or hides the cheminey
+        :return:
+        """
+        if self.cheminee.height() == 1:
+            self.fire = QMovie("content/fireplace.gif")
+            self.cheminee.setMovie(self.fire)
+            self.cheminee.setFixedHeight(260)
+            self.fire.start()
+            self.status_message("C'est un bon feu. Vous pouvez vous réchauffer les mains !")
+        else:
+            self.cheminee.setFixedHeight(1)
+            self.fire.stop()
+            self.cheminee.clear()
+            self.status_message("Vous allez attraper froid sans la cheminée !")
+
     def token_recoloration(self):
         for highlighter in self.highlighters:  # For each Editor instance, we change the text to recolorate it
             highlighter.rehighlight()
+
+    def fullscreen(self):
+        if self.isFullScreen():
+            self.showNormal()
+        else:
+            self.showFullScreen()
 
     def quit_func(self):
         """

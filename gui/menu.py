@@ -62,6 +62,8 @@ class MenuBar(QMenuBar):
         open_fic_action = MyAction(parent, "&Ouvrir", "Ouvrir un fichier", parent.open, "Ctrl+O")
         sauv_fic_action = MyAction(parent, "&Sauvegarder", "Sauvegarder le fichier courant", parent.save, "Ctrl+S")
         close_fic_action = MyAction(parent, "&Fermer", "Fermer le fichier courant", parent.close_current_tab, "Ctrl+W")
+        fullscreen_action = MyAction(parent, "&PleinEcran", "Plein Écran", parent.fullscreen, "Ctrl+Alt+F")
+        fullscreen_action.setCheckable(True)
         exit_ide_action = MyAction(parent, "&Fermer", "Fermer l'application", parent.quit_func, "Esc")
        
         # Edition
@@ -85,7 +87,6 @@ class MenuBar(QMenuBar):
         contact_ide_action = MyAction(parent, "&Contact", "", parent.contact)
         site_ide_action = MyAction(parent, "&Notre site", "Site", parent.site)
         help_ide_action = MyAction(parent, "&Aide", "Aide sur l'IDE", parent.help_func)
-        
 
         # Assistance vocale
         assist_voc_action = MyAction(parent, "&Assistance Vocale", "Assistance vocale", parent.assist_voc, "Ctrl+Alt+A")
@@ -103,7 +104,7 @@ class MenuBar(QMenuBar):
         # # # Menu Fichier et ses sous-menus # # #
         fichier_menu = self.addMenu("&Fichier")
         self.set_actions(fichier_menu, new_fic_action, open_fic_action, sauv_fic_action, close_fic_action, "sep",
-                         assist_voc_action, "sep", exit_ide_action)
+                         assist_voc_action, "sep", fullscreen_action, exit_ide_action)
 
         # # # Menu Edition et ses sous-menus # # #
 
@@ -142,15 +143,18 @@ class MenuBar(QMenuBar):
         self.set_group(theme_pastel, groupe_theme, clair, "pastel")
         # self.set_group(nomTheme, groupe_theme, apparence_menu, "monNouveauTheme")
 
-        apparence_menu.addSeparator()
+        fire_action = MyAction(parent, "&Afficher la cheminée", "Afficher la cheminée", parent.show_cheminee, "Ctrl+Alt+C")
+        fire_action.setCheckable(True)
+        self.set_actions(apparence_menu, "sep", fire_action, "sep")
 
         # Langues
+        langues = apparence_menu.addMenu("&Langues")
         groupe_langue = QActionGroup(parent)
         fr = MyAction(parent, "&Français", "Français", self.to_fr)
         en = MyAction(parent, "&English", "English", self.to_en)
 
-        self.set_group(fr, groupe_langue, apparence_menu, "fr")
-        self.set_group(en, groupe_langue, apparence_menu, "en")
+        self.set_group(fr, groupe_langue, langues, "fr")
+        self.set_group(en, groupe_langue, langues, "en")
 
         # # # Menu SpaghettIDE # # #
         spaghettide_menu = self.addMenu("&SpaghettIDE")

@@ -1,5 +1,4 @@
 import sys
-import os
 from PySide.QtGui import *
 from PySide.QtCore import *
 import gui.style.style as style
