@@ -48,6 +48,7 @@ def p_terme(p):
                 | terme DIVIDE facteur
                 | facteur
     '''
+    
     if not "/" in prop:
         prop.extend(["/", "*"])
 
