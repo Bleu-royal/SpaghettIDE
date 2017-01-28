@@ -100,7 +100,7 @@ Nous pouvons voir que la mise à jour du fichier XML s'effectue bien suivant le 
 
 \subsection{L'assistance vocale}
 
-Pour implémenter le XML pour l'assistance vocale nous devions donc encore une fois adapter les différentes fonctions déjà définies. Nous l'avons donc d'abord fait dans le module GUI. 
+L'assistance vocale lit seulement les messages affichés dans la barre de statut et permet ainsi de les dire à voix haute en utilisant la fonctionnalité say de MAC OSX. Donc en fait, on récupère le message de la barre de statut et on le fait dire à voix haute avec cette commande : "os.system("say message")" et le message est renouvelé à chaque clic (si l'assistance vocale est activée bien sûr) sur par exemple l'apparence de l'IDE, donc en cliquant sur un thème dans la barre de menu. Pour implémenter le XML pour l'assistance vocale nous devions donc encore une fois adapter les différentes fonctions déjà définies. Nous l'avons donc d'abord fait dans le module GUI. 
 
 Grâce au dictionnaire, nous pouvons ainsi récupérer la valeur de l'activation de l'assistance vocale actuelle en écrivant configuration['assistance\_vocale']. Nous pouvons ainsi faire des conditions. Nous utilisons encore une fois la fonction write\_xml afin d'associer la valeur en argument à la valeur de la balise assistance\_vocale dans le fichier XML. 
 
@@ -114,6 +114,8 @@ Nous pouvons voir que la mise à jour du fichier XML s'effectue bien suivant l'a
 				\caption{Interface graphique de la sélection de l'assistance vocale}
 			\end{center}
 		\end{figure}
+		
+L'assistance vocale n'est disponible pour le moment que sous MAC OSX.
 		
 \section{Conclusion}
 
