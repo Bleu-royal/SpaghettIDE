@@ -18,3 +18,8 @@ class Label(QLabel):
     def enterEvent(self, event):
         if self.message is not None:
             self.parent.status_message(self.message, 500)
+            self.parent.setCursor(Qt.ForbiddenCursor)
+
+    def leaveEvent(self, event):
+        if self.message is not None:
+            self.parent.setCursor(Qt.ArrowCursor)
