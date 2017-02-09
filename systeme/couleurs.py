@@ -66,13 +66,19 @@ class CodeHighLighter(QSyntaxHighlighter):
 
     def compare(self, word):
 
+        self.def_functions = []
+
+        for e in self.editeur.def_functions:
+            for e2 in self.editeur.def_functions[e]:
+                self.def_functions += [e2]
+
         res = []
 
         if word != "":
             for keyword in self.editeur.keywords:
                 if word in keyword and not keyword in res and keyword != word: res += [keyword]
-                
-            for def_function in self.editeur.def_functions:
+            
+            for def_function in self.def_functions:
                 if word in def_function[0] and not def_function[0] in res and def_function[0] != word: res += [def_function[0]]
 
         return res

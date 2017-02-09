@@ -136,7 +136,8 @@ class GetDefFonctions(QObject):
 
         # # Get Definitions of Functions
         types = ["char", "bool", "double", "enum", "float", "int", "long", "short", "signed", "unsigned", "void"]
-        res = []
+        res = {}
+
 
         for file_ in funct_by_files:
             fichier = open(file_, 'r')
@@ -153,10 +154,13 @@ class GetDefFonctions(QObject):
                 tmp = tmp.replace(" ", "").replace(",", "|").replace("(", "|").replace(")", "").replace(";", "")
                 tmp = tmp.split("{")[0]
 
-                res += [tmp.split("|")]
+                if file_ in res:
+                    res[file_] += [tmp.split("|")]
+                else:
+                    res[file_] = [tmp.split("|")]
 
-                for i in range(len(res)):
-                    res[i] = res[i][:-1] if res[i][-1] == "" else res[i]
+                for fi in res:
+                    res[fi] = res[fi][:-1] if res[fi][-1] == "" else res[fi]
 
         self.resultat.emit(res)
 

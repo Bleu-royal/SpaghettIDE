@@ -32,6 +32,46 @@ sys.path[:0] = ["../"]
 sys.path[:0] = ["gui"]
 
 
+class Inspecteur(QTextEdit):
+
+    def __init__(self, parent):
+
+        super().__init__()
+
+        self.parent = parent
+
+        self.setStyleSheet("QObject::pane{background: " + get_rgb(get_color_from_theme("treeview")["BACKGROUND"]) + "}")
+        self.setTextColor(QColor(255, 255, 255))
+        self.setReadOnly(True)
+        self.setMaximumHeight(1)
+
+
+    def load(self):
+
+        idx = self.parent.get_idx()
+
+        doc = self.parent.docs[idx]
+
+        current_file = doc.chemin_enregistrement
+
+        print(current_file)
+
+        if current_file in self.parent.def_functions:
+            self.def_functions_infos = self.parent.def_functions[current_file]
+
+        self.def_functions = []
+        for def_functions in self.def_functions_infos:
+            self.def_functions += ["   - " +  def_functions[0]]
+
+        self.setPlainText("Fonction du fichier %s : \n"%doc.nom)
+        text = self.toPlainText()
+
+        self.setPlainText(text + "\n".join(self.def_functions))
+
+        print('loading')
+
+
+
 class Fenetre(QWidget):
     def __init__(self, titre, workplace_path=QDir.homePath() + "/workplace/"):
         """
@@ -76,11 +116,7 @@ class Fenetre(QWidget):
         self.cheminee = Label(self, "Aie ! Ça brule !!")
         self.cheminee.setFixedHeight(1)
 
-        self.inspecteur = QTextEdit()
-        self.inspecteur.setStyleSheet("QObject::pane{background: " + get_rgb(get_color_from_theme("treeview")
-                                                                  ["BACKGROUND"]) + ";}")
-        self.inspecteur.setReadOnly(True)
-        self.inspecteur.setMaximumHeight(1)
+        self.inspecteur = Inspecteur(self)
 
         # Les boutons
         self.bouton_analyse = Bouton("Analyse", self.pre_analyse)
@@ -166,6 +202,7 @@ class Fenetre(QWidget):
 
             if actual == widgets[0]:
                 self.inspecteur.setMaximumHeight(self.ecran.screenGeometry().height())
+                self.inspecteur.load()
                 self.treeview.setMaximumHeight(1)
             elif actual == widgets[1]:
                 self.treeview.setMaximumHeight(self.ecran.screenGeometry().height())
