@@ -7,6 +7,7 @@ from PySide.QtCore import *
 sys.path[:0] = ["../"]
 sys.path[:0] = ["gui"]
 
+
 class Loading(QDialog):
     def __init__(self):
         QDialog.__init__(self)

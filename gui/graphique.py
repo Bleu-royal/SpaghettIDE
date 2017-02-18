@@ -19,7 +19,7 @@ from systeme.document import *
 from systeme.parallele import *
 
 # Importation des modules du menu, des onglets, du navigateur de fichiers, de l'éditeur
-# de la barre de statut et des boutons
+# de la barre de statut, des boutons et de l'inspecteur
 from gui.menu import *
 from gui.navigateur import *
 from gui.onglet import *
@@ -27,49 +27,10 @@ from gui.editeur import *
 from gui.statusbar import *
 from gui.bouton import Bouton
 from gui.label import Label
+from gui.inspecteur import *
 
 sys.path[:0] = ["../"]
 sys.path[:0] = ["gui"]
-
-
-class Inspecteur(QTextEdit):
-
-    def __init__(self, parent):
-
-        super().__init__()
-
-        self.parent = parent
-
-        self.setStyleSheet("QObject::pane{background: " + get_rgb(get_color_from_theme("treeview")["BACKGROUND"]) + "}")
-        self.setTextColor(QColor(255, 255, 255))
-        self.setReadOnly(True)
-        self.setMaximumHeight(1)
-
-
-    def load(self):
-
-        idx = self.parent.get_idx()
-
-        doc = self.parent.docs[idx]
-
-        current_file = doc.chemin_enregistrement
-
-        print(current_file)
-
-        if current_file in self.parent.def_functions:
-            self.def_functions_infos = self.parent.def_functions[current_file]
-
-        self.def_functions = []
-        for def_functions in self.def_functions_infos:
-            self.def_functions += ["   - " +  def_functions[0]]
-
-        self.setPlainText("Fonction du fichier %s : \n"%doc.nom)
-        text = self.toPlainText()
-
-        self.setPlainText(text + "\n".join(self.def_functions))
-
-        print('loading')
-
 
 
 class Fenetre(QWidget):
@@ -88,7 +49,8 @@ class Fenetre(QWidget):
 
         self.ecran = QDesktopWidget()
         self.setWindowTitle(titre)
-        self.setGeometry(20, 50, self.ecran.screenGeometry().width() - 100, self.ecran.screenGeometry().height() - 100)
+        self.setGeometry(20, 50, self.ecran.screenGeometry().width() - 100,
+                         self.ecran.screenGeometry().height() - 100)
         # Taille de la fenêtre
 
         self.workplace_path = workplace_path

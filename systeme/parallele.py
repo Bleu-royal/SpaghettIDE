@@ -1,8 +1,10 @@
 from threading import *
-import os, sys
+import os
+import sys
 
 from lexer import yaccing
 from time import sleep
+
 
 class SayMessage(Thread):
     def __init__(self, message):
