@@ -6,6 +6,7 @@ import sys
 
 import gui.style.style as style
 
+
 class SearchDialog(QDialog):
 
     searchEvent = Signal(QWidget, str, bool, bool)
@@ -110,7 +111,7 @@ class Document:
 
     def indent(self):
 
-        line_number = self.text_edit.textCursor().blockNumber() #Obtention du numero de la ligne
+        line_number = self.text_edit.textCursor().blockNumber()  # Obtention du numero de la ligne
 
         text = self.text_edit.toPlainText()
         lines = text.split("\n")
@@ -118,13 +119,14 @@ class Document:
         indent_level = 0
 
         for i, line in enumerate(lines):
-            indent_level -= "}" in line  #Si il y'a un accolade fermante on retire un niveau d'indentation
-            if lines[i].strip() != "": lines[i] = "\t" * indent_level + self.remove_tabs(line)  # On ajout indent_level fois un '\t' au debut de la ligne
-            indent_level += "{" in line  #Si il y'a un accolade ouvrante on ajoute un niveau d'indentation
+            indent_level -= "}" in line  # Si il y'a un accolade fermante on retire un niveau d'indentation
+            if lines[i].strip() != "": lines[i] = "\t" * indent_level + self.remove_tabs(line)  # On ajoute indent_level
+            # fois un '\t' au debut de la ligne
+            indent_level += "{" in line  # Si il y'a un accolade ouvrante on ajoute un niveau d'indentation
 
         self.text_edit.setPlainText("\n".join(lines))
 
-        for i in range(line_number):  #On remet le cursor au bon endroit
+        for i in range(line_number):  # On remet le cursor au bon endroit
             self.text_edit.moveCursor(QTextCursor.Down)
             self.text_edit.moveCursor(QTextCursor.EndOfLine)
 
@@ -211,6 +213,7 @@ def closedocument(parent):
 def deletedocument(parent):
     pass
 
+
 def find_dialog(parent):
     """
     Run a little window to enter text that you want to find in your code
@@ -223,6 +226,7 @@ def find_dialog(parent):
         dial = SearchDialog(parent)
         dial.searchEvent.connect(find)
         dial.exec()
+
 
 def find(parent, text, back, case):
     """

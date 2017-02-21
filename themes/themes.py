@@ -4,6 +4,7 @@ from xml import *
 import json
 import os
 
+
 def change_theme(theme):
 
     write_xml('theme', theme)
@@ -60,4 +61,3 @@ def get_rgb(l):
     """
 
     return "rgb(" + str(l[0]) + "," + str(l[1]) + "," + str(l[2]) + ")"
-
