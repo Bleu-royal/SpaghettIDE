@@ -68,6 +68,10 @@ class TabWidget(QTabWidget):
         :rtype: None
         """
         if len(self.parent.codes) != 0:  # On vérifie que la liste d'onglet n'est pas vide.
+
+            if self.parent.get_current_widget_used() == "Inspecteur":
+                self.parent.change_affichage()  # On remplace l'Inspecteur par le navigateur si il était actif
+
             idx = self.currentIndex()
 
             self.removeTab(idx)
@@ -80,6 +84,7 @@ class TabWidget(QTabWidget):
 
             self.parent.status_message("Le fichier sélectionné a bien été fermé.")
             self.parent.defaut_info_message()
+
 
     def next_tab(self):
         """

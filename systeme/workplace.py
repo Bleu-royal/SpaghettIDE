@@ -138,7 +138,6 @@ class GetDefFonctions(QObject):
         types = ["char", "bool", "double", "enum", "float", "int", "long", "short", "signed", "unsigned", "void"]
         res = {}
 
-
         for file_ in funct_by_files:
             fichier = open(file_, 'r')
             data = fichier.read()

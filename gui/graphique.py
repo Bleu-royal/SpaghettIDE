@@ -32,7 +32,7 @@ sys.path[:0] = ["../"]
 sys.path[:0] = ["gui"]
 
 
-class Inspecteur(QTextEdit):
+class Inspecteur(QListWidget):
 
     def __init__(self, parent):
 
@@ -40,36 +40,35 @@ class Inspecteur(QTextEdit):
 
         self.parent = parent
 
-        self.setStyleSheet("QObject::pane{background: " + get_rgb(get_color_from_theme("treeview")["BACKGROUND"]) + "}")
-        self.setTextColor(QColor(255, 255, 255))
-        self.setReadOnly(True)
+        self.setStyleSheet("QListView{background: " + get_rgb(get_color_from_theme("treeview")["BACKGROUND"]) + ";"
+                            "color: " + get_rgb(get_color_from_theme("treeview")["ITEMS"]) + "}")
         self.setMaximumHeight(1)
 
-
     def load(self):
+        self.clear()
 
         idx = self.parent.get_idx()
-
         doc = self.parent.docs[idx]
-
         current_file = doc.chemin_enregistrement
 
-        print(current_file)
+        self.def_functions_infos = ""
 
         if current_file in self.parent.def_functions:
             self.def_functions_infos = self.parent.def_functions[current_file]
 
-        self.def_functions = []
         for def_functions in self.def_functions_infos:
-            self.def_functions += ["   - " +  def_functions[0]]
+            self.add(def_functions[0])
 
-        self.setPlainText("Fonction du fichier %s : \n"%doc.nom)
-        text = self.toPlainText()
+    def add(self, item):
 
-        self.setPlainText(text + "\n".join(self.def_functions))
+         self.addItem(QListWidgetItem(item))
 
-        print('loading')
-
+    def mouseDoubleClickEvent(self, e):
+        """
+        Lorsqu'on double-clique sur un élément, on l'affiche dans le code
+        """
+        selected = self.currentItem().text()
+        find(self.parent, selected, False, True)
 
 
 class Fenetre(QWidget):
@@ -207,6 +206,12 @@ class Fenetre(QWidget):
             elif actual == widgets[1]:
                 self.treeview.setMaximumHeight(self.ecran.screenGeometry().height())
                 self.inspecteur.setMaximumHeight(1)
+
+    def get_current_widget_used(self):
+        """
+        Shows the widget displayed at the left
+        """
+        return self.bouton_change.text()
 
     def comment_selection(self):
         idx = self.tab_widget.currentIndex()
