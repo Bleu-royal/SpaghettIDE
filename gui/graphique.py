@@ -338,7 +338,7 @@ class Fenetre(QWidget):
         # fin = time()
         # self.info_message(str(round((fin-debut), 3)), 1000)
 
-    def add_code(self, title):
+    def add_code(self, title, new=False):
         """
         Fonction qui se charge d'ajouter à la liste des codes ouverts une nouvelle instance de la classe
         Editeur et de créer un nouvel onglet
@@ -353,6 +353,9 @@ class Fenetre(QWidget):
         self.codes[-1].tabPress.connect(self.highlighters[-1].test)
         self.tab_widget.addTab(self.codes[-1], title)
         self.tab_widget.setCurrentIndex(len(self.codes) - 1)
+
+        if new:
+            self.highlighters[-1].first_launch = False
 
     def new_project(self):
         """
