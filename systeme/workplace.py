@@ -9,6 +9,62 @@ from lexer import *
 
 from systeme.parallele import ProgressOpening, ProgressDisp
 
+class NewProject(QDialog):
+    def __init__(self):
+        super().__init__()
+
+        self.cancel = False
+
+        self.setWindowTitle("Choix du nom du projet")
+
+        self.layout = QVBoxLayout()
+        self.buttons_layout = QHBoxLayout()
+
+        self.lbl_line_edit = QLabel("Entrez un nom de projet :")
+
+        self.line_edit = QLineEdit()
+        
+        self.project_name_lang = QComboBox()
+        self.project_name_lang.addItem("Python")
+        self.project_name_lang.addItem("C")
+        self.project_name_lang.addItem("Arithmétique")
+
+        self.cancel_button = QPushButton("Cancel")
+        self.valider_button = QPushButton("Valider")
+
+        self.cancel_button.clicked.connect(self.cancel_action)
+        self.valider_button.clicked.connect(self.valider_action)
+
+        self.layout.addWidget(self.lbl_line_edit)
+        self.layout.addWidget(self.line_edit)
+        self.layout.addWidget(self.project_name_lang)
+
+        self.buttons_layout.addWidget(self.cancel_button)
+        self.buttons_layout.addWidget(self.valider_button)
+        self.layout.addLayout(self.buttons_layout)
+
+        self.setLayout(self.layout)
+
+    def cancel_action(self):
+        self.cancel = True
+        self.done(0)
+
+    def valider_action(self):
+        self.done(0)
+
+    def get_project_name(self):
+        return self.line_edit.text()
+
+    def get_project_lang(self):
+        return self.project_name_lang.currentText().replace("é","e").lower()
+
+    def keyPressEvent(self, event):
+
+        if event.key() == 16777216:
+            self.cancel = True
+
+        super().keyPressEvent(event)
+
 
 def create_workplace():
     """
@@ -23,23 +79,34 @@ def create_workplace():
 
 
 def newproject(parent):
-    project_name = QInputDialog.getText(parent, 'Choix du nom du projet', 'Entrez un nom de projet :')
 
-    while (project_name[0] == '' or "/" in project_name[0]) and project_name[1]:
+    np = NewProject()
+    np.exec()
+    project_name = np.get_project_name()
+    project_lang = np.get_project_lang()
+    cancel = np.cancel
+
+    print(project_lang)
+
+    while (project_name == '' or "/" in project_name) and not cancel:
         QMessageBox.critical(parent, "Erreur de syntaxe", "Le nom de projet n'est pas valide (veuillez éviter /)")
-        project_name = QInputDialog.getText(parent, 'Choix du nom du projet', 'Entrez un nom de projet :')
+        np = NewProject()
+        np.exec()
+        project_name = np.get_project_name()
+        project_lang = np.get_project_lang()
+        cancel = np.cancel
 
-    if not QDir(parent.workplace_path + project_name[0]).exists():
-        QDir(parent.workplace_path).mkpath(project_name[0])
+    if not QDir(parent.workplace_path + project_name).exists() and not cancel:
+        QDir(parent.workplace_path).mkpath(project_name)
 
-        date = datetime.now()
+        # date = datetime.now()
 
-        fichier = open("%s/.conf" % (QDir(parent.workplace_path + project_name[0]).path()), "w")
-        fichier.write("Created : %s/%s/%s" % (date.day, date.month, date.year))
-        fichier.close()
+        # fichier = open("%s/.conf" % (QDir(parent.workplace_path + project_name[0]).path()), "w")
+        # fichier.write("Created : %s/%s/%s" % (date.day, date.month, date.year))
+        # fichier.close()
 
     # elif parent.project_path[1]:
-    elif project_name[1]:
+    elif not cancel:
         QMessageBox.critical(parent, "Le projet existe déjà", "Veuillez entrer un autre nom de projet")
         parent.new_project()
 
