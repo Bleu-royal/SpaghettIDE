@@ -85,8 +85,6 @@ class CodeHighLighter(QSyntaxHighlighter):
 
         return res
 
-
-
     def highlightBlock(self, text):  # Appelée lorsqu'on change du texte dans le QTextEdit
 
         self.prop.clear()
@@ -138,7 +136,6 @@ class CodeHighLighter(QSyntaxHighlighter):
                 if text[i] == "\t" or text[i] == " ":
                     space_remember += [i]
 
-            
             colored = colorate(text)
 
             current_pos = 0
@@ -154,7 +151,6 @@ class CodeHighLighter(QSyntaxHighlighter):
                 current_pos += len(word)
 
             yacc_errors = self.editeur.yacc_errors
-
 
             lines = self.editeur.toPlainText().split("\n")
 
@@ -177,7 +173,6 @@ class CodeHighLighter(QSyntaxHighlighter):
                     self.setFormat(0, len(text_split[line-1]), textFormat)
 
             self.editeur.show_nb_prop(len(self.prop.props))  # Disp the number of propsitions
-
 
     def test(self):
         if self.prop.props != []:

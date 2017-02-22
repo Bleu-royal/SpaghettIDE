@@ -35,6 +35,7 @@ sys.path[:0] = ["gui"]
 class Fenetre(QWidget):
     sig_message = Signal(str)
     sig_progress = Signal(int)
+    sig_update_lines = Signal(int)
 
     def __init__(self, titre, workplace_path=QDir.homePath() + "/workplace/"):
         """
@@ -79,7 +80,9 @@ class Fenetre(QWidget):
         self.tab_widget = TabWidget(self)
         self.tab_widget.currentChanged.connect(self.defaut_info_message)
         self.nb_lignes = Lignes("ABeeZee", 14)
-        self.central_area = LignesAndTab(self.nb_lignes, self.tab_widget)
+        self.anim_line = False
+        self.last = 0  # Last number of lines
+        self.central_area = LignesAndTab(self, self.nb_lignes, self.tab_widget)
 
         self.cheminee = Label(self, "Aie ! Ça brule !!")
         self.cheminee.setFixedHeight(1)
@@ -156,6 +159,7 @@ class Fenetre(QWidget):
         # Connection des signaux
         self.sig_message.connect(self.prog_mess)
         self.sig_progress.connect(self.prog_val)
+        self.sig_update_lines.connect(self.change_lines)
 
     def prog_mess(self, message):
         self.status_message(message, -1, False)
@@ -240,27 +244,30 @@ class Fenetre(QWidget):
     # Messages in status bars
     def info_message(self, message, time=-1):
         self.infobar.clearMessage()
-        if message == "empty":
-            self.defaut_info_message()
-        elif time == -1:
+        if time == -1:
             self.infobar.showMessage(message)
         else:
             self.infobar.showMessage(message, time)
 
     def show_number_of_lines(self):
+        self.last = 0
         idx = self.tab_widget.currentIndex()
         if idx in range(len(self.docs)) and len(self.docs) > 0:  # On affiche le nombre de lignes
             nblignes = self.docs[idx].get_nb_lignes()
             self.infobar.showMessage(str(nblignes) + " ligne%s" % ("s" * (nblignes != 1)))
 
             self.nb_lignes.clear()
-            self.nb_lignes.addItem("")
-            self.nb_lignes.addItem("")
-            for i in range(1, nblignes+1):
-                self.nb_lignes.addItem(str(i))
+            self.update_lines_number = LinesActualise(self, nblignes, self.anim_line)
+            self.update_lines_number.start()
+
         else:  # On efface le nombre de lignes
             self.infobar.clearMessage()
             self.nb_lignes.clear()
+
+    def change_lines(self, e):
+        if e == self.last+1:
+            self.nb_lignes.addItem(str(e))
+            self.last += 1
 
     def defaut_info_message(self):
         self.show_number_of_lines()

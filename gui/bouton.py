@@ -8,10 +8,10 @@ sys.path[:0] = ["gui"]
 
 class Bouton(QPushButton):
 
-    def __init__(self, nom, fonction):
+    def __init__(self, nom, fonction, h=40):
         QPushButton.__init__(self, nom)
 
-        self.setFixedHeight(40)
+        self.setFixedHeight(h)
         self.clicked.connect(fonction)
         self.setStyleSheet(style.get("buttons"))
 

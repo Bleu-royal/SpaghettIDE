@@ -6,26 +6,45 @@ from PySide.QtCore import *
 from lexer import *
 from themes.themes import *
 import gui.style.style as style
+import gui.bouton as b
+
 sys.path[:0] = ["../"]
 sys.path[:0] = ["gui"]
 
 class LignesAndTab(QWidget):
-    def __init__(self, lignes, tab):
+    values = {True: "Anim.", False: "Inst."}
+
+    def __init__(self, parent, lignes, tab):
         QWidget.__init__(self)
+        self.parent = parent
 
-        l = QHBoxLayout()
-        l.setContentsMargins(0, 0, 0, 0)
-        l.addWidget(lignes)
-        l.addWidget(tab)
+        self.anim = b.Bouton("Inst.", self.change_anim, 21)
+        self.anim.setFixedWidth(60)
 
-        self.setLayout(l)
+        lh = QHBoxLayout()
+        lh.setContentsMargins(0, 0, 0, 0)
+
+        lv = QVBoxLayout()
+        lv.setContentsMargins(0, 0, 0, 0)
+
+        lv.addWidget(self.anim)
+        lv.addWidget(lignes)
+        lh.addLayout(lv)
+        lh.addWidget(tab)
+
+        self.setLayout(lh)
+
+    def change_anim(self):
+        self.parent.anim_line = not self.parent.anim_line
+        self.anim.setText(self.values[self.parent.anim_line])
+
 
 class Lignes(QListWidget):
     def __init__(self, police, taille_texte):
         QListWidget.__init__(self)
 
         self.police = police
-        self.taille_texte = taille_texte-1.7
+        self.taille_texte = taille_texte
         self.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
 
         self.maj_style()
@@ -38,7 +57,8 @@ class Lignes(QListWidget):
         self.setStyleSheet("QListView{ background-color:" + get_rgb(c["text-back-color"]) + ";"
                            + "font-family:" + self.police + ";"
                            + "color:" + get_rgb(c["text-color"]) + ";"
-                           + "font-size:" + str(self.taille_texte) + "pt; }")
+                           + "font-size:" + str(self.taille_texte) + "pt; }"
+                            "QListView::item{margin-bottom: -2px;}")
 
 class Editeur(QTextEdit):
 
@@ -82,7 +102,7 @@ class Editeur(QTextEdit):
     def analyse(self):
         """ Cette fonction est liée au bouton Analyse si il y a au moins un éditeur d'ouvert. """
 
-        self.parent.defaut_info_message()  # Actualisation des infos de base dès que l'on tape sur une touche
+        self.parent.defaut_info_message()  # Actualisation des infos de base
 
         # process_yacc = Yaccer(self)  # Module parallele --> Sur un Thread
         # process_yacc.start()
@@ -95,8 +115,7 @@ class Editeur(QTextEdit):
             self.parent.highlighters[idx].rehighlight()
 
     def keyPressEvent(self, event):
-
-        self.parent.defaut_info_message()  # Actualisation des infos de base dès que l'on tape sur une touche
+        # self.parent.defaut_info_message()  # Actualisation des infos de base dès que l'on tape sur une touche
         """
         if event.key() == 16777220:  # enter key
 
@@ -155,10 +174,10 @@ class Editeur(QTextEdit):
                            + "font-size:" + str(self.taille_texte) + "pt; }")
 
     def show_nb_prop(self, nb_prop):
-        if nb_prop == 0:
-            self.parent.info_message("empty")
-        else:
+        if nb_prop != 0:
             self.parent.info_message(str(nb_prop) + " proposition%s" % ("s" * (nb_prop != 1)))
+        else:
+            self.parent.defaut_info_message()
 
     def select_current_line(self):
         textCursor = self.textCursor()

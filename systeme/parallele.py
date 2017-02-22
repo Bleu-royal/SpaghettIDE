@@ -75,3 +75,17 @@ class ProgressDisp(Thread):
                 prev_val = self.memo.progress
 
             sleep(0.01)
+
+class LinesActualise(Thread):
+    def __init__(self, parent, nb_lignes, animate):
+        Thread.__init__(self, name="Lines")
+
+        self.n = nb_lignes
+        self.parent = parent
+        self.animate = animate
+
+    def run(self):
+        for i in range(1, self.n+1):
+            self.parent.sig_update_lines.emit(i)
+            if self.animate:
+                sleep(0.01)

@@ -252,8 +252,7 @@ class GetDefFonctions(QObject):
                     else:
                         structs[file_] = [name]
 
-
-        self.resultat.emit((functions,structs))
+        self.resultat.emit((functions, structs))
 
 
 class ProgressWin(QObject):

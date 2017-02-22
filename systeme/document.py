@@ -144,7 +144,7 @@ class Document:
 def new_document(parent):
     new = "Sans nom " + str(len(parent.docs) + 1)
     parent.status_message(("Nouveau fichier " + new), 2000)
-    parent.defaut_info_message()    
+    parent.defaut_info_message()
     parent.add_code(new, True)
     parent.docs += [Document(parent, parent.codes[-1], "")]
     parent.tab_widget.setCurrentIndex(len(parent.codes) - 1)
