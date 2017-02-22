@@ -33,6 +33,9 @@ sys.path[:0] = ["../"]
 sys.path[:0] = ["gui"]
 
 class Fenetre(QWidget):
+    sig_message = Signal(str)
+    sig_progress = Signal(int)
+
     def __init__(self, titre, workplace_path=QDir.homePath() + "/workplace/"):
         """
         Hérite de QWidget
@@ -147,6 +150,16 @@ class Fenetre(QWidget):
 
         self.maj_style()
 
+        # Connection des signaux
+        self.sig_message.connect(self.prog_mess)
+        self.sig_progress.connect(self.prog_val)
+
+    def prog_mess(self, message):
+        self.status_message(message, -1, False)
+
+    def prog_val(self, val):
+        self.progress_bar.setValue(val)
+
     def change_affichage(self):
         """
         Change the widget displayed at the left
@@ -162,11 +175,12 @@ class Fenetre(QWidget):
             self.bouton_change.setText(widgets[(widgets.index(actual) + 1) % len(widgets)])
             self.status_message(self.bouton_change.text() + " est maintenant affiché à la place de " + actual)
 
-            if actual == widgets[0]:
+            if actual == widgets[0]:  # Affichage de l'inspecteur
                 self.inspecteur.setMaximumHeight(self.ecran.screenGeometry().height())
                 self.inspecteur.load()
+                self.inspecteur.maj_style()
                 self.treeview.setMaximumHeight(1)
-            elif actual == widgets[1]:
+            elif actual == widgets[1]:  # Affichage du navigateur de fichiers
                 self.treeview.setMaximumHeight(self.ecran.screenGeometry().height())
                 self.inspecteur.setMaximumHeight(1)
 
@@ -447,7 +461,7 @@ class Fenetre(QWidget):
         updating style --> theme
         :return:
         """
-        l_objects = (self.treeview, self, self.tab_widget, self.statusbar, self.infobar)
+        l_objects = (self.treeview, self, self.tab_widget, self.statusbar, self.infobar, self.inspecteur)
         for o in l_objects:
             o.maj_style()
 

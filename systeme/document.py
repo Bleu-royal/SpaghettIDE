@@ -257,6 +257,10 @@ def find(parent, text, back, case):
         else:
             flags = QTextDocument.FindCaseSensitively
 
-    parent.codes[idx].find(text, flags)
-
-
+    res = parent.codes[idx].find(text, flags)
+    if not res and back:
+        parent.codes[idx].moveCursor(QTextCursor.End)
+        find(parent, text, back, case)
+    elif not res and not back:
+        parent.codes[idx].moveCursor(QTextCursor.Start)
+        find(parent, text, back, case)
