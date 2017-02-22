@@ -85,7 +85,6 @@ class TabWidget(QTabWidget):
             self.parent.status_message("Le fichier sélectionné a bien été fermé.")
             self.parent.defaut_info_message()
 
-
     def next_tab(self):
         """
         Afficher l'onglet suivant, relativement à la position courante.

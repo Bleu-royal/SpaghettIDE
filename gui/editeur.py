@@ -9,6 +9,36 @@ import gui.style.style as style
 sys.path[:0] = ["../"]
 sys.path[:0] = ["gui"]
 
+class LignesAndTab(QWidget):
+    def __init__(self, lignes, tab):
+        QWidget.__init__(self)
+
+        l = QHBoxLayout()
+        l.setContentsMargins(0, 0, 0, 0)
+        l.addWidget(lignes)
+        l.addWidget(tab)
+
+        self.setLayout(l)
+
+class Lignes(QListWidget):
+    def __init__(self, police, taille_texte):
+        QListWidget.__init__(self)
+
+        self.police = police
+        self.taille_texte = taille_texte-1.7
+        self.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+
+        self.maj_style()
+
+        self.setFixedWidth(50)
+
+    def maj_style(self):
+        c = get_color_from_theme("textedit")
+
+        self.setStyleSheet("QListView{ background-color:" + get_rgb(c["text-back-color"]) + ";"
+                           + "font-family:" + self.police + ";"
+                           + "color:" + get_rgb(c["text-color"]) + ";"
+                           + "font-size:" + str(self.taille_texte) + "pt; }")
 
 class Editeur(QTextEdit):
 

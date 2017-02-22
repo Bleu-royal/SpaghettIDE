@@ -76,6 +76,9 @@ class Fenetre(QWidget):
         self.docs = []
 
         self.tab_widget = TabWidget(self)
+        self.tab_widget.currentChanged.connect(self.defaut_info_message)
+        self.nb_lignes = Lignes("ABeeZee", 14)
+        self.central_area = LignesAndTab(self.nb_lignes, self.tab_widget)
 
         self.cheminee = Label(self, "Aie ! Ça brule !!")
         self.cheminee.setFixedHeight(1)
@@ -107,7 +110,7 @@ class Fenetre(QWidget):
         # Le QSplitter contenant le QTabWidget et le QSplitter (cf. ci-dessus)
         self.splitter = QSplitter()
         self.splitter.addWidget(self.split_gauche)
-        self.splitter.addWidget(self.tab_widget)
+        self.splitter.addWidget(self.central_area)
         self.splitter.setSizes([100, 400])
         self.splitter.setMinimumSize(self.width(), self.height() - 50)
 
@@ -243,14 +246,23 @@ class Fenetre(QWidget):
         else:
             self.infobar.showMessage(message, time)
 
-    def defaut_info_message(self):
-
+    def show_number_of_lines(self):
         idx = self.tab_widget.currentIndex()
-        if idx in range(len(self.docs)) and len(self.docs) > 0:
+        if idx in range(len(self.docs)) and len(self.docs) > 0:  # On affiche le nombre de lignes
             nblignes = self.docs[idx].get_nb_lignes()
             self.infobar.showMessage(str(nblignes) + " ligne%s" % ("s" * (nblignes != 1)))
-        else:
+
+            self.nb_lignes.clear()
+            self.nb_lignes.addItem("")
+            self.nb_lignes.addItem("")
+            for i in range(1, nblignes+1):
+                self.nb_lignes.addItem(str(i))
+        else:  # On efface le nombre de lignes
             self.infobar.clearMessage()
+            self.nb_lignes.clear()
+
+    def defaut_info_message(self):
+        self.show_number_of_lines()
 
     def show_nb_found(self, text):
         n = self.codes[self.get_idx()].toPlainText().count(text)
@@ -460,7 +472,7 @@ class Fenetre(QWidget):
         updating style --> theme
         :return:
         """
-        l_objects = (self.treeview, self, self.tab_widget, self.statusbar, self.infobar, self.inspecteur)
+        l_objects = (self.treeview, self, self.tab_widget, self.statusbar, self.infobar, self.inspecteur, self.nb_lignes)
         for o in l_objects:
             o.maj_style()
 

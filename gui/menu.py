@@ -62,7 +62,7 @@ class MenuBar(QMenuBar):
         open_fic_action = MyAction(parent, "&Ouvrir", "Ouvrir un fichier", parent.open, "Ctrl+O")
         sauv_fic_action = MyAction(parent, "&Sauvegarder", "Sauvegarder le fichier courant", parent.save, "Ctrl+S")
         close_fic_action = MyAction(parent, "&Fermer", "Fermer le fichier courant", parent.close_current_tab, "Ctrl+W")
-        fullscreen_action = MyAction(parent, "&PleinEcran", "Plein Écran", parent.fullscreen, "Ctrl+Alt+F")
+        fullscreen_action = MyAction(parent, "&Mode plein écran", "Plein Écran", parent.fullscreen, "Ctrl+Alt+F")
         fullscreen_action.setCheckable(True)
         exit_ide_action = MyAction(parent, "&Fermer", "Fermer l'application", parent.quit_func, "Esc")
        
