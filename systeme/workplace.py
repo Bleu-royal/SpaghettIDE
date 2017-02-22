@@ -86,8 +86,6 @@ def newproject(parent):
     project_lang = np.get_project_lang()
     cancel = np.cancel
 
-    print(project_lang)
-
     while (project_name == '' or "/" in project_name) and not cancel:
         QMessageBox.critical(parent, "Erreur de syntaxe", "Le nom de projet n'est pas valide (veuillez éviter /)")
         np = NewProject()
@@ -128,8 +126,10 @@ class Mem:
         self.progress = 0
 
 
-def open_project(parent):
-    name = parent.model.fileName(parent.currentIndex())
+def open_project(parent, name=False):
+    if not name:
+        name = parent.model.fileName(parent.currentIndex())
+
     if QDir(parent.fenetre.workplace_path + name).exists():
 
         parent.fenetre.show_progress_bar()

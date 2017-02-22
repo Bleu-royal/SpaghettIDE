@@ -5,6 +5,7 @@ from PySide.QtCore import *
 import sys
 import threading
 import json
+from systeme.workplace import *
 
 import gui.style.style as style
 
@@ -221,7 +222,7 @@ def open_project_and_document(parent, chemin):
         parent.tab_widget.clear()
 
         path = chemin.replace(parent.workplace_path,"").split("/")[0]
-        parent.project_path = path
+        open_project(parent.treeview, path)
         open_document(parent, chemin)
 
 
