@@ -72,15 +72,15 @@ def open_project(parent):
 
         memory = Mem()
 
-        #if "darwin" in sys.platform:
         gdf = ProgressOpening(ProgressWin, project_files, memory, parent)
         gdf.start()  # Processing of the opening project function
         disp_gdf = ProgressDisp(memory, parent)
         disp_gdf.start()  # Displays of the files studied
         """
-        else:
-            ProgressWin(project_files, memory)
-            parent.function_declarations.emit(memory.res)"""
+        # Problèmes de plantage du serveur graphique sur Linux lors de la modification du GUI via un Thread
+        ProgressWin(project_files, memory)
+        parent.function_declarations.emit(memory.res)
+        """
 
     else:
         parent.open()
