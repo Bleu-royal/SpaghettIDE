@@ -9,6 +9,62 @@ from lexer import *
 
 from systeme.parallele import ProgressOpening, ProgressDisp
 
+class NewProject(QDialog):
+    def __init__(self):
+        super().__init__()
+
+        self.cancel = False
+
+        self.setWindowTitle("Choix du nom du projet")
+
+        self.layout = QVBoxLayout()
+        self.buttons_layout = QHBoxLayout()
+
+        self.lbl_line_edit = QLabel("Entrez un nom de projet :")
+
+        self.line_edit = QLineEdit()
+        
+        self.project_name_lang = QComboBox()
+        self.project_name_lang.addItem("Python")
+        self.project_name_lang.addItem("C")
+        self.project_name_lang.addItem("Arithmétique")
+
+        self.cancel_button = QPushButton("Cancel")
+        self.valider_button = QPushButton("Valider")
+
+        self.cancel_button.clicked.connect(self.cancel_action)
+        self.valider_button.clicked.connect(self.valider_action)
+
+        self.layout.addWidget(self.lbl_line_edit)
+        self.layout.addWidget(self.line_edit)
+        self.layout.addWidget(self.project_name_lang)
+
+        self.buttons_layout.addWidget(self.cancel_button)
+        self.buttons_layout.addWidget(self.valider_button)
+        self.layout.addLayout(self.buttons_layout)
+
+        self.setLayout(self.layout)
+
+    def cancel_action(self):
+        self.cancel = True
+        self.done(0)
+
+    def valider_action(self):
+        self.done(0)
+
+    def get_project_name(self):
+        return self.line_edit.text()
+
+    def get_project_lang(self):
+        return self.project_name_lang.currentText().replace("é","e").lower()
+
+    def keyPressEvent(self, event):
+
+        if event.key() == 16777216:
+            self.cancel = True
+
+        super().keyPressEvent(event)
+
 
 def create_workplace():
     """
@@ -23,23 +79,34 @@ def create_workplace():
 
 
 def newproject(parent):
-    project_name = QInputDialog.getText(parent, 'Choix du nom du projet', 'Entrez un nom de projet :')
 
-    while (project_name[0] == '' or "/" in project_name[0]) and project_name[1]:
+    np = NewProject()
+    np.exec()
+    project_name = np.get_project_name()
+    project_lang = np.get_project_lang()
+    cancel = np.cancel
+
+    print(project_lang)
+
+    while (project_name == '' or "/" in project_name) and not cancel:
         QMessageBox.critical(parent, "Erreur de syntaxe", "Le nom de projet n'est pas valide (veuillez éviter /)")
-        project_name = QInputDialog.getText(parent, 'Choix du nom du projet', 'Entrez un nom de projet :')
+        np = NewProject()
+        np.exec()
+        project_name = np.get_project_name()
+        project_lang = np.get_project_lang()
+        cancel = np.cancel
 
-    if not QDir(parent.workplace_path + project_name[0]).exists():
-        QDir(parent.workplace_path).mkpath(project_name[0])
+    if not QDir(parent.workplace_path + project_name).exists() and not cancel:
+        QDir(parent.workplace_path).mkpath(project_name)
 
-        date = datetime.now()
+        # date = datetime.now()
 
-        fichier = open("%s/.conf" % (QDir(parent.workplace_path + project_name[0]).path()), "w")
-        fichier.write("Created : %s/%s/%s" % (date.day, date.month, date.year))
-        fichier.close()
+        # fichier = open("%s/.conf" % (QDir(parent.workplace_path + project_name[0]).path()), "w")
+        # fichier.write("Created : %s/%s/%s" % (date.day, date.month, date.year))
+        # fichier.close()
 
     # elif parent.project_path[1]:
-    elif project_name[1]:
+    elif not cancel:
         QMessageBox.critical(parent, "Le projet existe déjà", "Veuillez entrer un autre nom de projet")
         parent.new_project()
 
@@ -100,7 +167,7 @@ def get_project_files(path):
 
 
 class GetDefFonctions(QObject):
-    resultat = Signal(list)
+    resultat = Signal(tuple)
 
     def __init__(self, files, parent):
         QObject.__init__(self)
@@ -108,8 +175,9 @@ class GetDefFonctions(QObject):
         self.parent = parent
 
     def run(self):
-        # # Yaccing for functions
-        res = {}
+        # # Yaccing for functions and structs
+        functions = {}
+        structs = {}
 
         l = len(self.files)
         if l>0: incr = 100/l
@@ -128,16 +196,23 @@ class GetDefFonctions(QObject):
 
             for ligne in lignes:
                 if "function_definition" in lignes[ligne]:
-                    if file_ in res:
-                        res[file_] += [int(ligne) + 1]
+                    if file_ in functions:
+                        functions[file_] += [int(ligne) + 1]
                     else:
-                        res[file_] = [int(ligne) + 1]
+                        functions[file_] = [int(ligne) + 1]
+                elif "struct_or_union" in lignes[ligne]:
+                    if file_ in structs:
+                        structs[file_] += [int(ligne) + 1]
+                    else:
+                        structs[file_] = [int(ligne) + 1]
 
-        funct_by_files = res
+        funct_by_files = functions
+        struct_by_files = structs
 
         # # Get Definitions of Functions
         types = ["char", "bool", "double", "enum", "float", "int", "long", "short", "signed", "unsigned", "void"]
-        res = {}
+        functions = {}
+        structs = {}
 
         for file_ in funct_by_files:
             fichier = open(file_, 'r')
@@ -154,15 +229,31 @@ class GetDefFonctions(QObject):
                 tmp = tmp.replace(" ", "").replace(",", "|").replace("(", "|").replace(")", "").replace(";", "")
                 tmp = tmp.split("{")[0]
 
-                if file_ in res:
-                    res[file_] += [tmp.split("|")]
+                if file_ in functions:
+                    functions[file_] += [tmp.split("|")]
                 else:
-                    res[file_] = [tmp.split("|")]
+                    functions[file_] = [tmp.split("|")]
 
-                for fi in res:
-                    res[fi] = res[fi][:-1] if res[fi][-1] == "" else res[fi]
+                for fi in functions:
+                    functions[fi] = functions[fi][:-1] if functions[fi][-1] == "" else functions[fi]
 
-        self.resultat.emit(res)
+        for file_ in struct_by_files:
+            fichier = open(file_, 'r')
+            data = fichier.read()
+            fichier.close()
+
+            data_split = data.replace("\t", "").split("\n")
+            for ligne in struct_by_files[file_]:
+                tmp = data_split[int(ligne) - 1].split()
+                if tmp[0] == "struct":
+                    name = tmp[1].replace("{","")
+                    if file_ in structs:
+                        structs[file_] += [name]
+                    else:
+                        structs[file_] = [name]
+
+
+        self.resultat.emit((functions,structs))
 
 
 class ProgressWin(QObject):
