@@ -66,7 +66,6 @@ class TreeView(QTreeView):
                            ";}""QTreeView::item:hover{color: " + get_rgb(colors["ITEMSHOVER"]) + ";}")
 
     def cacher_pas_projet(self):
-
         pass
 
     def mouseDoubleClickEvent(self, event):

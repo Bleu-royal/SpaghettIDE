@@ -201,7 +201,12 @@ def open_document(parent, chemin):
                 parent.tab_widget.setCurrentIndex(len(parent.codes) - 1)
                 parent.defaut_info_message()
             else:
-                parent.status_message("Impossible d'ouvrir ce document car il est déjà ouvert.", 2000)
+                idx = 0
+                for i in range(len(parent.docs)):
+                    if parent.docs[i].chemin_enregistrement == chemin:
+                        idx = i
+                        break
+                parent.tab_widget.setCurrentIndex(idx)
         else:
             parent.status_message("Impossible d'ouvrir ce document car il ne fait pas partie "
                                          "du projet courant.", 2000)
