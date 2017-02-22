@@ -231,7 +231,7 @@ def find_dialog(parent):
         dial.exec()
 
 
-def find(parent, text, back, case):
+def find(parent, text, back, case, already_go_to_top=False):
     """
     Finds if it exists a word or an expression in a tab which contains code.
 
@@ -258,9 +258,9 @@ def find(parent, text, back, case):
             flags = QTextDocument.FindCaseSensitively
 
     res = parent.codes[idx].find(text, flags)
-    if not res and back:
+    if not res and back and not already_go_to_top:
         parent.codes[idx].moveCursor(QTextCursor.End)
-        find(parent, text, back, case)
-    elif not res and not back:
+        find(parent, text, back, case, already_go_to_top=True)
+    elif not res and not back and not already_go_to_top:
         parent.codes[idx].moveCursor(QTextCursor.Start)
-        find(parent, text, back, case)
+        find(parent, text, back, case, already_go_to_top=True)
