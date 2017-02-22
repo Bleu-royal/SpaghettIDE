@@ -174,11 +174,12 @@ class Fenetre(QWidget):
             self.bouton_change.setText(widgets[(widgets.index(actual) + 1) % len(widgets)])
             self.status_message(self.bouton_change.text() + " est maintenant affiché à la place de " + actual)
 
-            if actual == widgets[0]:
+            if actual == widgets[0]:  # Affichage de l'inspecteur
                 self.inspecteur.setMaximumHeight(self.ecran.screenGeometry().height())
                 self.inspecteur.load()
+                self.inspecteur.maj_style()
                 self.treeview.setMaximumHeight(1)
-            elif actual == widgets[1]:
+            elif actual == widgets[1]:  # Affichage du navigateur de fichiers
                 self.treeview.setMaximumHeight(self.ecran.screenGeometry().height())
                 self.inspecteur.setMaximumHeight(1)
 
@@ -459,7 +460,7 @@ class Fenetre(QWidget):
         updating style --> theme
         :return:
         """
-        l_objects = (self.treeview, self, self.tab_widget, self.statusbar, self.infobar)
+        l_objects = (self.treeview, self, self.tab_widget, self.statusbar, self.infobar, self.inspecteur)
         for o in l_objects:
             o.maj_style()
 
