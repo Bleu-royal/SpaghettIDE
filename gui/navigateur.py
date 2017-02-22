@@ -10,7 +10,7 @@ sys.path[:0] = ["gui"]
 
 
 class TreeView(QTreeView):
-    function_declarations = Signal(list)
+    function_declarations = Signal((list,list))
 
     def __init__(self, fenetre):
         """
@@ -90,7 +90,7 @@ class TreeView(QTreeView):
         else:
             QTreeView.keyPressEvent(self, event)
 
-    def load_project(self, func_decla):
+    def load_project(self, func_decla, structs_decla):
         """
         Calls open_project() in workplace module using a thread.
 
@@ -98,6 +98,7 @@ class TreeView(QTreeView):
         """
         if func_decla != None:
             self.fenetre.def_functions = func_decla
+            self.fenetre.def_structs = structs_decla
             self.fenetre.status_message("Le projet sélectionné a bien été ouvert")
             self.fenetre.hide_progress_bar()
 

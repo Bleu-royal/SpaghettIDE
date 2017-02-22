@@ -3,6 +3,8 @@
 from PySide.QtGui import *
 from PySide.QtCore import *
 import sys
+import threading
+import json
 
 import gui.style.style as style
 
@@ -76,8 +78,9 @@ class SearchDialog(QDialog):
 
 
 class Document:
-    def __init__(self, text_edit, chemin_enregistrement, ouverture=False):  # Sauvegarde des variables dans la classe
+    def __init__(self, parent, text_edit, chemin_enregistrement, ouverture=False):  # Sauvegarde des variables dans la classe
 
+        self.parent = parent
         self.text_edit = text_edit  # Objet QTextEdit
         self.chemin_enregistrement = chemin_enregistrement
         self.nom = self.chemin_enregistrement.split("/")[-1]  # Recupération du nom du fichier
@@ -95,6 +98,7 @@ class Document:
         code = fichier.read()  # lecture du fichier
         fichier.close()
         self.text_edit.setPlainText(code)
+        # ICI
 
     def sauvegarde_document(self, path=False):
         if not path:
@@ -136,12 +140,13 @@ class Document:
             idx += 1
         return text[idx:]
 
+
 def new_document(parent):
     new = "Sans nom " + str(len(parent.docs) + 1)
     parent.status_message(("Nouveau fichier " + new), 2000)
-    parent.defaut_info_message()
+    parent.defaut_info_message()    
     parent.add_code(new)
-    parent.docs += [Document(parent.codes[-1], "")]
+    parent.docs += [Document(parent, parent.codes[-1], "")]
     parent.tab_widget.setCurrentIndex(len(parent.codes) - 1)
 
 
@@ -179,22 +184,20 @@ def document_deja_ouvert(parent, chemin):
 
     return False
 
-
 def open_document(parent, chemin):
 
     if parent.project_path != "":
         if not chemin:
             chemin = QFileDialog.getOpenFileName(parent, 'Ouvrir un fichier', parent.project_path,
                                                  "Fichier C (*.c);;Fichier H (*.h)")[0]
-        if parent.project_path in chemin:
-            # print("ici")
-            pass
         if chemin != "" and parent.project_path in chemin:
             if not parent.deja_ouvert(chemin):
                 title = chemin.split("/")[-1]
                 parent.add_code(title)
                 parent.status_message("Ouverture de "+title, 2000)  # Message de status
-                parent.docs += [Document(parent.codes[-1], chemin, True)]
+                parent.docs += [Document(parent, parent.codes[-1], chemin, True)]
+                
+                parent.highlighters[-1].first_launch = False
                 parent.tab_widget.setCurrentIndex(len(parent.codes) - 1)
                 parent.defaut_info_message()
             else:

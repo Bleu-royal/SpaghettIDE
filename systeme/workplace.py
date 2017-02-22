@@ -99,7 +99,7 @@ def get_project_files(path):
 
 
 class GetDefFonctions(QObject):
-    resultat = Signal(list)
+    resultat = Signal(tuple)
 
     def __init__(self, files, parent):
         QObject.__init__(self)
@@ -107,8 +107,9 @@ class GetDefFonctions(QObject):
         self.parent = parent
 
     def run(self):
-        # # Yaccing for functions
-        res = {}
+        # # Yaccing for functions and structs
+        functions = {}
+        structs = {}
 
         l = len(self.files)
         if l>0: incr = 100/l
@@ -127,16 +128,21 @@ class GetDefFonctions(QObject):
 
             for ligne in lignes:
                 if "function_definition" in lignes[ligne]:
-                    if file_ in res:
-                        res[file_] += [int(ligne) + 1]
+                    if file_ in functions:
+                        functions[file_] += [int(ligne) + 1]
                     else:
-                        res[file_] = [int(ligne) + 1]
+                        functions[file_] = [int(ligne) + 1]
+                elif "struct_declarator" in lignes[ligne]:
+                    if file_ in structs:
+                        structs[file_] += [int(ligne) + 1]
+                    else:
+                        structs[file_] = [int(ligne) + 1]
 
-        funct_by_files = res
+        funct_by_files = functions
 
         # # Get Definitions of Functions
         types = ["char", "bool", "double", "enum", "float", "int", "long", "short", "signed", "unsigned", "void"]
-        res = {}
+        functions = {}
 
         for file_ in funct_by_files:
             fichier = open(file_, 'r')
@@ -153,15 +159,15 @@ class GetDefFonctions(QObject):
                 tmp = tmp.replace(" ", "").replace(",", "|").replace("(", "|").replace(")", "").replace(";", "")
                 tmp = tmp.split("{")[0]
 
-                if file_ in res:
-                    res[file_] += [tmp.split("|")]
+                if file_ in functions:
+                    functions[file_] += [tmp.split("|")]
                 else:
-                    res[file_] = [tmp.split("|")]
+                    functions[file_] = [tmp.split("|")]
 
-                for fi in res:
-                    res[fi] = res[fi][:-1] if res[fi][-1] == "" else res[fi]
+                for fi in functions:
+                    functions[fi] = functions[fi][:-1] if functions[fi][-1] == "" else functions[fi]
 
-        self.resultat.emit(res)
+        self.resultat.emit((functions,structs))
 
 
 class ProgressWin(QObject):

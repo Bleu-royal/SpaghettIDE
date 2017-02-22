@@ -56,6 +56,7 @@ class Fenetre(QWidget):
 
         self.project_path = ""
         self.def_functions = ""
+        self.def_structs = ""
         self.snippets = self.get_snippets()
 
         self.gridLayout = QGridLayout()
