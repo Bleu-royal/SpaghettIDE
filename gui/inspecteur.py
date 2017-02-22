@@ -30,12 +30,19 @@ class Inspecteur(QListWidget):
         current_file = doc.chemin_enregistrement
 
         self.def_functions_infos = ""
+        self.def_structs_infos = ""
 
         if current_file in self.parent.def_functions:
             self.def_functions_infos = self.parent.def_functions[current_file]
 
+        if current_file in self.parent.def_structs:
+            self.def_structs_infos = self.parent.def_structs[current_file]
+
         for def_functions in self.def_functions_infos:
-            self.add(def_functions[0])
+            self.add("+ " + def_functions[0])
+
+        for def_struct in self.def_structs_infos:
+            self.add("- " + tdef_struct)
 
     def add(self, item):
 

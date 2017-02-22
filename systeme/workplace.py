@@ -133,17 +133,19 @@ class GetDefFonctions(QObject):
                         functions[file_] += [int(ligne) + 1]
                     else:
                         functions[file_] = [int(ligne) + 1]
-                elif "struct_declarator" in lignes[ligne]:
+                elif "struct_or_union" in lignes[ligne]:
                     if file_ in structs:
                         structs[file_] += [int(ligne) + 1]
                     else:
                         structs[file_] = [int(ligne) + 1]
 
         funct_by_files = functions
+        struct_by_files = structs
 
         # # Get Definitions of Functions
         types = ["char", "bool", "double", "enum", "float", "int", "long", "short", "signed", "unsigned", "void"]
         functions = {}
+        structs = {}
 
         for file_ in funct_by_files:
             fichier = open(file_, 'r')
@@ -167,6 +169,22 @@ class GetDefFonctions(QObject):
 
                 for fi in functions:
                     functions[fi] = functions[fi][:-1] if functions[fi][-1] == "" else functions[fi]
+
+        for file_ in struct_by_files:
+            fichier = open(file_, 'r')
+            data = fichier.read()
+            fichier.close()
+
+            data_split = data.replace("\t", "").split("\n")
+            for ligne in struct_by_files[file_]:
+                tmp = data_split[int(ligne) - 1].split()
+                if tmp[0] == "struct":
+                    name = tmp[1].replace("{","")
+                    if file_ in structs:
+                        structs[file_] += [name]
+                    else:
+                        structs[file_] = [name]
+
 
         self.resultat.emit((functions,structs))
 
