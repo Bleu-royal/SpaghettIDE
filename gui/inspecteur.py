@@ -42,7 +42,7 @@ class Inspecteur(QListWidget):
             self.add("+ " + def_functions[0])
 
         for def_struct in self.def_structs_infos:
-            self.add("- " + tdef_struct)
+            self.add("- " + def_struct)
 
     def add(self, item):
 
@@ -52,7 +52,7 @@ class Inspecteur(QListWidget):
         """
         Lorsqu'on double-clique sur un élément, on l'affiche dans le code
         """
-        selected = self.currentItem().text()
+        selected = self.currentItem().text()[2:]
         find(self.parent, selected, False, True)
 
     def maj_style(self):
