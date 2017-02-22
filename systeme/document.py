@@ -208,10 +208,21 @@ def open_document(parent, chemin):
                         break
                 parent.tab_widget.setCurrentIndex(idx)
         else:
-            parent.status_message("Impossible d'ouvrir ce document car il ne fait pas partie "
-                                         "du projet courant.", 2000)
+            # parent.status_message("Impossible d'ouvrir ce document car il ne fait pas partie du projet courant.", 2000)
+            open_project_and_document(parent, chemin)
     else:
-        parent.status_message("Aucun projet ouvert, veuillez ouvrir ou créer un projet.", 2000)
+        open_project_and_document(parent, chemin)
+        # parent.status_message("Aucun projet ouvert, veuillez ouvrir ou créer un projet.", 2000)
+
+def open_project_and_document(parent, chemin):
+        parent.docs = []
+        parent.highlighters = []
+        parent.codes = []
+        parent.tab_widget.clear()
+
+        path = chemin.replace(parent.workplace_path,"").split("/")[0]
+        parent.project_path = path
+        open_document(parent, chemin)
 
 
 def closedocument(parent):
