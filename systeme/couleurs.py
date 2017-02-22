@@ -5,6 +5,7 @@ from PySide.QtCore import *
 from lexer import *
 from random import randint
 from copy import deepcopy
+import json
 
 import lexerAR as AR
 
@@ -55,7 +56,6 @@ class Proposition(QListWidget):
 
         textCursor.insertText(prop)
 
-
 class CodeHighLighter(QSyntaxHighlighter):
     def __init__(self, editeur, parent=None):  # Parent --> QTextEdit
         super().__init__(parent)
@@ -63,6 +63,8 @@ class CodeHighLighter(QSyntaxHighlighter):
         self.editeur = editeur
         self.prop = Proposition(self.editeur)
         self.props = ["int\nvoid\nbool\nchar", "(\n{", "+\n-\n*\n/"]
+
+        self.first_launch = True
 
     def compare(self, word):
 
@@ -83,93 +85,99 @@ class CodeHighLighter(QSyntaxHighlighter):
 
         return res
 
+
+
     def highlightBlock(self, text):  # Appelée lorsqu'on change du texte dans le QTextEdit
 
         self.prop.clear()
         self.prop.props = []
         self.prop.hide()
 
-        textCursor = self.editeur.textCursor()
-        textCursor.select(QTextCursor.WordUnderCursor)
-        word = textCursor.selectedText()
+        if not self.first_launch:
 
-        cursor_position = textCursor.columnNumber() - 1
+            textCursor = self.editeur.textCursor()
+            textCursor.select(QTextCursor.WordUnderCursor)
+            word = textCursor.selectedText()
 
-        possibilities = self.compare(word)
+            cursor_position = textCursor.columnNumber() - 1
 
-        if possibilities != [] and lexing(word) == "identifier":
-            self.prop.props += possibilities
-            self.prop.props_files += possibilities
-            self.prop.addElement(possibilities)
-            self.prop.show()
+            possibilities = self.compare(word)
 
-        if len(text) > 0 and cursor_position in range(len(text)) and text[cursor_position] == " ":
-            # possibilities = self.props[randint(0, len(self.props) - 1)].split("\n")
-            # self.prop.props += possibilities
-            # self.prop.addElement(possibilities)
-            # self.prop.show()
-            pass # ajout des propositions de yacc
+            if possibilities != [] and lexing(word) == "identifier":
+                self.prop.props += possibilities
+                self.prop.props_files += possibilities
+                self.prop.addElement(possibilities)
+                self.prop.show()
 
-        if len(text) == 0:
-            last_char = " "
-        else:
-            last_char = text[-1]
+            if len(text) > 0 and cursor_position in range(len(text)) and text[cursor_position] == " ":
+                # possibilities = self.props[randint(0, len(self.props) - 1)].split("\n")
+                # self.prop.props += possibilities
+                # self.prop.addElement(possibilities)
+                # self.prop.show()
+                pass # ajout des propositions de yacc
 
-        if last_char in [str(i) for i in range(10)] or last_char in "/+*-":
-            poss = AR.parse(text)
-            self.prop.props += poss
-            self.prop.addElement(poss)
-            self.prop.show()
+            if len(text) == 0:
+                last_char = " "
+            else:
+                last_char = text[-1]
 
-        x = self.editeur.cursorRect().x() + 10
-        y = self.editeur.cursorRect().y()
-        self.prop.move(x, y)
-        self.editeur.setFocus()
+            if last_char in [str(i) for i in range(10)] or last_char in "/+*-":
+                poss = AR.parse(text)
+                self.prop.props += poss
+                self.prop.addElement(poss)
+                self.prop.show()
 
-        space_remember = []
+            x = self.editeur.cursorRect().x() + 10
+            y = self.editeur.cursorRect().y()
+            self.prop.move(x, y)
+            self.editeur.setFocus()
 
-        for i in range(len(text)):
-            if text[i] == "\t" or text[i] == " ":
-                space_remember += [i]
+            space_remember = []
 
-        colored = colorate(text)
+            for i in range(len(text)):
+                if text[i] == "\t" or text[i] == " ":
+                    space_remember += [i]
 
-        current_pos = 0
+            
+            colored = colorate(text)
 
-        for info in colored:
+            current_pos = 0
 
-            while current_pos in space_remember:
-                current_pos += 1
+            for info in colored:
 
-            word, color = info
+                while current_pos in space_remember:
+                    current_pos += 1
 
-            self.setFormat(current_pos, len(word), QColor.fromRgb(color[0], color[1], color[2]))
-            current_pos += len(word)
+                word, color = info
 
-        yacc_errors = self.editeur.yacc_errors
+                self.setFormat(current_pos, len(word), QColor.fromRgb(color[0], color[1], color[2]))
+                current_pos += len(word)
+
+            yacc_errors = self.editeur.yacc_errors
 
 
-        lines = self.editeur.toPlainText().split("\n")
+            lines = self.editeur.toPlainText().split("\n")
 
-        current_line = 0
-        for i,line in enumerate(lines):
-            if line == text:
-                current_line = i
+            current_line = 0
+            for i,line in enumerate(lines):
+                if line == text:
+                    current_line = i
 
-        if yacc_errors != []:
-            line = yacc_errors[0][0]
-            char = yacc_errors[0][1]
-            value = yacc_errors[0][2]
-            if value in text and current_line == line - 1:
-                textFormat = QTextCharFormat()
-                textFormat.setFontUnderline(True)
-                textFormat.setUnderlineColor(QColor.fromRgb(255, 0, 0))
+            if yacc_errors != []:
+                line = yacc_errors[0][0]
+                char = yacc_errors[0][1]
+                value = yacc_errors[0][2]
+                if value in text and current_line == line - 1:
+                    textFormat = QTextCharFormat()
+                    textFormat.setFontUnderline(True)
+                    textFormat.setUnderlineColor(QColor.fromRgb(255, 0, 0))
 
-                text_split = self.editeur.toPlainText().split("\n")
+                    text_split = self.editeur.toPlainText().split("\n")
 
-                self.setFormat(0, len(text_split[line-1]), textFormat)
+                    self.setFormat(0, len(text_split[line-1]), textFormat)
 
-        self.editeur.show_nb_prop(len(self.prop.props))  # Disp the number of propsitions
+            self.editeur.show_nb_prop(len(self.prop.props))  # Disp the number of propsitions
+
 
     def test(self):
         if self.prop.props != []:

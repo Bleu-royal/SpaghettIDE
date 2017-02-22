@@ -139,14 +139,15 @@ def open_project(parent):
 
         memory = Mem()
 
-        if "darwin" in sys.platform:
-            gdf = ProgressOpening(ProgressWin, project_files, memory, parent)
-            gdf.start()  # Processing of the opening project function
-            disp_gdf = ProgressDisp(memory, parent)
-            disp_gdf.start()  # Displays of the files studied
-        else:
-            ProgressWin(project_files, memory)
-            parent.function_declarations.emit(memory.res)
+        gdf = ProgressOpening(ProgressWin, project_files, memory, parent)
+        gdf.start()  # Processing of the opening project function
+        disp_gdf = ProgressDisp(memory, parent)
+        disp_gdf.start()  # Displays of the files studied
+        """
+        # Problèmes de plantage du serveur graphique sur Linux lors de la modification du GUI via un Thread
+        ProgressWin(project_files, memory)
+        parent.function_declarations.emit(memory.res)
+        """
 
     else:
         parent.open()
@@ -166,7 +167,7 @@ def get_project_files(path):
 
 
 class GetDefFonctions(QObject):
-    resultat = Signal(list)
+    resultat = Signal(tuple)
 
     def __init__(self, files, parent):
         QObject.__init__(self)
@@ -174,8 +175,9 @@ class GetDefFonctions(QObject):
         self.parent = parent
 
     def run(self):
-        # # Yaccing for functions
-        res = {}
+        # # Yaccing for functions and structs
+        functions = {}
+        structs = {}
 
         l = len(self.files)
         if l>0: incr = 100/l
@@ -194,16 +196,23 @@ class GetDefFonctions(QObject):
 
             for ligne in lignes:
                 if "function_definition" in lignes[ligne]:
-                    if file_ in res:
-                        res[file_] += [int(ligne) + 1]
+                    if file_ in functions:
+                        functions[file_] += [int(ligne) + 1]
                     else:
-                        res[file_] = [int(ligne) + 1]
+                        functions[file_] = [int(ligne) + 1]
+                elif "struct_or_union" in lignes[ligne]:
+                    if file_ in structs:
+                        structs[file_] += [int(ligne) + 1]
+                    else:
+                        structs[file_] = [int(ligne) + 1]
 
-        funct_by_files = res
+        funct_by_files = functions
+        struct_by_files = structs
 
         # # Get Definitions of Functions
         types = ["char", "bool", "double", "enum", "float", "int", "long", "short", "signed", "unsigned", "void"]
-        res = {}
+        functions = {}
+        structs = {}
 
         for file_ in funct_by_files:
             fichier = open(file_, 'r')
@@ -220,15 +229,31 @@ class GetDefFonctions(QObject):
                 tmp = tmp.replace(" ", "").replace(",", "|").replace("(", "|").replace(")", "").replace(";", "")
                 tmp = tmp.split("{")[0]
 
-                if file_ in res:
-                    res[file_] += [tmp.split("|")]
+                if file_ in functions:
+                    functions[file_] += [tmp.split("|")]
                 else:
-                    res[file_] = [tmp.split("|")]
+                    functions[file_] = [tmp.split("|")]
 
-                for fi in res:
-                    res[fi] = res[fi][:-1] if res[fi][-1] == "" else res[fi]
+                for fi in functions:
+                    functions[fi] = functions[fi][:-1] if functions[fi][-1] == "" else functions[fi]
 
-        self.resultat.emit(res)
+        for file_ in struct_by_files:
+            fichier = open(file_, 'r')
+            data = fichier.read()
+            fichier.close()
+
+            data_split = data.replace("\t", "").split("\n")
+            for ligne in struct_by_files[file_]:
+                tmp = data_split[int(ligne) - 1].split()
+                if tmp[0] == "struct":
+                    name = tmp[1].replace("{","")
+                    if file_ in structs:
+                        structs[file_] += [name]
+                    else:
+                        structs[file_] = [name]
+
+
+        self.resultat.emit((functions,structs))
 
 
 class ProgressWin(QObject):
