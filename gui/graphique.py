@@ -33,6 +33,9 @@ sys.path[:0] = ["../"]
 sys.path[:0] = ["gui"]
 
 class Fenetre(QWidget):
+    sig_message = Signal(str)
+    sig_progress = Signal(int)
+
     def __init__(self, titre, workplace_path=QDir.homePath() + "/workplace/"):
         """
         Hérite de QWidget
@@ -145,6 +148,16 @@ class Fenetre(QWidget):
         self.show()
 
         self.maj_style()
+
+        # Connection des signaux
+        self.sig_message.connect(self.prog_mess)
+        self.sig_progress.connect(self.prog_val)
+
+    def prog_mess(self, message):
+        self.status_message(message, -1, False)
+
+    def prog_val(self, val):
+        self.progress_bar.setValue(val)
 
     def change_affichage(self):
         """
