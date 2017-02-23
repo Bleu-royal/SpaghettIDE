@@ -48,6 +48,9 @@ class TabWidget(QTabWidget):
         self.setUsesScrollButtons(True)  # Si il y a trop d'onglets
 
     def maj_style(self):
+        """
+        Met à jour le style du TabWidget
+        """
         url = QDir().currentPath() + "/images/medium.jpg"
         c = get_color_from_theme("textedit")
         self.setStyleSheet("QTabWidget::pane{background-image: url(images/medium.gif);"
@@ -120,4 +123,8 @@ class TabWidget(QTabWidget):
                 self.parent.status_message("Veuillez ouvrir un projet.")
 
     def enterEvent(self, e):
+        """
+        Evenement lors ce qu'on survole les onglets ou le widget lorsqu'il est vide.
+        Ici on change le curseur
+        """
         self.setCursor(Qt.PointingHandCursor)

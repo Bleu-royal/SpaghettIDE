@@ -15,10 +15,13 @@ class LignesAndTab(QWidget):
     values = {True: "Anim.", False: "Inst."}
 
     def __init__(self, parent, lignes):
+        """
+        Contient le bouton d'annimation de l'affichage des lignes ainsi que la zone de numérotation des lignes.
+        """
         QWidget.__init__(self)
         self.parent = parent
 
-        self.anim = b.Bouton("Inst.", self.change_anim, 21)
+        self.anim = b.Bouton("Inst.", self.change_anim, 25)
         self.anim.setFixedWidth(60)
 
         lv = QVBoxLayout()
@@ -36,6 +39,10 @@ class LignesAndTab(QWidget):
 
 class Lignes(QListWidget):
     def __init__(self, police, taille_texte):
+        """
+        Liste de numérotation des lignes. On utilise une QListWidget.
+        Chaque élément de la liste correspond à une ligne.
+        """
         QListWidget.__init__(self)
 
         self.police = police
@@ -47,6 +54,9 @@ class Lignes(QListWidget):
         self.setFixedWidth(50)
 
     def maj_style(self):
+        """
+        Met à jour le style de la zone de numérotation des lignes
+        """
         c = get_color_from_theme("textedit")
 
         self.setStyleSheet("QListView{ background-color:" + get_rgb(c["text-back-color"]) + ";"
@@ -137,7 +147,10 @@ class Editeur(QTextEdit):
         super().keyPressEvent(event)
 
     def use_snippets(self):
-
+        """
+        Lorsque l'on presse "TAB" et que l'on définit une fonction ou une structure ou encore une boucle, on
+        complète automatiquement la suite avec une liste prédéfinie de le fichier snippets.json.
+        """
         textCursor = self.textCursor()
         textCursor.select(QTextCursor.WordUnderCursor)
         word = textCursor.selectedText()
@@ -161,6 +174,9 @@ class Editeur(QTextEdit):
             return True
 
     def maj_style(self):
+        """
+        Met à jour le style de la zone de code.
+        """
         c = get_color_from_theme("textedit")
 
         self.setStyleSheet("QTextEdit { background-color:" + get_rgb(c["text-back-color"]) + ";"
@@ -169,24 +185,36 @@ class Editeur(QTextEdit):
                            + "font-size:" + str(self.taille_texte) + "pt; }")
 
     def show_nb_prop(self, nb_prop):
+        """
+        Afficje le nombre de propositions de complétions dans l'infoBar
+        """
         if nb_prop != 0:
             self.parent.info_message(str(nb_prop) + " proposition%s" % ("s" * (nb_prop != 1)))
         else:
             self.parent.defaut_info_message()
 
     def select_current_line(self):
+        """
+        Sélectionne la ligne sous le curseur
+        """
         textCursor = self.textCursor()
         textCursor.select(QTextCursor.LineUnderCursor)
 
         self.setTextCursor(textCursor)
 
     def select_current_word(self):
+        """
+        Sélectionne le mot sous le curseur
+        """
         textCursor = self.textCursor()
         textCursor.select(QTextCursor.WordUnderCursor)
 
         self.setTextCursor(textCursor)
 
     def duplicate(self):
+        """
+        Duplique la zone sélectionnée
+        """
         textCursor = self.textCursor()
         return_ = ""
 
@@ -197,6 +225,9 @@ class Editeur(QTextEdit):
         textCursor.insertText(textCursor.selectedText() + return_ + textCursor.selectedText())
 
     def comment_selection(self):
+        """
+        Commente la zone sélectionnée ou la ligne sous le curseur si rien n'est sélectionné.
+        """
         textCursor = self.textCursor()
 
         if textCursor.selectedText() == "":
@@ -219,13 +250,16 @@ class Editeur(QTextEdit):
         textCursor.insertText("\n".join(lines))
 
     def check_comment(self, lines):
+        """
+        Vérifie si une zone est commentée
+        :rtype: bool
+        """
         for line in lines:
             if line[:2] != "//" and line.strip() != "":
                 return False
         return True
 
     def highlight_by_block(self):
-
         highlighter = self.parent.highlighters[self.parent.get_idx()]
         doc = self.document()
         number_of_block = doc.blockCount()

@@ -254,21 +254,45 @@ class Fenetre(QWidget):
         return res
 
     def get_idx(self):
+        """
+        Renvoie l'index de l'onglet de code courant sur le tab_widget.
+        :rtype: int
+        """
         return self.tab_widget.currentIndex()
 
     def duplicate(self):
+        """
+        Duplique la séléction
+        Appelle la fonction duplicate() de Editeur
+        """
         if self.get_idx() != -1: self.codes[self.get_idx()].duplicate()
 
     def select_current_word(self):
+        """
+        Sélectionne le mot sur lequel est le curseur
+        Appelle la fonction select_current_word() de Editeur
+        """
         if self.get_idx() != -1: self.codes[self.get_idx()].select_current_word()
 
     def select_current_line(self):
+        """
+        Sélectionne la ligne sur laquelle est le curseur
+        Appelle la fonction select_current_line() de Editeur
+        """
         if self.get_idx() != -1: self.codes[self.get_idx()].select_current_line()
 
     def indent(self):
+        """
+        Indente automatiquement le fichier
+        Appelle la fonction indent() de Editeur
+        """
         if self.get_idx() != -1: self.docs[self.get_idx()].indent()
 
     def show_progress_bar(self):
+        """
+        Affiche la barre de progression dans l'infoBar.
+        Utilisée lors de l'ouverture d'un projet.
+        """
         self.infobar.clearMessage()
         self.progress_bar.setValue(0)
         self.progress_bar.setTextVisible(True)
@@ -276,11 +300,23 @@ class Fenetre(QWidget):
         self.progress_bar.show()
 
     def hide_progress_bar(self):
+        """
+        Masque la barre de progression de l'infoBar.
+        """
         self.progress_bar.setValue(100)
         self.infobar.removeWidget(self.progress_bar)
 
     # Messages in status bars
     def info_message(self, message, time=-1):
+        """
+        Affiche un message dans l'infoBar.
+
+        :param message: message à afficher
+        :type message: str
+        :param time: temps de l'affichage. Par défaut à -1. Si -1 alors le message est affiché indéfiniment
+        (jusqu'au prochain message)
+        :type time: int
+        """
         self.infobar.clearMessage()
         if time == -1:
             self.infobar.showMessage(message)
@@ -288,6 +324,11 @@ class Fenetre(QWidget):
             self.infobar.showMessage(message, time)
 
     def show_number_of_lines(self):
+        """
+        Affiche le nombre de lignes dans l'infoBar (ainsi que sur le côté du code si on le souhaite).
+
+        Pour l'affichage sur le côté on utilise un Thread qui va envoyer un signal pour actualiser l'affichage.
+        """
         self.last = 0
         idx = self.tab_widget.currentIndex()
         if idx in range(len(self.docs)) and len(self.docs) > 0:  # On affiche le nombre de lignes
@@ -303,6 +344,9 @@ class Fenetre(QWidget):
             self.nb_lignes.clear()
 
     def show_line_column(self):
+        """
+        Affiche et masque la colonne de numérotation des lignes.
+        """
         self.is_show_line = not self.is_show_line
         if self.is_show_line:
             self.line_tab.setMaximumWidth(60)
@@ -311,24 +355,37 @@ class Fenetre(QWidget):
         self.splitter.update()
 
     def change_lines(self, e):
+        """
+        Fonction recevant le signal "sig_update_lines" permettant d'actualiser le nombre de lignes sur le côté.
+        :param e: événement reçu : nouveau numéro à ajouter
+        :type e: int
+        """
         if e == self.last+1:
             self.nb_lignes.addItem(str(e))
             self.last += 1
 
     def defaut_info_message(self):
+        """
+        Affiche le message par défaut dans l'infoBar : ici le nombre de ligne
+        """
         self.show_number_of_lines()
 
     def show_nb_found(self, text):
+        """
+        Affiche le nombre de propositions trouvées au total lors de la recherche d'un terme
+        :param text: Mot recherché
+        :type text: str
+        """
         n = self.codes[self.get_idx()].toPlainText().count(text)
         self.info_message(str(n) + " occurrence%s de '%s'" % ("s" * (n != 1), text))
 
     def status_message(self, message, time=2000, say=True):
         """
-        Shows a message in the status bar
+        Affiche un message dans la barre de status
 
-        :param message: Message to show
+        :param message: Message à afficher
         :type message: str
-        :param time: Time of printed message
+        :param time: Temps d'affichage (par défaut 2s). Si -1 alors le message est affiché jusqu'au prochain message.
         :type time: int
         :rtype: None
         """
@@ -346,6 +403,9 @@ class Fenetre(QWidget):
             self.statusbar.showMessage(message)
 
     def assist_voc(self):
+        """
+        Active ou désactive l'assistance vocale et écrit la configuration actuelle dans un fichier XML.
+        """
         if "darwin" in sys.platform:
             configuration = open_xml()
             if configuration['assistance_vocale'] == 'True':
@@ -381,10 +441,20 @@ class Fenetre(QWidget):
         save_document(self)
 
     def close_current_tab(self):
+        """
+        Ferme l'onglet courant
+        Appelle la fonction close_current_tab() de TabWidget.
+        """
         self.tab_widget.close_current_tab()
 
     def deja_ouvert(self, chemin):
+        """
+        Renvoie si un document est déjà ouvert
 
+        :param chemin: Chemin vers le document
+        :type chemin: str
+        :rtype: bool
+        """
         return document_deja_ouvert(self, chemin)
 
     def open(self, chemin=False):
@@ -466,13 +536,14 @@ class Fenetre(QWidget):
         Donne des informations sur l'IDE
         :rtype: None
         """
-
         apropos = open("content/apropos.txt", "r").readlines()
 
         QMessageBox.about(self, "À propos de SpaghettIDE ", "".join(apropos))
 
     def contact(self):
-
+        """
+        Ouvre l'appli mail pour envoyer un email aux développeurs
+        """
         if "darwin" in sys.platform:
             os.system("open mailto:contact@spaghettide.com")
 
@@ -484,6 +555,10 @@ class Fenetre(QWidget):
 
     # Bouton analyse
     def pre_analyse(self):
+        """
+        Fonction appellée lors du clic sur le bouton analyse.
+        Si un document est ouvert, on appelle la fonction analyse() de Editeur
+        """
         index = self.get_idx()
         if index == -1:
             self.status_message("Veuillez ouvrir un document.")
@@ -493,7 +568,9 @@ class Fenetre(QWidget):
 
     # Thèmes
     def maj_style(self):
-
+        """
+        Met à jour le style de la fenêtre principale.
+        """
         self.setStyleSheet("QObject::pane{background: " + get_rgb(get_color_from_theme("textedit")
                                                                   ["text-back-color"]) + ";}")
         self.inspecteur.setStyleSheet("background: " + get_rgb(get_color_from_theme("treeview")
@@ -503,7 +580,9 @@ class Fenetre(QWidget):
             onglets_ouverts.maj_style()
 
     def help_func(self):
-
+        """
+        Page d'aide
+        """
         if "darwin" in sys.platform:
             os.system("open https://doc.qt.io/")
 
@@ -514,7 +593,9 @@ class Fenetre(QWidget):
             os.system("start https://doc.qt.io/")
 
     def site(self):
-
+        """
+        Lien vers notre site
+        """
         if "darwin" in sys.platform:
             os.system("open https://www.spaghettide.com")
 
@@ -526,8 +607,7 @@ class Fenetre(QWidget):
 
     def full_maj_style(self):
         """
-        updating style --> theme
-        :return:
+        Met à jour le thème de tous les éléments de l'interface graphique
         """
         l_objects = (self.treeview, self, self.tab_widget, self.statusbar, self.infobar, self.inspecteur, self.nb_lignes)
         for o in l_objects:
@@ -538,8 +618,7 @@ class Fenetre(QWidget):
 
     def show_cheminee(self):
         """
-        Shows or hides the cheminey
-        :return:
+        Affiche ou masque la cheminée.
         """
         if self.cheminee.height() == 1:
             self.fire = QMovie("content/fireplace.gif")
@@ -554,10 +633,16 @@ class Fenetre(QWidget):
             self.status_message("Vous allez attraper froid sans la cheminée !")
 
     def token_recoloration(self):
+        """
+        On reprend tout le contenu du QTextEdit pour le recolorer.
+        """
         for highlighter in self.highlighters:  # For each Editor instance, we change the text to recolorate it
             highlighter.rehighlight()
 
     def fullscreen(self):
+        """
+        Mode plein écran
+        """
         if self.isFullScreen():
             self.showNormal()
         else:

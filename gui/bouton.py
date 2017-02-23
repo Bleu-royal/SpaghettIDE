@@ -7,7 +7,6 @@ sys.path[:0] = ["gui"]
 
 
 class Bouton(QPushButton):
-
     def __init__(self, nom, fonction, h=40):
         QPushButton.__init__(self, nom)
 
@@ -16,4 +15,8 @@ class Bouton(QPushButton):
         self.setStyleSheet(style.get("buttons"))
 
     def enterEvent(self, event):
+        """
+        Evenement lors ce qu'on survole le Bouton
+        Ici on change le curseur
+        """
         self.setCursor(Qt.PointingHandCursor)
