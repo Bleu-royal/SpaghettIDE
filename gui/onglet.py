@@ -62,7 +62,7 @@ class TabWidget(QTabWidget):
                            "QTabBar::tab:selected,""QTabBar::tab:hover{background-color:" +
                            get_rgb(c["tab-hover-back-color"]) + ";""color: " + get_rgb(c["tab-hover-color"]) +
                            ";""border-bottom:" + get_rgb(c["tab-hover-bord-bot-color"]) +
-                           ";}""QTabBar::tab:!selected {margin-top: 5px;}")
+                           ";}""QTabBar::tab{margin-top: 2px;}")
 
     def close_current_tab(self):
         """
