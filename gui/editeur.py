@@ -259,11 +259,61 @@ class Editeur(QTextEdit):
                 return False
         return True
 
-    def highlight_by_block(self):
-        highlighter = self.parent.highlighters[self.parent.get_idx()]
-        doc = self.document()
-        number_of_block = doc.blockCount()
+    def get_lines_functions(self):
 
-        for i in range(min(80, number_of_block)):
-            highlighter.rehighlightBlock(doc.findBlockByNumber(i)) 
+        res = []
+
+        idx = self.parent.get_idx()
+        doc = self.parent.docs[idx]
+
+        if doc.chemin_enregistrement in self.def_functions:
+            def_functions = self.def_functions[doc.chemin_enregistrement]
+
+            for def_function in def_functions:
+                res += [def_function[-1]-1]
+
+        return res
+
+    def get_blocks(self):
+
+        res = []
+
+        lines_numbers = self.get_lines_functions()
+        lines = self.toPlainText().split("\n")
+
+        for i in lines_numbers:
+            nb_acc = 0
+            first_acc = False
+            end = i
+            while nb_acc != 0 or not first_acc:
+
+                if "}" in lines[end]:
+                    nb_acc -= 1
+                if "{" in lines[end]:
+                    nb_acc+=1
+                    first_acc = True
+                end += 1
+
+            res += [(i, end-1)]
+
+        return sorted(res)
+
+    def highlight_by_block(self):
+
+        if len(self.toPlainText().split("\n")) > 50:
+            blocks = self.get_blocks()
+
+            if blocks != []:
+                highlighter = self.parent.highlighters[self.parent.get_idx()]
+                doc = self.document()
+                number_of_block = doc.blockCount()
+
+                for i in range(blocks[0][-1]+1):
+                    highlighter.rehighlightBlock(doc.findBlockByNumber(i))
+
+        else:
+            self.setPlainText(self.toPlainText())
+
+        # for i in range(min(80, number_of_block)):
+        #     highlighter.rehighlightBlock(doc.findBlockByNumber(i)) 
 

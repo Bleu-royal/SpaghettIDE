@@ -96,7 +96,7 @@ class TreeView(QTreeView):
         :return:
         """
         if declarators != (None, None):
-            self.fenetre.def_functions,self.fenetre.def_structs = declarators
+            self.fenetre.def_functions,self.fenetre.def_structs, self.fenetre.def_vars = declarators
             self.fenetre.status_message("Le projet sélectionné a bien été ouvert")
             self.fenetre.hide_progress_bar()
 
