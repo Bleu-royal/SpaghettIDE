@@ -228,3 +228,13 @@ class Editeur(QTextEdit):
             if line[:2] != "//" and line.strip() != "":
                 return False
         return True
+
+    def highlight_by_block(self):
+
+        highlighter = self.parent.highlighters[self.parent.get_idx()]
+        doc = self.document()
+        number_of_block = doc.blockCount()
+
+        for i in range(min(80, number_of_block)):
+            highlighter.rehighlightBlock(doc.findBlockByNumber(i)) 
+
