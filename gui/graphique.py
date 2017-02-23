@@ -329,15 +329,19 @@ class Fenetre(QWidget):
 
         Pour l'affichage sur le côté on utilise un Thread qui va envoyer un signal pour actualiser l'affichage.
         """
+        prev = self.last
         self.last = 0
         idx = self.tab_widget.currentIndex()
         if idx in range(len(self.docs)) and len(self.docs) > 0:  # On affiche le nombre de lignes
             nblignes = self.docs[idx].get_nb_lignes()
             self.infobar.showMessage(str(nblignes) + " ligne%s" % ("s" * (nblignes != 1)))
 
-            self.nb_lignes.clear()
-            self.update_lines_number = LinesActualise(self, nblignes, self.anim_line)
-            self.update_lines_number.start()
+            if nblignes != prev:
+                self.nb_lignes.clear()
+                self.update_lines_number = LinesActualise(self, nblignes, self.anim_line)
+                self.update_lines_number.start()
+            else:
+                self.last = prev
 
         else:  # On efface le nombre de lignes
             self.infobar.clearMessage()
