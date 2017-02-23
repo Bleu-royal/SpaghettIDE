@@ -1029,10 +1029,12 @@ def yaccing(data, get_errros=True):
 
     import ply.yacc as yacc
     parser = yacc.yacc()
-    # parser.parse(data, tracking=True)
-    parser.parse(data)
+    parser.parse(data, tracking=True)
+    # parser.parse(data)
 
     # for i in sorted([int(i) for i in list(lignes.keys())]):
     #     print("ligne numero %s: %s" % (i + 1, lignes[str(i)]), "\n\n")
+
+    print(lignes)
 
     return [erreurs, lignes] if get_errros else lignes
