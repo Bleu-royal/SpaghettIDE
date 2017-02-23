@@ -517,14 +517,6 @@ class Fenetre(QWidget):
 
     # 	open_projects(self)
 
-    def close_project(self):
-        """
-        Ferme un projet
-        :rtype: None
-        """
-
-        closeproject(self)
-
     def delete_project(self):
 
         deleteproject(self)

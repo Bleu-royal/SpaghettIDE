@@ -322,12 +322,12 @@ class ProgressWin(QObject):
         self.memory.res = res
 
 
-def closeproject(parent):
-    parent.tab_widget.clear()
-    parent.project_path = ""
-    parent.docs = []
-    parent.codes = []
-    parent.highlighters = []
+# def closeproject(parent):
+#     parent.tab_widget.clear()
+#     parent.project_path = ""
+#     parent.docs = []
+#     parent.codes = []
+#     parent.highlighters = []
 
 
 def deleteproject(parent):
