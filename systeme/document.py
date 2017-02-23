@@ -199,6 +199,8 @@ def open_document(parent, chemin):
                 parent.docs += [Document(parent, parent.codes[-1], chemin, True)]
                 
                 parent.highlighters[-1].first_launch = False
+                parent.codes[-1].highlight_by_block()
+
                 parent.tab_widget.setCurrentIndex(len(parent.codes) - 1)
                 parent.defaut_info_message()
             else:

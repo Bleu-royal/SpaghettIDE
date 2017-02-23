@@ -61,6 +61,9 @@ class ProgressDisp(Thread):
         self.parent = parent
 
     def run(self):
+        """
+        Actualisation de la progression lors de l'ouverture d'un projet
+        """
         prev = ""
         prev_val = 0
         while self.memo.res is None:
@@ -85,6 +88,10 @@ class LinesActualise(Thread):
         self.animate = animate
 
     def run(self):
+        """
+        Actualisation du nombre de lignes dans la zone de numérotation des lignes
+        :return:
+        """
         for i in range(1, self.n+1):
             self.parent.sig_update_lines.emit(i)
             if self.animate:

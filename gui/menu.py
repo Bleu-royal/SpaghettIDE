@@ -52,21 +52,21 @@ class MenuBar(QMenuBar):
         super().__init__(parent)
         self.master = parent
 
-        # Projet
+        #### Projet
         new_project_action = MyAction(parent, "&Nouveau Projet", "Nouveau projet", parent.new_project, "Ctrl+M")
         # open_project_action = MyAction(parent, "&Ouvrir Projet", "Ouvrir un projet", parent.open_project, "Ctrl+P")
         exit_project_action = MyAction(parent, "&Fermer Projet", "Fermer le projet", parent.close_project, "Ctrl+K")
 
-        # Fichier
+        #### Fichier
         new_fic_action = MyAction(parent, "&Nouveau", "Nouveau fichier", parent.new, "Ctrl+N")
         open_fic_action = MyAction(parent, "&Ouvrir", "Ouvrir un fichier", parent.open, "Ctrl+O")
         sauv_fic_action = MyAction(parent, "&Sauvegarder", "Sauvegarder le fichier courant", parent.save, "Ctrl+S")
         close_fic_action = MyAction(parent, "&Fermer", "Fermer le fichier courant", parent.close_current_tab, "Ctrl+W")
-        fullscreen_action = MyAction(parent, "&Mode plein écran", "Plein Écran", parent.fullscreen, "Ctrl+Alt+F")
+        fullscreen_action = MyAction(parent, "&Mode plein écran", "Plein Écran", parent.fullscreen, "F7")
         fullscreen_action.setCheckable(True)
         exit_ide_action = MyAction(parent, "&Fermer", "Fermer l'application", parent.quit_func, "Esc")
        
-        # Edition
+        #### Edition
         indent_action = MyAction(parent, "&Indenter le fichier", "Indentation automatique du fichier",
                                  parent.indent, "Ctrl+Alt+L")
         
@@ -82,14 +82,14 @@ class MenuBar(QMenuBar):
         comment_selection_action = MyAction(parent, "&Commenter la selection", "Commenter", parent.comment_selection,
                                             "Ctrl+Shift+:")
 
-        # Menu divers
+        #### Menu divers
         apropos_ide_action = MyAction(parent, "&À Propos", "À propos de SpaghettIDE", parent.a_propos)
         contact_ide_action = MyAction(parent, "&Contact", "", parent.contact)
         site_ide_action = MyAction(parent, "&Notre site", "Site", parent.site)
         help_ide_action = MyAction(parent, "&Aide", "Aide sur l'IDE", parent.help_func)
 
         # Assistance vocale
-        assist_voc_action = MyAction(parent, "&Assistance Vocale", "Assistance vocale", parent.assist_voc, "Ctrl+Alt+A")
+        assist_voc_action = MyAction(parent, "&Assistance Vocale", "Assistance vocale", parent.assist_voc, "F12")
         assist_voc_action.setCheckable(True)
         
         configuration = open_xml("conf.xml")
@@ -143,9 +143,15 @@ class MenuBar(QMenuBar):
         self.set_group(theme_pastel, groupe_theme, clair, "pastel")
         # self.set_group(nomTheme, groupe_theme, apparence_menu, "monNouveauTheme")
 
-        fire_action = MyAction(parent, "&Afficher la cheminée", "Afficher la cheminée", parent.show_cheminee, "Ctrl+Alt+C")
+        fire_action = MyAction(parent, "&Afficher la cheminée", "Afficher la cheminée", parent.show_cheminee, "F6")
         fire_action.setCheckable(True)
-        self.set_actions(apparence_menu, "sep", fire_action, "sep")
+
+        line_action = MyAction(parent, "&Numérotation des lignes", "Numérotation des lignes", parent.show_line_column, "F2")
+        line_action.setCheckable(True)
+        if parent.is_show_line:
+            line_action.setChecked(True)
+
+        self.set_actions(apparence_menu, "sep", fire_action, line_action, "sep")
 
         # Langues
         langues = apparence_menu.addMenu("&Langues")
@@ -193,6 +199,10 @@ class MenuBar(QMenuBar):
 
     # Themes
     def __change_theme_to(self, theme):
+        """
+        Change le thème actuel
+        :param theme: nouveau thème
+        """
         if get_current_theme() != theme:
             change_theme(theme)
             self.master.full_maj_style()
