@@ -31,6 +31,7 @@ class Inspecteur(QListWidget):
 
         self.def_functions_infos = ""
         self.def_structs_infos = ""
+        self.def_vars_infos = ""
 
         if current_file in self.parent.def_functions:
             self.def_functions_infos = self.parent.def_functions[current_file]
@@ -38,11 +39,17 @@ class Inspecteur(QListWidget):
         if current_file in self.parent.def_structs:
             self.def_structs_infos = self.parent.def_structs[current_file]
 
+        if current_file in self.parent.def_vars:
+            self.def_vars_infos = self.parent.def_vars[current_file]
+
         for def_functions in self.def_functions_infos:
             self.add("+ " + def_functions[0])
 
         for def_struct in self.def_structs_infos:
             self.add("- " + def_struct)
+
+        for def_var in self.def_vars_infos:
+            self.add("* " + def_var)
 
     def add(self, item):
 

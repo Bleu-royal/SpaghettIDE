@@ -81,9 +81,11 @@ class TabWidget(QTabWidget):
 
             doc = self.parent.docs[idx]
             code = self.parent.codes[idx]
+            highlighter = self.parent.highlighters[idx]
 
             self.parent.docs.remove(doc)
             self.parent.codes.remove(code)
+            self.parent.highlighters.remove(highlighter)
 
             self.parent.status_message("Le fichier sélectionné a bien été fermé.")
             self.parent.defaut_info_message()

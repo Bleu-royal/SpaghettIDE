@@ -139,10 +139,16 @@ class Mem:
 
 
 def open_project(parent, name=False):
+
     if not name:
         name = parent.model.fileName(parent.currentIndex())
 
     if QDir(parent.fenetre.workplace_path + name).exists():
+        if name:
+            parent.fenetre.docs = []
+            parent.fenetre.highlighters = []
+            parent.fenetre.codes = []
+            parent.fenetre.tab_widget.clear()
 
         parent.fenetre.show_progress_bar()
 
@@ -190,6 +196,7 @@ class GetDefFonctions(QObject):
         # # Yaccing for functions and structs
         functions = {}
         structs = {}
+        vars_ = {}
 
         l = len(self.files)
         if l>0: incr = 100/l
@@ -217,14 +224,21 @@ class GetDefFonctions(QObject):
                         structs[file_] += [int(ligne) + 1]
                     else:
                         structs[file_] = [int(ligne) + 1]
+                elif "declaration" in lignes[ligne]:
+                    if file_ in vars_:
+                        vars_[file_] += [int(ligne) + 1]
+                    else:
+                        vars_[file_] = [int(ligne) + 1]
 
         funct_by_files = functions
         struct_by_files = structs
+        vars_by_files = vars_
 
         # # Get Definitions of Functions
         types = ["char", "bool", "double", "enum", "float", "int", "long", "short", "signed", "unsigned", "void"]
         functions = {}
         structs = {}
+        vars_ = {}
 
         for file_ in funct_by_files:
             fichier = open(file_, 'r')
@@ -242,9 +256,11 @@ class GetDefFonctions(QObject):
                 tmp = tmp.split("{")[0]
 
                 if file_ in functions:
-                    functions[file_] += [tmp.split("|")]
+                    functions[file_] += [tmp.replace("}", "").split("|")]
                 else:
-                    functions[file_] = [tmp.split("|")]
+                    functions[file_] = [tmp.replace("}", "").split("|")]
+
+                functions[file_][-1] += [int(ligne)]
 
                 for fi in functions:
                     functions[fi] = functions[fi][:-1] if functions[fi][-1] == "" else functions[fi]
@@ -258,13 +274,28 @@ class GetDefFonctions(QObject):
             for ligne in struct_by_files[file_]:
                 tmp = data_split[int(ligne) - 1].split()
                 if tmp[0] == "struct":
-                    name = tmp[1].replace("{","")
+                    name = tmp[1].replace("{","").replace("}", "")
                     if file_ in structs:
                         structs[file_] += [name]
                     else:
                         structs[file_] = [name]
 
-        self.resultat.emit((functions, structs))
+        for file_ in vars_by_files:
+            fichier = open(file_, 'r')
+            data = fichier.read()
+            fichier.close()
+
+            data_split = data.replace("\t", "").split("\n")
+            for ligne in vars_by_files[file_]:
+                tmp = data_split[int(ligne) - 1].split()
+                if tmp[0] in types:
+                    name = tmp[1].replace("{","")
+                    if file_ in vars_:
+                        vars_[file_] += [name]
+                    else:
+                        vars_[file_] = [name]
+
+        self.resultat.emit((functions, structs, vars_))
 
 
 class ProgressWin(QObject):
