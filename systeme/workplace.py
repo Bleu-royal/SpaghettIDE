@@ -6,7 +6,7 @@ from datetime import datetime
 import os
 import sys
 from lexer import *
-
+from xml import *
 from systeme.parallele import ProgressOpening, ProgressDisp
 
 class NewProject(QDialog):
@@ -44,6 +44,18 @@ class NewProject(QDialog):
         self.layout.addLayout(self.buttons_layout)
 
         self.setLayout(self.layout)
+
+        tree = etree.parse("projets.xml")
+        root = tree.getroot()
+        projets = etree.Element("projets")
+        projet = etree.SubElement(projets, "projet")
+        name = etree.SubElement(projet, "name")
+        name.text = get_project_name(self)
+        language = etree.SubElement(projet, "language")
+        language.text = get_project_lang(self)
+        location = etree.SubElement(projet, "location")
+        location.text = 
+        
 
     def cancel_action(self):
         self.cancel = True

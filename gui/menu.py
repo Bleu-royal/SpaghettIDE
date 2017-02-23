@@ -92,7 +92,7 @@ class MenuBar(QMenuBar):
         assist_voc_action = MyAction(parent, "&Assistance Vocale", "Assistance vocale", parent.assist_voc, "Ctrl+Alt+A")
         assist_voc_action.setCheckable(True)
         
-        configuration = open_xml()
+        configuration = open_xml("conf.xml")
         if configuration['assistance_vocale'] == 'False':
             assist_voc_action.setChecked(False)
         else:

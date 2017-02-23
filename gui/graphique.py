@@ -289,7 +289,7 @@ class Fenetre(QWidget):
         self.statusbar.clearMessage()
         if say and time != -1:
             if "darwin" in sys.platform:
-                configuration = open_xml()
+                configuration = open_xml("conf.xml")
                 if configuration['assistance_vocale'] == 'True':
                     self.blabla = SayMessage(message)
                     self.blabla.start()
