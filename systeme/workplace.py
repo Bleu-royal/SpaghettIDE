@@ -140,16 +140,15 @@ class Mem:
 
 def open_project(parent, name=False):
 
-
-    parent.fenetre.docs = []
-    parent.fenetre.highlighters = []
-    parent.fenetre.codes = []
-    parent.fenetre.tab_widget.clear()
-
     if not name:
         name = parent.model.fileName(parent.currentIndex())
 
     if QDir(parent.fenetre.workplace_path + name).exists():
+        if name:
+            parent.fenetre.docs = []
+            parent.fenetre.highlighters = []
+            parent.fenetre.codes = []
+            parent.fenetre.tab_widget.clear()
 
         parent.fenetre.show_progress_bar()
 
@@ -231,8 +230,6 @@ class GetDefFonctions(QObject):
                     else:
                         vars_[file_] = [int(ligne) + 1]
 
-        print("vars : ", vars_)
-
         funct_by_files = functions
         struct_by_files = structs
         vars_by_files = vars_
@@ -293,7 +290,7 @@ class GetDefFonctions(QObject):
                 tmp = data_split[int(ligne) - 1].split()
                 if tmp[0] in types:
                     name = tmp[1].replace("{","")
-                    if file_ in structs:
+                    if file_ in vars_:
                         vars_[file_] += [name]
                     else:
                         vars_[file_] = [name]
