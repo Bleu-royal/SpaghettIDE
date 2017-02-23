@@ -11,6 +11,7 @@ except :
     new.write("<configuration>\n"
               "     <theme>basic</theme>\n"
               "     <assistance_vocale>False</assistance_vocale>\n"
+              "     <loading>False</loading>\n"
               "</configuration>")
     new.close()
 

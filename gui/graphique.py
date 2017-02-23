@@ -28,6 +28,8 @@ from gui.statusbar import *
 from gui.bouton import Bouton
 from gui.label import Label
 from gui.inspecteur import *
+from gui.chargement import *
+from xml import *
 
 sys.path[:0] = ["../"]
 sys.path[:0] = ["gui"]
@@ -629,6 +631,13 @@ class Fenetre(QWidget):
             self.fire.stop()
             self.cheminee.clear()
             self.status_message("Vous allez attraper froid sans la cheminée !")
+
+    def show_loading(self):
+        configuration = open_xml("conf.xml")
+        if configuration['loading'] == 'False':
+            write_xml("conf.xml","loading","True")
+        else:
+            write_xml("conf.xml","loading","False")
 
     def token_recoloration(self):
         """
