@@ -62,7 +62,7 @@ class MenuBar(QMenuBar):
         open_fic_action = MyAction(parent, "&Ouvrir", "Ouvrir un fichier", parent.open, "Ctrl+O")
         sauv_fic_action = MyAction(parent, "&Sauvegarder", "Sauvegarder le fichier courant", parent.save, "Ctrl+S")
         close_fic_action = MyAction(parent, "&Fermer", "Fermer le fichier courant", parent.close_current_tab, "Ctrl+W")
-        fullscreen_action = MyAction(parent, "&Mode plein écran", "Plein Écran", parent.fullscreen, "Ctrl+Alt+F")
+        fullscreen_action = MyAction(parent, "&Mode plein écran", "Plein Écran", parent.fullscreen, "F7")
         fullscreen_action.setCheckable(True)
         exit_ide_action = MyAction(parent, "&Fermer", "Fermer l'application", parent.quit_func, "Esc")
        
@@ -89,7 +89,7 @@ class MenuBar(QMenuBar):
         help_ide_action = MyAction(parent, "&Aide", "Aide sur l'IDE", parent.help_func)
 
         # Assistance vocale
-        assist_voc_action = MyAction(parent, "&Assistance Vocale", "Assistance vocale", parent.assist_voc, "Ctrl+Alt+A")
+        assist_voc_action = MyAction(parent, "&Assistance Vocale", "Assistance vocale", parent.assist_voc, "F12")
         assist_voc_action.setCheckable(True)
         
         configuration = open_xml()
@@ -143,10 +143,10 @@ class MenuBar(QMenuBar):
         self.set_group(theme_pastel, groupe_theme, clair, "pastel")
         # self.set_group(nomTheme, groupe_theme, apparence_menu, "monNouveauTheme")
 
-        fire_action = MyAction(parent, "&Afficher la cheminée", "Afficher la cheminée", parent.show_cheminee, "Ctrl+Alt+C")
+        fire_action = MyAction(parent, "&Afficher la cheminée", "Afficher la cheminée", parent.show_cheminee, "F6")
         fire_action.setCheckable(True)
 
-        line_action = MyAction(parent, "&Numérotation des lignes", "Numérotation des lignes", parent.show_line_column, "Ctrl+Alt+Shift+L")
+        line_action = MyAction(parent, "&Numérotation des lignes", "Numérotation des lignes", parent.show_line_column, "F2")
         line_action.setCheckable(True)
         if parent.is_show_line:
             line_action.setChecked(True)
