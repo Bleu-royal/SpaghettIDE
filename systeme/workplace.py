@@ -45,18 +45,6 @@ class NewProject(QDialog):
 
         self.setLayout(self.layout)
 
-        tree = etree.parse("projets.xml")
-        root = tree.getroot()
-        projets = etree.Element("projets")
-        projet = etree.SubElement(projets, "projet")
-        name = etree.SubElement(projet, "name")
-        name.text = get_project_name(self)
-        language = etree.SubElement(projet, "language")
-        language.text = get_project_lang(self)
-        location = etree.SubElement(projet, "location")
-        location.text = ""
-        
-
     def cancel_action(self):
         self.cancel = True
         self.done(0)
@@ -114,6 +102,18 @@ def newproject(parent):
         # fichier = open("%s/.conf" % (QDir(parent.workplace_path + project_name[0]).path()), "w")
         # fichier.write("Created : %s/%s/%s" % (date.day, date.month, date.year))
         # fichier.close()
+
+        tree = etree.parse("projets.xml")
+        projets=tree.getroot()
+        projet = etree.SubElement(projets, "projet")
+        name = etree.SubElement(projet, "name")
+        name.text = project_name
+        language = etree.SubElement(projet, "language")
+        language.text = project_lang
+        location = etree.SubElement(projet, "location")
+        location.text = parent.workplace_path + project_name
+        tree.write('projets.xml', pretty_print=True)
+        
 
     # elif parent.project_path[1]:
     elif not cancel:

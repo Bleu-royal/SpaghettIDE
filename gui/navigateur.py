@@ -40,6 +40,8 @@ class TreeView(QTreeView):
         for i in range(1, 4):
             self.hideColumn(i)
 
+        self.setHeaderHidden(True)
+
         self.setAnimated(True)  # Animations
 
         self.filters = []
