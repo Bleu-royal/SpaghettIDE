@@ -54,7 +54,7 @@ class NewProject(QDialog):
         language = etree.SubElement(projet, "language")
         language.text = get_project_lang(self)
         location = etree.SubElement(projet, "location")
-        location.text = 
+        location.text = ""
         
 
     def cancel_action(self):
