@@ -1035,6 +1035,4 @@ def yaccing(data, get_errros=True):
     # for i in sorted([int(i) for i in list(lignes.keys())]):
     #     print("ligne numero %s: %s" % (i + 1, lignes[str(i)]), "\n\n")
 
-    print(lignes)
-
     return [erreurs, lignes] if get_errros else lignes
