@@ -78,11 +78,25 @@ class Fenetre(QWidget):
         self.docs = []
 
         self.tab_widget = TabWidget(self)
+
+        # Lines number
         self.tab_widget.currentChanged.connect(self.defaut_info_message)
         self.nb_lignes = Lignes("ABeeZee", 14)
         self.anim_line = False
         self.last = 0  # Last number of lines
-        self.central_area = LignesAndTab(self, self.nb_lignes, self.tab_widget)
+        self.is_show_line = True
+        self.line_tab = LignesAndTab(self, self.nb_lignes)
+        if self.is_show_line:
+            self.line_tab.setMaximumWidth(60)
+        else:
+            self.line_tab.setMaximumWidth(1)
+
+        self.central_area = QSplitter()
+        self.central_area.addWidget(self.line_tab)
+        self.central_area.addWidget(self.tab_widget)
+        self.central_area.setOrientation(Qt.Horizontal)
+        self.central_area.setHandleWidth(1)
+        self.central_area.setChildrenCollapsible(False)
 
         self.cheminee = Label(self, "Aie ! Ça brule !!")
         self.cheminee.setFixedHeight(1)
@@ -162,17 +176,29 @@ class Fenetre(QWidget):
         self.sig_update_lines.connect(self.change_lines)
 
     def prog_mess(self, message):
+        """
+        Fonction recevant le signal "sig_message" émis lors de l'ouverture d'un projet. Le signal est un message à
+        afficher dans la barre de status
+
+        :type message: str
+        """
         self.status_message(message, -1, False)
 
     def prog_val(self, val):
+        """
+        Fonction recevant le signal "sig_progress" émis lors de l'ouverture d'un projet. Le signal est la progression
+        utilisée par la barre de progression située dans l'infoBar
+
+        :type val: int
+        """
         self.progress_bar.setValue(val)
 
     def change_affichage(self):
         """
-        Change the widget displayed at the left
+        Change l'outil affiché sur la zone de gauche
 
-        0: Treeview
-        1: Inspector of elements
+        0: Navigateur de fichiers
+        1: Inspecteurs d'éléments.
         """
         if self.get_idx() == -1:
             self.status_message("Veuillez ouvrir un document.")
@@ -193,19 +219,31 @@ class Fenetre(QWidget):
 
     def get_current_widget_used(self):
         """
-        Shows the widget displayed at the left
+        Renvoie le texte affiché dans le bouton servant à changer le contenu de la zone à gauche. Cela nous sert à
+        passer à l'élément suivant lorsqu'on clique dessus
+
+        :rtype: str
         """
         return self.bouton_change.text()
 
     def comment_selection(self):
+        """
+        Commente le texte sélectionné via une méthode de Editeur
+        """
         idx = self.tab_widget.currentIndex()
         if idx != -1: self.codes[idx].comment_selection()
 
     def find(self):
+        """
+        Ouvre la boite de dialogue permettant de rechercher des éléments
+        """
         find_dialog(self)
 
     def get_snippets(self):
-
+        """
+        Récupère les snippets : prédéfinissions de fonctions.
+        :rtype: list
+        """
         try:
             fichier = open("snippets.json", "r")
             res = json.loads(fichier.read())
@@ -263,6 +301,14 @@ class Fenetre(QWidget):
         else:  # On efface le nombre de lignes
             self.infobar.clearMessage()
             self.nb_lignes.clear()
+
+    def show_line_column(self):
+        self.is_show_line = not self.is_show_line
+        if self.is_show_line:
+            self.line_tab.setMaximumWidth(60)
+        else:
+            self.line_tab.setMaximumWidth(1)
+        self.splitter.update()
 
     def change_lines(self, e):
         if e == self.last+1:

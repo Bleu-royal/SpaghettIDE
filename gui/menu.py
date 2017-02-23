@@ -145,7 +145,13 @@ class MenuBar(QMenuBar):
 
         fire_action = MyAction(parent, "&Afficher la cheminée", "Afficher la cheminée", parent.show_cheminee, "Ctrl+Alt+C")
         fire_action.setCheckable(True)
-        self.set_actions(apparence_menu, "sep", fire_action, "sep")
+
+        line_action = MyAction(parent, "&Numérotation des lignes", "Numérotation des lignes", parent.show_line_column, "Ctrl+Alt+Shift+L")
+        line_action.setCheckable(True)
+        if parent.is_show_line:
+            line_action.setChecked(True)
+
+        self.set_actions(apparence_menu, "sep", fire_action, line_action, "sep")
 
         # Langues
         langues = apparence_menu.addMenu("&Langues")

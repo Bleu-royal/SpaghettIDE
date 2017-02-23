@@ -14,25 +14,20 @@ sys.path[:0] = ["gui"]
 class LignesAndTab(QWidget):
     values = {True: "Anim.", False: "Inst."}
 
-    def __init__(self, parent, lignes, tab):
+    def __init__(self, parent, lignes):
         QWidget.__init__(self)
         self.parent = parent
 
         self.anim = b.Bouton("Inst.", self.change_anim, 21)
         self.anim.setFixedWidth(60)
 
-        lh = QHBoxLayout()
-        lh.setContentsMargins(0, 0, 0, 0)
-
         lv = QVBoxLayout()
         lv.setContentsMargins(0, 0, 0, 0)
 
         lv.addWidget(self.anim)
         lv.addWidget(lignes)
-        lh.addLayout(lv)
-        lh.addWidget(tab)
 
-        self.setLayout(lh)
+        self.setLayout(lv)
 
     def change_anim(self):
         self.parent.anim_line = not self.parent.anim_line
