@@ -290,7 +290,7 @@ def p_include_expression(p):
         lignes[str(p.lineno(0) - 1)] = ["include_expression"]
     else:
         lignes[str(p.lineno(0) - 1)] += ["include_expression"]
-    print("include_expression")
+    #print("include_expression")
 
 
 def p_primary_expression(p):
@@ -304,7 +304,7 @@ def p_primary_expression(p):
         lignes[str(p.lineno(0) - 1)] += ["primary_expression"]
     # Cette fonction est appelée lorsque Yacc trouve une primary expression, c'est-à-dire soit le token
     # IDENTIFIER, soit le token CONSTANT, ou encore STRING_LITERAL, ou bien une expression entre parenthèses.
-    print("primary_expression")
+    #print("primary_expression")
 
 
 def p_postfix_expression(p):
@@ -320,7 +320,7 @@ def p_postfix_expression(p):
         lignes[str(p.lineno(0) - 1)] = ["postfix_expression"]
     else:
         lignes[str(p.lineno(0) - 1)] += ["postfix_expression"]
-    print("postfix_expression")
+    #print("postfix_expression")
 
 
 def p_argument_expression_list(p):
@@ -330,7 +330,7 @@ def p_argument_expression_list(p):
         lignes[str(p.lineno(0) - 1)] = ["argument_expression_list"]
     else:
         lignes[str(p.lineno(0) - 1)] += ["argument_expression_list"]
-    print("argument_expression_list")
+    #print("argument_expression_list")
 
 
 def p_unary_expression(p):
@@ -344,7 +344,7 @@ def p_unary_expression(p):
         lignes[str(p.lineno(0) - 1)] = ["unary_expression"]
     else:
         lignes[str(p.lineno(0) - 1)] += ["unary_expression"]
-    print("unary_expression")
+    #print("unary_expression")
 
 
 def p_unary_operator(p):
@@ -358,7 +358,7 @@ def p_unary_operator(p):
         lignes[str(p.lineno(0) - 1)] = ["unary_operator"]
     else:
         lignes[str(p.lineno(0) - 1)] += ["unary_operator"]
-    print("unary_operator")
+    #print("unary_operator")
 
 
 def p_cast_expression(p):
@@ -368,7 +368,7 @@ def p_cast_expression(p):
         lignes[str(p.lineno(0) - 1)] = ["cast_expression"]
     else:
         lignes[str(p.lineno(0) - 1)] += ["cast_expression"]
-    print("cast_expression")
+    #print("cast_expression")
 
 
 def p_multiplicative_expression(p):
@@ -380,7 +380,7 @@ def p_multiplicative_expression(p):
         lignes[str(p.lineno(0) - 1)] = ["multiplicative_expression"]
     else:
         lignes[str(p.lineno(0) - 1)] += ["multiplicative_expression"]
-    print("multiplicative_expression")
+    #print("multiplicative_expression")
 
 
 def p_additive_expression(p):
@@ -391,7 +391,7 @@ def p_additive_expression(p):
         lignes[str(p.lineno(0) - 1)] = ["additive_expression"]
     else:
         lignes[str(p.lineno(0) - 1)] += ["additive_expression"]
-    print("additive_expression")
+    #print("additive_expression")
 
 
 def p_shift_expression(p):
@@ -402,7 +402,7 @@ def p_shift_expression(p):
         lignes[str(p.lineno(0) - 1)] = ["shift_expression"]
     else:
         lignes[str(p.lineno(0) - 1)] += ["shift_expression"]
-    print("shift_expression")
+    #print("shift_expression")
 
 
 def p_relational_expression(p):
@@ -415,7 +415,7 @@ def p_relational_expression(p):
         lignes[str(p.lineno(0) - 1)] = ["relational_expression"]
     else:
         lignes[str(p.lineno(0) - 1)] += ["relational_expression"]
-    print("relational_expression")
+    #print("relational_expression")
 
 
 def p_equality_expression(p):
@@ -426,7 +426,7 @@ def p_equality_expression(p):
         lignes[str(p.lineno(0) - 1)] = ["equality_expression"]
     else:
         lignes[str(p.lineno(0) - 1)] += ["equality_expression"]
-    print("equality_expression")
+    #print("equality_expression")
 
 
 def p_and_expression(p):
@@ -436,7 +436,7 @@ def p_and_expression(p):
         lignes[str(p.lineno(0) - 1)] = ["and_expression"]
     else:
         lignes[str(p.lineno(0) - 1)] += ["and_expression"]
-    print("and_expression")
+    #print("and_expression")
 
 
 def p_exclusive_or_expression(p):
@@ -446,7 +446,7 @@ def p_exclusive_or_expression(p):
         lignes[str(p.lineno(0) - 1)] = ["exclusive_or_expression"]
     else:
         lignes[str(p.lineno(0) - 1)] += ["exclusive_or_expression"]
-    print("exclusive_or_expression")
+    #print("exclusive_or_expression")
 
 
 def p_inclusive_or_expression(p):
@@ -456,7 +456,7 @@ def p_inclusive_or_expression(p):
         lignes[str(p.lineno(0) - 1)] = ["inclusive_or_expression"]
     else:
         lignes[str(p.lineno(0) - 1)] += ["inclusive_or_expression"]
-    print("inclusive_or_expression")
+    #print("inclusive_or_expression")
 
 
 def p_logical_and_expression(p):
@@ -466,7 +466,7 @@ def p_logical_and_expression(p):
         lignes[str(p.lineno(0) - 1)] = ["logical_and_expression"]
     else:
         lignes[str(p.lineno(0) - 1)] += ["logical_and_expression"]
-    print("logical_and_expression")
+    #print("logical_and_expression")
 
 
 def p_logical_or_expression(p):
@@ -476,7 +476,7 @@ def p_logical_or_expression(p):
         lignes[str(p.lineno(0) - 1)] = ["logical_or_expression"]
     else:
         lignes[str(p.lineno(0) - 1)] += ["logical_or_expression"]
-    print("logical_or_expression")
+    #print("logical_or_expression")
 
 
 def p_conditional_expression(p):
@@ -486,7 +486,7 @@ def p_conditional_expression(p):
         lignes[str(p.lineno(0) - 1)] = ["conditional_expression"]
     else:
         lignes[str(p.lineno(0) - 1)] += ["conditional_expression"]
-    print("conditional_expression")
+    #print("conditional_expression")
 
 
 def p_assignment_expression(p):
@@ -496,7 +496,7 @@ def p_assignment_expression(p):
         lignes[str(p.lineno(0) - 1)] = ["assignment_expression"]
     else:
         lignes[str(p.lineno(0) - 1)] += ["assignment_expression"]
-    print("assignment_expression")
+    #print("assignment_expression")
 
 
 def p_assignment_operator(p):
@@ -515,7 +515,7 @@ def p_assignment_operator(p):
         lignes[str(p.lineno(0) - 1)] = ["assignment_operator"]
     else:
         lignes[str(p.lineno(0) - 1)] += ["assignment_operator"]
-    print("assignment_operator")
+    #print("assignment_operator")
 
 
 def p_expression(p):
@@ -525,7 +525,7 @@ def p_expression(p):
         lignes[str(p.lineno(0) - 1)] = ["expression"]
     else:
         lignes[str(p.lineno(0) - 1)] += ["expression"]
-    print("expression")
+    #print("expression")
 
 
 def p_constant_expression(p):
@@ -534,7 +534,7 @@ def p_constant_expression(p):
         lignes[str(p.lineno(0) - 1)] = ["constant_expression"]
     else:
         lignes[str(p.lineno(0) - 1)] += ["constant_expression"]
-    print("constant_expression")
+    #print("constant_expression")
 
 
 def p_declaration(p):
@@ -544,7 +544,7 @@ def p_declaration(p):
         lignes[str(p.lineno(0) - 1)] = ["declaration"]
     else:
         lignes[str(p.lineno(0) - 1)] += ["declaration"]
-    print("declaration")
+    #print("declaration")
 
 
 def p_declaration_specifiers(p):
@@ -558,7 +558,7 @@ def p_declaration_specifiers(p):
         lignes[str(p.lineno(0) - 1)] = ["declaration_specifiers"]
     else:
         lignes[str(p.lineno(0) - 1)] += ["declaration_specifiers"]
-    print("declaration_specifiers")
+    #print("declaration_specifiers")
 
 
 def p_init_declarator_list(p):
@@ -568,7 +568,7 @@ def p_init_declarator_list(p):
         lignes[str(p.lineno(0) - 1)] = ["init_declarator_list"]
     else:
         lignes[str(p.lineno(0) - 1)] += ["init_declarator_list"]
-    print("init_declarator_list")
+    #print("init_declarator_list")
 
 
 def p_init_declarator(p):
@@ -578,7 +578,7 @@ def p_init_declarator(p):
         lignes[str(p.lineno(0) - 1)] = ["init_declarator"]
     else:
         lignes[str(p.lineno(0) - 1)] += ["init_declarator"]
-    print("init_declarator")
+    #print("init_declarator")
 
 
 def p_storage_class_specifier(p):
@@ -591,7 +591,7 @@ def p_storage_class_specifier(p):
         lignes[str(p.lineno(0) - 1)] = ["storage_class_specifier"]
     else:
         lignes[str(p.lineno(0) - 1)] += ["storage_class_specifier"]
-    print("storage_class_specifier")
+    #print("storage_class_specifier")
 
 
 def p_type_specifier(p):
@@ -611,7 +611,7 @@ def p_type_specifier(p):
         lignes[str(p.lineno(0) - 1)] = ["type_specifier"]
     else:
         lignes[str(p.lineno(0) - 1)] += ["type_specifier"]
-    print("type_specifier")
+    #print("type_specifier")
 
 
 def p_struct_or_union_specifier(p):
@@ -622,7 +622,7 @@ def p_struct_or_union_specifier(p):
         lignes[str(p.lineno(0) - 1)] = ["struct_or_union_specifier"]
     else:
         lignes[str(p.lineno(0) - 1)] += ["struct_or_union_specifier"]
-    print("struct_or_union_specifier")
+    #print("struct_or_union_specifier")
 
 
 def p_struct_or_union(p):
@@ -632,7 +632,7 @@ def p_struct_or_union(p):
         lignes[str(p.lineno(0) - 1)] = ["struct_or_union"]
     else:
         lignes[str(p.lineno(0) - 1)] += ["struct_or_union"]
-    print("struct_or_union")
+    #print("struct_or_union")
 
 
 def p_struct_declaration_list(p):
@@ -642,7 +642,7 @@ def p_struct_declaration_list(p):
         lignes[str(p.lineno(0) - 1)] = ["struct_declaration_list"]
     else:
         lignes[str(p.lineno(0) - 1)] += ["struct_declaration_list"]
-    print("struct_declaration_list")
+    #print("struct_declaration_list")
 
 
 def p_struct_declaration(p):
@@ -651,7 +651,7 @@ def p_struct_declaration(p):
         lignes[str(p.lineno(0) - 1)] = ["struct_declaration"]
     else:
         lignes[str(p.lineno(0) - 1)] += ["struct_declaration"]
-    print("struct_declaration")
+    #print("struct_declaration")
 
 
 def p_specifier_qualifier_list(p):
@@ -663,7 +663,7 @@ def p_specifier_qualifier_list(p):
         lignes[str(p.lineno(0) - 1)] = ["specifier_qualifier_list"]
     else:
         lignes[str(p.lineno(0) - 1)] += ["specifier_qualifier_list"]
-    print("specifier_qualifier_list")
+    #print("specifier_qualifier_list")
 
 
 def p_struct_declarator_list(p):
@@ -673,7 +673,7 @@ def p_struct_declarator_list(p):
         lignes[str(p.lineno(0) - 1)] = ["struct_declarator_list"]
     else:
         lignes[str(p.lineno(0) - 1)] += ["struct_declarator_list"]
-    print("struct_declarator_list")
+    #print("struct_declarator_list")
 
 
 def p_struct_declarator(p):
@@ -684,7 +684,7 @@ def p_struct_declarator(p):
         lignes[str(p.lineno(0) - 1)] = ["struct_declarator"]
     else:
         lignes[str(p.lineno(0) - 1)] += ["struct_declarator"]
-    print("struct_declarator")
+    #print("struct_declarator")
 
 
 def p_enum_specifier(p):
@@ -695,7 +695,7 @@ def p_enum_specifier(p):
         lignes[str(p.lineno(0) - 1)] = ["enum_specifier"]
     else:
         lignes[str(p.lineno(0) - 1)] += ["enum_specifier"]
-    print("enum_specifier")
+    #print("enum_specifier")
 
 
 def p_enumerator_list(p):
@@ -705,7 +705,7 @@ def p_enumerator_list(p):
         lignes[str(p.lineno(0) - 1)] = ["enumerator_list"]
     else:
         lignes[str(p.lineno(0) - 1)] += ["enumerator_list"]
-    print("enumerator_list")
+    #print("enumerator_list")
 
 
 def p_enumerator(p):
@@ -715,7 +715,7 @@ def p_enumerator(p):
         lignes[str(p.lineno(0) - 1)] = ["enumerator"]
     else:
         lignes[str(p.lineno(0) - 1)] += ["enumerator"]
-    print("enumerator")
+    #print("enumerator")
 
 
 def p_type_qualifier(p):
@@ -725,7 +725,7 @@ def p_type_qualifier(p):
         lignes[str(p.lineno(0) - 1)] = ["type_qualifier"]
     else:
         lignes[str(p.lineno(0) - 1)] += ["type_qualifier"]
-    print("type_qualifier")
+    #print("type_qualifier")
 
 
 def p_declarator(p):
@@ -735,7 +735,7 @@ def p_declarator(p):
         lignes[str(p.lineno(0) - 1)] = ["declarator"]
     else:
         lignes[str(p.lineno(0) - 1)] += ["declarator"]
-    print("declarator")
+    #print("declarator")
 
 
 def p_direct_declarator(p):
@@ -750,7 +750,7 @@ def p_direct_declarator(p):
         lignes[str(p.lineno(0) - 1)] = ["declarator"]
     else:
         lignes[str(p.lineno(0) - 1)] += ["declarator"]
-    print("direct_declarator")
+    #print("direct_declarator")
 
 
 def p_pointer(p):
@@ -762,7 +762,7 @@ def p_pointer(p):
         lignes[str(p.lineno(0) - 1)] = ["pointer"]
     else:
         lignes[str(p.lineno(0) - 1)] += ["pointer"]
-    print("pointer")
+    #print("pointer")
 
 
 def p_type_qualifier_list(p):
@@ -772,7 +772,7 @@ def p_type_qualifier_list(p):
         lignes[str(p.lineno(0) - 1)] = ["type_qualifier_list"]
     else:
         lignes[str(p.lineno(0) - 1)] += ["type_qualifier_list"]
-    print("type_qualifier_list")
+    #print("type_qualifier_list")
 
 
 def p_parameter_type_list(p):
@@ -782,7 +782,7 @@ def p_parameter_type_list(p):
         lignes[str(p.lineno(0) - 1)] = ["parameter_type_list"]
     else:
         lignes[str(p.lineno(0) - 1)] += ["parameter_type_list"]
-    print("parameter_type_list")
+    #print("parameter_type_list")
 
 
 def p_parameter_list(p):
@@ -792,7 +792,7 @@ def p_parameter_list(p):
         lignes[str(p.lineno(0) - 1)] = ["parameter_list"]
     else:
         lignes[str(p.lineno(0) - 1)] += ["parameter_list"]
-    print("parameter_list")
+    #print("parameter_list")
 
 
 def p_parameter_declaration(p):
@@ -803,7 +803,7 @@ def p_parameter_declaration(p):
         lignes[str(p.lineno(0) - 1)] = ["parameter_declaration"]
     else:
         lignes[str(p.lineno(0) - 1)] += ["parameter_declaration"]
-    print("parameter_declaration")
+    #print("parameter_declaration")
 
 
 def p_identifier_list(p):
@@ -813,7 +813,7 @@ def p_identifier_list(p):
         lignes[str(p.lineno(0) - 1)] = ["identifier_list"]
     else:
         lignes[str(p.lineno(0) - 1)] += ["identifier_list"]
-    print("identifier_list")
+    #print("identifier_list")
 
 
 def p_type_name(p):
@@ -823,7 +823,7 @@ def p_type_name(p):
         lignes[str(p.lineno(0) - 1)] = ["type_name"]
     else:
         lignes[str(p.lineno(0) - 1)] += ["type_name"]
-    print("type_name")
+    #print("type_name")
 
 
 def p_abstract_declarator(p):
@@ -834,7 +834,7 @@ def p_abstract_declarator(p):
         lignes[str(p.lineno(0) - 1)] = ["abstract_declarator"]
     else:
         lignes[str(p.lineno(0) - 1)] += ["abstract_declarator"]
-    print("abstract_declarator")
+    #print("abstract_declarator")
 
 
 def p_direct_abstract_declarator(p):
@@ -851,7 +851,7 @@ def p_direct_abstract_declarator(p):
         lignes[str(p.lineno(0) - 1)] = ["direct_abstract_declarator"]
     else:
         lignes[str(p.lineno(0) - 1)] += ["direct_abstract_declarator"]
-    print("direct_abstract_declarator")
+    #print("direct_abstract_declarator")
 
 
 def p_initializer(p):
@@ -862,7 +862,7 @@ def p_initializer(p):
         lignes[str(p.lineno(0) - 1)] = ["initializer"]
     else:
         lignes[str(p.lineno(0) - 1)] += ["initializer"]
-    print("initializer")
+    #print("initializer")
 
 
 def p_initializer_list(p):
@@ -872,7 +872,7 @@ def p_initializer_list(p):
         lignes[str(p.lineno(0) - 1)] = ["initializer_list"]
     else:
         lignes[str(p.lineno(0) - 1)] += ["initializer_list"]
-    print("initializer_list")
+    #print("initializer_list")
 
 
 def p_statement(p):
@@ -886,7 +886,7 @@ def p_statement(p):
         lignes[str(p.lineno(0) - 1)] = ["initializer_list"]
     else:
         lignes[str(p.lineno(0) - 1)] += ["initializer_list"]
-    print("statement")
+    #print("statement")
 
 
 def p_labeled_statement(p):
@@ -897,7 +897,7 @@ def p_labeled_statement(p):
         lignes[str(p.lineno(0) - 1)] = ["labeled_statement"]
     else:
         lignes[str(p.lineno(0) - 1)] += ["labeled_statement"]
-    print("labeled_statement")
+    #print("labeled_statement")
 
 
 def p_compound_statement(p):
@@ -909,7 +909,7 @@ def p_compound_statement(p):
         lignes[str(p.lineno(0) - 1)] = ["compound_statement"]
     else:
         lignes[str(p.lineno(0) - 1)] += ["compound_statement"]
-    print("compound_statement")
+    #print("compound_statement")
 
 
 def p_declaration_list(p):
@@ -919,7 +919,7 @@ def p_declaration_list(p):
         lignes[str(p.lineno(0) - 1)] = ["declaration_list"]
     else:
         lignes[str(p.lineno(0) - 1)] += ["declaration_list"]
-    print("declaration_list")
+    #print("declaration_list")
 
 
 def p_statement_list(p):
@@ -929,7 +929,7 @@ def p_statement_list(p):
         lignes[str(p.lineno(0) - 1)] = ["statement_list"]
     else:
         lignes[str(p.lineno(0) - 1)] += ["statement_list"]
-    print("statement_list")
+    #print("statement_list")
 
 
 def p_expression_statement(p):
@@ -939,7 +939,7 @@ def p_expression_statement(p):
         lignes[str(p.lineno(0) - 1)] = ["expression_statement"]
     else:
         lignes[str(p.lineno(0) - 1)] += ["expression_statement"]
-    print("expression_statement")
+    #print("expression_statement")
 
 
 def p_selection_statement(p):
@@ -950,7 +950,7 @@ def p_selection_statement(p):
         lignes[str(p.lineno(0) - 1)] = ["selection_statement"]
     else:
         lignes[str(p.lineno(0) - 1)] += ["selection_statement"]
-    print("selection_statement")
+    #print("selection_statement")
 
 
 def p_iteration_statement(p):
@@ -962,7 +962,7 @@ def p_iteration_statement(p):
         lignes[str(p.lineno(0) - 1)] = ["iteration_statement"]
     else:
         lignes[str(p.lineno(0) - 1)] += ["iteration_statement"]
-    print("iteration_statement")
+    #print("iteration_statement")
 
 
 def p_jump_statement(p):
@@ -975,7 +975,7 @@ def p_jump_statement(p):
         lignes[str(p.lineno(0) - 1)] = ["jump_statement"]
     else:
         lignes[str(p.lineno(0) - 1)] += ["jump_statement"]
-    print("jump_statement")
+    #print("jump_statement")
 
 
 def p_translation_unit(p):
@@ -986,7 +986,7 @@ def p_translation_unit(p):
         lignes[str(p.lineno(0) - 1)] = ["translation_unit"]
     else:
         lignes[str(p.lineno(0) - 1)] += ["translation_unit"]
-    print("translation_unit")
+    #print("translation_unit")
 
 
 def p_external_declaration(p):
@@ -996,7 +996,7 @@ def p_external_declaration(p):
         lignes[str(p.lineno(0) - 1)] = ["translation_unit"]
     else:
         lignes[str(p.lineno(0) - 1)] += ["translation_unit"]
-    print("external_declaration")
+    #print("external_declaration")
 
 
 def p_function_definition(p):
@@ -1009,15 +1009,14 @@ def p_function_definition(p):
     else:
         lignes[str(p.lineno(0) - 1)] += ["function_definition"]
     nb = len(list(p)) - 1
-    print(
-    "function_definition, on line", p.lineno(0), "from char", p.lexspan(0)[0] + 1, "to char", p.lexspan(nb)[0] + 1)
+    #print("function_definition, on line", p.lineno(0), "from char", p.lexspan(0)[0] + 1, "to char", p.lexspan(nb)[0] + 1)
 
 
 def p_error(p):
     if p and p.type != "COMMENT":
         global erreurs
         erreurs += [[p.lineno, p.lexpos, p.value]]
-        print("---------------Syntax error in input : ", p.lineno, p.type, p.value, p.lexpos)
+        #print("---------------Syntax error in input : ", p.lineno, p.type, p.value, p.lexpos)
 
 
 def yaccing(data, get_errros=True):
@@ -1031,8 +1030,9 @@ def yaccing(data, get_errros=True):
     import ply.yacc as yacc
     parser = yacc.yacc()
     parser.parse(data, tracking=True)
+    # parser.parse(data)
 
-    for i in sorted([int(i) for i in list(lignes.keys())]):
-        print("ligne numero %s: %s" % (i + 1, lignes[str(i)]), "\n\n")
+    # for i in sorted([int(i) for i in list(lignes.keys())]):
+    #     print("ligne numero %s: %s" % (i + 1, lignes[str(i)]), "\n\n")
 
     return [erreurs, lignes] if get_errros else lignes

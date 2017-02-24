@@ -28,6 +28,8 @@ from gui.statusbar import *
 from gui.bouton import Bouton
 from gui.label import Label
 from gui.inspecteur import *
+from gui.chargement import *
+from xml import *
 
 sys.path[:0] = ["../"]
 sys.path[:0] = ["gui"]
@@ -59,8 +61,10 @@ class Fenetre(QWidget):
         self.workplace_path = workplace_path
 
         self.project_path = ""
-        self.def_functions = ""
-        self.def_structs = ""
+        self.def_functions = {}
+        self.def_structs = {}
+        self.def_vars = {}
+        
         self.snippets = self.get_snippets()
 
         self.gridLayout = QGridLayout()
@@ -396,7 +400,7 @@ class Fenetre(QWidget):
         self.statusbar.clearMessage()
         if say and time != -1:
             if "darwin" in sys.platform:
-                configuration = open_xml()
+                configuration = open_xml("conf.xml")
                 if configuration['assistance_vocale'] == 'True':
                     self.blabla = SayMessage(message)
                     self.blabla.start()
@@ -515,14 +519,6 @@ class Fenetre(QWidget):
 
     # 	open_projects(self)
 
-    def close_project(self):
-        """
-        Ferme un projet
-        :rtype: None
-        """
-
-        closeproject(self)
-
     def delete_project(self):
 
         deleteproject(self)
@@ -635,6 +631,13 @@ class Fenetre(QWidget):
             self.fire.stop()
             self.cheminee.clear()
             self.status_message("Vous allez attraper froid sans la cheminée !")
+
+    def show_loading(self):
+        configuration = open_xml("conf.xml")
+        if configuration['loading'] == 'False':
+            write_xml("conf.xml","loading","True")
+        else:
+            write_xml("conf.xml","loading","False")
 
     def token_recoloration(self):
         """

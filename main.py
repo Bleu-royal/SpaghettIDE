@@ -36,8 +36,10 @@ try:
     bind(fenetre)  # Connection between buttons and functions
     create_workplace()
 
-    load = Loading()
-    load.exec()
+    configuration = open_xml("conf.xml")
+    if configuration['loading'] == 'True':
+        load = Loading()
+        load.exec()
 
     sys.exit(app.exec_())
     

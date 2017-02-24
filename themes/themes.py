@@ -7,7 +7,7 @@ import os
 
 def change_theme(theme):
 
-    write_xml('theme', theme)
+    write_xml("conf.xml",'theme', theme)
     
 
 def get_current_theme():
@@ -18,7 +18,7 @@ def get_current_theme():
     """
 
     try:
-        configuration = open_xml()
+        configuration = open_xml("conf.xml")
         current_theme_dir = str(configuration['theme'])  # We load the current theme
     except:  # Si le fichier n'existe pas
         change_theme("basic")

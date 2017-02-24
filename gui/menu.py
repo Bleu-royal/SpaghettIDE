@@ -6,6 +6,7 @@ import gui.style.style as style
 from systeme.workplace import *
 from themes.themes import *
 from language.language import *
+from gui.chargement import *
 
 sys.path[:0] = ["../"]
 sys.path[:0] = ["gui"]
@@ -54,8 +55,9 @@ class MenuBar(QMenuBar):
 
         #### Projet
         new_project_action = MyAction(parent, "&Nouveau Projet", "Nouveau projet", parent.new_project, "Ctrl+M")
+        del_project_action = MyAction(parent, "&Supprimer Projet", "Supprimer le projet", parent.delete_project, "Ctrl+T")
         # open_project_action = MyAction(parent, "&Ouvrir Projet", "Ouvrir un projet", parent.open_project, "Ctrl+P")
-        exit_project_action = MyAction(parent, "&Fermer Projet", "Fermer le projet", parent.close_project, "Ctrl+K")
+        # exit_project_action = MyAction(parent, "&Fermer Projet", "Fermer le projet", parent.close_project, "Ctrl+K")
 
         #### Fichier
         new_fic_action = MyAction(parent, "&Nouveau", "Nouveau fichier", parent.new, "Ctrl+N")
@@ -92,7 +94,7 @@ class MenuBar(QMenuBar):
         assist_voc_action = MyAction(parent, "&Assistance Vocale", "Assistance vocale", parent.assist_voc, "F12")
         assist_voc_action.setCheckable(True)
         
-        configuration = open_xml()
+        configuration = open_xml("conf.xml")
         if configuration['assistance_vocale'] == 'False':
             assist_voc_action.setChecked(False)
         else:
@@ -114,7 +116,7 @@ class MenuBar(QMenuBar):
 
         # # # Menu Projet et ses sous-menus # # #
         projet_menu = self.addMenu("&Projet")
-        self.set_actions(projet_menu, new_project_action, exit_project_action)#, open_project_action, )
+        self.set_actions(projet_menu, new_project_action, del_project_action)
 
         # # # Menu Apparence # # #
         apparence_menu = self.addMenu("&Apparence")
@@ -146,12 +148,20 @@ class MenuBar(QMenuBar):
         fire_action = MyAction(parent, "&Afficher la cheminée", "Afficher la cheminée", parent.show_cheminee, "F6")
         fire_action.setCheckable(True)
 
+        load_action = MyAction(parent, "&Afficher l'écran de chargement au démarrage", "Afficher l'écran de chargement au démarrage", parent.show_loading, "F4")
+        load_action.setCheckable(True)
+
+        if configuration['loading'] == 'False':
+            load_action.setChecked(False)
+        else:
+            load_action.setChecked(True)
+
         line_action = MyAction(parent, "&Numérotation des lignes", "Numérotation des lignes", parent.show_line_column, "F2")
         line_action.setCheckable(True)
         if parent.is_show_line:
             line_action.setChecked(True)
 
-        self.set_actions(apparence_menu, "sep", fire_action, line_action, "sep")
+        self.set_actions(apparence_menu, "sep", fire_action, load_action, line_action, "sep")
 
         # Langues
         langues = apparence_menu.addMenu("&Langues")
