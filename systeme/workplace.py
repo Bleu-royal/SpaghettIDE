@@ -273,12 +273,13 @@ class GetDefFonctions(QObject):
             data_split = data.replace("\t", "").split("\n")
             for ligne in struct_by_files[file_]:
                 tmp = data_split[int(ligne) - 1].split()
-                if tmp[0] == "struct":
-                    name = tmp[1].replace("{","").replace("}", "")
-                    if file_ in structs:
-                        structs[file_] += [name]
-                    else:
-                        structs[file_] = [name]
+                if len(tmp) > 0:
+                    if tmp[0] == "struct":
+                        name = tmp[1].replace("{","").replace("}", "")
+                        if file_ in structs:
+                            structs[file_] += [name]
+                        else:
+                            structs[file_] = [name]
 
         for file_ in vars_by_files:
             fichier = open(file_, 'r')
@@ -288,12 +289,13 @@ class GetDefFonctions(QObject):
             data_split = data.replace("\t", "").split("\n")
             for ligne in vars_by_files[file_]:
                 tmp = data_split[int(ligne) - 1].split()
-                if tmp[0] in types:
-                    name = tmp[1].replace("{","")
-                    if file_ in vars_:
-                        vars_[file_] += [name]
-                    else:
-                        vars_[file_] = [name]
+                if len(tmp) > 0:
+                    if tmp[0] in types:
+                        name = tmp[1].replace("{","")
+                        if file_ in vars_:
+                            vars_[file_] += [name]
+                        else:
+                            vars_[file_] = [name]
 
         self.resultat.emit((functions, structs, vars_))
 

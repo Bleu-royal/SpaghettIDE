@@ -185,7 +185,7 @@ def document_deja_ouvert(parent, chemin):
 
     return False
 
-def open_document(parent, chemin):
+def open_document(parent, chemin, secu=False):
 
     if parent.project_path != "":
         if not chemin:
@@ -212,9 +212,11 @@ def open_document(parent, chemin):
                 parent.tab_widget.setCurrentIndex(idx)
         else:
             # parent.status_message("Impossible d'ouvrir ce document car il ne fait pas partie du projet courant.", 2000)
-            open_project_and_document(parent, chemin)
+            if not secu:
+                open_project_and_document(parent, chemin)
     else:
-        open_project_and_document(parent, chemin)
+        if not secu:
+            open_project_and_document(parent, chemin)
         # parent.status_message("Aucun projet ouvert, veuillez ouvrir ou créer un projet.", 2000)
 
 def open_project_and_document(parent, chemin):
@@ -223,9 +225,15 @@ def open_project_and_document(parent, chemin):
         parent.codes = []
         parent.tab_widget.clear()
 
-        path = chemin.replace(parent.workplace_path,"").split("/")[0]
+        path = chemin.replace(parent.workplace_path, "").split("/")[0]
         open_project(parent.treeview, path)
-        open_document(parent, chemin)
+        # open_document(parent, chemin)
+        parent.sig_progress_termine.connect(lambda e: open_doc_from_sig(e, parent, chemin))
+
+
+def open_doc_from_sig(e, parent, chemin):
+    if e:
+        open_document(parent, chemin, True)
 
 
 def closedocument(parent):
