@@ -102,6 +102,8 @@ class Editeur(QTextEdit):
         self.maj_style()
         self.setFocus()
 
+        self.cursorPositionChanged.connect(self.syncro)
+
         # self.append("int main ( int argc, char** argv ){\n\n\treturn 0;\n\n}")
 
     def analyse(self):
@@ -145,6 +147,10 @@ class Editeur(QTextEdit):
             return False
 
         super().keyPressEvent(event)
+
+    def syncro(self):
+        #self.parent.nb_lignes.scrollToItem(self.parent.nb_lignes.item(100))
+        pass
 
     def use_snippets(self):
         """
