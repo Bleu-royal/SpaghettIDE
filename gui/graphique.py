@@ -356,7 +356,6 @@ class Fenetre(QWidget):
         """
         Affiche et masque la colonne de numérotation des lignes.
         """
-        configuration = open_xml("conf.xml")
         if configuration['numerote_lines'] == 'False':
             write_xml("conf.xml","numerote_lines","True")
         else:
@@ -422,12 +421,12 @@ class Fenetre(QWidget):
         Active ou désactive l'assistance vocale et écrit la configuration actuelle dans un fichier XML.
         """
         if "darwin" in sys.platform:
-            configuration = open_xml()
+            configuration = open_xml("conf.xml")
             if configuration['assistance_vocale'] == 'True':
                 self.status_message("Assistance vocale désactivée.")
-                write_xml("assistance_vocale", "False")
+                write_xml("conf.xml","assistance_vocale", "False")
             else:
-                write_xml("assistance_vocale", "True")
+                write_xml("conf.xml","assistance_vocale", "True")
                 self.status_message("Assistance vocale activée.")
 
     def new(self):
@@ -640,7 +639,6 @@ class Fenetre(QWidget):
             self.status_message("Vous allez attraper froid sans la cheminée !")
 
     def show_loading(self):
-        configuration = open_xml("conf.xml")
         if configuration['loading'] == 'False':
             write_xml("conf.xml","loading","True")
         else:

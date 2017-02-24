@@ -7,6 +7,7 @@ from systeme.workplace import *
 from themes.themes import *
 from language.language import *
 from gui.chargement import *
+from xml import *
 
 sys.path[:0] = ["../"]
 sys.path[:0] = ["gui"]
@@ -93,8 +94,6 @@ class MenuBar(QMenuBar):
         # Assistance vocale
         assist_voc_action = MyAction(parent, "&Assistance Vocale", "Assistance vocale", parent.assist_voc, "F12")
         assist_voc_action.setCheckable(True)
-        
-        configuration = open_xml("conf.xml")
         if configuration['assistance_vocale'] == 'False':
             assist_voc_action.setChecked(False)
         else:
