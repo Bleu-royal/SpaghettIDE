@@ -356,6 +356,12 @@ class Fenetre(QWidget):
         """
         Affiche et masque la colonne de numérotation des lignes.
         """
+        configuration = open_xml("conf.xml")
+        if configuration['numerote_lines'] == 'False':
+            write_xml("conf.xml","numerote_lines","True")
+        else:
+            write_xml("conf.xml","numerote_lines","False")
+
         self.is_show_line = not self.is_show_line
         if self.is_show_line:
             self.line_tab.setMaximumWidth(60)

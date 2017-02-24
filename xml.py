@@ -12,9 +12,11 @@ except :
               "     <theme>basic</theme>\n"
               "     <assistance_vocale>False</assistance_vocale>\n"
               "     <loading>False</loading>\n"
+              "     <numerote_lines>True</numerote_lines>\n"
+              "     <language>Fran&#231;ais</language>\n"
               "</configuration>")
     new.close()
-
+    
 try :
     open("projets.xml")
     #tree = etree.parse("conf.xml")

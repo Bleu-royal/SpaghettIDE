@@ -33,6 +33,10 @@ try:
     verif.close()
 
     fenetre = Fenetre("SpaghettIDE (Bleu Royal)")  # Creation of the main window
+    configuration = open_xml("conf.xml")
+    if configuration['numerote_lines'] == 'False':
+        fenetre.show_line_column()
+        write_xml("conf.xml","numerote_lines","False")
     bind(fenetre)  # Connection between buttons and functions
     create_workplace()
 
