@@ -37,6 +37,7 @@ sys.path[:0] = ["gui"]
 class Fenetre(QWidget):
     sig_message = Signal(str)
     sig_progress = Signal(int)
+    sig_progress_termine = Signal(bool)
     sig_update_lines = Signal(int)
 
     def __init__(self, titre, workplace_path=QDir.homePath() + "/workplace/"):
