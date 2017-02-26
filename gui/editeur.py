@@ -36,22 +36,45 @@ class LignesAndTab(QWidget):
         self.parent.anim_line = not self.parent.anim_line
         self.anim.setText(self.values[self.parent.anim_line])
 
+    """
+    def wheelEvent(self, e):
+        idx = self.parent.get_idx()
+        if idx in range(len(self.parent.docs)) and len(self.parent.docs) > 0:  # On affiche le nombre de lignes
+            nblignes = self.parent.docs[idx].get_nb_lignes()
 
-class Lignes(QListWidget):
-    def __init__(self, police, taille_texte):
+            step = -e.delta()/15
+
+            self.first_line_shown += step
+            if self.first_line_shown < 1:
+                self.first_line_shown = 1
+            elif self.first_line_shown > nblignes:
+                self.first_line_shown = nblignes
+
+            self.scroll(0, step)
+            print(self.first_line_shown)"""
+
+
+class Lignes(QTextEdit):
+    def __init__(self, master, police, taille_texte):
         """
-        Liste de numérotation des lignes. On utilise une QListWidget.
+        Liste de numérotation des lignes. On utilise un QTextEdit.
         Chaque élément de la liste correspond à une ligne.
         """
-        QListWidget.__init__(self)
+        QTextEdit.__init__(self)
+
+        self.master = master
 
         self.police = police
         self.taille_texte = taille_texte
         self.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        self.setReadOnly(True)
 
         self.maj_style()
 
         self.setFixedWidth(50)
+
+    def go_top(self):
+        self.scrollToAnchor("1")
 
     def maj_style(self):
         """
@@ -59,11 +82,28 @@ class Lignes(QListWidget):
         """
         c = get_color_from_theme("textedit")
 
-        self.setStyleSheet("QListView{ background-color:" + get_rgb(c["text-back-color"]) + ";"
+        self.setStyleSheet("QTextEdit{ background-color:" + get_rgb(c["text-back-color"]) + ";"
                            + "font-family:" + self.police + ";"
                            + "color:" + get_rgb(c["text-color"]) + ";"
-                           + "font-size:" + str(self.taille_texte) + "pt; }"
-                            "QListView::item{margin-bottom: -2px;}")
+                           + "font-size:" + str(self.taille_texte) + "pt; }")
+
+    def wheelEvent(self, e, syncr=False):
+        """
+        Évenement appelé lors du scroll via la souris
+
+        :param e: evenemnt
+        :type e: object
+        """
+        QTextEdit.wheelEvent(self, e)
+        if not syncr:
+            self.master.codes[self.master.get_idx()].wheelEvent(e, True)
+
+    def enterEvent(self, event):
+        """
+        Evenement lors ce qu'on survole la numérotation des lignes
+        Ici on change le curseur en normal.
+        """
+        self.viewport().setCursor(Qt.ArrowCursor)
 
 class Editeur(QTextEdit):
 
@@ -101,8 +141,6 @@ class Editeur(QTextEdit):
 
         self.maj_style()
         self.setFocus()
-
-        self.cursorPositionChanged.connect(self.syncro)
 
         # self.append("int main ( int argc, char** argv ){\n\n\treturn 0;\n\n}")
 
@@ -148,9 +186,18 @@ class Editeur(QTextEdit):
 
         super().keyPressEvent(event)
 
-    def syncro(self):
-        #self.parent.nb_lignes.scrollToItem(self.parent.nb_lignes.item(100))
-        pass
+    def wheelEvent(self, e, syncr=False):
+        """
+        Évenement appelé lors du scroll via la souris
+
+        On rappelle ici la même fonction sur l'objet pour afficher les lignes afin de les syncroniser.
+
+        :param e: evenemnt
+        :type e: object
+        """
+        QTextEdit.wheelEvent(self, e)
+        if not syncr:
+            self.parent.nb_lignes.wheelEvent(e, True)
 
     def use_snippets(self):
         """

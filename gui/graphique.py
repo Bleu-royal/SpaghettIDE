@@ -86,7 +86,7 @@ class Fenetre(QWidget):
 
         # Lines number
         self.tab_widget.currentChanged.connect(self.defaut_info_message)
-        self.nb_lignes = Lignes("ABeeZee", 14)
+        self.nb_lignes = Lignes(self, "ABeeZee", 14)
         self.anim_line = False
         self.last = 0  # Last number of lines
         self.is_show_line = True
@@ -272,6 +272,18 @@ class Fenetre(QWidget):
         """
         if self.get_idx() != -1: self.codes[self.get_idx()].duplicate()
 
+    def insert_mode(self):
+        """
+        Active ou désactive le mode insertion : remplacement du texte
+        """
+        idx = self.get_idx()
+        if self.codes[idx].overwriteMode():
+            self.codes[idx].setOverwriteMode(False)
+            self.codes[idx].setCursorWidth(1)
+        else:
+            self.codes[idx].setOverwriteMode(True)
+            self.codes[idx].setCursorWidth(5)
+
     def select_current_word(self):
         """
         Sélectionne le mot sur lequel est le curseur
@@ -370,7 +382,7 @@ class Fenetre(QWidget):
         :type e: int
         """
         if e == self.last+1:
-            self.nb_lignes.addItem(str(e))
+            self.nb_lignes.append(str(e))  # addItem(str(e)) --> QListWidget
             self.last += 1
 
     def defaut_info_message(self):

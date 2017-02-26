@@ -83,6 +83,8 @@ class MenuBar(QMenuBar):
         
         comment_selection_action = MyAction(parent, "&Commenter la selection", "Commenter", parent.comment_selection,
                                             "Ctrl+Shift+:")
+        insert_action = MyAction(parent, "&Mode insertion", "insertion", parent.insert_mode, "Ctrl+I")
+        insert_action.setCheckable(True)
 
         #### Menu divers
         apropos_ide_action = MyAction(parent, "&À Propos", "À propos de SpaghettIDE", parent.a_propos)
@@ -111,8 +113,8 @@ class MenuBar(QMenuBar):
         # # # Menu Edition et ses sous-menus # # #
 
         edition_menu = self.addMenu("&Edition")
-        self.set_actions(edition_menu, select_current_line_action, select_current_word_action, duplicate_action, "sep",
-                         find_action, "sep", indent_action, comment_selection_action)
+        self.set_actions(edition_menu, select_current_line_action, select_current_word_action, duplicate_action,
+                         insert_action, "sep", find_action, "sep", indent_action, comment_selection_action)
 
         # # # Menu Projet et ses sous-menus # # #
         projet_menu = self.addMenu("&Projet")
