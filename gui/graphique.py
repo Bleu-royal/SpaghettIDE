@@ -39,6 +39,7 @@ class Fenetre(QWidget):
     sig_progress = Signal(int)
     sig_progress_termine = Signal(bool)
     sig_update_lines = Signal(int)
+    sig_update_lines_termine = Signal(bool)
 
     def __init__(self, titre, workplace_path=QDir.homePath() + "/workplace/"):
         """
@@ -179,6 +180,7 @@ class Fenetre(QWidget):
         self.sig_message.connect(self.prog_mess)
         self.sig_progress.connect(self.prog_val)
         self.sig_update_lines.connect(self.change_lines)
+        self.sig_update_lines_termine.connect(self.nb_lignes.go_top)
 
     def prog_mess(self, message):
         """
@@ -369,9 +371,9 @@ class Fenetre(QWidget):
         Affiche et masque la colonne de numérotation des lignes.
         """
         if configuration['numerote_lines'] == 'False':
-            write_xml("conf.xml","numerote_lines","True")
+            write_xml("conf.xml", "numerote_lines", "True")
         else:
-            write_xml("conf.xml","numerote_lines","False")
+            write_xml("conf.xml", "numerote_lines", "False")
 
         self.is_show_line = not self.is_show_line
         if self.is_show_line:
@@ -495,6 +497,7 @@ class Fenetre(QWidget):
         :rtype: None
         """
         # debut = time()
+        self.aller_en_haut_lignes = True
         open_document(self, chemin)
         # fin = time()
         # self.info_message(str(round((fin-debut), 3)), 1000)

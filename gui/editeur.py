@@ -74,7 +74,9 @@ class Lignes(QTextEdit):
         self.setFixedWidth(50)
 
     def go_top(self):
-        self.scrollToAnchor("1")
+        if self.master.aller_en_haut_lignes:
+            self.scrollToAnchor("1")
+            self.master.aller_en_haut_lignes = False
 
     def maj_style(self):
         """
