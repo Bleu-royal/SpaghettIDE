@@ -3,27 +3,6 @@
 
 from lxml import etree
 
-try :
-    open("conf.xml")
-    #tree = etree.parse("conf.xml")
-except :
-    new = open("conf.xml", "w")
-    new.write("<configuration>\n"
-              "     <theme>basic</theme>\n"
-              "     <assistance_vocale>False</assistance_vocale>\n"
-              "     <loading>False</loading>\n"
-              "</configuration>")
-    new.close()
-
-try :
-    open("projets.xml")
-    #tree = etree.parse("conf.xml")
-except :
-    new = open("projets.xml", "w")
-    new.write("<projets>\n"
-              "</projets>")
-    new.close()
-
 def open_xml(fichier):
 	configuration = {}
 	tree = etree.parse(fichier)
@@ -41,3 +20,25 @@ def write_xml(fichier,config,value):
 			mode = root.find(config)
 	mode.text = value
 	tree.write(fichier)
+
+try :
+    configuration = open_xml("conf.xml")
+except :
+    new = open("conf.xml", "w")
+    new.write("<configuration>\n"
+              "     <theme>basic</theme>\n"
+              "     <assistance_vocale>False</assistance_vocale>\n"
+              "     <loading>False</loading>\n"
+              "     <numerote_lines>True</numerote_lines>\n"
+              "     <language>Fran&#231;ais</language>\n"
+              "</configuration>")
+    new.close()
+    print("IGNOREZ CETTE ERREUR ET REDÉMARREZ L'IDE")
+    
+try :
+    open("projets.xml")
+except :
+    new = open("projets.xml", "w")
+    new.write("<projets>\n"
+              "</projets>")
+    new.close()

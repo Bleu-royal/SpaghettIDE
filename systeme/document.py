@@ -227,12 +227,13 @@ def open_project_and_document(parent, chemin):
 
         path = chemin.replace(parent.workplace_path, "").split("/")[0]
         open_project(parent.treeview, path)
-        # open_document(parent, chemin)
-        parent.sig_progress_termine.connect(lambda e: open_doc_from_sig(e, parent, chemin))
+        open_document(parent, chemin)
+        # parent.sig_progress_termine.connect(lambda e: open_doc_from_sig(e, parent, chemin))
 
 
 def open_doc_from_sig(e, parent, chemin):
     if e:
+        print("----",chemin)
         open_document(parent, chemin, True)
 
 
