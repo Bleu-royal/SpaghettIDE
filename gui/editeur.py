@@ -36,23 +36,6 @@ class LignesAndTab(QWidget):
         self.parent.anim_line = not self.parent.anim_line
         self.anim.setText(self.values[self.parent.anim_line])
 
-    """
-    def wheelEvent(self, e):
-        idx = self.parent.get_idx()
-        if idx in range(len(self.parent.docs)) and len(self.parent.docs) > 0:  # On affiche le nombre de lignes
-            nblignes = self.parent.docs[idx].get_nb_lignes()
-
-            step = -e.delta()/15
-
-            self.first_line_shown += step
-            if self.first_line_shown < 1:
-                self.first_line_shown = 1
-            elif self.first_line_shown > nblignes:
-                self.first_line_shown = nblignes
-
-            self.scroll(0, step)
-            print(self.first_line_shown)"""
-
 
 class Lignes(QTextEdit):
     def __init__(self, master, police, taille_texte):
@@ -74,6 +57,9 @@ class Lignes(QTextEdit):
         self.setFixedWidth(50)
 
     def go_top(self):
+        """
+        Replace la numérotation des lignes tout en haut
+        """
         if self.master.aller_en_haut_lignes:
             self.scrollToAnchor("1")
             self.master.aller_en_haut_lignes = False
@@ -223,7 +209,7 @@ class Editeur(QTextEdit):
                 self.moveCursor(QTextCursor.Right)
 
             textCursor = self.textCursor()
-            textCursor.select(QTextCursor.WordUnderCursor)
+            textCursor.select(QCursor.WordUnderCursor)
             self.setTextCursor(textCursor)
 
             return True
