@@ -5,6 +5,7 @@ from PySide.QtGui import *
 from datetime import datetime
 import os
 import sys
+import shutil
 from lexer import *
 from xml import *
 from systeme.parallele import ProgressOpening, ProgressDisp
@@ -331,6 +332,60 @@ class ProgressWin(QObject):
 #     parent.codes = []
 #     parent.highlighters = []
 
+class DeleteProject(QDialog):
+    def __init__(self):
+        super().__init__()
+
+        self.valider = False
+
+        self.setWindowTitle("Sélectionnez un projet à supprimer :")
+
+        self.layout = QVBoxLayout()
+        self.buttons_layout = QHBoxLayout()
+
+        self.project_name = QComboBox()
+        for e in os.listdir(os.environ["HOME"]+"/workplace"):
+            if e != ".DS_Store":
+                self.project_name.addItem(e)
+
+        self.cancel_button = QPushButton("Cancel")
+        self.valider_button = QPushButton("Valider")
+
+        self.cancel_button.clicked.connect(self.cancel_action)
+        self.valider_button.clicked.connect(self.valider_action)
+
+        self.layout.addWidget(self.project_name)
+
+        self.buttons_layout.addWidget(self.cancel_button)
+        self.buttons_layout.addWidget(self.valider_button)
+        self.layout.addLayout(self.buttons_layout)
+
+        self.setLayout(self.layout)
+
+    def cancel_action(self):
+        self.cancel = True
+        self.done(0)
+
+    def valider_action(self):
+        self.valider = True
+        self.done(0)
+
+    def get_project(self):
+        return self.project_name.currentText().replace("é","e").lower()
+
+    def keyPressEvent(self, event):
+
+        if event.key() == 16777216:
+            self.cancel = True
+
+        super().keyPressEvent(event)
 
 def deleteproject(parent):
-    pass
+
+    dp = DeleteProject()
+    dp.exec()
+    project_name = dp.get_project()
+    valider = dp.valider
+
+    if QDir(parent.workplace_path + project_name).exists() and valider:
+        shutil.rmtree(parent.workplace_path + project_name)
