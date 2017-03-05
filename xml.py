@@ -11,7 +11,6 @@ def open_xml(fichier):
 		configuration[child.tag] = child.text
 	return configuration
 
-
 def write_xml(fichier,config,value):
 	tree = etree.parse(fichier)
 	root = tree.getroot()
