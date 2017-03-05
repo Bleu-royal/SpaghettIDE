@@ -10,6 +10,7 @@ from PySide.QtGui import *
 from gui.chargement import Loading
 from xml import *
 
+
 app = QApplication(sys.argv)
 
 # Fonction permettant de cacher les dossiers __pycache__ et leur contenu en les supprimant à l'exécution du programme
@@ -54,3 +55,4 @@ except FileNotFoundError:
     mess.setStandardButtons(QMessageBox.Close)
     mess.setDefaultButton(QMessageBox.Close)
     mess.exec_()
+

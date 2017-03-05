@@ -20,6 +20,7 @@ from systeme.parallele import *
 
 # Importation des modules du menu, des onglets, du navigateur de fichiers, de l'éditeur
 # de la barre de statut, des boutons et de l'inspecteur
+from xml import *
 from gui.menu import *
 from gui.navigateur import *
 from gui.onglet import *
@@ -29,7 +30,6 @@ from gui.bouton import Bouton
 from gui.label import Label
 from gui.inspecteur import *
 from gui.chargement import *
-from xml import *
 
 sys.path[:0] = ["../"]
 sys.path[:0] = ["gui"]

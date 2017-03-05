@@ -33,7 +33,6 @@ except :
               "     <language>Fran&#231;ais</language>\n"
               "</configuration>")
     new.close()
-    print("IGNOREZ CETTE ERREUR ET REDÉMARREZ L'IDE")
     
 try :
     open("projets.xml")

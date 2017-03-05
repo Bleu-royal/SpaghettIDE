@@ -3,15 +3,17 @@ from PySide.QtGui import *
 from PySide.QtCore import *
 
 import gui.style.style as style
+from xml import *
 from systeme.workplace import *
 from themes.themes import *
 from language.language import *
 from gui.chargement import *
-from xml import *
+
 
 sys.path[:0] = ["../"]
 sys.path[:0] = ["gui"]
 
+configuration = open_xml("conf.xml")
 
 class MyAction(QAction):
     def __init__(self, parent, name, statut, fonction, shortcut_command=None):
