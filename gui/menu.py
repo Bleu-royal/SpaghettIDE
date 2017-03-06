@@ -58,7 +58,8 @@ class MenuBar(QMenuBar):
 
         #### Projet
         new_project_action = MyAction(parent, "&Nouveau Projet", "Nouveau projet", parent.new_project, "Ctrl+M")
-        del_project_action = MyAction(parent, "&Supprimer Projet", "Supprimer le projet", parent.delete_project, "Ctrl+T")
+        del_project_action = MyAction(parent, "&Supprimer Projet", "Supprimer le projet", parent.delete_project, "Ctrl+Alt+D")
+        info_project_action = MyAction(parent, "&Informations Projet", "Informations d'un projet", parent.infos_project, "Ctrl+Alt+I")
         # open_project_action = MyAction(parent, "&Ouvrir Projet", "Ouvrir un projet", parent.open_project, "Ctrl+P")
         # exit_project_action = MyAction(parent, "&Fermer Projet", "Fermer le projet", parent.close_project, "Ctrl+K")
 
@@ -119,7 +120,7 @@ class MenuBar(QMenuBar):
 
         # # # Menu Projet et ses sous-menus # # #
         projet_menu = self.addMenu("&Projet")
-        self.set_actions(projet_menu, new_project_action, del_project_action)
+        self.set_actions(projet_menu, new_project_action, del_project_action, info_project_action)
 
         # # # Menu Apparence # # #
         apparence_menu = self.addMenu("&Apparence")

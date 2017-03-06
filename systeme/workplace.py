@@ -31,7 +31,7 @@ class NewProject(QDialog):
         self.project_name_lang.addItem("Arithmétique")
 
         self.cancel_button = QPushButton("Cancel")
-        self.valider_button = QPushButton("Valider")
+        self.valider_button = QPushButton("Créer")
 
         self.cancel_button.clearFocus()
         self.valider_button.setFocus()
@@ -355,7 +355,7 @@ class DeleteProject(QDialog):
                 self.project_name.addItem(e)
 
         self.cancel_button = QPushButton("Cancel")
-        self.valider_button = QPushButton("Valider")
+        self.valider_button = QPushButton("Supprimer")
 
         self.cancel_button.clicked.connect(self.cancel_action)
         self.valider_button.clicked.connect(self.valider_action)
@@ -398,3 +398,6 @@ def deleteproject(parent):
 
     if QDir(parent.workplace_path + project_name).exists() and valider:
         shutil.rmtree(parent.workplace_path + project_name)
+
+def infosproject(parent):
+    pass

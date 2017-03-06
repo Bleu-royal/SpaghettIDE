@@ -544,6 +544,10 @@ class Fenetre(QWidget):
 
         deleteproject(self)
 
+    def infos_project(self):
+
+        infosproject(self)
+
     def close_document(self):
 
         closedocument(self)
