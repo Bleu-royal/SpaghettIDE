@@ -368,6 +368,9 @@ class DeleteProject(QDialog):
 
         self.setLayout(self.layout)
 
+        self.activateWindow()
+        self.valider_button.setFocus()
+
     def cancel_action(self):
         self.cancel = True
         self.done(0)
