@@ -104,11 +104,30 @@ def newproject(parent):
     if not QDir(parent.workplace_path + project_name).exists() and not cancel:
         QDir(parent.workplace_path).mkpath(project_name)
 
-        # date = datetime.now()
+        date = str(datetime.now())
+        path = "%s/%s.xml" % (QDir(parent.workplace_path + project_name).path(), project_name)
 
-        # fichier = open("%s/.conf" % (QDir(parent.workplace_path + project_name[0]).path()), "w")
-        # fichier.write("Created : %s/%s/%s" % (date.day, date.month, date.year))
-        # fichier.close()
+        fichier = open(path, "w")
+        fichier.write("<project>\n"
+                      "     <name></name>\n"
+                      "     <creation_date></creation_date>\n"
+                      "     <language></language>\n"
+                      "     <number_files></number_files>\n"
+                      "</project>")
+        fichier.close()
+
+        nb_files = 0
+
+        project_path = QDir(parent.workplace_path + project_name).path()
+
+        for e in os.listdir(project_path):
+            if os.path.isfile(project_path+"/"+e):
+                nb_files+=1
+
+        write_xml(path,"name",project_name)
+        write_xml(path,"creation_date",date)
+        write_xml(path,"language",project_lang)
+        write_xml(path,"number_files",str(nb_files))
 
         tree = etree.parse("projets.xml")
         projets=tree.getroot()
@@ -399,5 +418,65 @@ def deleteproject(parent):
     if QDir(parent.workplace_path + project_name).exists() and valider:
         shutil.rmtree(parent.workplace_path + project_name)
 
+
+class InfosProject(QDialog):
+    def __init__(self):
+        super().__init__()
+
+        self.valider = False
+
+        self.setWindowTitle("Sélectionnez un projet à supprimer :")
+
+        self.layout = QVBoxLayout()
+        self.buttons_layout = QHBoxLayout()
+
+        self.project_name = QComboBox()
+        for e in os.listdir(os.environ["HOME"]+"/workplace"):
+            if e != ".DS_Store":
+                self.project_name.addItem(e)
+
+        self.cancel_button = QPushButton("Cancel")
+        self.valider_button = QPushButton("Supprimer")
+
+        self.cancel_button.clicked.connect(self.cancel_action)
+        self.valider_button.clicked.connect(self.valider_action)
+
+        self.layout.addWidget(self.project_name)
+
+        self.buttons_layout.addWidget(self.cancel_button)
+        self.buttons_layout.addWidget(self.valider_button)
+        self.layout.addLayout(self.buttons_layout)
+
+        self.setLayout(self.layout)
+
+        self.activateWindow()
+        self.valider_button.setFocus()
+
+    def cancel_action(self):
+        self.cancel = True
+        self.done(0)
+
+    def valider_action(self):
+        self.valider = True
+        self.done(0)
+
+    def get_project(self):
+        return self.project_name.currentText().replace("é","e").lower()
+
+    def keyPressEvent(self, event):
+
+        if event.key() == 16777216:
+            self.cancel = True
+
+        super().keyPressEvent(event)
+
 def infosproject(parent):
-    pass
+
+    dp = DeleteProject()
+    dp.exec()
+    project_name = dp.get_project()
+    valider = dp.valider
+
+    if QDir(parent.workplace_path + project_name).exists() and valider:
+        shutil.rmtree(parent.workplace_path + project_name)
+

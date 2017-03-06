@@ -36,7 +36,7 @@ except :
 try :
     open("projets.xml")
 except :
-    new = open("projets.xml", "w")
+    new = open("projects.xml", "w")
     new.write("<projets>\n"
-              "</projets>")
+              "</projects>")
     new.close()
