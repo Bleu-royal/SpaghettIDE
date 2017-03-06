@@ -49,6 +49,9 @@ class NewProject(QDialog):
 
         self.setLayout(self.layout)
 
+        self.activateWindow()
+        self.valider_button.setFocus()
+
     def cancel_action(self):
         self.cancel = True
         self.done(0)
@@ -85,7 +88,6 @@ def create_workplace():
 def newproject(parent):
 
     np = NewProject()
-    np.valider_button.setFocus()
     np.exec()
     project_name = np.get_project_name()
     project_lang = np.get_project_lang()
@@ -94,7 +96,6 @@ def newproject(parent):
     while (project_name == '' or "/" in project_name) and not cancel:
         QMessageBox.critical(parent, "Erreur de syntaxe", "Le nom de projet n'est pas valide (veuillez éviter /)")
         np = NewProject()
-        np.valider_button.setFocus()
         np.exec()
         project_name = np.get_project_name()
         project_lang = np.get_project_lang()
