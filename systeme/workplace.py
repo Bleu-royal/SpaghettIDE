@@ -30,7 +30,7 @@ class NewProject(QDialog):
         self.project_name_lang.addItem("C")
         self.project_name_lang.addItem("Arithmétique")
 
-        self.cancel_button = QPushButton("Cancel")
+        self.cancel_button = QPushButton("Annuler")
         self.valider_button = QPushButton("Créer")
 
         self.cancel_button.clearFocus()
@@ -63,7 +63,7 @@ class NewProject(QDialog):
         return self.line_edit.text()
 
     def get_project_lang(self):
-        return self.project_name_lang.currentText().replace("é","e").lower()
+        return self.project_name_lang.currentText()#.replace("é","e").lower()
 
     def keyPressEvent(self, event):
 
@@ -72,6 +72,21 @@ class NewProject(QDialog):
 
         super().keyPressEvent(event)
 
+def update_infos(parent,path,project_name,date,project_lang,nb_files):
+    write_xml(path,"name",project_name)
+    write_xml(path,"creation_date",date)
+    write_xml(path,"language",project_lang)
+    write_xml(path,"number_files",str(nb_files))
+
+def get_nb_files(parent,project_name):
+    nb_files = 0
+    project_path = QDir(parent.workplace_path + project_name).path()
+
+    for e in os.listdir(project_path):
+        if os.path.isfile(project_path+"/"+e):
+            nb_files+=1
+
+    return nb_files
 
 def create_workplace():
     """
@@ -104,23 +119,13 @@ def newproject(parent):
     if not QDir(parent.workplace_path + project_name).exists() and not cancel:
         QDir(parent.workplace_path).mkpath(project_name)
 
+        create_xml("%s/%s.xml" % (QDir(parent.workplace_path + project_name).path(), project_name))
+
         date = str(datetime.now())
         path = "%s/%s.xml" % (QDir(parent.workplace_path + project_name).path(), project_name)
+        nb_files = get_nb_files(parent,project_name)
 
-        create_xml(path)
-
-        nb_files = 0
-
-        project_path = QDir(parent.workplace_path + project_name).path()
-
-        for e in os.listdir(project_path):
-            if os.path.isfile(project_path+"/"+e):
-                nb_files+=1
-
-        write_xml(path,"name",project_name)
-        write_xml(path,"creation_date",date)
-        write_xml(path,"language",project_lang)
-        write_xml(path,"number_files",str(nb_files))
+        update_infos(parent,path,project_name,date,project_lang,nb_files)
 
         tree = etree.parse("projets.xml")
         projets=tree.getroot()
@@ -366,7 +371,7 @@ class DeleteProject(QDialog):
             if e != ".DS_Store":
                 self.project_name.addItem(e)
 
-        self.cancel_button = QPushButton("Cancel")
+        self.cancel_button = QPushButton("Annuler")
         self.valider_button = QPushButton("Supprimer")
 
         self.cancel_button.clicked.connect(self.cancel_action)
@@ -434,7 +439,7 @@ class InfosProject(QDialog):
             if e != ".DS_Store":
                 self.project_name.addItem(e)
 
-        self.cancel_button = QPushButton("Cancel")
+        self.cancel_button = QPushButton("Annuler")
         self.valider_button = QPushButton("Valider")
 
         self.cancel_button.clicked.connect(self.cancel_action)
@@ -480,8 +485,10 @@ def infosproject(parent):
     while valider and not cancel and QDir(parent.workplace_path + project_name).exists():
         valider = ip.valider
         cancel = ip.cancel
-        project_name = ip.get_project()
-        project = open_xml("%s/%s.xml" % (QDir(parent.workplace_path + project_name).path(), project_name))
+        project_name = ip.get_project() 
+        path = "%s/%s.xml" % (QDir(parent.workplace_path + project_name).path(), project_name)
+        project = open_xml(path)
+        update_infos(parent,path,project_name,project["creation_date"],project["language"],get_nb_files(parent,project_name))
         ip.name.setParent(None)
         ip.name = QLabel("Nom du projet : " + project["name"])
         ip.layout.addWidget(ip.name)
@@ -496,3 +503,5 @@ def infosproject(parent):
         ip.layout.addWidget(ip.number_files)
         if not cancel:
             ip.exec()
+
+        
