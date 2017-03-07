@@ -424,11 +424,17 @@ class InfosProject(QDialog):
         super().__init__()
 
         self.valider = False
+        self.cancel = False
 
-        self.setWindowTitle("Sélectionnez un projet à supprimer :")
+        self.setWindowTitle("Sélectionnez un projet pour obtenir ses informations :")
 
         self.layout = QVBoxLayout()
         self.buttons_layout = QHBoxLayout()
+
+        self.name = QLabel("")
+        self.creation_date = QLabel("")
+        self.language = QLabel("")
+        self.number_files = QLabel("")
 
         self.project_name = QComboBox()
         for e in os.listdir(os.environ["HOME"]+"/workplace"):
@@ -436,7 +442,7 @@ class InfosProject(QDialog):
                 self.project_name.addItem(e)
 
         self.cancel_button = QPushButton("Cancel")
-        self.valider_button = QPushButton("Supprimer")
+        self.valider_button = QPushButton("Valider")
 
         self.cancel_button.clicked.connect(self.cancel_action)
         self.valider_button.clicked.connect(self.valider_action)
@@ -472,11 +478,28 @@ class InfosProject(QDialog):
 
 def infosproject(parent):
 
-    dp = DeleteProject()
-    dp.exec()
-    project_name = dp.get_project()
-    valider = dp.valider
+    ip = InfosProject()
+    ip.exec()
+    project_name = ip.get_project()
+    valider = ip.valider
+    cancel = ip.cancel
 
-    if QDir(parent.workplace_path + project_name).exists() and valider:
-        shutil.rmtree(parent.workplace_path + project_name)
-
+    while valider and not cancel and QDir(parent.workplace_path + project_name).exists():
+        valider = ip.valider
+        cancel = ip.cancel
+        project_name = ip.get_project()
+        project = open_xml("%s/%s.xml" % (QDir(parent.workplace_path + project_name).path(), project_name))
+        ip.name.setParent(None)
+        ip.name = QLabel("Nom du projet : " + project["name"])
+        ip.layout.addWidget(ip.name)
+        ip.creation_date.setParent(None)
+        ip.creation_date = QLabel("Date de création du projet : " + project["creation_date"])
+        ip.layout.addWidget(ip.creation_date)
+        ip.language.setParent(None)
+        ip.language = QLabel("Langage du projet : " + project["language"])
+        ip.layout.addWidget(ip.language)
+        ip.number_files.setParent(None)
+        ip.number_files = QLabel("Nombre de fichiers du projet : " + project["number_files"])
+        ip.layout.addWidget(ip.number_files)
+        if not cancel:
+            ip.exec()
