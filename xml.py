@@ -20,6 +20,16 @@ def write_xml(fichier,config,value):
 	mode.text = value
 	tree.write(fichier)
 
+def create_xml(path):
+	fichier = open(path, "w")
+	fichier.write("<project>\n"
+	              "     <name></name>\n"
+	              "     <creation_date></creation_date>\n"
+	              "     <language></language>\n"
+	              "     <number_files></number_files>\n"
+	              "</project>")
+	fichier.close()
+
 try :
     configuration = open_xml("conf.xml")
 except :

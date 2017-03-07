@@ -107,14 +107,7 @@ def newproject(parent):
         date = str(datetime.now())
         path = "%s/%s.xml" % (QDir(parent.workplace_path + project_name).path(), project_name)
 
-        fichier = open(path, "w")
-        fichier.write("<project>\n"
-                      "     <name></name>\n"
-                      "     <creation_date></creation_date>\n"
-                      "     <language></language>\n"
-                      "     <number_files></number_files>\n"
-                      "</project>")
-        fichier.close()
+        create_xml(path)
 
         nb_files = 0
 
