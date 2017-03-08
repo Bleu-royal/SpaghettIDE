@@ -529,7 +529,7 @@ def infosproject(parent):
         if not cancel and not modification and not appliquer:
             ip.exec()
             
-    if modification:
+    if modification and not cancel:
         ip.name.setParent(None)
         ip.name = QLineEdit()
         ip.name.setPlaceholderText(project["name"])
@@ -552,7 +552,7 @@ def infosproject(parent):
         ip.appliquer_button.setFocus()
         ip.exec()
 
-    if not appliquer:
+    if not appliquer and not cancel:
         os.rename(QDir(parent.workplace_path + project["name"]).path(), QDir(parent.workplace_path + ip.get_project_name()).path())
         shutil.move("%s/%s.xml" % (QDir(parent.workplace_path + project["name"]).path(), project["name"]), "%s/%s.xml" % (QDir(parent.workplace_path + ip.get_project_name()).path(), ip.get_project_name()))
         path = "%s/%s.xml" % (QDir(parent.workplace_path + ip.get_project_name()).path(), ip.get_project_name())
