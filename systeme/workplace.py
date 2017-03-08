@@ -127,22 +127,8 @@ def newproject(parent):
         nb_files = get_nb_files(parent,project_name)
 
         update_infos(parent,path,project_name,date,project_lang,nb_files)
-
-        tree = etree.parse("projects.xml")
-        projects=tree.getroot()
-        project = etree.SubElement(projects, "project")
-        name = etree.SubElement(project, "name")
-        name.text = project_name
-        language = etree.SubElement(project, "language")
-        language.text = project_lang
-        location = etree.SubElement(project, "location")
-        location.text = parent.workplace_path + project_name
-        creation_date = etree.SubElement(project, "creation_date")
-        creation_date.text = date
-        nb_files = etree.SubElement(project, "nb_files")
-        nb_files.text = nb_files
-        tree.write('projects.xml', pretty_print=True)
-        
+        project_location = parent.workplace_path + project_name
+        add_projects_xml(project_name,project_lang,project_location,date,nb_files) 
 
     # elif parent.project_path[1]:
     elif not cancel:

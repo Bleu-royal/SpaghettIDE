@@ -31,8 +31,21 @@ def create_xml(path):
 	              "</project>")
 	fichier.close()
 
-def add_projects_xml(project_name,project_lang):
-	pass
+def add_projects_xml(project_name,project_lang,project_location,date,project_nb_files):
+	tree = etree.parse("projects.xml")
+	projects=tree.getroot()
+	project = etree.SubElement(projects, "project")
+	name = etree.SubElement(project, "name")
+	name.text = project_name
+	language = etree.SubElement(project, "language")
+	language.text = project_lang
+	location = etree.SubElement(project, "location")
+	location.text = project_location
+	creation_date = etree.SubElement(project, "creation_date")
+	creation_date.text = date
+	nb_files = etree.SubElement(project, "nb_files")
+	nb_files.text = project_nb_files
+	tree.write('projects.xml', pretty_print=True)
 
 try :
     configuration = open_xml("conf.xml")
