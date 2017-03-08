@@ -31,7 +31,7 @@ def create_xml(path):
 	              "</project>")
 	fichier.close()
 
-def add_projects_xml(project_name,project_lang,)
+def add_projects_xml(project_name,project_lang):
 	pass
 
 try :
