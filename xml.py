@@ -43,7 +43,7 @@ def add_projects_xml(project_name,project_lang,project_location,date,project_nb_
 	location.text = project_location
 	creation_date = etree.SubElement(project, "creation_date")
 	creation_date.text = date
-	nb_files = etree.SubElement(project, "nb_files")
+	nb_files = etree.SubElement(project, "number_files")
 	nb_files.text = project_nb_files
 	tree.write('projects.xml', pretty_print=True)
 
