@@ -31,6 +31,9 @@ def create_xml(path):
 	              "</project>")
 	fichier.close()
 
+def add_projects_xml(project_name,project_lang,)
+	pass
+
 try :
     configuration = open_xml("conf.xml")
 except :
@@ -45,9 +48,9 @@ except :
     new.close()
     
 try :
-    open("projets.xml")
+    open("projects.xml")
 except :
     new = open("projects.xml", "w")
-    new.write("<projets>\n"
+    new.write("<projects>\n"
               "</projects>")
     new.close()
