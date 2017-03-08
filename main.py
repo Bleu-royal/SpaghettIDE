@@ -10,7 +10,6 @@ from PySide.QtGui import *
 from gui.chargement import Loading
 from xml import *
 
-
 app = QApplication(sys.argv)
 
 # Fonction permettant de cacher les dossiers __pycache__ et leur contenu en les supprimant à l'exécution du programme
@@ -38,7 +37,7 @@ try:
     
     if configuration['numerote_lines'] == 'False':
         fenetre.show_line_column()
-        write_xml("conf.xml","numerote_lines","False")
+        write_xml("xml/conf.xml","numerote_lines","False")
         
     bind(fenetre)  # Connection between buttons and functions
     create_workplace()

@@ -31,8 +31,8 @@ from gui.label import Label
 from gui.inspecteur import *
 from gui.chargement import *
 
-sys.path[:0] = ["../"]
-sys.path[:0] = ["gui"]
+# sys.path[:0] = ["../"]
+# sys.path[:0] = ["gui"]
 
 class Fenetre(QWidget):
     sig_message = Signal(str)
