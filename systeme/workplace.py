@@ -397,7 +397,7 @@ class DeleteProject(QDialog):
         self.done(0)
 
     def get_project(self):
-        return self.project_name.currentText().replace("é","e").lower()
+        return self.project_name.currentText()#.replace("é","e").lower()
 
     def keyPressEvent(self, event):
 
@@ -423,6 +423,8 @@ class InfosProject(QDialog):
 
         self.valider = False
         self.cancel = False
+        self.modification = False
+        self.appliquer = False
 
         self.setWindowTitle("Sélectionnez un projet pour obtenir ses informations :")
 
@@ -440,10 +442,14 @@ class InfosProject(QDialog):
                 self.project_name.addItem(e)
 
         self.cancel_button = QPushButton("Annuler")
-        self.valider_button = QPushButton("Valider")
+        self.valider_button = QPushButton("Sélectionner")
+        self.modification_button = QPushButton("Modifier")
+        self.appliquer_button = QPushButton("Appliquer")
 
         self.cancel_button.clicked.connect(self.cancel_action)
         self.valider_button.clicked.connect(self.valider_action)
+        self.modification_button.clicked.connect(self.modification_action)
+        self.appliquer_button.clicked.connect(self.appliquer_action)
 
         self.layout.addWidget(self.project_name)
 
@@ -464,8 +470,22 @@ class InfosProject(QDialog):
         self.valider = True
         self.done(0)
 
+    def modification_action(self):
+        self.modification = True
+        self.done(0)
+
+    def appliquer_action(self):
+        self.appliquer = True
+        self.done(0)
+
     def get_project(self):
-        return self.project_name.currentText().replace("é","e").lower()
+        return self.project_name.currentText()#.replace("é","e").lower()
+
+    def get_project_name(self):
+        return self.name.text()
+
+    def get_project_lang(self):
+        return self.language.currentText()#.replace("é","e").lower()
 
     def keyPressEvent(self, event):
 
@@ -479,29 +499,66 @@ def infosproject(parent):
     ip = InfosProject()
     ip.exec()
     project_name = ip.get_project()
+    path = "%s/%s.xml" % (QDir(parent.workplace_path + project_name).path(), project_name)
     valider = ip.valider
     cancel = ip.cancel
+    modification = ip.modification
+    appliquer = ip.appliquer
 
-    while valider and not cancel and QDir(parent.workplace_path + project_name).exists():
+    while valider and not cancel and not modification and not appliquer and QDir(parent.workplace_path + project_name).exists():
         valider = ip.valider
         cancel = ip.cancel
+        modification = ip.modification
+        appliquer = ip.appliquer
         project_name = ip.get_project() 
-        path = "%s/%s.xml" % (QDir(parent.workplace_path + project_name).path(), project_name)
         project = open_xml(path)
         update_infos(parent,path,project_name,project["creation_date"],project["language"],get_nb_files(parent,project_name))
         ip.name.setParent(None)
         ip.name = QLabel("Nom du projet : " + project["name"])
         ip.layout.addWidget(ip.name)
-        ip.creation_date.setParent(None)
-        ip.creation_date = QLabel("Date de création du projet : " + project["creation_date"])
-        ip.layout.addWidget(ip.creation_date)
         ip.language.setParent(None)
         ip.language = QLabel("Langage du projet : " + project["language"])
         ip.layout.addWidget(ip.language)
+        ip.creation_date.setParent(None)
+        ip.creation_date = QLabel("Date de création du projet : " + project["creation_date"])
+        ip.layout.addWidget(ip.creation_date)
         ip.number_files.setParent(None)
         ip.number_files = QLabel("Nombre de fichiers du projet : " + project["number_files"])
         ip.layout.addWidget(ip.number_files)
-        if not cancel:
+        ip.buttons_layout.addWidget(ip.modification_button)
+        if not cancel and not modification and not appliquer:
             ip.exec()
+            
+    if modification:
+        ip.name.setParent(None)
+        ip.name = QLineEdit()
+        ip.name.setPlaceholderText(project["name"])
+        ip.layout.addWidget(ip.name)
+        ip.language.setParent(None)
+        ip.language = QComboBox()
+        ip.language.addItem("Python")
+        ip.language.addItem("C")
+        ip.language.addItem("Arithmétique")
+        ip.layout.addWidget(ip.language)
+        ip.creation_date.setParent(None)
+        ip.creation_date = QLabel("Date de création du projet : " + project["creation_date"])
+        ip.layout.addWidget(ip.creation_date)
+        ip.number_files.setParent(None)
+        ip.number_files = QLabel("Nombre de fichiers du projet : " + project["number_files"])
+        ip.layout.addWidget(ip.number_files)
+        ip.modification_button.setParent(None)
+        ip.buttons_layout.addWidget(ip.appliquer_button)
+        ip.activateWindow()
+        ip.appliquer_button.setFocus()
+        ip.exec()
+
+    if not appliquer:
+        os.rename(QDir(parent.workplace_path + project["name"]).path(), QDir(parent.workplace_path + ip.get_project_name()).path())
+        shutil.move("%s/%s.xml" % (QDir(parent.workplace_path + project["name"]).path(), project["name"]), "%s/%s.xml" % (QDir(parent.workplace_path + ip.get_project_name()).path(), ip.get_project_name()))
+        path = "%s/%s.xml" % (QDir(parent.workplace_path + ip.get_project_name()).path(), ip.get_project_name())
+        project = open_xml(path)
+        update_infos(parent,path,ip.get_project_name(),project["creation_date"],ip.get_project_lang(),project["number_files"])
+
+
 
         
