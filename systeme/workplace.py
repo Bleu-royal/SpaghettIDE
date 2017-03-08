@@ -87,7 +87,7 @@ def get_nb_files(parent,project_name):
         if os.path.isfile(project_path+"/"+e):
             nb_files+=1
 
-    return nb_files
+    return str(nb_files)
 
 def create_workplace():
     """
@@ -124,11 +124,11 @@ def newproject(parent):
 
         date = str(datetime.now())
         path = "%s/%s.xml" % (QDir(parent.workplace_path + project_name).path(), project_name)
-        nb_files = get_nb_files(parent,project_name)
+        project_nb_files = get_nb_files(parent,project_name)
 
-        update_infos(parent,path,project_name,date,project_lang,nb_files)
+        update_infos(parent,path,project_name,date,project_lang,project_nb_files)
         project_location = parent.workplace_path + project_name
-        add_projects_xml(project_name,project_lang,project_location,date,nb_files) 
+        add_projects_xml(project_name,project_lang,project_location,date,project_nb_files) 
 
     # elif parent.project_path[1]:
     elif not cancel:
