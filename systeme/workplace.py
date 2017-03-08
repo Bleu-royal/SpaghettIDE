@@ -554,9 +554,8 @@ def infosproject(parent):
 
     if not appliquer and not cancel:
         os.rename(QDir(parent.workplace_path + project["name"]).path(), QDir(parent.workplace_path + ip.get_project_name()).path())
-        shutil.move("%s/%s.xml" % (QDir(parent.workplace_path + project["name"]).path(), project["name"]), "%s/%s.xml" % (QDir(parent.workplace_path + ip.get_project_name()).path(), ip.get_project_name()))
-        path = "%s/%s.xml" % (QDir(parent.workplace_path + ip.get_project_name()).path(), ip.get_project_name())
-        project = open_xml(path)
+        os.rename("%s/%s.xml" % (QDir(parent.workplace_path + ip.get_project_name()).path(), project["name"]), "%s/%s.xml" % (QDir(parent.workplace_path + ip.get_project_name()).path(), ip.get_project_name()))
+        project = open_xml("%s/%s.xml" % (QDir(parent.workplace_path + ip.get_project_name()).path(), ip.get_project_name()))
         update_infos(parent,path,ip.get_project_name(),project["creation_date"],ip.get_project_lang(),project["number_files"])
 
 
