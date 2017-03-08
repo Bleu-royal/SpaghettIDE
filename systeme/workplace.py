@@ -77,6 +77,7 @@ def update_infos(parent,path,project_name,date,project_lang,nb_files):
     write_xml(path,"creation_date",date)
     write_xml(path,"language",project_lang)
     write_xml(path,"number_files",str(nb_files))
+    write_xml(path,"location",QDir(parent.workplace_path + project_name).path())
 
 def get_nb_files(parent,project_name):
     nb_files = 0
@@ -415,6 +416,8 @@ def deleteproject(parent):
 
     if QDir(parent.workplace_path + project_name).exists() and valider:
         shutil.rmtree(parent.workplace_path + project_name)
+        open_xml("projets.xml")
+
 
 
 class InfosProject(QDialog):
@@ -434,6 +437,7 @@ class InfosProject(QDialog):
         self.name = QLabel("")
         self.creation_date = QLabel("")
         self.language = QLabel("")
+        self.location = QLabel("")
         self.number_files = QLabel("")
 
         self.project_name = QComboBox()
@@ -519,6 +523,9 @@ def infosproject(parent):
         ip.language.setParent(None)
         ip.language = QLabel("Langage du projet : " + project["language"])
         ip.layout.addWidget(ip.language)
+        ip.location.setParent(None)
+        ip.location = QLabel("Localisation du projet : " + QDir(parent.workplace_path + project_name).path())
+        ip.layout.addWidget(ip.location)
         ip.creation_date.setParent(None)
         ip.creation_date = QLabel("Date de création du projet : " + project["creation_date"])
         ip.layout.addWidget(ip.creation_date)
@@ -540,6 +547,9 @@ def infosproject(parent):
         ip.language.addItem("C")
         ip.language.addItem("Arithmétique")
         ip.layout.addWidget(ip.language)
+        ip.location.setParent(None)
+        ip.location = QLabel("Localisation du projet : " + QDir(parent.workplace_path + project_name).path())
+        ip.layout.addWidget(ip.location)
         ip.creation_date.setParent(None)
         ip.creation_date = QLabel("Date de création du projet : " + project["creation_date"])
         ip.layout.addWidget(ip.creation_date)
@@ -555,7 +565,8 @@ def infosproject(parent):
     if not appliquer and not cancel:
         os.rename(QDir(parent.workplace_path + project["name"]).path(), QDir(parent.workplace_path + ip.get_project_name()).path())
         os.rename("%s/%s.xml" % (QDir(parent.workplace_path + ip.get_project_name()).path(), project["name"]), "%s/%s.xml" % (QDir(parent.workplace_path + ip.get_project_name()).path(), ip.get_project_name()))
-        project = open_xml("%s/%s.xml" % (QDir(parent.workplace_path + ip.get_project_name()).path(), ip.get_project_name()))
+        path = "%s/%s.xml" % (QDir(parent.workplace_path + ip.get_project_name()).path(), ip.get_project_name())
+        project = open_xml(path)
         update_infos(parent,path,ip.get_project_name(),project["creation_date"],ip.get_project_lang(),project["number_files"])
 
 

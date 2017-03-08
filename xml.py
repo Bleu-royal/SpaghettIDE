@@ -26,6 +26,7 @@ def create_xml(path):
 	              "     <name></name>\n"
 	              "     <creation_date></creation_date>\n"
 	              "     <language></language>\n"
+	              "     <location></location>\n"
 	              "     <number_files></number_files>\n"
 	              "</project>")
 	fichier.close()
