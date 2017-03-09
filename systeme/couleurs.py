@@ -7,6 +7,8 @@ from random import randint
 from copy import deepcopy
 import json
 
+import os
+
 import lexerAR as AR
 
 
@@ -66,6 +68,8 @@ class CodeHighLighter(QSyntaxHighlighter):
 
         self.first_launch = True
 
+        self.cache_name = ""
+
     def compare(self, word):
 
         self.def_functions = []
@@ -91,7 +95,7 @@ class CodeHighLighter(QSyntaxHighlighter):
         self.prop.props = []
         self.prop.hide()
 
-        if not self.first_launch:
+        if not self.first_launch and text != "":
 
             textCursor = self.editeur.textCursor()
             textCursor.select(QTextCursor.WordUnderCursor)
@@ -136,7 +140,32 @@ class CodeHighLighter(QSyntaxHighlighter):
                 if text[i] == "\t" or text[i] == " ":
                     space_remember += [i]
 
-            colored = colorate(text)
+            # get_from_cache = False
+
+            if self.cache_name != "":
+                if os.path.isfile("colorate/%s.json"%self.cache_name): 
+                    cache = open("colorate/%s.json"%self.cache_name, "r")
+                    colored_cache = json.loads(cache.read())
+                    cache.close()
+                else:
+                    cache = open("colorate/%s.json"%self.cache_name, "w")
+                    cache.write("{}")
+                    cache.close()
+                    colored_cache = {}
+
+            if text in colored_cache:
+                colored = colored_cache[text]
+            else:
+                print("coloration par Lex")
+                colored = colorate(text)
+                cache = open("colorate/%s.json"%self.cache_name, "r")
+                tmp = json.loads(cache.read())
+                cache.close()
+
+                cache = open("colorate/%s.json"%self.cache_name, "w")
+                tmp.update({text:colored})
+                cache.write(json.dumps(tmp))
+                cache.close()
 
             current_pos = 0
 

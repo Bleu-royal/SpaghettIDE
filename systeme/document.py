@@ -199,6 +199,7 @@ def open_document(parent, chemin, secu=False):
                 parent.docs += [Document(parent, parent.codes[-1], chemin, True)]
                 
                 parent.highlighters[-1].first_launch = False
+                parent.highlighters[-1].cache_name = parent.docs[-1].chemin_enregistrement.replace("/", "_")
                 parent.codes[-1].highlight_by_block()
 
                 parent.tab_widget.setCurrentIndex(len(parent.codes) - 1)
