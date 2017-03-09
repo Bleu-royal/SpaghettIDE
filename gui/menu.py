@@ -138,6 +138,7 @@ class MenuBar(QMenuBar):
         theme_blackwhite = MyAction(parent, "&Thème Black n White", "Thème Black n White",
                                     lambda: self.__change_theme_to("black_white"))
         theme_pastel = MyAction(parent, "&Thème Pastel", "Thème Pastel", lambda: self.__change_theme_to("pastel"))
+        theme_awesome = MyAction(parent, "&Thème Awesome", "Thème Awesome", lambda: self.__change_theme_to("awesome"))
         # nomTheme = MyAction(parent, "&monNouveauTheme", "monNouveauTheme", lambda: self.__change_theme_to("monNouveauTheme"))
 
         self.set_group(theme_basic, groupe_theme, fonce, "basic")
@@ -147,6 +148,7 @@ class MenuBar(QMenuBar):
         self.set_group(theme_galaxy, groupe_theme, fonce, "galaxy")
         self.set_group(theme_blackwhite, groupe_theme, fonce, "black_white")
         self.set_group(theme_pastel, groupe_theme, clair, "pastel")
+        self.set_group(theme_awesome, groupe_theme, fonce, "awesome")
         # self.set_group(nomTheme, groupe_theme, apparence_menu, "monNouveauTheme")
 
         fire_action = MyAction(parent, "&Afficher la cheminée", "Afficher la cheminée", parent.show_cheminee, "F6")
