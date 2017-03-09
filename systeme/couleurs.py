@@ -206,3 +206,9 @@ class CodeHighLighter(QSyntaxHighlighter):
     def test(self):
         if self.prop.props != []:
             self.prop.complete()
+
+def create_cache_folder():
+    if not os.path.exists("colorate"):
+        os.makedirs("colorate")
+
+create_cache_folder()
