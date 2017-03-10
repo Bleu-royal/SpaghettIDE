@@ -11,6 +11,15 @@ def open_xml(fichier):
         configuration[child.tag] = child.text
     return configuration
 
+# def open_projects_xml(fichier,project_name):
+#     tree = etree.parse(fichier)
+#     for project in tree.xpath("/projects/project/name"):
+#         if name.text == project_name:
+#             name.getparent().remove(name)
+
+    #tree.findtext(path)
+
+
 def write_xml(fichier,config,value):
     tree = etree.parse(fichier)
     root = tree.getroot()
