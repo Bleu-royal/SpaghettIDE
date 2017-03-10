@@ -533,9 +533,18 @@ def infosproject(parent):
         ip.layout.addWidget(ip.name)
         ip.language.setParent(None)
         ip.language = QComboBox()
-        ip.language.addItem("Python")
-        ip.language.addItem("C")
-        ip.language.addItem("Arithmétique")
+        if project["language"] == "Python":
+            ip.language.addItem("Python")
+            ip.language.addItem("C")
+            ip.language.addItem("Arithmétique")
+        elif project["language"] == "C":
+            ip.language.addItem("C")
+            ip.language.addItem("Python")
+            ip.language.addItem("Arithmétique")
+        elif project["language"] == "Arithmétique":
+            ip.language.addItem("Arithmétique")
+            ip.language.addItem("Python")
+            ip.language.addItem("C")
         ip.layout.addWidget(ip.language)
         ip.location.setParent(None)
         ip.location = QLabel("Localisation du projet : " + QDir(parent.workplace_path + project_name).path())
