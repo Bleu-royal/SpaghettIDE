@@ -1,5 +1,7 @@
 __pycache__/
 
+colorate/*
+
 .DS_Store
 
 .idea
@@ -18,4 +20,4 @@ parsetab.py
 parser.out
 
 conf.xml
-projets.xml
+projects.xml

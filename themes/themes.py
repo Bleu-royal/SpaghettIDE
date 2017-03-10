@@ -1,9 +1,8 @@
 # Gestion des thèmes
 
-from xml import *
 import json
-import os
-
+import os, sys
+from xml import *
 
 def change_theme(theme):
 
