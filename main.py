@@ -30,7 +30,8 @@ def remove_folder(path):
 remove_folder(".")
 
 def remove_parsetab():
-	os.remove("parsetab.py")
+	if os.path.isfile("parsetab.py"):
+		os.remove("parsetab.py")
 
 try:
 	verif = open("lexer.py", "r")
