@@ -13,6 +13,7 @@ import gui.style.style as style
 from language.language import *
 
 from systeme.workplace import *
+from systeme import compilateur
 # Importation du module relatif à la coloration lexicale et de la gestion des documents
 from systeme.couleurs import *
 from systeme.document import *
@@ -181,6 +182,12 @@ class Fenetre(QWidget):
         self.sig_progress.connect(self.prog_val)
         self.sig_update_lines.connect(self.change_lines)
         self.sig_update_lines_termine.connect(self.nb_lignes.go_top)
+
+    def compiler(self):
+        compilateur.compiler()
+
+    def configuration_compilation(self):
+        compilateur.configuration_compilation()
 
     def prog_mess(self, message):
         """
