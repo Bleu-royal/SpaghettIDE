@@ -2,6 +2,7 @@ import os
 from PySide.QtGui import *
 
 configuration=""#Variable temporaire à mettre dans le XML
+type_projet="c"#Variable temporaire à mettre dans le XML
 
 class GroupBoxOptions(QGroupBox):
 
@@ -108,19 +109,90 @@ class ConfigCompilC(QDialog):
  
 		return "gcc %s %s %s"%(fichiers_compiler, fichier_header, fichier_sortie)
 
+class LineEditPath(QLineEdit):
+
+	def __init__(self, parent):
+		super().__init__()
+		self.parent = parent
+
+	def mousePressEvent(self, event):
+		self.open_selection_window()
+
+	def keyPressEvent(self, event):
+		return False
+
+	def open_selection_window(self):
+		nom_fichier, filtre = QFileDialog.getOpenFileName(self, "Ouvrir", self.parent.project_path)
+		self.setText(nom_fichier)
 
 
-def compiler():
+class ConfigInterpPython(QDialog):
+
+	def __init__(self, parent):
+		super().__init__()
+
+		self.parent = parent
+
+		self.est_valide = False
+
+		self.setWindowTitle("Configurateur de l'interpreteur python")
+
+		layout = QGridLayout()
+
+		lbl_titre = QLabel("Configurateur de l'interpreteur python")
+		layout.addWidget(lbl_titre, 0, 0, 1, 2)
+
+		lbl_emplacement_interpreteur = QLabel("Emplacement de l'interpreteur python : ")
+		layout.addWidget(lbl_emplacement_interpreteur, 1, 0)
+
+		self.lineEdit_emplacement_interpreteur = LineEditPath(self.parent)
+		layout.addWidget(self.lineEdit_emplacement_interpreteur, 1, 1)
+
+		lbl_emplacement_depart = QLabel("Fichier de depart : ")
+		layout.addWidget(lbl_emplacement_depart, 2, 0)
+
+		self.lineEdit_fichier_depart = LineEditPath(self.parent)
+		layout.addWidget(self.lineEdit_fichier_depart, 2, 1)
+
+		btn_valider = QPushButton("Valider")
+		btn_valider.clicked.connect(self.valider)
+		layout.addWidget(btn_valider, 3, 0, 1, 2)
+
+		self.setLayout(layout)
+	def valider(self):
+
+		if self.est_configuration_valide():
+			self.est_valide = True
+			self.done(0)
+		else:
+			QMessageBox.critical(self, "La configuration n'est pas valide", "Veuillez entrer une configuration valide")
+
+
+	def est_configuration_valide(self):
+		return self.lineEdit_emplacement_interpreteur.text().strip() != "" and self.lineEdit_fichier_depart.text().strip() != "" and self.parent.project_path in self.lineEdit_fichier_depart.text()
+
+	def get_configuration_string(self):
+
+		return "%s %s"%(self.lineEdit_emplacement_interpreteur.text(), self.lineEdit_fichier_depart.text())
+
+
+
+def compiler(parent):
 	if configuration == "":
-		configuration_compilation()
+		configuration_compilation(parent)
 	print("compilation en cours avec la commande : %s"%configuration)
+	# os.system(configuration)
 
-def configuration_compilation():
+def configuration_compilation(parent):
 
 	global configuration # Configuration -> XML
 
-	configCompil = ConfigCompilC()
-	res = configCompil.exec()
+	if type_projet == "c":
+		config = ConfigCompilC()
+	else:
+		config = ConfigInterpPython(parent)
 
-	if configCompil.est_valide:
-		configuration = configCompil.get_configuration_string()
+	config.exec()
+
+	if config.est_valide:
+		configuration = config.get_configuration_string()
