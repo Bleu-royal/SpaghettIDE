@@ -184,10 +184,17 @@ class Fenetre(QWidget):
         self.sig_update_lines_termine.connect(self.nb_lignes.go_top)
 
     def compiler(self):
-        compilateur.compiler()
+        if self.project_path != "":
+            compilateur.compiler()
+        else:
+            QMessageBox.critical(self, "Aucun projet ouvert", "Veuillez ouvrir un projet")
+
 
     def configuration_compilation(self):
-        compilateur.configuration_compilation()
+        if self.project_path != "":
+            compilateur.configuration_compilation()
+        else:
+            QMessageBox.critical(self, "Aucun projet ouvert", "Veuillez ouvrir un projet")
 
     def prog_mess(self, message):
         """

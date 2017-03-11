@@ -34,7 +34,7 @@ class GroupBoxOptions(QGroupBox):
 		self.setLayout(layout)
 
 
-class ConfigCompil(QDialog):
+class ConfigCompilC(QDialog):
 
 	def __init__(self):
 		super().__init__()
@@ -111,13 +111,15 @@ class ConfigCompil(QDialog):
 
 
 def compiler():
+	if configuration == "":
+		configuration_compilation()
 	print("compilation en cours avec la commande : %s"%configuration)
 
 def configuration_compilation():
 
 	global configuration # Configuration -> XML
 
-	configCompil = ConfigCompil()
+	configCompil = ConfigCompilC()
 	res = configCompil.exec()
 
 	if configCompil.est_valide:
