@@ -2,7 +2,6 @@ import os
 from PySide.QtGui import *
 
 configuration=""#Variable temporaire à mettre dans le XML
-type_projet="c"#Variable temporaire à mettre dans le XML
 
 class GroupBoxOptions(QGroupBox):
 
@@ -167,7 +166,6 @@ class ConfigInterpPython(QDialog):
 		else:
 			QMessageBox.critical(self, "La configuration n'est pas valide", "Veuillez entrer une configuration valide")
 
-
 	def est_configuration_valide(self):
 		return self.lineEdit_emplacement_interpreteur.text().strip() != "" and self.lineEdit_fichier_depart.text().strip() != "" and self.parent.project_path in self.lineEdit_fichier_depart.text()
 
@@ -187,7 +185,7 @@ def configuration_compilation(parent):
 
 	global configuration # Configuration -> XML
 
-	if type_projet == "c":
+	if parent.project_type == "c":
 		config = ConfigCompilC()
 	else:
 		config = ConfigInterpPython(parent)

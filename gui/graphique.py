@@ -64,6 +64,7 @@ class Fenetre(QWidget):
         self.workplace_path = workplace_path
 
         self.project_path = ""
+        self.project_type = "c" # A changer un fonction du XML
         self.def_functions = {}
         self.def_structs = {}
         self.def_vars = {}

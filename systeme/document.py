@@ -5,10 +5,11 @@ from PySide.QtCore import *
 import sys
 import threading
 import json
+import kernel.variables as var
+
 from systeme.workplace import *
 
 import gui.style.style as style
-
 
 class SearchDialog(QDialog):
 
@@ -157,8 +158,7 @@ def save_document(parent):
         if idx != -1:
             if parent.docs[idx].chemin_enregistrement == "":
                 chemin = \
-                    QFileDialog.getSaveFileName(parent, 'Sauvegarder un fichier', parent.project_path,
-                                                "Fichier C (*.c);;Fichier H (*.h)")[0]
+                    QFileDialog.getSaveFileName(parent, 'Sauvegarder un fichier', parent.project_path, var.file_by_language[parent.project_type])[0]
                 if chemin != "" and parent.project_path in chemin:
                     parent.docs[idx].set_chemin_enregistrement(chemin)
                     parent.docs[idx].sauvegarde_document(chemin)
@@ -189,8 +189,7 @@ def open_document(parent, chemin, secu=False):
 
     if parent.project_path != "":
         if not chemin:
-            chemin = QFileDialog.getOpenFileName(parent, 'Ouvrir un fichier', parent.project_path,
-                                                 "Fichier C (*.c);;Fichier H (*.h)")[0]
+            chemin = QFileDialog.getOpenFileName(parent, 'Ouvrir un fichier', parent.project_path, var.file_by_language[parent.project_type])[0]
         if chemin != "" and parent.project_path in chemin:
             if not parent.deja_ouvert(chemin):
                 title = chemin.split("/")[-1]
