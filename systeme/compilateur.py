@@ -221,8 +221,8 @@ def compiler(parent):
 	if configuration == "":
 		configuration_compilation(parent)
 	print("compilation en cours avec la commande : %s"%configuration)
-	# os.system("cd %s"%parent.project_path)
-	# os.system(configuration)
+	
+	os.system("cd %s && %s"%(parent.project_path, configuration))
 
 def configuration_compilation(parent):
 
