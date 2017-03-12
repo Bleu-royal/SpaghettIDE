@@ -203,6 +203,9 @@ class CodeHighLighter(QSyntaxHighlighter):
 
             self.editeur.show_nb_prop(len(self.prop.props))  # Disp the number of propsitions
 
+        else:
+            self.editeur.parent.defaut_info_message()
+
     def test(self):
         if self.prop.props != []:
             self.prop.complete()

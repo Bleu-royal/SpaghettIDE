@@ -10,7 +10,7 @@ from lexer import *
 import lexerAR as AR
 from themes.themes import *
 import gui.style.style as style
-from language.language import *
+from language.language import get_text
 
 from systeme.workplace import *
 # Importation du module relatif à la coloration lexicale et de la gestion des documents
@@ -104,14 +104,14 @@ class Fenetre(QWidget):
         self.central_area.setHandleWidth(1)
         self.central_area.setChildrenCollapsible(False)
 
-        self.cheminee = Label(self, "Aie ! Ça brule !!")
+        self.cheminee = Label(self, get_text("text_cheminee_hover"))
         self.cheminee.setFixedHeight(1)
 
         self.inspecteur = Inspecteur(self)
 
         # Les boutons
-        self.bouton_analyse = Bouton("Analyse", self.pre_analyse)
-        self.bouton_change = Bouton("Navigateur", self.change_affichage)
+        self.bouton_analyse = Bouton(get_text("text_bout_analyse"), self.pre_analyse)
+        self.bouton_change = Bouton(get_text("text_bout_nav"), self.change_affichage)
 
         self.boutons = QSplitter()
         self.boutons.addWidget(self.bouton_change)
@@ -151,7 +151,7 @@ class Fenetre(QWidget):
         if "darwin" in sys.platform:
             name = os.environ["USER"]
 
-        self.status_message("Bienvenue %s!" % name)
+        self.status_message(get_text("text_bienvenue") + name)
 
         # self.statusbar.addWidget(MyReadWriteIndication)
         self.menuBar = MenuBar(self)
@@ -208,19 +208,22 @@ class Fenetre(QWidget):
         1: Inspecteurs d'éléments.
         """
         if self.get_idx() == -1:
-            self.status_message("Veuillez ouvrir un document.")
+            self.status_message(get_text("status_error_open_doc"))
         else:
-            widgets = ["Navigateur", "Inspecteur"]
+            widgets = [("Navigateur", "TreeView"), ("Inspecteur", "Inspector")]
+            text_widgets = {"Navigateur": get_text("text_bout_insp"), "TreeView": get_text("text_bout_insp"),
+                            "Inspecteur": get_text("text_bout_nav"), "Inspector": get_text("text_bout_nav")}
+                            # On récupère le texte en fonction de la langue.
             actual = self.bouton_change.text()
-            self.bouton_change.setText(widgets[(widgets.index(actual) + 1) % len(widgets)])
-            self.status_message(self.bouton_change.text() + " est maintenant affiché à la place de " + actual)
+            self.bouton_change.setText(text_widgets[actual])
+            self.status_message(self.bouton_change.text() + get_text("text_chang_bout") + actual)
 
-            if actual == widgets[0]:  # Affichage de l'inspecteur
+            if actual in widgets[0]:  # Affichage de l'inspecteur
                 self.inspecteur.setMaximumHeight(self.ecran.screenGeometry().height())
                 self.inspecteur.load()
                 self.inspecteur.maj_style()
                 self.treeview.setMaximumHeight(1)
-            elif actual == widgets[1]:  # Affichage du navigateur de fichiers
+            elif actual in widgets[1]:  # Affichage du navigateur de fichiers
                 self.treeview.setMaximumHeight(self.ecran.screenGeometry().height())
                 self.inspecteur.setMaximumHeight(1)
 
@@ -353,7 +356,7 @@ class Fenetre(QWidget):
         idx = self.tab_widget.currentIndex()
         if idx in range(len(self.docs)) and len(self.docs) > 0:  # On affiche le nombre de lignes
             nblignes = self.docs[idx].get_nb_lignes()
-            self.infobar.showMessage(str(nblignes) + " ligne%s" % ("s" * (nblignes != 1)))
+            self.infobar.showMessage(str(nblignes) + get_text("infobar_line") + "s"*(nblignes != 1))
 
             if nblignes != prev:
                 self.nb_lignes.clear()
@@ -405,7 +408,7 @@ class Fenetre(QWidget):
         :type text: str
         """
         n = self.codes[self.get_idx()].toPlainText().count(text)
-        self.info_message(str(n) + " occurrence%s de '%s'" % ("s" * (n != 1), text))
+        self.info_message(str(n) + " occurrence%s %s '%s'" % ("s" * (n != 1), get_text("infobar_de"), text))
 
     def status_message(self, message, time=2000, say=True):
         """
@@ -437,11 +440,11 @@ class Fenetre(QWidget):
         if "darwin" in sys.platform:
             configuration = open_xml("conf.xml")
             if configuration['assistance_vocale'] == 'True':
-                self.status_message("Assistance vocale désactivée.")
-                write_xml("conf.xml","assistance_vocale", "False")
+                self.status_message(get_text("status_voc_des"))
+                write_xml("conf.xml", "assistance_vocale", "False")
             else:
-                write_xml("conf.xml","assistance_vocale", "True")
-                self.status_message("Assistance vocale activée.")
+                write_xml("conf.xml", "assistance_vocale", "True")
+                self.status_message(get_text("status_voc_activ"))
 
     def new(self):
         """
