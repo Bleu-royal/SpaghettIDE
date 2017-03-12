@@ -1,0 +1,56 @@
+{
+  "text_cheminee_hover": {
+    "fr": "Aie ! Ça brule !!",
+    "en": "Ouch ! Too hot !!"
+  },
+
+  "text_bout_analyse": {
+    "fr": "Analyse",
+    "en": "Analyse"
+  },
+
+  "text_bout_nav": {
+    "fr": "Navigateur",
+    "en": "TreeView"
+  },
+
+  "text_bout_insp": {
+    "fr": "Inspecteur",
+    "en": "Inspector"
+  },
+
+  "text_bienvenue": {
+    "fr": "Bienvenue ",
+    "en": "Welcome "
+  },
+
+  "text_chang_bout": {
+    "fr": " est maintenant affiché à la place de ",
+    "en": " is now replacing "
+  },
+
+  "infobar_line": {
+    "fr": " ligne",
+    "en": " line"
+  },
+
+  "infobar_de": {
+    "fr": "de",
+    "en": "of"
+  },
+
+  "status_voc_activ": {
+    "fr": "Assistance vocale activée.",
+    "en": "Vocal help activated"
+  },
+
+  "status_voc_des": {
+    "fr": "Assistance vocale désactivée.",
+    "en": "Vocal help desactivated"
+  },
+
+  "status_error_open_doc": {
+    "fr": "Veuillez ouvrir un document.",
+    "en": "Please open a document before."
+  }
+}

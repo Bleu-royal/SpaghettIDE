@@ -72,7 +72,7 @@ class TabWidget(QTabWidget):
         """
         if len(self.parent.codes) != 0:  # On vérifie que la liste d'onglet n'est pas vide.
 
-            if self.parent.get_current_widget_used() == "Inspecteur":
+            if self.parent.get_current_widget_used() in ("Inspecteur", "Inspector"):
                 self.parent.change_affichage()  # On remplace l'Inspecteur par le navigateur si il était actif
 
             idx = self.currentIndex()
