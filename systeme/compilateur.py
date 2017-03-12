@@ -212,9 +212,7 @@ class ConfigInterpPython(QDialog):
 		return self.lineEdit_emplacement_interpreteur.text().strip() != "" and self.lineEdit_fichier_depart.text().strip() != "" and self.parent.project_path in self.lineEdit_fichier_depart.text()
 
 	def get_configuration_string(self):
-
 		return "%s %s"%(self.lineEdit_emplacement_interpreteur.text(), self.lineEdit_fichier_depart.text())
-
 
 
 def compiler(parent):
@@ -222,7 +220,18 @@ def compiler(parent):
 		configuration_compilation(parent)
 	print("compilation en cours avec la commande : %s"%configuration)
 	
-	os.system("cd %s && %s"%(parent.project_path, configuration))
+	curt = os.popen("pwd").read()[:-1]
+	os.chdir(parent.project_path)
+	res = os.popen(configuration + " 2>&1", "r").read()
+	os.chdir(curt)
+
+	if parent.project_type == "c":
+		if res != "":
+			QMessageBox.critical(parent, "Résultat de la compilation", res)
+		else:
+			QMessageBox.about(parent, "Résultat de la compilation", "La compilation à réussie")		
+	else:
+		print(res)	
 
 def configuration_compilation(parent):
 
