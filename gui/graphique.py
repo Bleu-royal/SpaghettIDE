@@ -13,6 +13,7 @@ import gui.style.style as style
 from language.language import get_text
 
 from systeme.workplace import *
+from systeme import compilateur
 # Importation du module relatif à la coloration lexicale et de la gestion des documents
 from systeme.couleurs import *
 from systeme.document import *
@@ -63,6 +64,7 @@ class Fenetre(QWidget):
         self.workplace_path = workplace_path
 
         self.project_path = ""
+        self.project_type = "c" # A changer un fonction du XML
         self.def_functions = {}
         self.def_structs = {}
         self.def_vars = {}
@@ -181,6 +183,19 @@ class Fenetre(QWidget):
         self.sig_progress.connect(self.prog_val)
         self.sig_update_lines.connect(self.change_lines)
         self.sig_update_lines_termine.connect(self.nb_lignes.go_top)
+
+    def compiler(self):
+        if self.project_path != "":
+            compilateur.compiler(self)
+        else:
+            QMessageBox.critical(self, "Aucun projet ouvert", "Veuillez ouvrir un projet")
+
+
+    def configuration_compilation(self):
+        if self.project_path != "":
+            compilateur.configuration_compilation(self)
+        else:
+            QMessageBox.critical(self, "Aucun projet ouvert", "Veuillez ouvrir un projet")
 
     def prog_mess(self, message):
         """

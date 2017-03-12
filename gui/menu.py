@@ -90,6 +90,10 @@ class MenuBar(QMenuBar):
         insert_action = MyAction(parent, "&Mode insertion", "insertion", parent.insert_mode, "Ctrl+I")
         insert_action.setCheckable(True)
 
+        #### Menu compilation
+        compiler_action = MyAction(parent, "&Compiler", "Compiler le projet", parent.compiler, "F5")
+        configurer_compilation_action = MyAction(parent, "&Configuration", "Configurer la compilation", parent.configuration_compilation, "Shift+F5")
+
         #### Menu divers
         apropos_ide_action = MyAction(parent, "&À Propos", "À propos de SpaghettIDE", parent.a_propos)
         contact_ide_action = MyAction(parent, "&Contact", "", parent.contact)
@@ -181,6 +185,11 @@ class MenuBar(QMenuBar):
 
         self.set_group(fr, groupe_langue, langues, "fr")
         self.set_group(en, groupe_langue, langues, "en")
+
+        #Compilation
+
+        compilation_menu = self.addMenu("&Compilation")
+        self.set_actions(compilation_menu, compiler_action, configurer_compilation_action)
 
         # # # Menu SpaghettIDE # # #
         spaghettide_menu = self.addMenu("&SpaghettIDE")

@@ -406,7 +406,7 @@ def deleteproject(parent):
 
     if QDir(parent.workplace_path + project_name).exists() and valider:
         shutil.rmtree(parent.workplace_path + project_name)
-        open_xml("projects.xml")
+        #open_projects_xml("projects.xml",project_name)
 
 
 
@@ -533,9 +533,18 @@ def infosproject(parent):
         ip.layout.addWidget(ip.name)
         ip.language.setParent(None)
         ip.language = QComboBox()
-        ip.language.addItem("Python")
-        ip.language.addItem("C")
-        ip.language.addItem("Arithmétique")
+        if project["language"] == "Python":
+            ip.language.addItem("Python")
+            ip.language.addItem("C")
+            ip.language.addItem("Arithmétique")
+        elif project["language"] == "C":
+            ip.language.addItem("C")
+            ip.language.addItem("Python")
+            ip.language.addItem("Arithmétique")
+        elif project["language"] == "Arithmétique":
+            ip.language.addItem("Arithmétique")
+            ip.language.addItem("Python")
+            ip.language.addItem("C")
         ip.layout.addWidget(ip.language)
         ip.location.setParent(None)
         ip.location = QLabel("Localisation du projet : " + QDir(parent.workplace_path + project_name).path())
@@ -553,11 +562,15 @@ def infosproject(parent):
         ip.exec()
 
     if not appliquer and not cancel:
-        os.rename(QDir(parent.workplace_path + project["name"]).path(), QDir(parent.workplace_path + ip.get_project_name()).path())
-        os.rename("%s/%s.xml" % (QDir(parent.workplace_path + ip.get_project_name()).path(), project["name"]), "%s/%s.xml" % (QDir(parent.workplace_path + ip.get_project_name()).path(), ip.get_project_name()))
-        path = "%s/%s.xml" % (QDir(parent.workplace_path + ip.get_project_name()).path(), ip.get_project_name())
+        if ip.get_project_name() == "":
+            project_name = project["name"]
+        else:
+            project_name = ip.get_project_name()
+        os.rename(QDir(parent.workplace_path + project["name"]).path(), QDir(parent.workplace_path + project_name).path())
+        os.rename("%s/%s.xml" % (QDir(parent.workplace_path + project_name).path(), project["name"]), "%s/%s.xml" % (QDir(parent.workplace_path + project_name).path(), project_name))
+        path = "%s/%s.xml" % (QDir(parent.workplace_path + project_name).path(), project_name)
         project = open_xml(path)
-        update_infos(parent,path,ip.get_project_name(),project["creation_date"],ip.get_project_lang(),project["number_files"])
+        update_infos(parent,path,project_name,project["creation_date"],ip.get_project_lang(),project["number_files"])
 
 
 

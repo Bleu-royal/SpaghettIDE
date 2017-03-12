@@ -5,6 +5,8 @@ from PySide.QtCore import *
 from systeme.workplace import *
 from themes.themes import *
 
+import kernel.variables as var
+
 sys.path[:0] = ["../"]
 sys.path[:0] = ["gui"]
 
@@ -47,7 +49,7 @@ class TreeView(QTreeView):
         self.setAnimated(True)  # Animations
 
         self.filters = []
-        extentions = ("*c", "*h")
+        extentions = var.extension_by_language[self.fenetre.project_type]
         for ext in extentions:
             self.filters.append(ext)
 
@@ -114,7 +116,8 @@ class TreeView(QTreeView):
         path = self.model.filePath(self.currentIndex())
         name = self.model.fileName(self.currentIndex())
         ext = name.split(".")[-1]
-        if ext in ("c", "h"):
+
+        if ext in [i[1:] for i in var.extension_by_language[self.fenetre.project_type]]:
             self.fenetre.open(path)
         else:
             QMessageBox.critical(self.fenetre, "Erreur d'ouverture", "L'extention sélectionnée n'est pas lisible par "

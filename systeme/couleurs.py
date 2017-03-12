@@ -142,6 +142,8 @@ class CodeHighLighter(QSyntaxHighlighter):
 
             # get_from_cache = False
 
+            colored_cache = {}
+
             if self.cache_name != "":
                 if os.path.isfile("colorate/%s.json"%self.cache_name): 
                     cache = open("colorate/%s.json"%self.cache_name, "r")
@@ -158,14 +160,15 @@ class CodeHighLighter(QSyntaxHighlighter):
             else:
                 print("coloration par Lex")
                 colored = colorate(text)
-                cache = open("colorate/%s.json"%self.cache_name, "r")
-                tmp = json.loads(cache.read())
-                cache.close()
+                if self.cache_name != "":
+                    cache = open("colorate/%s.json"%self.cache_name, "r")
+                    tmp = json.loads(cache.read())
+                    cache.close()
 
-                cache = open("colorate/%s.json"%self.cache_name, "w")
-                tmp.update({text:colored})
-                cache.write(json.dumps(tmp))
-                cache.close()
+                    cache = open("colorate/%s.json"%self.cache_name, "w")
+                    tmp.update({text:colored})
+                    cache.write(json.dumps(tmp))
+                    cache.close()
 
             current_pos = 0
 
