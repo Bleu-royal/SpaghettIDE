@@ -215,7 +215,7 @@ def open_document(parent, chemin, secu=False):
             if not secu:
                 open_project_and_document(parent, chemin)
     else:
-        if not secu:
+        if not secu  and chemin:
             open_project_and_document(parent, chemin)
         # parent.status_message("Aucun projet ouvert, veuillez ouvrir ou créer un projet.", 2000)
 

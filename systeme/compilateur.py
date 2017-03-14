@@ -200,8 +200,8 @@ class ConfigInterpPython(QDialog):
 		layout.addWidget(btn_valider, 3, 0, 1, 2)
 
 		self.setLayout(layout)
-	def valider(self):
 
+	def valider(self):
 		if self.est_configuration_valide():
 			self.est_valide = True
 			self.done(0)
