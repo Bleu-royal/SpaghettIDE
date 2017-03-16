@@ -71,6 +71,8 @@ class Fenetre(QWidget):
         
         self.snippets = self.get_snippets()
 
+        self.aller_en_haut_lignes = False
+
         self.gridLayout = QGridLayout()
         self.gridLayout.setContentsMargins(0, 0, 0, 0)  # No spacing around widgets
 
