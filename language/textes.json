@@ -29,6 +29,16 @@
     "en": " is now replacing "
   },
 
+  "text_please_open_project":{
+    "fr": "Veuillez ouvrir un projet.",
+    "en": "Please open a project."
+  },
+
+  "text_please_open_doc":{
+    "fr": "Veuillez ouvrir un document.",
+    "en": "Please open a document."
+  },
+
   "infobar_line": {
     "fr": " ligne",
     "en": " line"
@@ -49,8 +59,38 @@
     "en": "Vocal help desactivated"
   },
 
-  "status_error_open_doc": {
-    "fr": "Veuillez ouvrir un document.",
-    "en": "Please open a document before."
+  "status_fic_analys": {
+    "fr": "Le fichier courant a bien été analysé.",
+    "en": "Current file has been successfully processed."
+  },
+
+  "status_fic_closed": {
+    "fr": "Le fichier sélectionné a bien été fermé.",
+    "en": "Current file has been successfully closed."
+  },
+
+  "status_cheminee_on": {
+    "fr": "C'est un bon feu. Vous pouvez vous réchauffer les mains !",
+    "en": "What a pleasant fire. You can stay warm !"
+  },
+
+  "status_cheminee_off": {
+    "fr": "Vous allez attraper froid sans la cheminée !",
+    "en": "You are going to be sick without our fire !"
+  },
+
+  "status_exit": {
+    "fr": "Fermeture...",
+    "en": "Closing..."
+  },
+
+  "status_not_exit": {
+    "fr": "... ou pas !!",
+    "en": "... or not !!"
+  },
+
+  "box_exit": {
+    "fr": "Voulez-vous vraiment fermer l'IDE ?",
+    "en": "Are you sure you want to leave ?"
   }
 }

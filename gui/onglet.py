@@ -4,6 +4,8 @@ from PySide.QtGui import *
 from PySide.QtCore import *
 from themes.themes import *
 
+from language.language import get_text
+
 sys.path[:0] = ["../"]
 sys.path[:0] = ["gui"]
 
@@ -87,7 +89,7 @@ class TabWidget(QTabWidget):
             self.parent.codes.remove(code)
             self.parent.highlighters.remove(highlighter)
 
-            self.parent.status_message("Le fichier sélectionné a bien été fermé.")
+            self.parent.status_message(get_text("status_fic_closed"))
             self.parent.defaut_info_message()
 
     def next_tab(self):
@@ -122,7 +124,7 @@ class TabWidget(QTabWidget):
             if self.parent.project_path != "":
                 self.parent.new()
             else:
-                self.parent.status_message("Veuillez ouvrir un projet.")
+                self.parent.status_message(get_text("text_please_open_project"))
 
     def enterEvent(self, e):
         """

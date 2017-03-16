@@ -5,7 +5,7 @@ def get_current_language():
     :return: La langue utilisée dans l'IDE, stoquée dans le fichier conf.xml
     :rtype: str
     """
-    return "fr"
+    return "en"
 
 def get_text(key):
     """

@@ -223,7 +223,7 @@ class Fenetre(QWidget):
         1: Inspecteurs d'éléments.
         """
         if self.get_idx() == -1:
-            self.status_message(get_text("status_error_open_doc"))
+            self.status_message(get_text("text_please_open_doc"))
         else:
             widgets = [("Navigateur", "TreeView"), ("Inspecteur", "Inspector")]
             text_widgets = {"Navigateur": get_text("text_bout_insp"), "TreeView": get_text("text_bout_insp"),
@@ -473,7 +473,7 @@ class Fenetre(QWidget):
         if self.project_path != "":
             new_document(self)
         else:
-            self.status_message("Veuillez ouvrir un projet.", 1000)
+            self.status_message(get_text("text_please_open_project"), 1000)
 
     def save(self):
         """
@@ -604,10 +604,10 @@ class Fenetre(QWidget):
         """
         index = self.get_idx()
         if index == -1:
-            self.status_message("Veuillez ouvrir un document.")
+            self.status_message(get_text("text_please_open_doc"))
         else:
             self.codes[index].analyse()
-            self.status_message("Le fichier courant a bien été analysé.")
+            self.status_message(get_text("status_fic_analys"))
 
     # Thèmes
     def maj_style(self):
@@ -668,18 +668,18 @@ class Fenetre(QWidget):
             self.cheminee.setMovie(self.fire)
             self.cheminee.setFixedHeight(260)
             self.fire.start()
-            self.status_message("C'est un bon feu. Vous pouvez vous réchauffer les mains !")
+            self.status_message(get_text("status_cheminee_on"))
         else:
             self.cheminee.setFixedHeight(1)
             self.fire.stop()
             self.cheminee.clear()
-            self.status_message("Vous allez attraper froid sans la cheminée !")
+            self.status_message(get_text("status_cheminee_off"))
 
     def show_loading(self):
         if configuration['loading'] == 'False':
-            write_xml("conf.xml","loading","True")
+            write_xml("conf.xml", "loading", "True")
         else:
-            write_xml("conf.xml","loading","False")
+            write_xml("conf.xml", "loading", "False")
 
     def token_recoloration(self):
         """
@@ -705,9 +705,9 @@ class Fenetre(QWidget):
 
         :rtype: None
         """
-        self.status_message("Fermeture...", -1, False)  # Message de statut
+        self.status_message(get_text("status_exit"), -1, False)  # Message de statut
         box = QMessageBox()
-        box.setText("Voulez-vous vraiment fermer l'IDE ?")
+        box.setText(get_text("box_exit"))
         box.setStandardButtons(QMessageBox.Cancel | QMessageBox.Close)
         box.setDefaultButton(QMessageBox.Close)
         box.setEscapeButton(QMessageBox.Cancel)
@@ -718,4 +718,4 @@ class Fenetre(QWidget):
             self.restart = False
             self.close()
         else:
-            self.status_message("... ou pas !!", 1000, False)  # Message de statut
+            self.status_message(get_text("status_not_exit"), 1000, False)  # Message de statut
