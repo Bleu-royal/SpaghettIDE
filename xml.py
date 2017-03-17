@@ -19,6 +19,12 @@ def open_xml(fichier):
 
     #tree.findtext(path)
 
+def project_language(fichier):
+    configuration = open_xml(fichier)
+    return configuration[language]
+
+def compil_xml(fichier,value):
+    write_xml(fichier,"compil",value)
 
 def write_xml(fichier,config,value):
     tree = etree.parse(fichier)
@@ -37,6 +43,7 @@ def create_xml(path):
                   "     <language></language>\n"
                   "     <location></location>\n"
                   "     <number_files></number_files>\n"
+                  "     <compil></compil>\n"
                   "</project>")
     fichier.close()
 
@@ -54,6 +61,8 @@ def add_projects_xml(project_name,project_lang,project_location,date,project_nb_
     creation_date.text = date
     nb_files = etree.SubElement(project, "number_files")
     nb_files.text = project_nb_files
+    compil = etree.SubElement(project, "compil")
+    compil.text = ""
     tree.write('projects.xml', pretty_print=True)
 
 try :

@@ -78,13 +78,14 @@ def update_infos(parent,path,project_name,date,project_lang,nb_files):
     write_xml(path,"language",project_lang)
     write_xml(path,"number_files",str(nb_files))
     write_xml(path,"location",QDir(parent.workplace_path + project_name).path())
+    write_xml(path,"compil","")
 
 def get_nb_files(parent,project_name):
     nb_files = 0
     project_path = QDir(parent.workplace_path + project_name).path()
 
     for e in os.listdir(project_path):
-        if os.path.isfile(project_path+"/"+e):
+        if os.path.isfile(project_path+"/"+e) and e!="%s.xml" %project_name:
             nb_files+=1
 
     return str(nb_files)
