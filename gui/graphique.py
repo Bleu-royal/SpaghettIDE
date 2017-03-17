@@ -568,6 +568,10 @@ class Fenetre(QWidget):
 
         infosproject(self)
 
+    def import_project(self):
+
+        importproject(self)
+
     def close_document(self):
 
         closedocument(self)

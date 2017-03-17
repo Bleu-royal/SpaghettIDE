@@ -6,6 +6,7 @@ from datetime import datetime
 import os
 import sys
 import shutil
+from shutil import copyfile
 from lexer import *
 from xml import *
 from systeme.parallele import ProgressOpening, ProgressDisp
@@ -145,6 +146,41 @@ def newproject(parent):
 #             projet.remove(e)
 
 #     print(projet)
+
+def importproject(parent):
+
+    chemin = QFileDialog.getExistingDirectory(parent, 'Importer un projet', parent.project_path)
+    i=-1
+    while chemin[i]!="/":
+        i-=1
+    project_name = chemin[i+1:]
+
+    QDir(parent.workplace_path).mkpath(project_name)
+    create_xml("%s/%s.xml" % (QDir(parent.workplace_path + project_name).path(), project_name))
+
+    for e in os.listdir(chemin):
+        os.system("cp -r " + "%s/%s " %(chemin,e) + parent.workplace_path + project_name + "/" + e)
+
+    date = str(datetime.now())
+
+    for e in os.listdir(chemin):
+        i=-1
+        while e[i]!=".":
+            i-=1
+        extension = e[i+1:]
+        if extension=="c" or "h":
+            project_lang = "C"
+        elif extension=="py":
+            project_lang = "Python"
+        else:
+            project_lang = "Arithmétique"
+        break
+
+    path = "%s/%s.xml" % (QDir(parent.workplace_path + project_name).path(), project_name)
+    project_nb_files = get_nb_files(parent,project_name)
+    update_infos(parent,path,project_name,date,project_lang,project_nb_files)
+    project_location = parent.workplace_path + project_name
+    add_projects_xml(project_name,project_lang,project_location,date,project_nb_files) 
 
 
 class Mem:
@@ -360,7 +396,7 @@ class DeleteProject(QDialog):
 
         self.project_name = QComboBox()
         for e in os.listdir(os.environ["HOME"]+"/workplace"):
-            if e != ".DS_Store":
+            if e != ".DS_Store" and e != ".conf":
                 self.project_name.addItem(e)
 
         self.cancel_button = QPushButton("Annuler")
@@ -433,7 +469,7 @@ class InfosProject(QDialog):
 
         self.project_name = QComboBox()
         for e in os.listdir(os.environ["HOME"]+"/workplace"):
-            if e != ".DS_Store":
+            if e != ".DS_Store" and e != ".conf":
                 self.project_name.addItem(e)
 
         self.cancel_button = QPushButton("Annuler")
