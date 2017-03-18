@@ -6,7 +6,6 @@ from datetime import datetime
 import os
 import sys
 import shutil
-from shutil import copyfile
 from lexer import *
 from xml import *
 from systeme.parallele import ProgressOpening, ProgressDisp
