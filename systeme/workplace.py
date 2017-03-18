@@ -149,9 +149,9 @@ def newproject(parent):
 def importproject(parent):
 
     chemin = QFileDialog.getExistingDirectory(parent, 'Importer un projet', parent.project_path)
-    while " " in chemin:
-        QMessageBox.critical(parent, "Erreur de syntaxe", "Le nom de projet n'est pas valide (veuillez éviter les espaces pour l'importation, remplacez les par un _)")
-        chemin = QFileDialog.getExistingDirectory(parent, 'Importer un projet', parent.project_path)
+    if " " in chemin:
+        os.rename(chemin, chemin.replace(" ", "_"))
+    chemin = chemin.replace(" ", "_")
     i=-1
     while chemin[i]!="/":
         i-=1
@@ -185,6 +185,7 @@ def importproject(parent):
     update_infos(parent,path,project_name,date,project_lang,project_nb_files)
     project_location = parent.workplace_path + project_name
     add_projects_xml(project_name,project_lang,project_location,date,project_nb_files) 
+    os.rename(chemin, chemin.replace("_", " "))
 
 
 class Mem:
