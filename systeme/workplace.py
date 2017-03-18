@@ -76,7 +76,7 @@ def update_infos(parent,path,project_name,date,project_lang,nb_files):
     write_xml(path,"name",project_name)
     write_xml(path,"creation_date",date)
     write_xml(path,"language",project_lang)
-    write_xml(path,"number_files",str(nb_files))
+    write_xml(path,"number_files",nb_files)
     write_xml(path,"location",QDir(parent.workplace_path + project_name).path())
     write_xml(path,"compil","")
 
@@ -149,13 +149,15 @@ def newproject(parent):
 def importproject(parent):
 
     chemin = QFileDialog.getExistingDirectory(parent, 'Importer un projet', parent.project_path)
+    while " " in chemin:
+        QMessageBox.critical(parent, "Erreur de syntaxe", "Le nom de projet n'est pas valide (veuillez éviter les espaces pour l'importation, remplacez les par un _)")
+        chemin = QFileDialog.getExistingDirectory(parent, 'Importer un projet', parent.project_path)
     i=-1
     while chemin[i]!="/":
         i-=1
     project_name = chemin[i+1:]
 
     QDir(parent.workplace_path).mkpath(project_name)
-    create_xml("%s/%s.xml" % (QDir(parent.workplace_path + project_name).path(), project_name))
 
     for e in os.listdir(chemin):
         os.system("cp -r " + "%s/%s " %(chemin,e) + parent.workplace_path + project_name + "/" + e)
@@ -175,6 +177,9 @@ def importproject(parent):
             project_lang = "Arithmétique"
         break
 
+    os.rename(QDir(parent.workplace_path + project_name).path(), QDir(parent.workplace_path + project_name.replace("_", " ")).path())
+    project_name = project_name.replace("_", " ")
+    create_xml("%s/%s.xml" % (QDir(parent.workplace_path + project_name).path(), project_name))
     path = "%s/%s.xml" % (QDir(parent.workplace_path + project_name).path(), project_name)
     project_nb_files = get_nb_files(parent,project_name)
     update_infos(parent,path,project_name,date,project_lang,project_nb_files)
@@ -529,7 +534,6 @@ def infosproject(parent):
     ip = InfosProject()
     ip.exec()
     project_name = ip.get_project()
-    path = "%s/%s.xml" % (QDir(parent.workplace_path + project_name).path(), project_name)
     valider = ip.valider
     cancel = ip.cancel
     modification = ip.modification
@@ -541,6 +545,7 @@ def infosproject(parent):
         modification = ip.modification
         appliquer = ip.appliquer
         project_name = ip.get_project() 
+        path = "%s/%s.xml" % (QDir(parent.workplace_path + project_name).path(), project_name)
         project = open_xml(path)
         update_infos(parent,path,project_name,project["creation_date"],project["language"],get_nb_files(parent,project_name))
         ip.name.setParent(None)
