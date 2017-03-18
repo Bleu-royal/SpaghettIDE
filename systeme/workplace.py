@@ -86,7 +86,7 @@ def get_nb_files(parent,project_name):
     project_path = QDir(parent.workplace_path + project_name).path()
 
     for e in os.listdir(project_path):
-        if os.path.isfile(project_path+"/"+e) and e!="%s.xml" %project_name:
+        if os.path.isfile(project_path+"/"+e) and e!="%s.xml" %(project_name) and e[0]!=".":
             nb_files+=1
 
     return str(nb_files)
