@@ -74,7 +74,7 @@ except :
               "     <assistance_vocale>False</assistance_vocale>\n"
               "     <loading>False</loading>\n"
               "     <numerote_lines>True</numerote_lines>\n"
-              "     <language>Fran&#231;ais</language>\n"
+              "     <language>en</language>\n"
               "</configuration>")
     new.close()
     

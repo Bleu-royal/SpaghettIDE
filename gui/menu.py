@@ -244,7 +244,9 @@ class MenuBar(QMenuBar):
     def to_fr(self):
         if get_current_language() != "fr":
             self.master.status_message("Changement en langue Française à venir.")
+            write_xml("conf.xml", "language", "fr")
 
     def to_en(self):
         if get_current_language() != "en":
             self.master.status_message("English language comming soon !")
+            write_xml("conf.xml", "language", "en")
