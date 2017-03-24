@@ -205,6 +205,7 @@ def open_project(parent, name=False):
         name = parent.model.fileName(parent.currentIndex())
 
     if QDir(parent.fenetre.workplace_path + name).exists():
+
         if name:
             parent.fenetre.docs = []
             parent.fenetre.highlighters = []
@@ -215,6 +216,10 @@ def open_project(parent, name=False):
 
         parent.fenetre.project_path = parent.fenetre.workplace_path + name
         project_files = get_project_files(parent.fenetre.project_path + "/")
+
+
+        parent.fenetre.project_type = project_language("%s/%s.xml"%(parent.fenetre.project_path, parent.fenetre.project_path.split("/")[-1]))
+
 
         memory = Mem()
 

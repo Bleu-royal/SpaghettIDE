@@ -21,7 +21,7 @@ def open_xml(fichier):
 
 def project_language(fichier):
     configuration = open_xml(fichier)
-    return configuration["language"]
+    return configuration["language"].lower()
 
 def project_compil(fichier):
     configuration = open_xml(fichier)
