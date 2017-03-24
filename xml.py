@@ -21,7 +21,11 @@ def open_xml(fichier):
 
 def project_language(fichier):
     configuration = open_xml(fichier)
-    return configuration[language]
+    return configuration["language"]
+
+def project_compil(fichier):
+    configuration = open_xml(fichier)
+    return configuration["compil"] if configuration["compil"] != None else ""
 
 def compil_xml(fichier,value):
     write_xml(fichier,"compil",value)

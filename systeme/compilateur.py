@@ -1,7 +1,7 @@
-import os, re
+import os, re, xml
 from PySide.QtGui import *
 
-configuration=""#Variable temporaire à mettre dans le XML
+# configuration=""#Variable temporaire à mettre dans le XML
 
 class LineEditPath(QLineEdit):
 
@@ -249,9 +249,14 @@ def get_erreurs(lines, project_path):
 	return erreurs
 
 def compiler(parent):
+	configuration = xml.project_compil("%s/%s.xml"%(parent.project_path, parent.project_path.split("/")[-1]))
+
 	if configuration == "":
 		configuration_compilation(parent)
-	print("compilation en cours avec la commande : %s"%configuration)
+		configuration = xml.project_compil("%s/%s.xml"%(parent.project_path, parent.project_path.split("/")[-1]))
+		if configuration == "":
+			return False
+
 	
 	curt = os.popen("pwd").read()[:-1]
 	os.chdir(parent.project_path)
@@ -263,7 +268,6 @@ def compiler(parent):
 			erreurs = get_erreurs(res, parent.project_path)
 			dialogErreur = DialogErreurs(erreurs)
 			dialogErreur.exec()
-
 		else:
 			QMessageBox.about(parent, "Résultat de la compilation", "La compilation à réussie")		
 	else:
@@ -271,7 +275,11 @@ def compiler(parent):
 
 def configuration_compilation(parent):
 
-	global configuration # Configuration -> XML
+	# global configuration # Configuration -> XML
+
+	xml_path = "%s/%s.xml"%(parent.project_path, parent.project_path.split("/")[-1])
+
+	configuration = xml.project_compil(xml_path)
 
 	if parent.project_type == "c":
 		config = ConfigCompilC(parent)
@@ -282,3 +290,4 @@ def configuration_compilation(parent):
 
 	if config.est_valide:
 		configuration = config.get_configuration_string()
+		xml.compil_xml(xml_path, configuration)
