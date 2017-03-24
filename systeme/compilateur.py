@@ -1,4 +1,4 @@
-import os
+import os, re
 from PySide.QtGui import *
 
 configuration=""#Variable temporaire à mettre dans le XML
@@ -214,6 +214,39 @@ class ConfigInterpPython(QDialog):
 	def get_configuration_string(self):
 		return "%s %s"%(self.lineEdit_emplacement_interpreteur.text(), self.lineEdit_fichier_depart.text())
 
+class DialogErreurs(QDialog):
+
+	def __init__(self, erreurs):
+		super().__init__()
+
+		self.erreurs = erreurs
+
+		self.layout = QVBoxLayout()
+
+		self.comboBox = QComboBox()
+		for i in range(len(self.erreurs)):
+			self.comboBox.addItem("Erreur n° %s"%(i+1))
+		self.comboBox.currentIndexChanged.connect(self.changeErreur)
+
+		self.affiche_erreurs = QTextEdit()
+		self.affiche_erreurs.setPlainText(self.erreurs[0])
+		self.affiche_erreurs.readOnly = True
+
+		self.layout.addWidget(self.comboBox)
+		self.layout.addWidget(self.affiche_erreurs)
+
+		self.setLayout(self.layout)
+
+	def changeErreur(self):
+		idx = self.comboBox.currentIndex()
+		self.affiche_erreurs.setPlainText(self.erreurs[idx])
+
+def get_erreurs(lines, project_path):
+
+	erreurs = lines.split("%s/"%project_path)[1:]
+	erreurs[-1] = "\n".join(erreurs[-1].split("\n")[:-2])
+	erreurs = ["\n".join(e.split("\n")[:2]) for e in erreurs]
+	return erreurs
 
 def compiler(parent):
 	if configuration == "":
@@ -227,7 +260,10 @@ def compiler(parent):
 
 	if parent.project_type == "c":
 		if res != "":
-			QMessageBox.critical(parent, "Résultat de la compilation", res)
+			erreurs = get_erreurs(res, parent.project_path)
+			dialogErreur = DialogErreurs(erreurs)
+			dialogErreur.exec()
+
 		else:
 			QMessageBox.about(parent, "Résultat de la compilation", "La compilation à réussie")		
 	else:
