@@ -247,5 +247,45 @@
   "comp_ok": {
     "fr": "La compilation à réussie",
     "en": "Successful compilation"
+  },
+
+  "proj_choice": {
+    "fr": "Choix du nom du projet",
+    "en": "Project name choice"
+  },
+
+  "proj_name": {
+    "fr": "Entrez un nom de projet :",
+    "en": "Project name :"
+  },
+
+  "cancel": {
+    "fr": "Annuler",
+    "en": "Cancel"
+  },
+
+  "create": {
+    "fr": "Créer",
+    "en": "Create"
+  },
+
+  "proj_name_fail": {
+    "fr": "Le nom de projet n'est pas valide (veuillez éviter '/')",
+    "en": "Cannot use this name (please don't use '/')"
+  },
+
+  "proj_choose_other": {
+    "fr": "Ce nom existe déjà, veuillez entrer un autre nom de projet",
+    "en": "Project already exists, choose another name"
+  },
+
+  "proj_import": {
+    "fr": "Importer un projet depuis un répertoire existant",
+    "en": "Import a project from an existing directory"
+  },
+
+  "proj_opening": {
+    "fr": "Ouverture du projet...  --- PROCESSUS : Traitement du fichier ",
+    "en": "Opening project... --- PROCESS : Analysing file "
   }
 }

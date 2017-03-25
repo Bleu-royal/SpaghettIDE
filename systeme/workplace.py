@@ -5,10 +5,12 @@ from PySide.QtGui import *
 from datetime import datetime
 import os
 import sys
+
 import shutil
 from lexer import *
 from xml import *
 from systeme.parallele import ProgressOpening, ProgressDisp
+from language.language import get_text
 
 class NewProject(QDialog):
     def __init__(self):
@@ -16,12 +18,12 @@ class NewProject(QDialog):
 
         self.cancel = False
 
-        self.setWindowTitle("Choix du nom du projet")
+        self.setWindowTitle(get_text("proj_choice"))
 
         self.layout = QVBoxLayout()
         self.buttons_layout = QHBoxLayout()
 
-        self.lbl_line_edit = QLabel("Entrez un nom de projet :")
+        self.lbl_line_edit = QLabel(get_text("proj_name"))
 
         self.line_edit = QLineEdit()
         
@@ -30,8 +32,8 @@ class NewProject(QDialog):
         self.project_name_lang.addItem("C")
         self.project_name_lang.addItem("Arithmétique")
 
-        self.cancel_button = QPushButton("Annuler")
-        self.valider_button = QPushButton("Créer")
+        self.cancel_button = QPushButton(get_text("cancel"))
+        self.valider_button = QPushButton(get_text("create"))
 
         self.cancel_button.clearFocus()
         self.valider_button.setFocus()
@@ -111,7 +113,7 @@ def newproject(parent):
     cancel = np.cancel
 
     while (project_name == '' or "/" in project_name) and not cancel:
-        QMessageBox.critical(parent, "Erreur de syntaxe", "Le nom de projet n'est pas valide (veuillez éviter /)")
+        QMessageBox.critical(parent, get_text("text_erreur"), get_text("proj_name_fail"))
         np = NewProject()
         np.exec()
         project_name = np.get_project_name()
@@ -133,7 +135,7 @@ def newproject(parent):
 
     # elif parent.project_path[1]:
     elif not cancel:
-        QMessageBox.critical(parent, "Le projet existe déjà", "Veuillez entrer un autre nom de projet")
+        QMessageBox.critical(parent, get_text("text_erreur"), get_text("proj_choose_other"))
         parent.new_project()
 
 
@@ -148,7 +150,7 @@ def newproject(parent):
 
 def importproject(parent):
 
-    chemin = QFileDialog.getExistingDirectory(parent, 'Importer un projet', parent.project_path)
+    chemin = QFileDialog.getExistingDirectory(parent, get_text("proj_import"), parent.project_path)
 
     if chemin != "":
 
@@ -272,7 +274,7 @@ class GetDefFonctions(QObject):
         for file_ in self.files:
             i += 1
             self.parent.update_progress(i*incr)
-            self.parent.update_text("Ouverture du projet...  --- PROCESS : Traitement du fichier %s" %file_)
+            self.parent.update_text(get_text("proj_opening") + file_)
 
             fichier = open(file_, "r")
             data = fichier.read()
