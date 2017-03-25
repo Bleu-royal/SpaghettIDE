@@ -64,11 +64,11 @@ class Fenetre(QWidget):
         self.workplace_path = workplace_path
 
         self.project_path = ""
-        self.project_type = "c" # A changer un fonction du XML
+        self.project_type = ""  # A changer un fonction du XML
         self.def_functions = {}
         self.def_structs = {}
         self.def_vars = {}
-        
+
         self.snippets = self.get_snippets()
 
         self.aller_en_haut_lignes = False
@@ -229,7 +229,8 @@ class Fenetre(QWidget):
             widgets = [("Navigateur", "TreeView"), ("Inspecteur", "Inspector")]
             text_widgets = {"Navigateur": get_text("text_bout_insp"), "TreeView": get_text("text_bout_insp"),
                             "Inspecteur": get_text("text_bout_nav"), "Inspector": get_text("text_bout_nav")}
-                            # On récupère le texte en fonction de la langue.
+            # On récupère le texte en fonction de la langue.
+
             actual = self.bouton_change.text()
             self.bouton_change.setText(text_widgets[actual])
             self.status_message(self.bouton_change.text() + get_text("text_chang_bout") + actual)
@@ -267,7 +268,7 @@ class Fenetre(QWidget):
 
     def get_snippets(self):
         """
-        Récupère les snippets : prédéfinissions de fonctions.
+        Récupère les snippets : prédéfinitions de fonctions.
         :rtype: list
         """
         try:
@@ -578,6 +579,12 @@ class Fenetre(QWidget):
     def delete_document(self):
 
         deletedocument(self)
+
+    def menu_raccourcis(self):
+        """ Sous-menu permettant d'ouvrir la fenêtre de modification des raccourcis."""
+        coucou = open("content/coucou.txt", "r").readlines()
+
+        QMessageBox.about(self, "Préparation", "".join(coucou))
 
     def a_propos(self):
         """
