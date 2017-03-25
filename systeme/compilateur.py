@@ -1,6 +1,7 @@
 import os, xml, json
 from PySide.QtGui import *
 
+from subprocess import Popen, PIPE
 from language.language import get_text
 
 class LineEditPath(QLineEdit):
@@ -135,9 +136,9 @@ class ConfigCompilC(QDialog):
         self.informations += [self.lineEdit_fichier_sortie]
 
         #Gestion des options de compilation
-        group_options = GroupBoxOptions()
-        layout.addWidget(group_options, 6, 0, 1, 2)
-        self.informations += group_options.get_options()
+        self.group_options = GroupBoxOptions()
+        layout.addWidget(self.group_options, 6, 0, 1, 2)
+        self.informations += self.group_options.get_options()
 
         #Gestion de l'execution au lancement
         self.checkBox_launch = QCheckBox(get_text("lanch_comp"))
@@ -198,7 +199,12 @@ class ConfigCompilC(QDialog):
         if le_nom_librarie.strip() != "":
             nom_librairie = "-l%s"%le_nom_librarie
  
-        return "gcc %s %s %s %s %s"%(fichiers_compiler, fichier_header, emplacement_librairie, nom_librairie, fichier_sortie)
+        options = ""
+        for e in self.group_options.get_options():
+            if e.isChecked():
+                options += "%s "%e.text()
+
+        return "gcc %s %s %s %s %s %s"%(fichiers_compiler, fichier_header, emplacement_librairie, nom_librairie, options,fichier_sortie)
 
     def setConfig(self, config_json):
         config_json = json.loads(config_json)
@@ -317,9 +323,10 @@ def compiler(parent):
         if configuration == "":
             return False
 
-    curt = os.popen("pwd").read()[:-1]
+    curt = os.getcwd()
     os.chdir(parent.project_path)
-    res = os.popen(configuration + " 2>&1", "r").read()
+    out, res = Popen(configuration, shell=True, stdout=PIPE, stderr=PIPE).communicate()
+    res = res.decode("utf-8")
     os.chdir(curt)
 
     if parent.project_type == "c":
