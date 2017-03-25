@@ -226,14 +226,14 @@ class ConfigInterpPython(QDialog):
 
         self.lineEdit_emplacement_interpreteur = LineEditPath(self.parent)
         layout.addWidget(self.lineEdit_emplacement_interpreteur, 1, 1)
-        self.informations += [lineEdit_emplacement_interpreteur]
+        self.informations += [self.lineEdit_emplacement_interpreteur]
 
         lbl_emplacement_depart = QLabel(get_text("comp_file_py"))
         layout.addWidget(lbl_emplacement_depart, 2, 0)
 
         self.lineEdit_fichier_depart = LineEditPath(self.parent)
         layout.addWidget(self.lineEdit_fichier_depart, 2, 1)
-        self.informations += [lineEdit_fichier_depart]
+        self.informations += [self.lineEdit_fichier_depart]
 
         btn_valider = QPushButton(get_text("comp_run_py"))
         btn_valider.clicked.connect(self.valider)
