@@ -56,7 +56,7 @@ class MenuBar(QMenuBar):
         super().__init__(parent)
         self.master = parent
 
-        #### Projet
+        # # # # Projet
         new_project_action = MyAction(parent, "&Nouveau Projet", "Nouveau projet", parent.new_project, "Ctrl+M")
         import_project_action = MyAction(parent, "&Importer Projet", "Importer un projet", parent.import_project, "Ctrl+Shift+I")
         del_project_action = MyAction(parent, "&Supprimer Projet", "Supprimer le projet", parent.delete_project, "Ctrl+Alt+S")
@@ -64,7 +64,7 @@ class MenuBar(QMenuBar):
         # open_project_action = MyAction(parent, "&Ouvrir Projet", "Ouvrir un projet", parent.open_project, "Ctrl+P")
         # exit_project_action = MyAction(parent, "&Fermer Projet", "Fermer le projet", parent.close_project, "Ctrl+K")
 
-        #### Fichier
+        # # # # Fichier
         new_fic_action = MyAction(parent, "&Nouveau", "Nouveau fichier", parent.new, "Ctrl+N")
         open_fic_action = MyAction(parent, "&Ouvrir", "Ouvrir un fichier", parent.open, "Ctrl+O")
         sauv_fic_action = MyAction(parent, "&Sauvegarder", "Sauvegarder le fichier courant", parent.save, "Ctrl+S")
@@ -73,7 +73,7 @@ class MenuBar(QMenuBar):
         fullscreen_action.setCheckable(True)
         exit_ide_action = MyAction(parent, "&Fermer", "Fermer l'application", parent.quit_func, "Esc")
        
-        #### Edition
+        # # # # Edition
         indent_action = MyAction(parent, "&Indenter le fichier", "Indentation automatique du fichier",
                                  parent.indent, "Ctrl+Alt+L")
         
@@ -91,17 +91,18 @@ class MenuBar(QMenuBar):
         insert_action = MyAction(parent, "&Mode insertion", "insertion", parent.insert_mode, "Ctrl+I")
         insert_action.setCheckable(True)
 
-        #### Menu compilation
+        # # # # Menu compilation
         compiler_action = MyAction(parent, "&Compiler", "Compiler le projet", parent.compiler, "F5")
         configurer_compilation_action = MyAction(parent, "&Configuration", "Configurer la compilation", parent.configuration_compilation, "Shift+F5")
 
-        #### Menu divers
+        # # # # Menu divers
         apropos_ide_action = MyAction(parent, "&À Propos", "À propos de SpaghettIDE", parent.a_propos)
         contact_ide_action = MyAction(parent, "&Contact", "", parent.contact)
         site_ide_action = MyAction(parent, "&Notre site", "Site", parent.site)
         help_ide_action = MyAction(parent, "&Aide", "Aide sur l'IDE", parent.help_func)
+        raccourcis_action = MyAction(parent, "&Raccourcis", "Raccourcis", parent.menu_raccourcis)
 
-        # Assistance vocale
+        # # # # Assistance vocale
         assist_voc_action = MyAction(parent, "&Assistance Vocale", "Assistance vocale", parent.assist_voc, "F12")
         assist_voc_action.setCheckable(True)
         if configuration['assistance_vocale'] == 'False':
@@ -112,28 +113,28 @@ class MenuBar(QMenuBar):
         if "darwin" not in sys.platform:
             assist_voc_action.setDisabled(True)
 
-        # # # Menu Fichier et ses sous-menus # # #
+        # # # # Menu Fichier et ses sous-menus # # # #
         fichier_menu = self.addMenu("&Fichier")
         self.set_actions(fichier_menu, new_fic_action, open_fic_action, sauv_fic_action, close_fic_action, "sep",
                          assist_voc_action, "sep", fullscreen_action, exit_ide_action)
 
-        # # # Menu Edition et ses sous-menus # # #
+        # # # # Menu Edition et ses sous-menus # # # #
 
         edition_menu = self.addMenu("&Edition")
         self.set_actions(edition_menu, select_current_line_action, select_current_word_action, duplicate_action,
                          insert_action, "sep", find_action, "sep", indent_action, comment_selection_action)
 
-        # # # Menu Projet et ses sous-menus # # #
+        # # # # Menu Projet et ses sous-menus # # # #
         projet_menu = self.addMenu("&Projet")
         self.set_actions(projet_menu, new_project_action, import_project_action, del_project_action, info_project_action)
 
-        # # # Menu Apparence # # #
+        # # # # Menu Apparence # # # #
         apparence_menu = self.addMenu("&Apparence")
 
         clair = apparence_menu.addMenu("&Thème clair")
         fonce = apparence_menu.addMenu("&Thème foncé")
 
-        # Thèmes
+        # # # # Thèmes
         groupe_theme = QActionGroup(parent)
         theme_basic = MyAction(parent, "&Thème Basique", "Thème Basique", lambda: self.__change_theme_to("basic"))
         theme_pimp = MyAction(parent, "&Thème Pimp", "Thème Pimp", lambda: self.__change_theme_to("pimp"))
@@ -178,7 +179,7 @@ class MenuBar(QMenuBar):
 
         self.set_actions(apparence_menu, "sep", fire_action, load_action, line_action, "sep")
 
-        # Langues
+        # # # #Langues
         langues = apparence_menu.addMenu("&Langues")
         groupe_langue = QActionGroup(parent)
         fr = MyAction(parent, "&Français", "Français", self.to_fr)
@@ -187,14 +188,15 @@ class MenuBar(QMenuBar):
         self.set_group(fr, groupe_langue, langues, "fr")
         self.set_group(en, groupe_langue, langues, "en")
 
-        #Compilation
+        # # # #Compilation
 
         compilation_menu = self.addMenu("&Compilation")
         self.set_actions(compilation_menu, compiler_action, configurer_compilation_action)
 
-        # # # Menu SpaghettIDE # # #
+        # # # # Menu SpaghettIDE # # # #
         spaghettide_menu = self.addMenu("&SpaghettIDE")
-        self.set_actions(spaghettide_menu, apropos_ide_action, contact_ide_action, site_ide_action, help_ide_action)
+        self.set_actions(spaghettide_menu, apropos_ide_action, contact_ide_action, site_ide_action,
+                         help_ide_action, raccourcis_action)
 
     def set_actions(self, menu, *args):
         """
@@ -227,7 +229,7 @@ class MenuBar(QMenuBar):
         groupe.addAction(action)
         sous_groupe.addAction(action)
 
-    # Themes
+    # # # # Themes
     def __change_theme_to(self, theme):
         """
         Change le thème actuel
@@ -240,7 +242,7 @@ class MenuBar(QMenuBar):
             self.master.status_message("Thème actuel : " + theme + ". La coloration lexicale sera actualisée lorsque "
                                        "vous écrirez un caractère.", 4000)
 
-    # Languages
+    # # # # Languages
     def to_fr(self):
         if get_current_language() != "fr":
             self.master.status_message("Changement en langue Française à venir.")
