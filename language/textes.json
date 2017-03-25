@@ -287,5 +287,10 @@
   "proj_opening": {
     "fr": "Ouverture du projet...  --- PROCESSUS : Traitement du fichier ",
     "en": "Opening project... --- PROCESS : Analysing file "
+  },
+
+  "chang_lang": {
+    "fr": "Langue : français. La langue du menu sera actualisée au redémarrage",
+    "en": "Language : English. Menu language will be update when you'll restart the IDE"
   }
 }

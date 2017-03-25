@@ -1,0 +1,196 @@
+{
+  "fichier": {
+    "fr": "Fichier",
+    "en": "File"
+  },
+
+  "new": {
+    "fr": "Nouveau...",
+    "en": "New..."
+  },
+
+  "new_file": {
+    "fr": "Nouveau fichier",
+    "en": "New file"
+  },
+
+  "open_file": {
+    "fr": "Ouvrir",
+    "en": "Open file"
+  },
+
+  "save_file": {
+    "fr": "Sauvegarder",
+    "en": "Save"
+  },
+
+  "close_file": {
+    "fr": "Fermer l'onglet",
+    "en": "Close current tab"
+  },
+
+  "full_screen": {
+    "fr": "Plein écran",
+    "en": "Fullscreen"
+  },
+
+  "exit": {
+    "fr": "Quitter l'application",
+    "en": "Exit IDE"
+  },
+
+  "voice": {
+    "fr": "Assistance vocale",
+    "en": "Vocal help"
+  },
+
+
+
+  "proj": {
+    "fr": "Projet",
+    "en": "Project"
+  },
+
+  "new_proj": {
+    "fr": "Nouveau projet",
+    "en": "New project"
+  },
+
+  "import_proj": {
+    "fr": "Importer projet",
+    "en": "Import project"
+  },
+
+  "supr_proj": {
+    "fr": "Supprimer projet",
+    "en": "Delete project"
+  },
+
+  "info_proj": {
+    "fr": "Informations projet",
+    "en": "About project"
+  },
+
+
+
+  "edit": {
+    "fr": "Edition",
+    "en": "Edit"
+  },
+
+  "indent": {
+    "fr": "Indenter le fichier",
+    "en": "Indent file"
+  },
+
+  "select_line": {
+    "fr": "Sélectionner la ligne courante",
+    "en": "Select current line"
+  },
+
+  "select_word": {
+    "fr": "Sélectionner le mot courant",
+    "en": "Select current word"
+  },
+
+  "duplicate": {
+    "fr": "Dupliquer",
+    "en": "Duplicate"
+  },
+
+  "find": {
+    "fr": "Rechercher",
+    "en": "Find"
+  },
+
+  "comment": {
+    "fr": "Commenter la selection",
+    "en": "Comment"
+  },
+
+  "insert": {
+    "fr": "Mode insertion",
+    "en": "Insert mode"
+  },
+
+
+
+  "compil": {
+    "fr": "Compilation",
+    "en": "Compilation"
+  },
+
+  "comp": {
+    "fr": "Compiler",
+    "en": "Compile"
+  },
+
+  "conf_comp": {
+    "fr": "Configuration",
+    "en": "Settings"
+  },
+
+
+
+  "about": {
+    "fr": "A propos",
+    "en": "About us"
+  },
+
+  "site": {
+    "fr": "Site internet",
+    "en": "Website"
+  },
+
+  "contact": {
+    "fr": "Contact",
+    "en": "Contact"
+  },
+
+  "help": {
+    "fr": "Aide",
+    "en": "Help"
+  },
+
+  "raccourcis": {
+    "fr": "Raccourcis",
+    "en": "Shortcuts"
+  },
+
+
+
+  "settings": {
+    "fr": "Paramètres",
+    "en": "Settings"
+  },
+
+  "theme_clair": {
+    "fr": "Thème clair",
+    "en": "Light theme"
+  },
+
+  "theme_sombre": {
+    "fr": "Thème sombre",
+    "en": "Dark theme"
+  },
+
+  "cheminee": {
+    "fr": "Afficher la cheminée",
+    "en": "Show the fireplace"
+  },
+
+  "chargement": {
+    "fr": "Afficher l'écran de chargement au démarrage",
+    "en": "Show loading window while booting"
+  },
+
+  "lines": {
+    "fr": "Afficher la numérotation des lignes",
+    "en": "Show line numbers"
+  },
+
+  "lang": {
+    "fr": "Langues",
+    "en": "Languages"
+  }
+}
