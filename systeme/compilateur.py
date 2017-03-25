@@ -246,7 +246,7 @@ class ConfigInterpPython(QDialog):
         layout.addWidget(self.lineEdit_fichier_depart, 2, 1)
         self.informations += [self.lineEdit_fichier_depart]
 
-        btn_valider = QPushButton(get_text("comp_run_py"))
+        btn_valider = QPushButton(get_text("comp_run"))
         btn_valider.clicked.connect(self.valider)
         layout.addWidget(btn_valider, 3, 0, 1, 2)
 

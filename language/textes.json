@@ -220,13 +220,8 @@
   },
 
   "comp_run": {
-    "fr": "Compiler",
-    "en": "Compile"
-  },
-
-  "comp_run_py": {
-    "fr": "Exécuter",
-    "en": "Run"
+    "fr" : "Sauvegarder la configuration",
+    "en" : "Save"
   },
 
   "comp_enter_good": {
