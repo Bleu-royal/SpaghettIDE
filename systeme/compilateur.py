@@ -1,9 +1,7 @@
-import os, re, xml
+import os, xml, json
 from PySide.QtGui import *
 
 from language.language import get_text
-
-# configuration=""#Variable temporaire à mettre dans le XML
 
 class LineEditPath(QLineEdit):
 
@@ -43,31 +41,41 @@ class GroupBoxOptions(QGroupBox):
     def __init__(self):
         super().__init__(get_text("comp_opt"))
 
+        self.options = []
         layout = QGridLayout()
 
         pipe_option = QCheckBox("-pipe")
         layout.addWidget(pipe_option, 0, 0)
+        self.options += [pipe_option]
 
         pas_lien_option = QCheckBox("-c")
         layout.addWidget(pas_lien_option, 0, 1)
+        self.options += [pas_lien_option]
 
         supp_avert_option = QCheckBox("-w")
         layout.addWidget(supp_avert_option, 0, 2)
+        self.options += [supp_avert_option]
 
-        supp_avert_option = QCheckBox("-W")
-        layout.addWidget(supp_avert_option, 0, 3)
+        W_option = QCheckBox("-W")
+        layout.addWidget(W_option, 0, 3)
+        self.options += [W_option]
 
-        supp_avert_option = QCheckBox("-Wall")
-        layout.addWidget(supp_avert_option, 1, 0)
+        Wall_option = QCheckBox("-Wall")
+        layout.addWidget(Wall_option, 1, 0)
+        self.options += [Wall_option]
 
-        supp_avert_option = QCheckBox("-Werror")
-        layout.addWidget(supp_avert_option, 1, 1)
+        Werror_option = QCheckBox("-Werror")
+        layout.addWidget(Werror_option, 1, 1)
+        self.options += [Werror_option]
 
-        supp_avert_option = QCheckBox("-v")
-        layout.addWidget(supp_avert_option, 1, 2)
+        verbose_option = QCheckBox("-v")
+        layout.addWidget(verbose_option, 1, 2)
+        self.options += [verbose_option]
 
         self.setLayout(layout)
 
+    def get_options(self):
+        return self.options
 
 class ConfigCompilC(QDialog):
 
@@ -77,6 +85,7 @@ class ConfigCompilC(QDialog):
         self.parent = parent
 
         self.est_valide = False
+        self.informations = []
 
         self.setWindowTitle(get_text("comp_config"))
 
@@ -91,6 +100,7 @@ class ConfigCompilC(QDialog):
 
         self.lineEdit_fichiers_compiler = LineEditPath(self.parent)
         layout.addWidget(self.lineEdit_fichiers_compiler, 1, 1)
+        self.informations += [self.lineEdit_fichiers_compiler]
 
         #Gestion de l'emplacement des headers
         lbl_fichier_header = QLabel(get_text("comp_headers"))
@@ -98,6 +108,7 @@ class ConfigCompilC(QDialog):
 
         self.lineEdit_fichier_header = LineEditPathDirectory(self.parent)
         layout.addWidget(self.lineEdit_fichier_header, 2, 1)
+        self.informations += [self.lineEdit_fichier_header]
 
         #Gestion de l'emplacement des librairies
         lbl_emplacement_librairie = QLabel(get_text("comp_lib"))
@@ -105,6 +116,7 @@ class ConfigCompilC(QDialog):
 
         self.lineEdit_emplacement_librairie = LineEditPathDirectory(self.parent)
         layout.addWidget(self.lineEdit_emplacement_librairie, 3, 1)
+        self.informations += [self.lineEdit_emplacement_librairie]
 
         #Gestion de l'emplacement des librairies
         lbl_nom_librairie = QLabel(get_text("comp_lib_name"))
@@ -112,6 +124,7 @@ class ConfigCompilC(QDialog):
 
         self.lineEdit_nom_librairie = QLineEdit()
         layout.addWidget(self.lineEdit_nom_librairie, 4, 1)
+        self.informations += [self.lineEdit_nom_librairie]
 
         #Gestion du nom du fichier de sortie
         lbl_fichier_sortie = QLabel(get_text("comp_out"))
@@ -119,10 +132,12 @@ class ConfigCompilC(QDialog):
 
         self.lineEdit_fichier_sortie = QLineEdit()
         layout.addWidget(self.lineEdit_fichier_sortie, 5, 1)
+        self.informations += [self.lineEdit_fichier_sortie]
 
         #Gestion des options de compilation
         group_options = GroupBoxOptions()
         layout.addWidget(group_options, 6, 0, 1, 2)
+        self.informations += group_options.get_options()
 
         btn_valider = QPushButton(get_text("comp_run"))
         btn_valider.clicked.connect(self.valider)
@@ -141,6 +156,18 @@ class ConfigCompilC(QDialog):
 
     def est_configuration_valide(self):
         return self.lineEdit_fichiers_compiler.text().strip() != "" and len(self.lineEdit_fichier_sortie.text().split()) <= 1 and len(self.lineEdit_fichier_header.text().split()) <= 1 and len(self.lineEdit_emplacement_librairie.text().split()) <= 1 and len(self.lineEdit_nom_librairie.text().split()) <= 1
+
+    def get_configuration_json(self):
+
+        res = []
+
+        for e in self.informations: 
+            if isinstance(e, QLineEdit):
+                res += [e.text()]
+            else:
+                res += [e.isChecked()]
+
+        return json.dumps(res)
 
     def get_configuration_string(self):
 
@@ -168,6 +195,15 @@ class ConfigCompilC(QDialog):
  
         return "gcc %s %s %s %s %s"%(fichiers_compiler, fichier_header, emplacement_librairie, nom_librairie, fichier_sortie)
 
+    def setConfig(self, config_json):
+        config_json = json.loads(config_json)
+        for i,e in enumerate(self.informations):
+            if isinstance(e, QLineEdit):
+                e.setText(config_json[i])
+            else:
+                e.setChecked(config_json[i])
+
+
 class ConfigInterpPython(QDialog):
 
     def __init__(self, parent):
@@ -176,6 +212,7 @@ class ConfigInterpPython(QDialog):
         self.parent = parent
 
         self.est_valide = False
+        self.informations = []
 
         self.setWindowTitle(get_text("comp_config_python"))
 
@@ -189,12 +226,14 @@ class ConfigInterpPython(QDialog):
 
         self.lineEdit_emplacement_interpreteur = LineEditPath(self.parent)
         layout.addWidget(self.lineEdit_emplacement_interpreteur, 1, 1)
+        self.informations += [lineEdit_emplacement_interpreteur]
 
         lbl_emplacement_depart = QLabel(get_text("comp_file_py"))
         layout.addWidget(lbl_emplacement_depart, 2, 0)
 
         self.lineEdit_fichier_depart = LineEditPath(self.parent)
         layout.addWidget(self.lineEdit_fichier_depart, 2, 1)
+        self.informations += [lineEdit_fichier_depart]
 
         btn_valider = QPushButton(get_text("comp_run_py"))
         btn_valider.clicked.connect(self.valider)
@@ -212,8 +251,20 @@ class ConfigInterpPython(QDialog):
     def est_configuration_valide(self):
         return self.lineEdit_emplacement_interpreteur.text().strip() != "" and self.lineEdit_fichier_depart.text().strip() != "" and self.parent.project_path in self.lineEdit_fichier_depart.text()
 
+    def get_configuration_json(self):
+        res = []
+        for e in self.informations:
+            res += [e.text()]
+
+        return json.dumps(res)
+
     def get_configuration_string(self):
         return "%s %s"%(self.lineEdit_emplacement_interpreteur.text(), self.lineEdit_fichier_depart.text())
+
+    def setConfig(self, config_json):
+        config_json = json.loads(config_json)
+        for i,e in enumerate(self.informations):
+            e.setText(config_json[i])
 
 class DialogErreurs(QDialog):
 
@@ -276,19 +327,22 @@ def compiler(parent):
 
 def configuration_compilation(parent):
 
-    # global configuration # Configuration -> XML
-
     xml_path = "%s/%s.xml"%(parent.project_path, parent.project_path.split("/")[-1])
-
-    configuration = xml.project_compil(xml_path)
 
     if parent.project_type == "c":
         config = ConfigCompilC(parent)
     else:
         config = ConfigInterpPython(parent)
 
+    config_json = xml.project_compil_json(xml_path)
+    if config_json != "":
+        config.setConfig(config_json)
+
     config.exec()
 
     if config.est_valide:
         configuration = config.get_configuration_string()
         xml.compil_xml(xml_path, configuration)
+
+        configuration_json = config.get_configuration_json()
+        xml.compil_json_xml(xml_path, configuration_json)
