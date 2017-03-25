@@ -36,6 +36,7 @@ from gui.chargement import *
 # sys.path[:0] = ["gui"]
 
 class Fenetre(QWidget):
+
 	sig_message = Signal(str)
 	sig_progress = Signal(int)
 	sig_progress_termine = Signal(bool)
@@ -64,7 +65,7 @@ class Fenetre(QWidget):
 		self.workplace_path = workplace_path
 
 		self.project_path = ""
-		self.project_type = "c" # A changer un fonction du XML
+		self.project_type = "c"  # A changer un fonction du XML
 		self.def_functions = {}
 		self.def_structs = {}
 		self.def_vars = {}
@@ -192,7 +193,6 @@ class Fenetre(QWidget):
 		else:
 			QMessageBox.critical(self, "Aucun projet ouvert", "Veuillez ouvrir un projet")
 
-
 	def configuration_compilation(self):
 		if self.project_path != "":
 			compilateur.configuration_compilation(self)
@@ -229,8 +229,9 @@ class Fenetre(QWidget):
 		else:
 			widgets = [("Navigateur", "TreeView"), ("Inspecteur", "Inspector")]
 			text_widgets = {"Navigateur": get_text("text_bout_insp"), "TreeView": get_text("text_bout_insp"),
-							"Inspecteur": get_text("text_bout_nav"), "Inspector": get_text("text_bout_nav")}
-							# On récupère le texte en fonction de la langue.
+			                "Inspecteur": get_text("text_bout_nav"), "Inspector": get_text("text_bout_nav")}
+			# On récupère le texte en fonction de la langue.
+			
 			actual = self.bouton_change.text()
 			self.bouton_change.setText(text_widgets[actual])
 			self.status_message(self.bouton_change.text() + get_text("text_chang_bout") + actual)
@@ -268,7 +269,7 @@ class Fenetre(QWidget):
 
 	def get_snippets(self):
 		"""
-		Récupère les snippets : prédéfinissions de fonctions.
+		Récupère les snippets : prédéfinitions de fonctions.
 		:rtype: list
 		"""
 		try:
@@ -532,7 +533,7 @@ class Fenetre(QWidget):
 		:rtype: None
 		"""
 		self.codes += [Editeur("ABeeZee", 14, self.def_functions, list(keywords.keys()) +
-							   know_functions, self, self.snippets)]
+		                       know_functions, self, self.snippets)]
 		self.highlighters += [CodeHighLighter(self.codes[-1], self.codes[-1].document())]
 		self.codes[-1].tabPress.connect(self.highlighters[-1].test)
 		self.tab_widget.addTab(self.codes[-1], title)
