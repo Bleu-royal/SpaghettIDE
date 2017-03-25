@@ -139,9 +139,14 @@ class ConfigCompilC(QDialog):
         layout.addWidget(group_options, 6, 0, 1, 2)
         self.informations += group_options.get_options()
 
+        #Gestion de l'execution au lancement
+        self.checkBox_launch = QCheckBox(get_text("lanch_comp"))
+        layout.addWidget(self.checkBox_launch, 7, 0, 1, 2)
+        self.informations += [self.checkBox_launch]
+
         btn_valider = QPushButton(get_text("comp_run"))
         btn_valider.clicked.connect(self.valider)
-        layout.addWidget(btn_valider, 7, 0, 1, 2)
+        layout.addWidget(btn_valider, 8, 0, 1, 2)
 
         self.setLayout(layout)
 
@@ -302,11 +307,13 @@ def get_erreurs(lines, project_path):
 
 def compiler(parent):
 
-    configuration = xml.project_compil("%s/%s.xml"%(parent.project_path, parent.project_path.split("/")[-1]))
+    xml_path = "%s/%s.xml"%(parent.project_path, parent.project_path.split("/")[-1])
+
+    configuration = xml.project_compil(xml_path)
 
     if configuration == "":
         configuration_compilation(parent)
-        configuration = xml.project_compil("%s/%s.xml"%(parent.project_path, parent.project_path.split("/")[-1]))
+        configuration = xml.project_compil(xml_path)
         if configuration == "":
             return False
 
@@ -322,6 +329,12 @@ def compiler(parent):
             dialogErreur.exec()
         else:
             QMessageBox.about(parent, get_text("comp_res"), get_text("comp_ok"))
+            
+            config_json = json.loads(xml.project_compil_json(xml_path))
+            if config_json[-1]: # lancer après la compilation ?
+                name = "a.out" if config_json[4] == "" else config_json[4] # Nom du fichier
+                os.system("%s/%s"%(parent.project_path, name))
+
     else:
         print(res)
 
