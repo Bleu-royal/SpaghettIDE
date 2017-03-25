@@ -43,7 +43,7 @@ try:
 
     if configuration['numerote_lines'] == 'False':
         fenetre.show_line_column()
-        write_xml("xml/conf.xml", "numerote_lines", "False")
+        write_xml("conf.xml", "numerote_lines", "False")
 
     bind(fenetre)  # Connection between buttons and functions
     create_workplace()
