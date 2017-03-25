@@ -4,6 +4,7 @@ from PySide.QtGui import *
 from PySide.QtCore import *
 from systeme.workplace import *
 from themes.themes import *
+from language.language import get_text
 
 import kernel.variables as var
 
@@ -103,7 +104,7 @@ class TreeView(QTreeView):
         """
         if declarators != (None, None, None):
             self.fenetre.def_functions, self.fenetre.def_structs, self.fenetre.def_vars = declarators
-            self.fenetre.status_message("Le projet sélectionné a bien été ouvert")
+            self.fenetre.status_message(get_text("project_opened"))
             self.fenetre.hide_progress_bar()
 
     def open(self):
@@ -120,6 +121,4 @@ class TreeView(QTreeView):
         if ext in [i[1:] for i in var.extension_by_language[self.fenetre.project_type]]:
             self.fenetre.open(path)
         else:
-            QMessageBox.critical(self.fenetre, "Erreur d'ouverture", "L'extention sélectionnée n'est pas lisible par "
-                                                                     "notre IDE.\n\n"
-                                                                     "Pour le moment...")
+            QMessageBox.critical(self.fenetre, get_text("opening_fail"), get_text("opening_fail_text"))

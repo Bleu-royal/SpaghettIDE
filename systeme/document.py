@@ -8,7 +8,7 @@ import json
 import kernel.variables as var
 
 from systeme.workplace import *
-
+from language.language import get_text
 import gui.style.style as style
 
 class SearchDialog(QDialog):
@@ -35,8 +35,8 @@ class SearchDialog(QDialog):
         self.line_edit = QLineEdit()
         self.case_sensitive_checkbox = QCheckBox(text="Case sensitive")
         self.case_sensitive_checkbox.setChecked(True)
-        self.prev_button = QPushButton(text="Précédent")
-        self.next_button = QPushButton(text="Suivant")
+        self.prev_button = QPushButton(text=get_text("prev"))
+        self.next_button = QPushButton(text=get_text("suiv"))
 
         self.setStyleSheet(style.get("buttons", "window", "check_box", "line_edit"))
 
@@ -144,8 +144,8 @@ class Document:
 
 
 def new_document(parent):
-    new = "Sans nom " + str(len(parent.docs) + 1)
-    parent.status_message(("Nouveau fichier " + new), 2000)
+    new = get_text("nom_new_fic") + str(len(parent.docs) + 1)
+    parent.status_message((get_text("new_file") + new), 2000)
     parent.defaut_info_message()
     parent.add_code(new, True)
     parent.docs += [Document(parent, parent.codes[-1], "")]
@@ -158,23 +158,22 @@ def save_document(parent):
         if idx != -1:
             if parent.docs[idx].chemin_enregistrement == "":
                 chemin = \
-                    QFileDialog.getSaveFileName(parent, 'Sauvegarder un fichier', parent.project_path, var.file_by_language[parent.project_type])[0]
+                    QFileDialog.getSaveFileName(parent, get_text("save_file"), parent.project_path, var.file_by_language[parent.project_type])[0]
                 if chemin != "" and parent.project_path in chemin:
                     parent.docs[idx].set_chemin_enregistrement(chemin)
                     parent.docs[idx].sauvegarde_document(chemin)
                     parent.tab_widget.setTabText(idx, parent.docs[idx].nom)
 
-                    parent.status_message(parent.docs[idx].nom+" a bien été sauvegardé.", 2000)
+                    parent.status_message(parent.docs[idx].nom+get_text("save_complete"), 2000)
                     # Message de statut
                 elif parent.project_path in chemin:
-                    QMessageBox.critical(parent, "Impossible de sauvegarder ce document",
-                                         "Ce document ne fait pas partie du projet courant")
+                    QMessageBox.critical(parent, get_text("save_failed"), get_text("save_fail_text"))
             else:
                 parent.docs[idx].sauvegarde_document()
-                parent.status_message(parent.docs[idx].nom+" a bien été sauvegardé.", 2000)
+                parent.status_message(parent.docs[idx].nom+get_text("save_complete"), 2000)
 
     else:
-        QMessageBox.critical(parent, "Aucun projet ouvert", "Veuillez ouvrir ou créer un projet")
+        QMessageBox.critical(parent, get_text("no_project_on"), get_text("text_please_open_project"))
 
 
 def document_deja_ouvert(parent, chemin):
@@ -189,12 +188,12 @@ def open_document(parent, chemin, secu=False):
 
     if parent.project_path != "":
         if not chemin:
-            chemin = QFileDialog.getOpenFileName(parent, 'Ouvrir un fichier', parent.project_path, var.file_by_language[parent.project_type])[0]
+            chemin = QFileDialog.getOpenFileName(parent, get_text("ouverture_2"), parent.project_path, var.file_by_language[parent.project_type])[0]
         if chemin != "" and parent.project_path in chemin:
             if not parent.deja_ouvert(chemin):
                 title = chemin.split("/")[-1]
                 parent.add_code(title)
-                parent.status_message("Ouverture de "+title, 2000)  # Message de status
+                parent.status_message(get_text("ouverture_de")+title, 2000)  # Message de status
                 parent.docs += [Document(parent, parent.codes[-1], chemin, True)]
                 
                 parent.highlighters[-1].first_launch = False

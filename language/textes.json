@@ -1,4 +1,9 @@
 {
+  "text_erreur": {
+    "fr": "Erreur",
+    "en": "Error"
+  },
+
   "text_cheminee_hover": {
     "fr": "Aie ! Ça brule !!",
     "en": "Ouch ! Too hot !!"
@@ -92,5 +97,155 @@
   "box_exit": {
     "fr": "Voulez-vous vraiment fermer l'IDE ?",
     "en": "Are you sure you want to leave ?"
+  },
+
+  "charging": {
+    "fr": "Chargement...",
+    "en": "Loading..."
+  },
+
+  "prev": {
+    "fr": "Précédent",
+    "en": "Previous"
+  },
+
+  "suiv": {
+    "fr": "Suivant",
+    "en": "Next"
+  },
+
+  "nom_new_fic": {
+    "fr": "Sans nom ",
+    "en": "Unamed "
+  },
+
+  "new_file": {
+    "fr": "Nouveau fichier ",
+    "en": "New file "
+  },
+
+  "save_file": {
+    "fr": "Sauvegarder un fichier",
+    "en": "Save a file"
+  },
+
+  "save_complete": {
+    "fr":" a bien été sauvegardé.",
+    "en":" has successfuly saved."
+  },
+
+  "save_failed": {
+    "fr": "Impossible de sauvegarder ce document",
+    "en": "File cannot be saved"
+  },
+
+  "save_fail_text": {
+    "fr": "Ce document ne fait pas partie du projet courant",
+    "en": "File must be in the current opened project"
+  },
+
+  "no_project_on": {
+    "fr": "Aucun projet ouvert",
+    "en": "No projects opened"
+  },
+
+  "ouverture_de": {
+    "fr": "Ouverture de ",
+    "en": "Opening "
+  },
+
+  "ouverture_2": {
+    "fr": "Ouvrir un fichier",
+    "en": "Open a file"
+  },
+
+  "project_opened": {
+    "fr": "Le projet sélectionné a bien été ouvert",
+    "en": "Selected project has successfuy been opened"
+  },
+
+  "opening_fail": {
+    "fr": "Echec d'ouverture",
+    "en": "Failed to open"
+  },
+
+  "opening_fail_text": {
+    "fr": "L'extention sélectionnée n'est pas lisible par notre IDE.\n\n Pour le moment...",
+    "en": "File extention isn't reconized for now. \n\n Soooorry..."
+  },
+
+  "comp_opt": {
+    "fr": "Options de compilation",
+    "en": "Compilation options"
+  },
+
+  "comp_config": {
+    "fr": "Configurateur de la compilation",
+    "en": "Compilation configurator"
+  },
+
+  "comp_config_python": {
+    "fr": "Configurateur de l'interpreteur python",
+    "en": "Python interpreter configurator"
+  },
+
+  "comp_files": {
+    "fr": "Fichiers à compiler (séparés par des espaces) : ",
+    "en": "Files you want to compile (separated by spaces) : "
+  },
+
+  "comp_headers": {
+    "fr": "Emplacement des fichiers headers : ",
+    "en": "Headers files location : "
+  },
+
+  "comp_lib": {
+    "fr": "Emplacement de la librairie : ",
+    "en": "Library location : "
+  },
+
+  "comp_lib_name": {
+    "fr": "Nom de la librairie : ",
+    "en": "Library name : "
+  },
+
+  "comp_out": {
+    "fr": "Nom du fichier de sortie : ",
+    "en": "Output file name : "
+  },
+
+  "comp_run": {
+    "fr": "Compiler",
+    "en": "Compile"
+  },
+
+  "comp_run_py": {
+    "fr": "Exécuter",
+    "en": "Run"
+  },
+
+  "comp_enter_good": {
+    "fr": "Veuillez entrer une configuration valide",
+    "en": "Please select a valid configuration"
+  },
+
+  "comp_py_loca": {
+    "fr": "Emplacement de l'interpreteur python : ",
+    "en": "Python interpreter localisation : "
+  },
+
+  "comp_file_py": {
+    "fr": "Fichier de depart : ",
+    "en": "Input file : "
+  },
+
+  "comp_res": {
+    "fr": "Résultat de la compilation",
+    "en": "Compilation output"
+  },
+
+  "comp_ok": {
+    "fr": "La compilation à réussie",
+    "en": "Successful compilation"
   }
 }

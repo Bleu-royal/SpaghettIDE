@@ -190,14 +190,13 @@ class Fenetre(QWidget):
         if self.project_path != "":
             compilateur.compiler(self)
         else:
-            QMessageBox.critical(self, "Aucun projet ouvert", "Veuillez ouvrir un projet")
-
+            QMessageBox.critical(self, get_text("no_project_on"), get_text("text_please_open_project"))
 
     def configuration_compilation(self):
         if self.project_path != "":
             compilateur.configuration_compilation(self)
         else:
-            QMessageBox.critical(self, "Aucun projet ouvert", "Veuillez ouvrir un projet")
+            QMessageBox.critical(self, get_text("no_project_on"), get_text("text_please_open_project"))
 
     def prog_mess(self, message):
         """
