@@ -152,11 +152,14 @@ def importproject(parent):
 
     chemin = QFileDialog.getExistingDirectory(parent, get_text("proj_import"), parent.project_path)
 
+    underscore = False
+
     if chemin != "":
 
         if " " in chemin:
             os.rename(chemin, chemin.replace(" ", "_"))
             chemin = chemin.replace(" ", "_")
+            underscore = True
 
         i=-1
         while chemin[i]!="/":
@@ -183,15 +186,17 @@ def importproject(parent):
                 project_lang = "Arithmétique"
             break
 
-        os.rename(QDir(parent.workplace_path + project_name).path(), QDir(parent.workplace_path + project_name.replace("_", " ")).path())
-        project_name = project_name.replace("_", " ")
+        if underscore==True:
+            os.rename(QDir(parent.workplace_path + project_name).path(), QDir(parent.workplace_path + project_name.replace("_", " ")).path())
+            project_name = project_name.replace("_", " ")
         create_xml("%s/%s.xml" % (QDir(parent.workplace_path + project_name).path(), project_name))
         path = "%s/%s.xml" % (QDir(parent.workplace_path + project_name).path(), project_name)
         project_nb_files = get_nb_files(parent,project_name)
         update_infos(parent,path,project_name,date,project_lang,project_nb_files)
         project_location = parent.workplace_path + project_name
         add_projects_xml(project_name,project_lang,project_location,date,project_nb_files) 
-        os.rename(chemin, chemin.replace("_", " "))
+        if underscore==True:
+            os.rename(chemin, chemin.replace("_", " "))
 
 
 class Mem:
