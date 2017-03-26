@@ -19,10 +19,12 @@ def get_text(key):
     :return: le texte voulu
     :rtype: str
     """
-
-    fichier = open("language/textes.json", "r")
-    dico = json.loads(fichier.read())
-    fichier.close()
+    try:
+        fichier = open("language/textes.json", "r")
+        dico = json.loads(fichier.read())
+        fichier.close()
+    except:
+        dico = {}
 
     if key in dico:
         if get_current_language() in dico[key]:
@@ -43,10 +45,12 @@ def get_tmenu(key):
     :return: le texte du menu voulu
     :rtype: str
     """
-
-    fichier = open("language/menus.json", "r")
-    dico = json.loads(fichier.read())
-    fichier.close()
+    try:
+        fichier = open("language/menus.json", "r")
+        dico = json.loads(fichier.read())
+        fichier.close()
+    except:
+        dico = {}
 
     if key in dico:
         if get_current_language() in dico[key]:

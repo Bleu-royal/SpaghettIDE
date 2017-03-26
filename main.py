@@ -10,6 +10,8 @@ from PySide.QtGui import *
 from gui.chargement import Loading
 from xml import *
 
+print("Bienvenue")
+
 app = QApplication(sys.argv)
 
 # Fonction permettant de cacher les dossiers __pycache__ et leur contenu en les supprimant à l'exécution du programme
