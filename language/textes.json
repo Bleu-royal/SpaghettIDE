@@ -214,14 +214,14 @@
     "en": "Output file name : "
   },
 
-  "comp_run": {
-    "fr": "Compiler",
-    "en": "Compile"
+  "lanch_comp": {
+    "fr": "Lancer après la compilation",
+    "en": "Launch after compilation"
   },
 
-  "comp_run_py": {
-    "fr": "Exécuter",
-    "en": "Run"
+  "comp_run": {
+    "fr" : "Sauvegarder la configuration",
+    "en" : "Save"
   },
 
   "comp_enter_good": {

@@ -27,8 +27,15 @@ def project_compil(fichier):
     configuration = open_xml(fichier)
     return configuration["compil"] if configuration["compil"] != None else ""
 
+def project_compil_json(fichier):
+    configuration = open_xml(fichier)
+    return configuration["compil_json"] if configuration["compil_json"] != None else ""
+
 def compil_xml(fichier,value):
     write_xml(fichier,"compil",value)
+
+def compil_json_xml(fichier,value):
+    write_xml(fichier,"compil_json",value)
 
 def write_xml(fichier,config,value):
     tree = etree.parse(fichier)
@@ -48,6 +55,7 @@ def create_xml(path):
                   "     <location></location>\n"
                   "     <number_files></number_files>\n"
                   "     <compil></compil>\n"
+                  "     <compil_json></compil_json>\n"
                   "</project>")
     fichier.close()
 
@@ -67,6 +75,8 @@ def add_projects_xml(project_name,project_lang,project_location,date,project_nb_
     nb_files.text = project_nb_files
     compil = etree.SubElement(project, "compil")
     compil.text = ""
+    compil_json = etree.SubElement(project, "compil_json")
+    compil_json.text = ""
     tree.write('projects.xml', pretty_print=True)
 
 try :
