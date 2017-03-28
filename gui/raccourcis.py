@@ -14,7 +14,7 @@ class Raccourcis(QDialog):
 		self.tab_widget = QTabWidget()
 		self.tab_widget.addTab(MenuFichier(parent), "Fichier")
 		
-		# self.tab_widget.addTab(MenuEdition(), "Edition")
+		self.tab_widget.addTab(MenuEdition(parent), "Edition")
 		# self.tab_widget.addTab(MenuProjet(), "Projet")
 		
 		self.bouton_valider = QPushButton("Valider")
@@ -41,13 +41,27 @@ class Raccourcis(QDialog):
 
 
 class MenuFichier(QWidget):
+	
 	def __init__(self, parent):
 		QWidget.__init__(self)
 		
 		new_fichier = MenuFonction("Nouveau Fichier", "Ctrl+N")  # lire json
 		new_projet = MenuFonction("Nouveau Projet", "Ctrl+M")
+		ouvrir = MenuFonction("Ouvrir", "Ctrl+O")
+		sauver = MenuFonction("Sauvegarder", "Ctrl+S")
+		fermer_onglet = MenuFonction("Fermer Onglet", "Ctrl+W")
+		compiler = MenuFonction("Compiler", "F5")
+		configuration = MenuFonction("Configuration", "Maj+F5")
+		cheminee = MenuFonction("Cheminee", "F6")
+		ecran_chargement = MenuFonction("Ecran Chargement", "F4")
+		num_lignes = MenuFonction("Num Lignes", "F2")
+		assistance_vocale = MenuFonction("Assistance Vocale", "F12")
+		plein_ecran = MenuFonction("Plein Ecran", "F7")
+		quitter = MenuFonction("Quitter", "Echap")
 		
-		self.liste_fonctions = [new_projet, new_fichier]
+		self.liste_fonctions = [new_projet, new_fichier, ouvrir, sauver, fermer_onglet, compiler,
+		                        configuration, cheminee, ecran_chargement, num_lignes, assistance_vocale,
+		                        plein_ecran, quitter]
 		
 		self.fic_layout = QVBoxLayout()
 		
@@ -55,7 +69,47 @@ class MenuFichier(QWidget):
 			self.fic_layout.addWidget(widget)
 		
 		self.setLayout(self.fic_layout)
-
+		
+		
+class MenuEdition(QWidget):
+	
+	def __init__(self, parent):
+		QWidget.__init__(self)
+		
+		ligne_courante = MenuFonction("Ligne Courante", "Ctrl+L")
+		mot_courant = MenuFonction("Mot Courant", "Ctrl+D")
+		dupliquer = MenuFonction("Dupliquer", "Maj+Ctrl+D")
+		mode_insertion = MenuFonction("Mode Insertion", "Ctrl+I")
+		rechercher = MenuFonction("Rechercher", "Ctrl+F")
+		indenter = MenuFonction("Indenter", "Ctrl+Alt+L")
+		
+		self.liste_fonctions = [ligne_courante, mot_courant, dupliquer, mode_insertion, rechercher, indenter]
+		
+		self.fic_layout = QVBoxLayout()
+		
+		for widget in self.liste_fonctions:
+			self.fic_layout.addWidget(widget)
+		
+		self.setLayout(self.fic_layout)
+		
+class MenuProjet(QWidget):
+	
+	def __init__(self, parent):
+		QWidget.__init__(self)
+		
+		importer = MenuFonction("Importer Projet", "Maj+Ctrl+I")
+		supprimer = MenuFonction("Supprimer Projet", "Ctrl+Alt+S")
+		informations = MenuFonction("Informations Projet", "Ctrl+Alt+I")
+		
+		self.liste_fonctions = [importer, supprimer, informations]
+		
+		self.fic_layout = QVBoxLayout()
+		
+		for widget in self.liste_fonctions:
+			self.fic_layout.addWidget(widget)
+		
+		self.setLayout(self.fic_layout)
+		
 
 class MenuFonction(QWidget):
 	def __init__(self, nom_label, valeur_defaut):
