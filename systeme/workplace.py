@@ -81,8 +81,8 @@ def update_infos(parent,path,project_name,date,project_lang,nb_files):
     write_xml(path,"language",project_lang)
     write_xml(path,"number_files",nb_files)
     write_xml(path,"location",QDir(parent.workplace_path + project_name).path())
-    write_xml(path,"compil","")
-    write_xml(path,"compil_json","")
+    write_xml(path,"compil"," ")
+    write_xml(path,"compil_json"," ")
 
 def get_nb_files(parent,project_name):
     nb_files = 0

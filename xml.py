@@ -25,11 +25,11 @@ def project_language(fichier):
 
 def project_compil(fichier):
     configuration = open_xml(fichier)
-    return configuration["compil"] if configuration["compil"] != None else ""
+    return configuration["compil"] if configuration["compil"] != " " else ""
 
 def project_compil_json(fichier):
     configuration = open_xml(fichier)
-    return configuration["compil_json"] if configuration["compil_json"] != None else ""
+    return configuration["compil_json"] if configuration["compil_json"] != " " else ""
 
 def compil_xml(fichier,value):
     write_xml(fichier,"compil",value)
