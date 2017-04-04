@@ -2,7 +2,7 @@ from threading import *
 import os
 import sys
 
-from lexer import yaccing
+from lexer.lexer import yaccing
 from time import sleep
 
 

@@ -1,6 +1,6 @@
 # Module relatif à l'analyseur lexical LEX
 
-import ply.lex as lex
+import lexer.ply.lex as lex
 
 tokens = (
    'NUMBER',
@@ -73,7 +73,7 @@ def parse(data):
     lexer = lex.lex()
     lexer.input(data)
 
-    import ply.yacc as yacc
+    import lexer.ply.yacc as yacc
     parser = yacc.yacc()
     parser.parse(data, tracking=True)
     return prop

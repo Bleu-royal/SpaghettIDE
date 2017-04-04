@@ -6,7 +6,7 @@ import json
 from PySide.QtGui import *
 from PySide.QtCore import *
 
-import lexer as lex
+import lexer.lexer as lex
 
 import themes.themes as themes
 import gui.style.style as style
@@ -562,17 +562,22 @@ class Fenetre(QWidget):
 
         f_gif.exec_()
 
-    def add_code(self, title, new=False):
+    def add_code(self, title, new=False, current_ext="c"):
         """
         Fonction qui se charge d'ajouter à la liste des codes ouverts une nouvelle instance de la classe
         Editeur et de créer un nouvel onglet
 
         :param title: Nom du document
         :type title: str
+        :param new: Vrai si il s'agit d'un nouveau document
+        :type new: bool
+        :param current_ext: l'extension du fichier courant
+        :type current_ext: str
         :rtype: None
         """
-        self.codes += [editeur.Editeur("ABeeZee", 14, self.def_functions, list(lex.keywords.keys()) +
-                               lex.know_functions, self, self.snippets)]
+
+        self.codes += [editeur.Editeur("ABeeZee", 14, self.def_functions, list(lex.get_keywords(current_ext).keys()) +
+                               lex.get_know_functions(current_ext), self, self.snippets)]
         self.highlighters += [couleurs.CodeHighLighter(self.codes[-1], self.codes[-1].document())]
         self.codes[-1].tabPress.connect(self.highlighters[-1].test)
         self.tab_widget.addTab(self.codes[-1], title)
@@ -708,7 +713,7 @@ class Fenetre(QWidget):
         for o in l_objects:
             o.maj_style()
 
-        lex.update_token_color()
+        lex.update_token_color(self.tab_widget.get_current_ext())
         self.token_recoloration()
 
     def show_cheminee(self):
