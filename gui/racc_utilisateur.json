@@ -1,0 +1,30 @@
+{
+  "Edition": {
+    "Mot Courant": "Ctrl+D",
+    "Dupliquer": "Maj+Ctrl+D",
+    "Rechercher": "Ctrl+F",
+    "Mode Insertion": "Ctrl+I",
+    "Indenter": "Ctrl+Alt+L",
+    "Ligne Courante": "Ctrl+L"
+  },
+  "Fichier": {
+    "Configuration": "Maj+F5",
+    "Cheminee": "F6",
+    "Plein Ecran": "F7",
+    "Assistance vocale": "F12",
+    "Ouvrir": "Ctrl+O",
+    "Compiler": "F5",
+    "Ecran Chargement": "F4",
+    "Quitter": "Echap",
+    "Fermer Onglet": "Ctrl+W",
+    "Nouveau Projet": "Ctrl+M",
+    "Num Lignes": "F2",
+    "Nouveau Fichier": "Ctrl+N",
+    "Sauvegarder": "Ctrl+S"
+  },
+  "Projet": {
+    "Importer Projet": "Maj+Ctrl+I",
+    "Informations Projet": "Ctrl+Alt+I",
+    "Supprimer Projet": "Ctrl+Alt+S"
+  }
+}
