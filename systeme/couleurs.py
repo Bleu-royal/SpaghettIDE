@@ -5,6 +5,7 @@ from PySide.QtCore import *
 import lexer as lex
 import json
 import os
+import re
 
 import lexerAR as AR
 
@@ -102,7 +103,11 @@ class CodeHighLighter(QSyntaxHighlighter):
 
             possibilities = self.compare(word)
 
-            if possibilities != [] and word == "[A-Za-z_][A-Za-z0-9_]*":
+            pattern = re.compile("[A-Za-z_][A-Za-z0-9_]*")
+
+            print(pattern.match(word))
+
+            if possibilities != [] and pattern.match(word) !=  None:
                 self.prop.props += possibilities
                 self.prop.props_files += possibilities
                 self.prop.addElement(possibilities)
