@@ -2,7 +2,7 @@
 
 from PySide.QtGui import *
 from PySide.QtCore import *
-import lexer.c as lex
+import lexer.lexer as lex
 import json
 import os
 import re
@@ -95,6 +95,9 @@ class CodeHighLighter(QSyntaxHighlighter):
 
         if not self.first_launch and text != "":
 
+            idx = self.editeur.parent.get_idx() - 1
+            file_type = self.editeur.parent.docs[idx].extension
+
             textCursor = self.editeur.textCursor()
             textCursor.select(QTextCursor.WordUnderCursor)
             word = textCursor.selectedText()
@@ -104,8 +107,6 @@ class CodeHighLighter(QSyntaxHighlighter):
             possibilities = self.compare(word)
 
             pattern = re.compile("[A-Za-z_][A-Za-z0-9_]*")
-
-            print(pattern.match(word))
 
             if possibilities != [] and pattern.match(word) !=  None:
                 self.prop.props += possibilities
@@ -159,11 +160,11 @@ class CodeHighLighter(QSyntaxHighlighter):
 
             if text in colored_cache:
                 data = colored_cache[text]
-                colored = lex.colorate(data)
+                colored = lex.colorate(file_type, data)
             else:
                 print("coloration par Lex")
-                data = lex.tokenize(text)
-                colored = lex.colorate(data)
+                data = lex.tokenize(file_type, text)
+                colored = lex.colorate(file_type, data)
                 if self.cache_name != "":
                     cache = open("cache/%s.json"%self.cache_name, "r")
                     tmp = json.loads(cache.read())

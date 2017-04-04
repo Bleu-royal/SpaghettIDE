@@ -35,7 +35,7 @@ def remove_parsetab():
         os.remove("lexer/parsetab.py")
 
 try:
-    verif = open("lexer/c.py", "r")
+    verif = open("lexer/lexer.py", "r")
     verif.close()
 
     remove_parsetab()

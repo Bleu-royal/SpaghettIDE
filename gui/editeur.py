@@ -3,7 +3,7 @@ import os
 from PySide.QtGui import *
 from PySide.QtCore import *
 
-import lexer.c as lex
+import lexer.lexer as lex
 import themes.themes as themes
 import gui.bouton as b
 
@@ -133,6 +133,8 @@ class Editeur(QTextEdit):
 
     def analyse(self):
         """ Cette fonction est liée au bouton Analyse si il y a au moins un éditeur d'ouvert. """
+        idx = self.parent.get_idx()
+        file_type = self.parent.docs[idx].extension
 
         self.parent.defaut_info_message()  # Actualisation des infos de base
 
@@ -140,10 +142,9 @@ class Editeur(QTextEdit):
         # process_yacc.start()
 
         self.last_yacc_errors = self.yacc_errors
-        self.yacc_errors, self.parent.def_functions = lex.yaccing(self.toPlainText())
+        self.yacc_errors, self.parent.def_functions = lex.yaccing(file_type, self.toPlainText())
 
         if self.last_yacc_errors != self.yacc_errors:
-            idx = self.parent.get_idx()
             self.parent.highlighters[idx].rehighlight()
 
     def keyPressEvent(self, event):

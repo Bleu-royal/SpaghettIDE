@@ -49,6 +49,9 @@ class TabWidget(QTabWidget):
         # self.setTabsClosable(True)  # Signal : tabCloseRequested
         self.setUsesScrollButtons(True)  # Si il y a trop d'onglets
 
+    def get_current_ext(self):
+        return self.parent.codes[self.currentIndex()+1].split(".")[-1]
+
     def maj_style(self):
         """
         Met à jour le style du TabWidget
