@@ -72,7 +72,7 @@ class MenuBar(QMenuBar):
         fullscreen_action = MyAction(parent, get_tmenu("full_screen"), "Plein Écran", parent.fullscreen, "F7")
         fullscreen_action.setCheckable(True)
         exit_ide_action = MyAction(parent, get_tmenu("exit"), "Fermer l'application", parent.quit_func, "Esc")
-       
+
         # # # # Edition
         indent_action = MyAction(parent, get_tmenu("indent"), "Indentation automatique du fichier",
                                  parent.indent, "Ctrl+Alt+L")
