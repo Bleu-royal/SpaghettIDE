@@ -11,6 +11,7 @@ from lexer import *
 from xml import *
 from systeme.parallele import ProgressOpening, ProgressDisp
 from language.language import get_text
+import kernel.variables as var
 
 class NewProject(QDialog):
     def __init__(self):
@@ -80,7 +81,8 @@ def update_infos(parent,path,project_name,date,project_lang,nb_files):
     write_xml(path,"language",project_lang)
     write_xml(path,"number_files",nb_files)
     write_xml(path,"location",QDir(parent.workplace_path + project_name).path())
-    write_xml(path,"compil","")
+    write_xml(path,"compil"," ")
+    write_xml(path,"compil_json"," ")
 
 def get_nb_files(parent,project_name):
     nb_files = 0
@@ -149,54 +151,30 @@ def newproject(parent):
 #     print(projet)
 
 def importproject(parent):
+    workplace_path = parent.workplace_path
 
     chemin = QFileDialog.getExistingDirectory(parent, get_text("proj_import"), parent.project_path)
+    project_name = chemin.split("/")[-1]
 
-    underscore = False
-
-    if chemin != "":
-
-        if " " in chemin:
-            os.rename(chemin, chemin.replace(" ", "_"))
-            chemin = chemin.replace(" ", "_")
-            underscore = True
-
-        i=-1
-        while chemin[i]!="/":
-            i-=1
-        project_name = chemin[i+1:]
-
+    if not os.path.exists(workplace_path+project_name):
         QDir(parent.workplace_path).mkpath(project_name)
 
-        for e in os.listdir(chemin):
-            os.system("cp -r " + "%s/%s " %(chemin,e) + parent.workplace_path + project_name + "/" + e)
+        os.system("cp -r %s/ %s/"%(chemin.replace(" ", "\ "), workplace_path + project_name.replace(" ","\ ")))
 
         date = str(datetime.now())
 
         for e in os.listdir(chemin):
-            i=-1
-            while e[i]!=".":
-                i-=1
-            extension = e[i+1:]
-            if extension=="c" or "h":
-                project_lang = "C"
-            elif extension=="py":
-                project_lang = "Python"
-            else:
-                project_lang = "Arithmétique"
-            break
+            if os.path.isfile("%s/%s"%(chemin,e)) and e[0] != ".":
+                ext = e.split(".")[-1]
+                project_lang = var.supported_extensions.get(ext, "Arithmétique")
+                break
 
-        if underscore==True:
-            os.rename(QDir(parent.workplace_path + project_name).path(), QDir(parent.workplace_path + project_name.replace("_", " ")).path())
-            project_name = project_name.replace("_", " ")
-        create_xml("%s/%s.xml" % (QDir(parent.workplace_path + project_name).path(), project_name))
-        path = "%s/%s.xml" % (QDir(parent.workplace_path + project_name).path(), project_name)
+        create_xml("%s/%s.xml" % (QDir(workplace_path + project_name).path(), project_name))
+        path = "%s/%s.xml" % (QDir(workplace_path + project_name).path(), project_name)
         project_nb_files = get_nb_files(parent,project_name)
         update_infos(parent,path,project_name,date,project_lang,project_nb_files)
-        project_location = parent.workplace_path + project_name
+        project_location = workplace_path + project_name
         add_projects_xml(project_name,project_lang,project_location,date,project_nb_files) 
-        if underscore==True:
-            os.rename(chemin, chemin.replace("_", " "))
 
 
 class Mem:

@@ -31,6 +31,7 @@ from gui.bouton import Bouton
 from gui.label import Label
 from gui.inspecteur import *
 from gui.chargement import *
+from gui.raccourcis import Raccourcis
 
 # sys.path[:0] = ["../"]
 # sys.path[:0] = ["gui"]
@@ -582,9 +583,9 @@ class Fenetre(QWidget):
 
     def menu_raccourcis(self):
         """ Sous-menu permettant d'ouvrir la fenêtre de modification des raccourcis."""
-        coucou = open("content/coucou.txt", "r").readlines()
-
-        QMessageBox.about(self, "Préparation", "".join(coucou))
+        
+        fen_raccourcis = Raccourcis(self, "Paramètrage raccourcis")
+        fen_raccourcis.exec()
 
     def a_propos(self):
         """
