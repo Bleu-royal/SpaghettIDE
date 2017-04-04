@@ -6,7 +6,6 @@ from lexer import *
 from random import randint
 from copy import deepcopy
 import json
-
 import os
 
 import lexerAR as AR
@@ -105,7 +104,7 @@ class CodeHighLighter(QSyntaxHighlighter):
 
             possibilities = self.compare(word)
 
-            if possibilities != [] and lexing(word) == "identifier":
+            if possibilities != [] and word == "[A-Za-z_][A-Za-z0-9_]*":
                 self.prop.props += possibilities
                 self.prop.props_files += possibilities
                 self.prop.addElement(possibilities)

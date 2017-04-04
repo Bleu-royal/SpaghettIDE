@@ -341,19 +341,21 @@ class Editeur(QTextEdit):
 
     def highlight_by_block(self):
 
-        if len(self.toPlainText().split("\n")) > 50:
-            blocks = self.get_blocks()
+        self.setPlainText(self.toPlainText())
 
-            if blocks != []:
-                highlighter = self.parent.highlighters[self.parent.get_idx()]
-                doc = self.document()
-                number_of_block = doc.blockCount()
+        # if len(self.toPlainText().split("\n")) > 50:
+        #     blocks = self.get_blocks()
 
-                for i in range(blocks[0][-1]+1):
-                    highlighter.rehighlightBlock(doc.findBlockByNumber(i))
+        #     if blocks != []:
+        #         highlighter = self.parent.highlighters[self.parent.get_idx()]
+        #         doc = self.document()
+        #         number_of_block = doc.blockCount()
 
-        else:
-            self.setPlainText(self.toPlainText())
+        #         for i in range(blocks[0][-1]+1):
+        #             highlighter.rehighlightBlock(doc.findBlockByNumber(i))
+
+        # else:
+        #     self.setPlainText(self.toPlainText())
 
         # for i in range(min(80, number_of_block)):
         #     highlighter.rehighlightBlock(doc.findBlockByNumber(i)) 
