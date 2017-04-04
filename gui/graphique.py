@@ -522,6 +522,46 @@ class Fenetre(QWidget):
         # fin = time()
         # self.info_message(str(round((fin-debut), 3)), 1000)
 
+    def open_img(self, chemin):
+        """
+        Fonction d'ouverture d'une image
+
+        :param chemin: Chemin vers l'image
+        :type chemin: str
+        """
+
+        f_im = QDialog()
+
+        lab_img = QLabel()
+        pixmap_im = QPixmap(chemin)
+        lab_img.setPixmap(pixmap_im)
+        lab_img.setMaximumSize(self.ecran.screenGeometry().width() - 100, self.ecran.screenGeometry().height() - 100)
+
+        layout_im = QHBoxLayout()
+        layout_im.addWidget(lab_img)
+        f_im.setLayout(layout_im)
+        f_im.exec_()
+
+    def open_gif(self, chemin):
+        """
+        Fonction d'ouverture d'un gif
+
+        :param chemin: Chemin vers le GIF
+        """
+
+        f_gif = QDialog()
+
+        lab_gif = QLabel()
+        mov = QMovie(chemin)
+        lab_gif.setMovie(mov)
+
+        layout_gif = QHBoxLayout()
+        layout_gif.addWidget(lab_gif)
+        f_gif.setLayout(layout_gif)
+        mov.start()
+
+        f_gif.exec_()
+
     def add_code(self, title, new=False):
         """
         Fonction qui se charge d'ajouter à la liste des codes ouverts une nouvelle instance de la classe
