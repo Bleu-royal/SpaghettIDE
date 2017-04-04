@@ -145,12 +145,12 @@ class CodeHighLighter(QSyntaxHighlighter):
             colored_cache = {}
 
             if self.cache_name != "":
-                if os.path.isfile("colorate/%s.json"%self.cache_name): 
-                    cache = open("colorate/%s.json"%self.cache_name, "r")
+                if os.path.isfile("cache/%s.json"%self.cache_name): 
+                    cache = open("cache/%s.json"%self.cache_name, "r")
                     colored_cache = json.loads(cache.read())
                     cache.close()
                 else:
-                    cache = open("colorate/%s.json"%self.cache_name, "w")
+                    cache = open("cache/%s.json"%self.cache_name, "w")
                     cache.write("{}")
                     cache.close()
                     colored_cache = {}
@@ -161,11 +161,11 @@ class CodeHighLighter(QSyntaxHighlighter):
                 print("coloration par Lex")
                 colored = colorate(text)
                 if self.cache_name != "":
-                    cache = open("colorate/%s.json"%self.cache_name, "r")
+                    cache = open("cache/%s.json"%self.cache_name, "r")
                     tmp = json.loads(cache.read())
                     cache.close()
 
-                    cache = open("colorate/%s.json"%self.cache_name, "w")
+                    cache = open("cache/%s.json"%self.cache_name, "w")
                     tmp.update({text:colored})
                     cache.write(json.dumps(tmp))
                     cache.close()
@@ -214,7 +214,7 @@ class CodeHighLighter(QSyntaxHighlighter):
             self.prop.complete()
 
 def create_cache_folder():
-    if not os.path.exists("colorate"):
-        os.makedirs("colorate")
+    if not os.path.exists("cache"):
+        os.makedirs("cache")
 
 create_cache_folder()
