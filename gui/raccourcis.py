@@ -15,7 +15,7 @@ class Raccourcis(QDialog):
 		self.tab_widget.addTab(MenuFichier(parent), "Fichier")
 		
 		self.tab_widget.addTab(MenuEdition(parent), "Edition")
-		# self.tab_widget.addTab(MenuProjet(), "Projet")
+		self.tab_widget.addTab(MenuProjet(parent), "Projet")
 		
 		self.bouton_valider = QPushButton("Valider")
 		self.bouton_valider.clicked.connect(self.valider)
