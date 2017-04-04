@@ -53,9 +53,8 @@ class TabWidget(QTabWidget):
         """
         Met à jour le style du TabWidget
         """
-        url = QDir().currentPath() + "/images/medium.jpg"
         c = get_color_from_theme("textedit")
-        self.setStyleSheet("QTabWidget::pane{background-image: url(images/medium.gif);"
+        self.setStyleSheet("QTabWidget::pane{background-image: url(content/medium.gif);"
                            "background-repeat: no-repeat;background-position: center}"
                            "QTabWidget::tab-bar{left:0;}QTabBar::tab{color: " + get_rgb(c["tab-color"]) +
                            ";""background-color:" + get_rgb(c["tab-back-color"]) +

@@ -4,8 +4,7 @@ import sys
 import os 
 import shutil
 from gui.graphique import *  
-from kernel.bind import bind  
-from systeme.workplace import *  
+from systeme.workplace import *
 from PySide.QtGui import *
 from gui.chargement import Loading
 from xml import *
@@ -47,7 +46,6 @@ try:
         fenetre.show_line_column()
         write_xml("conf.xml", "numerote_lines", "False")
 
-    bind(fenetre)  # Connection between buttons and functions
     create_workplace()
 
     if configuration['loading'] == 'True':
