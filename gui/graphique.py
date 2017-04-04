@@ -2,35 +2,34 @@
 
 import sys
 import os
+import json
 from PySide.QtGui import *
 from PySide.QtCore import *
-# from time import time
 
-from lexer import *
-import lexerAR as AR
-from themes.themes import *
+import lexer as lex
+
+import themes.themes as themes
 import gui.style.style as style
 from language.language import get_text
 
 from systeme.workplace import *
 from systeme import compilateur
 # Importation du module relatif à la coloration lexicale et de la gestion des documents
-from systeme.couleurs import *
-from systeme.document import *
-from systeme.parallele import *
+from systeme import couleurs
+from systeme import document
+from systeme import parallele
 
 # Importation des modules du menu, des onglets, du navigateur de fichiers, de l'éditeur
 # de la barre de statut, des boutons et de l'inspecteur
 from xml import *
-from gui.menu import *
-from gui.navigateur import *
-from gui.onglet import *
-from gui.editeur import *
-from gui.statusbar import *
+from gui import menu
+from gui import navigateur
+from gui import onglet
+from gui import editeur
+from gui import statusbar
 from gui.bouton import Bouton
 from gui.label import Label
-from gui.inspecteur import *
-from gui.chargement import *
+from gui import inspecteur
 from gui.raccourcis import Raccourcis
 
 # sys.path[:0] = ["../"]
@@ -82,21 +81,21 @@ class Fenetre(QWidget):
         # self.pixmap_img = QPixmap("images/pieuvre.jpg")
         # self.label_img.setPixmap(self.pixmap_img)
 
-        self.treeview = TreeView(self)
+        self.treeview = navigateur.TreeView(self)
 
         self.codes = []
         self.highlighters = []
         self.docs = []
 
-        self.tab_widget = TabWidget(self)
+        self.tab_widget = onglet.TabWidget(self)
 
         # Lines number
         self.tab_widget.currentChanged.connect(self.defaut_info_message)
-        self.nb_lignes = Lignes(self, "ABeeZee", 14)
+        self.nb_lignes = editeur.Lignes(self, "ABeeZee", 14)
         self.anim_line = False
         self.last = 0  # Last number of lines
         self.is_show_line = True
-        self.line_tab = LignesAndTab(self, self.nb_lignes)
+        self.line_tab = editeur.LignesAndTab(self, self.nb_lignes)
         if self.is_show_line:
             self.line_tab.setMaximumWidth(60)
         else:
@@ -112,7 +111,7 @@ class Fenetre(QWidget):
         self.cheminee = Label(self, get_text("text_cheminee_hover"))
         self.cheminee.setFixedHeight(1)
 
-        self.inspecteur = Inspecteur(self)
+        self.inspecteur = inspecteur.Inspecteur(self)
 
         # Les boutons
         self.bouton_analyse = Bouton(get_text("text_bout_analyse"), self.pre_analyse)
@@ -144,8 +143,8 @@ class Fenetre(QWidget):
         self.splitter.setMinimumSize(self.width(), self.height() - 50)
 
         # Les barres de statut
-        self.statusbar = StatusBar()
-        self.infobar = StatusBar(200)
+        self.statusbar = statusbar.StatusBar()
+        self.infobar = statusbar.StatusBar(200)
 
         # La barre de progression
         self.progress_bar = QProgressBar()
@@ -159,7 +158,7 @@ class Fenetre(QWidget):
         self.status_message(get_text("text_bienvenue") + name)
 
         # self.statusbar.addWidget(MyReadWriteIndication)
-        self.menuBar = MenuBar(self)
+        self.menuBar = menu.MenuBar(self)
 
         # Positionnement des Layouts
 
@@ -265,7 +264,7 @@ class Fenetre(QWidget):
         """
         Ouvre la boite de dialogue permettant de rechercher des éléments
         """
-        find_dialog(self)
+        document.find_dialog(self)
 
     def get_snippets(self):
         """
@@ -378,7 +377,7 @@ class Fenetre(QWidget):
 
             if nblignes != prev:
                 self.nb_lignes.clear()
-                self.update_lines_number = LinesActualise(self, nblignes, self.anim_line)
+                self.update_lines_number = parallele.LinesActualise(self, nblignes, self.anim_line)
                 self.update_lines_number.start()
             else:
                 self.last = prev
@@ -443,7 +442,7 @@ class Fenetre(QWidget):
             if "darwin" in sys.platform:
                 configuration = open_xml("conf.xml")
                 if configuration['assistance_vocale'] == 'True':
-                    self.blabla = SayMessage(message)
+                    self.blabla = parallele.SayMessage(message)
                     self.blabla.start()
             self.statusbar.showMessage(message, time)
         elif time != -1:
@@ -474,7 +473,7 @@ class Fenetre(QWidget):
         :rtype: None
         """
         if self.project_path != "":
-            new_document(self)
+            document.new_document(self)
         else:
             self.status_message(get_text("text_please_open_project"), 1000)
 
@@ -487,7 +486,7 @@ class Fenetre(QWidget):
         :return:
         """
 
-        save_document(self)
+        document.save_document(self)
 
     def close_current_tab(self):
         """
@@ -504,7 +503,7 @@ class Fenetre(QWidget):
         :type chemin: str
         :rtype: bool
         """
-        return document_deja_ouvert(self, chemin)
+        return document.document_deja_ouvert(self, chemin)
 
     def open(self, chemin=False):
         """
@@ -519,7 +518,7 @@ class Fenetre(QWidget):
         """
         # debut = time()
         self.aller_en_haut_lignes = True
-        open_document(self, chemin)
+        document.open_document(self, chemin)
         # fin = time()
         # self.info_message(str(round((fin-debut), 3)), 1000)
 
@@ -532,9 +531,9 @@ class Fenetre(QWidget):
         :type title: str
         :rtype: None
         """
-        self.codes += [Editeur("ABeeZee", 14, self.def_functions, list(keywords.keys()) +
-                               know_functions, self, self.snippets)]
-        self.highlighters += [CodeHighLighter(self.codes[-1], self.codes[-1].document())]
+        self.codes += [editeur.Editeur("ABeeZee", 14, self.def_functions, list(lex.keywords.keys()) +
+                               lex.know_functions, self, self.snippets)]
+        self.highlighters += [couleurs.CodeHighLighter(self.codes[-1], self.codes[-1].document())]
         self.codes[-1].tabPress.connect(self.highlighters[-1].test)
         self.tab_widget.addTab(self.codes[-1], title)
         self.tab_widget.setCurrentIndex(len(self.codes) - 1)
@@ -575,11 +574,11 @@ class Fenetre(QWidget):
 
     def close_document(self):
 
-        closedocument(self)
+        document.closedocument(self)
 
     def delete_document(self):
 
-        deletedocument(self)
+        document.deletedocument(self)
 
     def menu_raccourcis(self):
         """ Sous-menu permettant d'ouvrir la fenêtre de modification des raccourcis."""
@@ -627,9 +626,9 @@ class Fenetre(QWidget):
         """
         Met à jour le style de la fenêtre principale.
         """
-        self.setStyleSheet("QObject::pane{background: " + get_rgb(get_color_from_theme("textedit")
+        self.setStyleSheet("QObject::pane{background: " + themes.get_rgb(themes.get_color_from_theme("textedit")
                                                                   ["text-back-color"]) + ";}")
-        self.inspecteur.setStyleSheet("background: " + get_rgb(get_color_from_theme("treeview")
+        self.inspecteur.setStyleSheet("background: " + themes.get_rgb(themes.get_color_from_theme("treeview")
                                                                   ["BACKGROUND"]) + ";")
 
         for onglets_ouverts in self.codes:
@@ -669,7 +668,7 @@ class Fenetre(QWidget):
         for o in l_objects:
             o.maj_style()
 
-        update_token_color()
+        lex.update_token_color()
         self.token_recoloration()
 
     def show_cheminee(self):

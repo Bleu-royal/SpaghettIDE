@@ -7,7 +7,7 @@ import threading
 import json
 import kernel.variables as var
 
-from systeme.workplace import *
+from systeme import workplace
 from language.language import get_text
 import gui.style.style as style
 
@@ -225,7 +225,7 @@ def open_project_and_document(parent, chemin):
         parent.tab_widget.clear()
 
         path = chemin.replace(parent.workplace_path, "").split("/")[0]
-        open_project(parent.treeview, path)
+        workplace.open_project(parent.treeview, path)
         # open_document(parent, chemin)
         parent.sig_progress_termine.connect(lambda e: open_doc_from_sig(e, parent, chemin))
 

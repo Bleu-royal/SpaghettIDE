@@ -2,8 +2,8 @@ import sys
 import os
 from PySide.QtGui import *
 from PySide.QtCore import *
-from systeme.workplace import *
-from themes.themes import *
+from systeme import workplace
+from themes import themes
 from language.language import get_text
 
 import kernel.variables as var
@@ -67,10 +67,10 @@ class TreeView(QTreeView):
         self.function_declarations.connect(self.load_project)
 
     def maj_style(self):
-        colors = get_color_from_theme("treeview")
-        self.setStyleSheet("QTreeView{background: " + get_rgb(colors["BACKGROUND"]) +
-                           ";}""QTreeView::item{color: " + get_rgb(colors["ITEMS"]) +
-                           ";}""QTreeView::item:hover{color: " + get_rgb(colors["ITEMSHOVER"]) + ";}")
+        colors = themes.get_color_from_theme("treeview")
+        self.setStyleSheet("QTreeView{background: " + themes.get_rgb(colors["BACKGROUND"]) +
+                           ";}""QTreeView::item{color: " + themes.get_rgb(colors["ITEMS"]) +
+                           ";}""QTreeView::item:hover{color: " + themes.get_rgb(colors["ITEMSHOVER"]) + ";}")
 
     def cacher_pas_projet(self):
         pass
@@ -80,7 +80,7 @@ class TreeView(QTreeView):
         :param event: Contient les positions x et y de l'endroit où on a cliqué. NON UTILISÉ ICI.
         :rtype: None
         """
-        open_project(self)
+        workplace.open_project(self)
 
     def keyPressEvent(self, event):
         """
@@ -92,7 +92,7 @@ class TreeView(QTreeView):
         :rtype: None
         """
         if event.key() == 16777220:  # Référence de la touche "entrée"
-            open_project(self)
+            workplace.open_project(self)
         else:
             QTreeView.keyPressEvent(self, event)
 

@@ -3,9 +3,8 @@ import os
 from PySide.QtGui import *
 from PySide.QtCore import *
 
-from lexer import *
-from themes.themes import *
-import gui.style.style as style
+import lexer as lex
+import themes.themes as themes
 import gui.bouton as b
 
 sys.path[:0] = ["../"]
@@ -68,11 +67,11 @@ class Lignes(QTextEdit):
         """
         Met à jour le style de la zone de numérotation des lignes
         """
-        c = get_color_from_theme("textedit")
+        c = themes.get_color_from_theme("textedit")
 
-        self.setStyleSheet("QTextEdit{ background-color:" + get_rgb(c["text-back-color"]) + ";"
+        self.setStyleSheet("QTextEdit{ background-color:" + themes.get_rgb(c["text-back-color"]) + ";"
                            + "font-family:" + self.police + ";"
-                           + "color:" + get_rgb(c["text-color"]) + ";"
+                           + "color:" + themes.get_rgb(c["text-color"]) + ";"
                            + "font-size:" + str(self.taille_texte) + "pt; }")
 
     def wheelEvent(self, e, syncr=False):
@@ -141,7 +140,7 @@ class Editeur(QTextEdit):
         # process_yacc.start()
 
         self.last_yacc_errors = self.yacc_errors
-        self.yacc_errors, self.parent.def_functions = yaccing(self.toPlainText())
+        self.yacc_errors, self.parent.def_functions = lex.yaccing(self.toPlainText())
 
         if self.last_yacc_errors != self.yacc_errors:
             idx = self.parent.get_idx()
@@ -218,11 +217,11 @@ class Editeur(QTextEdit):
         """
         Met à jour le style de la zone de code.
         """
-        c = get_color_from_theme("textedit")
+        c = themes.get_color_from_theme("textedit")
 
-        self.setStyleSheet("QTextEdit { background-color:" + get_rgb(c["text-back-color"]) + ";"
+        self.setStyleSheet("QTextEdit { background-color:" + themes.get_rgb(c["text-back-color"]) + ";"
                            + "font-family:" + self.police + ";"
-                           + "color:" + get_rgb(c["text-color"]) + ";"
+                           + "color:" + themes.get_rgb(c["text-color"]) + ";"
                            + "font-size:" + str(self.taille_texte) + "pt; }")
 
     def show_nb_prop(self, nb_prop):

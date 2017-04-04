@@ -1,5 +1,4 @@
 import sys
-from time import sleep
 
 from PySide.QtGui import *
 from PySide.QtCore import *

@@ -1,7 +1,7 @@
 import sys
 from PySide.QtGui import *
 from PySide.QtCore import *
-import gui.style.style as style
+
 sys.path[:0] = ["../"]
 sys.path[:0] = ["gui"]
 

@@ -2,7 +2,7 @@ import sys
 import os
 from PySide.QtGui import *
 from PySide.QtCore import *
-from themes.themes import *
+from themes import themes
 
 from language.language import get_text
 
@@ -53,16 +53,16 @@ class TabWidget(QTabWidget):
         """
         Met à jour le style du TabWidget
         """
-        c = get_color_from_theme("textedit")
+        c = themes.get_color_from_theme("textedit")
         self.setStyleSheet("QTabWidget::pane{background-image: url(content/medium.gif);"
                            "background-repeat: no-repeat;background-position: center}"
-                           "QTabWidget::tab-bar{left:0;}QTabBar::tab{color: " + get_rgb(c["tab-color"]) +
-                           ";""background-color:" + get_rgb(c["tab-back-color"]) +
+                           "QTabWidget::tab-bar{left:0;}QTabBar::tab{color: " + themes.get_rgb(c["tab-color"]) +
+                           ";""background-color:" + themes.get_rgb(c["tab-back-color"]) +
                            ";""border-bottom: 2px solid transparent;padding:7px 15px;"
                            "margin-top:0px;border-top-left-radius:10px;border-top-right-radius:10px;}"
                            "QTabBar::tab:selected,""QTabBar::tab:hover{background-color:" +
-                           get_rgb(c["tab-hover-back-color"]) + ";""color: " + get_rgb(c["tab-hover-color"]) +
-                           ";""border-bottom:" + get_rgb(c["tab-hover-bord-bot-color"]) +
+                           themes.get_rgb(c["tab-hover-back-color"]) + ";""color: " + themes.get_rgb(c["tab-hover-color"]) +
+                           ";""border-bottom:" + themes.get_rgb(c["tab-hover-bord-bot-color"]) +
                            ";}""QTabBar::tab{margin-top: 2px;}")
 
     def close_current_tab(self):

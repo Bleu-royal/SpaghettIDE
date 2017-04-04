@@ -4,7 +4,7 @@ import os
 from PySide.QtGui import *
 from PySide.QtCore import *
 
-from themes.themes import *
+from themes import themes
 import gui.style.style as style
 
 sys.path[:0] = ["../"]
@@ -23,6 +23,6 @@ class StatusBar(QStatusBar):
         self.maj_style()
 
     def maj_style(self):
-        status_color = get_color_from_theme("statusbar")
-        self.setStyleSheet("QStatusBar {background: " + get_rgb(status_color["BACKGROUND"]) + ";""color: " +
-                           get_rgb(status_color["TEXT"]) + ";}")
+        status_color = themes.get_color_from_theme("statusbar")
+        self.setStyleSheet("QStatusBar {background: " + themes.get_rgb(status_color["BACKGROUND"]) + ";""color: " +
+                           themes.get_rgb(status_color["TEXT"]) + ";}")
