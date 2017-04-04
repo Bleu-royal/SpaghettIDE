@@ -14,7 +14,6 @@ def tokenize(language, data):
         []
 
 def colorate(language, data):
-    
     if language in ("c", "h"):
         return c.colorate(data)
     else:
@@ -26,7 +25,6 @@ def update_token_color(language):
 
 
 def yaccing(language, data, get_errros=True):
-
     if language in ("c", "h"):
         return c.yaccing(data, get_errros)
     else:
@@ -34,7 +32,6 @@ def yaccing(language, data, get_errros=True):
         else: return []
 
 def get_keywords(language):
-    print(language)
     if language in ("c", "h"):
         return c.keywords
     else:
@@ -42,7 +39,6 @@ def get_keywords(language):
 
 
 def get_know_functions(language):
-    print(language)
     if language in ("c", "h"):
         return c.know_functions
     else:
