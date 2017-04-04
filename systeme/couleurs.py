@@ -2,12 +2,12 @@
 
 from PySide.QtGui import *
 from PySide.QtCore import *
-import lexer as lex
+import lexer.c as lex
 import json
 import os
 import re
 
-import lexerAR as AR
+import lexer.ar as AR
 
 
 class Proposition(QListWidget):

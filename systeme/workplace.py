@@ -7,7 +7,7 @@ import os
 import sys
 
 import shutil
-import lexer as lex
+import lexer.c as lex
 from xml import *
 from systeme.parallele import ProgressOpening, ProgressDisp
 from language.language import get_text

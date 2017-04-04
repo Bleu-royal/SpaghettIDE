@@ -3,7 +3,7 @@ import os
 from PySide.QtGui import *
 from PySide.QtCore import *
 
-import lexer as lex
+import lexer.c as lex
 import themes.themes as themes
 import gui.bouton as b
 

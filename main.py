@@ -31,11 +31,11 @@ def remove_folder(path):
 remove_folder(".")
 
 def remove_parsetab():
-    if os.path.isfile("parsetab.py"):
-        os.remove("parsetab.py")
+    if os.path.isfile("lexer/parsetab.py"):
+        os.remove("lexer/parsetab.py")
 
 try:
-    verif = open("lexer.py", "r")
+    verif = open("lexer/c.py", "r")
     verif.close()
 
     remove_parsetab()
