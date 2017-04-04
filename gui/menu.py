@@ -2,12 +2,9 @@ import sys
 from PySide.QtGui import *
 from PySide.QtCore import *
 
-import gui.style.style as style
 from xml import *
-from systeme.workplace import *
-from themes.themes import *
-from language.language import *
-from gui.chargement import *
+from themes import themes
+from language import language
 from language.language import get_tmenu, get_text
 
 sys.path[:0] = ["../"]
@@ -220,7 +217,7 @@ class MenuBar(QMenuBar):
         :param name: Name of the theme
         """
         action.setCheckable(True)
-        if name in (get_current_theme(), get_current_language()):
+        if name in (themes.get_current_theme(), language.get_current_language()):
             action.setChecked(True)
         groupe.addAction(action)
         sous_groupe.addAction(action)
@@ -231,8 +228,8 @@ class MenuBar(QMenuBar):
         Change le thème actuel
         :param theme: nouveau thème
         """
-        if get_current_theme() != theme:
-            change_theme(theme)
+        if themes.get_current_theme() != theme:
+            themes.change_theme(theme)
             self.master.full_maj_style()
 
     # # # # Languages
@@ -241,7 +238,7 @@ class MenuBar(QMenuBar):
         Change la langue actuelle
         :param l: nouvelle langue
         """
-        if get_current_language() != l:
+        if language.get_current_language() != l:
             write_xml("conf.xml", "language", l)
             self.master.status_message(get_text("chang_lang"))
 

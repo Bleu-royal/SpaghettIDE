@@ -2,9 +2,7 @@
 
 from PySide.QtGui import *
 from PySide.QtCore import *
-from lexer import *
-from random import randint
-from copy import deepcopy
+import lexer as lex
 import json
 import os
 
@@ -156,11 +154,11 @@ class CodeHighLighter(QSyntaxHighlighter):
 
             if text in colored_cache:
                 data = colored_cache[text]
-                colored = colorate(data)
+                colored = lex.colorate(data)
             else:
                 print("coloration par Lex")
-                data = tokenize(text)
-                colored = colorate(data)
+                data = lex.tokenize(text)
+                colored = lex.colorate(data)
                 if self.cache_name != "":
                     cache = open("cache/%s.json"%self.cache_name, "r")
                     tmp = json.loads(cache.read())

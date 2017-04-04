@@ -7,7 +7,7 @@ import os
 import sys
 
 import shutil
-from lexer import *
+import lexer as lex
 from xml import *
 from systeme.parallele import ProgressOpening, ProgressDisp
 from language.language import get_text
@@ -262,7 +262,7 @@ class GetDefFonctions(QObject):
             fichier = open(file_, "r")
             data = fichier.read()
             fichier.close()
-            lignes = yaccing(data, False)
+            lignes = lex.yaccing(data, False)
 
             for ligne in lignes:
                 if "function_definition" in lignes[ligne]:

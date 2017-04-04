@@ -5,7 +5,7 @@ import os
 from PySide.QtGui import *
 from PySide.QtCore import *
 
-from themes.themes import *
+from themes import themes
 from systeme.document import find
 
 sys.path[:0] = ["../"]
@@ -63,7 +63,7 @@ class Inspecteur(QListWidget):
         find(self.parent, selected, False, True)
 
     def maj_style(self):
-        colors = get_color_from_theme("treeview")
-        self.setStyleSheet("QListWidget{background: " + get_rgb(colors["BACKGROUND"]) + ";}"
-                           "QListWidget::item{color: " + get_rgb(colors["ITEMS"]) + ";}"
-                           "QListWidget::item:hover{color: " + get_rgb(colors["ITEMSHOVER"]) + ";}")
+        colors = themes.get_color_from_theme("treeview")
+        self.setStyleSheet("QListWidget{background: " + themes.get_rgb(colors["BACKGROUND"]) + ";}"
+                           "QListWidget::item{color: " + themes.get_rgb(colors["ITEMS"]) + ";}"
+                           "QListWidget::item:hover{color: " + themes.get_rgb(colors["ITEMSHOVER"]) + ";}")
