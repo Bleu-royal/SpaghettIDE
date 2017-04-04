@@ -259,34 +259,33 @@ def tokenize(data):
     while True:
         token = lexer.token()
         if not token: break
-        res += [token.type]
+        res += [(token.type, token.value)]
 
     return res
-
-
 
 def colorate(data):
     res = []
 
     for e in data:
-        if e.type.lower() in types:
-            res += [[e.value, tokenColor["TYPE"]]]
-        elif e.type.lower() in operandes:
-            res += [[e.value, tokenColor["OP"]]]
-        elif e.type == "IDENTIFIER" and e.value in know_functions:
-            res += [[e.value, [107, 217, 237]]]
-        elif e.type == "IDENTIFIER" and e.value in know_const:
-            res += [[e.value, tokenColor["CONSTANT"]]]
-        elif e.type in list(keywords.values()):
-            res += [[e.value, tokenColor["KEYWORD"]]]
-        elif e.type in tokenColor:
-            res += [[e.value, tokenColor[e.type]]]
+        type_, value = e
+        if type_.lower() in types:
+            res += [[value, tokenColor["TYPE"]]]
+        elif type_.lower() in operandes:
+            res += [[value, tokenColor["OP"]]]
+        elif type_ == "IDENTIFIER" and value in know_functions:
+            res += [[value, [107, 217, 237]]]
+        elif type_ == "IDENTIFIER" and value in know_const:
+            res += [[value, tokenColor["CONSTANT"]]]
+        elif type_ in list(keywords.values()):
+            res += [[value, tokenColor["KEYWORD"]]]
+        elif type_ in tokenColor:
+            res += [[value, tokenColor[type_]]]
         else:
             if "PONCT" not in tokenColor:
                 ponct = [255, 255, 255]
             else:
                 ponct = tokenColor["PONCT"]
-            res += [[e.value, ponct]]
+            res += [[value, ponct]]
     
     return res
 

@@ -156,24 +156,25 @@ class CodeHighLighter(QSyntaxHighlighter):
                     colored_cache = {}
 
             if text in colored_cache:
-                colored = colored_cache[text]
+                data = colored_cache[text]
+                colored = colorate(data)
             else:
                 print("coloration par Lex")
-                colored = colorate(text)
+                data = tokenize(text)
+                colored = colorate(data)
                 if self.cache_name != "":
                     cache = open("cache/%s.json"%self.cache_name, "r")
                     tmp = json.loads(cache.read())
                     cache.close()
 
                     cache = open("cache/%s.json"%self.cache_name, "w")
-                    tmp.update({text:colored})
+                    tmp.update({text:data})
                     cache.write(json.dumps(tmp))
                     cache.close()
 
             current_pos = 0
 
             for info in colored:
-
                 while current_pos in space_remember:
                     current_pos += 1
 
