@@ -1,30 +1,30 @@
 {
   "Edition": {
     "Mot Courant": "Ctrl+D",
-    "Dupliquer": "Maj+Ctrl+D",
-    "Rechercher": "Ctrl+F",
+    "Ligne Courante": "Ctrl+L",
     "Mode Insertion": "Ctrl+I",
-    "Indenter": "Ctrl+Alt+L",
-    "Ligne Courante": "Ctrl+L"
-  },
-  "Fichier": {
-    "Configuration": "Maj+F5",
-    "Cheminee": "F6",
-    "Plein Ecran": "F7",
-    "Assistance vocale": "F12",
-    "Ouvrir": "Ctrl+O",
-    "Compiler": "F5",
-    "Ecran Chargement": "F4",
-    "Quitter": "Echap",
-    "Fermer Onglet": "Ctrl+W",
-    "Nouveau Projet": "Ctrl+M",
-    "Num Lignes": "F2",
-    "Nouveau Fichier": "Ctrl+N",
-    "Sauvegarder": "Ctrl+S"
+    "Rechercher": "Ctrl+F",
+    "Dupliquer": "Maj+Ctrl+D",
+    "Indenter": "Ctrl+Alt+L"
   },
   "Projet": {
-    "Importer Projet": "Maj+Ctrl+I",
     "Informations Projet": "Ctrl+Alt+I",
+    "Importer Projet": "Maj+Ctrl+I",
     "Supprimer Projet": "Ctrl+Alt+S"
+  },
+  "Fichier": {
+    "Fermer Onglet": "Ctrl+W",
+    "Ecran Chargement": "F4",
+    "Configuration": "Maj+F5",
+    "Sauvegarder": "Ctrl+S",
+    "Cheminee": "F6",
+    "Ouvrir": "Ctrl+O",
+    "Plein Ecran": "F7",
+    "Quitter": "Echap",
+    "Nouveau Fichier": "Ctrl+N",
+    "Nouveau Projet": "Ctrl+M",
+    "Assistance vocale": "F12",
+    "Compiler": "F5",
+    "Num Lignes": "F2"
   }
 }

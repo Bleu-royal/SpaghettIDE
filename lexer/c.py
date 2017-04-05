@@ -273,7 +273,7 @@ def colorate(data):
         elif type_.lower() in operandes:
             res += [[value, tokenColor["OP"]]]
         elif type_ == "IDENTIFIER" and value in know_functions:
-            res += [[value, [107, 217, 237]]]
+            res += [[value, tokenColor["KNOWN_FUNC"]]]
         elif type_ == "IDENTIFIER" and value in know_const:
             res += [[value, tokenColor["CONSTANT"]]]
         elif type_ in list(keywords.values()):
@@ -281,11 +281,7 @@ def colorate(data):
         elif type_ in tokenColor:
             res += [[value, tokenColor[type_]]]
         else:
-            if "PONCT" not in tokenColor:
-                ponct = [255, 255, 255]
-            else:
-                ponct = tokenColor["PONCT"]
-            res += [[value, ponct]]
+            res += [[value, tokenColor["PONCT"]]]
     
     return res
 
