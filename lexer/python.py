@@ -155,18 +155,12 @@ tokens = [
     "AND_ASSIGN",
     "XOR_ASSIGN",
     "OR_ASSIGN",
-    "RIGHT_OP",
-    "LEFT_OP",
-    "INC_OP",
-    "DEC_OP",
-    "PTR_OP",
     "AND_OP",
     "OR_OP",
     "LE_OP",
     "GE_OP",
     "EQ_OP",
     "NE_OP",
-    "SEMICOLON",
     "L_BRACE",
     "R_BRACE",
     "COMMA",
@@ -177,8 +171,6 @@ tokens = [
     "L_HOOK",
     "R_HOOK",
     "POINT",
-    "AND",
-    "NOT",
     "TILD",
     "MINUS",
     "PLUS",
@@ -187,13 +179,51 @@ tokens = [
     "MOD",
     "INF",
     "SUP",
-    "EXOR",
-    "OR",
-    "INTER",
     "COMMENT",
+    "DOTTED_NAME"
 ] + list(keywords.values())
 
 t_STRING_LITERAL = r"[A-Za-z_]?\"(\.|[^\"])*\""
+t_ELLIPSIS = r"\.\.\."
+t_ADD_ASSIGN = r"\+="
+t_SUB_ASSIGN = r"-="
+t_MUL_ASSIGN = r"\*="
+t_DIV_ASSIGN = r"/="
+t_MOD_ASSIGN = r"%="
+t_AND_ASSIGN = r"&="
+t_OR_ASSIGN = r"\|="
+t_AND_OP = r"&&"
+t_OR_OP = r"\|\|"
+t_LE_OP = r"<="
+t_GE_OP = r">="
+t_EQ_OP = r"=="
+t_NE_OP = r"!="
+t_L_BRACE = r"{"
+t_R_BRACE = r"}"
+t_COMMA = r","
+t_COLON = r":"
+t_EQUALS = r"="
+t_L_BRACKET = r"\("
+t_R_BRACKET = r"\)"
+t_L_HOOK = r"\["
+t_R_HOOK = r"\]"
+t_POINT = r"\."
+t_TILD = r"~"
+t_MINUS = r"-"
+t_PLUS = r"\+"
+t_TIMES = r"\*"
+t_DIVIDE = r"/"
+t_MOD = r"\%"
+t_INF = r"<"
+t_SUP = r">"
+t_CONSTANT = r'[0-9]+'
+t_COMMENT = r'\#(.*)'
+
+
+def t_DOTTED_NAME(t):
+    r"[A-Za-z_][\.A-Za-z0-9_]*"
+    t.type = keywords.get(t.value, "IDENTIFIER")
+    return t
 
 def t_IDENTIFIER(t):
     r"[A-Za-z_][A-Za-z0-9_]*"
