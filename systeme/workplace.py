@@ -532,6 +532,7 @@ def infosproject(parent):
 
     ip = InfosProject(parent)
     ip.exec()
+    project = {}
     project_name = ip.get_project()
     valider = ip.valider
     cancel = ip.cancel
