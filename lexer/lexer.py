@@ -9,6 +9,7 @@ def tokenize(language, data):
     return [] if language not in lexers else lexers[language].tokenize(data)
 
 def colorate(language, data):
+    print(language, data)
     return [] if language not in lexers else lexers[language].colorate(data)
 
 def update_token_color(language):

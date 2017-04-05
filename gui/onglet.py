@@ -50,6 +50,7 @@ class TabWidget(QTabWidget):
         self.setUsesScrollButtons(True)  # Si il y a trop d'onglets
 
     def get_current_ext(self):
+        print("ext ====> %s"%self.parent.codes[self.currentIndex()+1].split(".")[-1])
         return self.parent.codes[self.currentIndex()+1].split(".")[-1]
 
     def maj_style(self):

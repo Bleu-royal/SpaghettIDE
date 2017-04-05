@@ -95,7 +95,7 @@ class CodeHighLighter(QSyntaxHighlighter):
 
         if not self.first_launch and text != "":
 
-            idx = self.editeur.parent.get_idx() - 1
+            idx = self.editeur.parent.get_idx()
             file_type = self.editeur.parent.docs[idx].extension
 
             textCursor = self.editeur.textCursor()
