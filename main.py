@@ -38,7 +38,7 @@ try:
 
     remove_parsetab()
 
-    workplace_path = open_xml("conf.xml")["current_workplace"] + "/"
+    workplace_path = open_xml("conf.xml")["current_workplace"]
 
     fenetre = Fenetre("SpaghettIDE (Bleu Royal)", workplace_path)  # Creation of the main window
 

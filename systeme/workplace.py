@@ -202,8 +202,11 @@ def open_project(parent, name=False):
         parent.fenetre.project_path = parent.fenetre.workplace_path + name
         project_files = get_project_files(parent.fenetre.project_path + "/")
 
-
-        parent.fenetre.project_type = project_language("%s/%s.xml"%(parent.fenetre.project_path, parent.fenetre.project_path.split("/")[-1]))
+        if os.path.exists("%s/%s.xml"%(parent.fenetre.project_path, parent.fenetre.project_path.split("/")[-1])):
+            parent.fenetre.project_type = project_language("%s/%s.xml"%(parent.fenetre.project_path, parent.fenetre.project_path.split("/")[-1]))
+        else:
+            QMessageBox.critical(parent, get_text("invalid_project"), get_text("please_import"))
+            return
 
         memory = Mem()
 

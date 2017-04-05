@@ -297,5 +297,15 @@
   "chg_workplace": {
     "fr": "Changer l'emplacement du workplace",
     "en": "Change workplace location"
+  },
+
+  "invalid_project": {
+    "fr": "Le projet selectionné n'est pas valide",
+    "en": "Selected project is invalid"
+  },
+
+  "please_import": {
+    "fr": "Veuillez importer le projet avant de l'ouvrir",
+    "en": "Please import the project before open it"
   }
 }

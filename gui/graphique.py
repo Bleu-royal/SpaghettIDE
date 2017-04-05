@@ -483,6 +483,12 @@ class Fenetre(QWidget):
         """
         Change l'emplacement du workplace
         """
+        self.docs = []
+        self.highlighters = []
+        self.codes = []
+        self.tab_widget.clear()
+        self.project_path = ""
+
         chemin = QFileDialog.getExistingDirectory(self, get_text("chg_worplace"), self.workplace_path) + "/"
         self.treeview.change_worplace(chemin)
         self.workplace_path = chemin
