@@ -193,12 +193,12 @@ tokens = [
     "COMMENT",
 ] + list(keywords.values())
 
+t_STRING_LITERAL = r"[A-Za-z_]?\"(\.|[^\"])*\""
+
 def t_IDENTIFIER(t):
     r"[A-Za-z_][A-Za-z0-9_]*"
     t.type = keywords.get(t.value, "IDENTIFIER")
     return t
-
-
 
 
 t_ignore = " \t\f\v"
