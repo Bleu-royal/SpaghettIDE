@@ -293,7 +293,8 @@ erreurs = []
 start = "translation_unit"
 
 def p_include_expression(p):
-    '''include_expression : INCLUDE INCLUDE_STRING'''
+    '''include_expression : INCLUDE INCLUDE_STRING
+                          | include_expression INCLUDE INCLUDE_STRING'''
     if not str(p.lineno(0) - 1) in lignes:
         lignes[str(p.lineno(0) - 1)] = ["include_expression"]
     else:
