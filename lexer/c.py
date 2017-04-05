@@ -11,6 +11,7 @@ tokenColor = get_color_from_theme("token")
 def update_token_color():
     global tokenColor
     tokenColor = get_color_from_theme("token")
+    print("changement of token colors : %s" %tokenColor)
 
 
 types = [
@@ -240,7 +241,7 @@ def t_newline(t):
 
 
 def t_error(t):
-    print("coucouc c'est moi")
+    print("erreur : %s"%t)
     # print("Illegal character ’%s’" % t.value[0], "on line ", t.lineno)
     t.lexer.skip(1)
 
@@ -1020,7 +1021,7 @@ def p_function_definition(p):
 
 
 def p_error(p):
-    print("coucou c'est moi")
+    print("erreur : %s"%p)
     if p and p.type != "COMMENT":
         global erreurs
         erreurs += [[p.lineno, p.lexpos, p.value]]

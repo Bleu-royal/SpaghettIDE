@@ -209,7 +209,7 @@ def t_newline(t):
 
 
 def t_error(t):
-    print("coucouc c'est moi")
+    print("erreur : %s"%t)
     # print("Illegal character ’%s’" % t.value[0], "on line ", t.lineno)
     t.lexer.skip(1)
 
@@ -257,6 +257,11 @@ def colorate(data):
 
 lignes = {}
 erreurs = []
+
+
+def p_error(p):
+    print("erreur : %s"%p)
+
 
 def yaccing(data, get_errros=True):
     global erreurs, lignes

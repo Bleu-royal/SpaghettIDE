@@ -709,13 +709,13 @@ class Fenetre(QWidget):
         """
         Met à jour le thème de tous les éléments de l'interface graphique
         """
+        print("full maj style------")
         l_objects = (self.treeview, self, self.tab_widget, self.statusbar, self.infobar, self.inspecteur, self.nb_lignes)
         for o in l_objects:
             o.maj_style()
 
-        for i,e in enumerate(self.docs):
-            lex.update_token_color(e.extension)
-            self.token_recoloration()
+        lex.update_token_color()
+        self.token_recoloration()
 
     def show_cheminee(self):
         """
