@@ -122,6 +122,7 @@ class Editeur(QTextEdit):
         self.snippets = snippets
 
         self.setTabStopWidth(20)
+        self.setLineWrapMode(QTextEdit.NoWrap)
 
         self.yacc_errors = []
         self.last_yacc_errors = []
