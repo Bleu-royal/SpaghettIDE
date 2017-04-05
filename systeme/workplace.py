@@ -153,7 +153,7 @@ def newproject(parent):
 def importproject(parent):
     workplace_path = parent.workplace_path
 
-    chemin = QFileDialog.getExistingDirectory(parent, get_text("proj_import"), parent.project_path)
+    chemin = QFileDialog.getExistingDirectory(parent, get_text("proj_import"), workplace_path)
     project_name = chemin.split("/")[-1]
 
     if not os.path.exists(workplace_path+project_name):
@@ -383,8 +383,10 @@ class ProgressWin(QObject):
 #     parent.highlighters = []
 
 class DeleteProject(QDialog):
-    def __init__(self):
+    def __init__(self, parent):
         super().__init__()
+
+        self.parent = parent
 
         self.valider = False
 
@@ -394,7 +396,7 @@ class DeleteProject(QDialog):
         self.buttons_layout = QHBoxLayout()
 
         self.project_name = QComboBox()
-        for e in os.listdir(os.environ["HOME"]+"/workplace"):
+        for e in os.listdir(parent.workplace_path):
             if e != ".DS_Store" and e != ".conf":
                 self.project_name.addItem(e)
 
@@ -435,7 +437,7 @@ class DeleteProject(QDialog):
 
 def deleteproject(parent):
 
-    dp = DeleteProject()
+    dp = DeleteProject(parent)
     dp.exec()
     project_name = dp.get_project()
     valider = dp.valider
@@ -447,8 +449,10 @@ def deleteproject(parent):
 
 
 class InfosProject(QDialog):
-    def __init__(self):
+    def __init__(self, parent):
         super().__init__()
+
+        self.parent = parent
 
         self.valider = False
         self.cancel = False
@@ -467,7 +471,7 @@ class InfosProject(QDialog):
         self.number_files = QLabel("")
 
         self.project_name = QComboBox()
-        for e in os.listdir(os.environ["HOME"]+"/workplace"):
+        for e in os.listdir(self.parent.workplace_path):
             if e != ".DS_Store" and e != ".conf":
                 self.project_name.addItem(e)
 
@@ -526,7 +530,7 @@ class InfosProject(QDialog):
 
 def infosproject(parent):
 
-    ip = InfosProject()
+    ip = InfosProject(parent)
     ip.exec()
     project_name = ip.get_project()
     valider = ip.valider
