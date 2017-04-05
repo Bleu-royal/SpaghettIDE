@@ -12,218 +12,23 @@ def update_token_color():
     global tokenColor
     tokenColor = get_color_from_theme("token")
 
-
 types = [
-    "char",
-    "bool",
-    "double",
-    "enum",
-    "float",
-    "int",
-    "long",
-    "short",
-    "signed",
-    "unsigned",
-    "void"
 ]
 
 operandes = [
-    "equals",
-    "times",
-    "divide",
-    "mod",
-    "minus",
-    "plus",
-    "right_assign",
-    "left_assign",
-    "add_assign",
-    "sub_assign",
-    "mul_assign",
-    "div_assign",
-    "mod_assign",
-    "and_assign",
-    "xor_assign",
-    "or_assign",
-    "inc_op",
-    "dec_op",
-    "and_op",
-    "or_op",
-    "le_op",
-    "ge_op",
-    "eq_op",
-    "ne_op",
-    "inf",
-    "sup",
-    "and",
-    "not"
 ]
 
 know_functions = [
-    "srand",
-    "rand",
-    "time",
-    "printf",
-    "scanf"
 ]
 
 know_const = [
-    "NULL",
 ]
 
 keywords = {
-    "#include" : "INCLUDE",
-    "auto": "AUTO",
-    "bool": "BOOL",
-    "break": "BREAK",
-    "case": "CASE",
-    "char": "CHAR",
-    "const": "CONST",
-    "continue": "CONTINUE",
-    "default": "DEFAULT",
-    "do": "DO",
-    "double": "DOUBLE",
-    "else": "ELSE",
-    "enum": "ENUM",
-    "extern": "EXTERN",
-    "float": "FLOAT",
-    "for": "FOR",
-    "goto": "GOTO",
-    "if": "IF",
-    "int": "INT",
-    "long": "LONG",
-    "register": "REGISTER",
-    "return": "RETURN",
-    "short": "SHORT",
-    "signed": "SIGNED",
-    "sizeof": "SIZEOF",
-    "static": "STATIC",
-    "struct": "STRUCT",
-    "switch": "SWITCH",
-    "typedef": "TYPEDEF",
-    "union": "UNION",
-    "unsigned": "UNSIGNED",
-    "void": "VOID",
-    "volatile": "VOLATILE",
-    "while": "WHILE"
 }
 
 tokens = [
-             "INCLUDE_STRING",
-             "IDENTIFIER",
-             "CONSTANT",
-             "STRING_LITERAL",
-             "ELLIPSIS",
-             "RIGHT_ASSIGN",
-             "LEFT_ASSIGN",
-             "ADD_ASSIGN",
-             "SUB_ASSIGN",
-             "MUL_ASSIGN",
-             "DIV_ASSIGN",
-             "MOD_ASSIGN",
-             "AND_ASSIGN",
-             "XOR_ASSIGN",
-             "OR_ASSIGN",
-             "RIGHT_OP",
-             "LEFT_OP",
-             "INC_OP",
-             "DEC_OP",
-             "PTR_OP",
-             "AND_OP",
-             "OR_OP",
-             "LE_OP",
-             "GE_OP",
-             "EQ_OP",
-             "NE_OP",
-             "SEMICOLON",
-             "L_BRACE",
-             "R_BRACE",
-             "COMMA",
-             "COLON",
-             "EQUALS",
-             "L_BRACKET",
-             "R_BRACKET",
-             "L_HOOK",
-             "R_HOOK",
-             "POINT",
-             "AND",
-             "NOT",
-             "TILD",
-             "MINUS",
-             "PLUS",
-             "TIMES",
-             "DIVIDE",
-             "MOD",
-             "INF",
-             "SUP",
-             "EXOR",
-             "OR",
-             "INTER",
-             "COMMENT",
-         ] + list(keywords.values())
-
-"""{
-
-    "IDENTIFIER": [255, 255, 255],
-    "KEYWORD": [246, 45, 115],
-    "STRING_LITERAL": [230, 218, 123],
-    "COMMENT": [117, 113, 95],
-    "CONSTANT": [174, 133, 252]
-
-}"""
-
-t_INCLUDE = r"\#include"
-t_INCLUDE_STRING = r"<[A-Za-z_]+.h>"
-t_STRING_LITERAL = r"[A-Za-z_]?\"(\.|[^\"])*\""
-t_ELLIPSIS = r"\.\.\."
-t_RIGHT_ASSIGN = r">>="
-t_LEFT_ASSIGN = r"<<="
-t_ADD_ASSIGN = r"\+="
-t_SUB_ASSIGN = r"-="
-t_MUL_ASSIGN = r"\*="
-t_DIV_ASSIGN = r"/="
-t_MOD_ASSIGN = r"%="
-t_AND_ASSIGN = r"&="
-t_XOR_ASSIGN = r"\^="
-t_OR_ASSIGN = r"\|="
-t_RIGHT_OP = r">>"
-t_LEFT_OP = r"<<"
-t_INC_OP = r"\+\+"
-t_DEC_OP = r"--"
-t_PTR_OP = r"->"
-t_AND_OP = r"&&"
-t_OR_OP = r"\|\|"
-t_LE_OP = r"<="
-t_GE_OP = r">="
-t_EQ_OP = r"=="
-t_NE_OP = r"!="
-t_SEMICOLON = r";"
-# t_L_BRACE = r"{|<%"
-# t_R_BRACE = r"}|%>"
-t_L_BRACE = r"{"
-t_R_BRACE = r"}"
-t_COMMA = r","
-t_COLON = r":"
-t_EQUALS = r"="
-t_L_BRACKET = r"\("
-t_R_BRACKET = r"\)"
-t_L_HOOK = r"\["
-t_R_HOOK = r"\]"
-t_POINT = r"\."
-t_AND = r"&"
-t_NOT = r"!"
-t_TILD = r"~"
-t_MINUS = r"-"
-t_PLUS = r"\+"
-t_TIMES = r"\*"
-t_DIVIDE = r"/"
-t_MOD = r"\%"
-t_INF = r"<"
-t_SUP = r">"
-t_EXOR = r"\^"
-t_OR = r"\|"
-t_INTER = r"\?"
-t_CONSTANT = r'[0-9]+'
-t_COMMENT = r'(//.*)|(/\*(.)*\*/)'
+] + list(keywords.values())
 
 def t_IDENTIFIER(t):
     r"[A-Za-z_][A-Za-z0-9_]*"
@@ -273,7 +78,7 @@ def colorate(data):
         elif type_.lower() in operandes:
             res += [[value, tokenColor["OP"]]]
         elif type_ == "IDENTIFIER" and value in know_functions:
-            res += [[value, tokenColor["KNOWN_FUNC"]]]
+            res += [[value, [107, 217, 237]]]
         elif type_ == "IDENTIFIER" and value in know_const:
             res += [[value, tokenColor["CONSTANT"]]]
         elif type_ in list(keywords.values()):
@@ -281,7 +86,11 @@ def colorate(data):
         elif type_ in tokenColor:
             res += [[value, tokenColor[type_]]]
         else:
-            res += [[value, tokenColor["PONCT"]]]
+            if "PONCT" not in tokenColor:
+                ponct = [255, 255, 255]
+            else:
+                ponct = tokenColor["PONCT"]
+            res += [[value, ponct]]
     
     return res
 

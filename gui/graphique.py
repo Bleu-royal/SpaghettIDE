@@ -713,8 +713,9 @@ class Fenetre(QWidget):
         for o in l_objects:
             o.maj_style()
 
-        lex.update_token_color(self.tab_widget.get_current_ext())
-        self.token_recoloration()
+        for i,e in enumerate(self.docs):
+            lex.update_token_color(e.extension)
+            self.token_recoloration()
 
     def show_cheminee(self):
         """

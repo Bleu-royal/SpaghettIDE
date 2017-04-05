@@ -232,7 +232,6 @@ def open_project_and_document(parent, chemin):
 
 def open_doc_from_sig(e, parent, chemin):
     if e:
-        print("-----", chemin)
         open_document(parent, chemin, True)
 
 

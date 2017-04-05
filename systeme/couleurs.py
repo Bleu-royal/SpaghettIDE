@@ -7,7 +7,7 @@ import json
 import os
 import re
 
-import lexer.ar as AR
+# import lexer.ar as AR
 
 
 class Proposition(QListWidget):
@@ -126,11 +126,11 @@ class CodeHighLighter(QSyntaxHighlighter):
             else:
                 last_char = text[-1]
 
-            if last_char in [str(i) for i in range(10)] or last_char in "/+*-":
-                poss = AR.parse(text)
-                self.prop.props += poss
-                self.prop.addElement(poss)
-                self.prop.show()
+            # if last_char in [str(i) for i in range(10)] or last_char in "/+*-":
+            #     poss = AR.parse(text)
+            #     self.prop.props += poss
+            #     self.prop.addElement(poss)
+            #     self.prop.show()
 
             x = self.editeur.cursorRect().x() + 10
             y = self.editeur.cursorRect().y()

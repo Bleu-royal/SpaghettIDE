@@ -1,5 +1,7 @@
 {
   "Edition": {
+    "Ligne Courante": "Ctrl+L",
+    "Indenter": "Ctrl+Alt+L",
     "Mot Courant": "Ctrl+D",
     "Ligne Courante": "Ctrl+L",
     "Mode Insertion": "Ctrl+I",
