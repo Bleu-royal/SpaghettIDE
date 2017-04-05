@@ -192,7 +192,6 @@ def open_document(parent, chemin, secu=False):
         if chemin != "" and parent.project_path in chemin:
             if not parent.deja_ouvert(chemin):
                 title = chemin.split("/")[-1]
-                print("ext : %s"%chemin.split(".")[-1])
                 parent.add_code(title, current_ext=chemin.split(".")[-1])
                 parent.status_message(get_text("ouverture_de")+title, 2000)  # Message de status
                 parent.docs += [Document(parent, parent.codes[-1], chemin, True)]

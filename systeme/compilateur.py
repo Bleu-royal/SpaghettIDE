@@ -326,7 +326,7 @@ def compiler(parent):
     curt = os.getcwd()
     os.chdir(parent.project_path)
     out, res = Popen(configuration, shell=True, stdout=PIPE, stderr=PIPE).communicate()
-    res = res.decode("utf-8")
+    out, res = out.decode("utf-8"), res.decode("utf-8")
     os.chdir(curt)
 
     if parent.project_type == "c":
@@ -336,14 +336,15 @@ def compiler(parent):
             dialogErreur.exec()
         else:
             QMessageBox.about(parent, get_text("comp_res"), get_text("comp_ok"))
-            
             config_json = json.loads(xml.project_compil_json(xml_path))
             if config_json[-1]: # lancer après la compilation ?
                 name = "a.out" if config_json[4] == "" else config_json[4] # Nom du fichier
                 os.system("%s/%s"%(parent.project_path, name))
 
     else:
-        print(res)
+        print("##### Debut du script python #####")
+        print(out)
+        print("##### Fin du script python #####")
 
 def configuration_compilation(parent):
 
