@@ -205,7 +205,6 @@ def open_project(parent, name=False):
 
         parent.fenetre.project_type = project_language("%s/%s.xml"%(parent.fenetre.project_path, parent.fenetre.project_path.split("/")[-1]))
 
-
         memory = Mem()
 
         gdf = ProgressOpening(ProgressWin, project_files, memory, parent)
@@ -238,7 +237,7 @@ def get_project_files(path):
 class GetDefFonctions(QObject):
     resultat = Signal(tuple)
 
-    def __init__(self, files, parent):
+    def __init__(self, files, parent=False):
         QObject.__init__(self)
         self.files = files
         self.parent = parent
@@ -256,8 +255,9 @@ class GetDefFonctions(QObject):
         i = 0
         for file_ in self.files:
             i += 1
-            self.parent.update_progress(i*incr)
-            self.parent.update_text(get_text("proj_opening") + file_)
+            if self.parent:
+                self.parent.update_progress(i*incr)
+                self.parent.update_text(get_text("proj_opening") + file_)
 
             fichier = open(file_, "r")
             data = fichier.read()
