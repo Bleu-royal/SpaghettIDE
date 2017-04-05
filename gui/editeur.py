@@ -1,5 +1,6 @@
 import sys
 import os
+import json
 from PySide.QtGui import *
 from PySide.QtCore import *
 
@@ -97,7 +98,7 @@ class Editeur(QTextEdit):
 
     tabPress = Signal()
 
-    def __init__(self, police, taille_texte, def_functions, keywords, parent, snippets):
+    def __init__(self, police, taille_texte, def_functions, keywords, parent):
         """
         Hérite de QTextEdit.
         C'est une zone de texte dans laquelle on peut écrire, que l'on utilise ici pour écrire du code.
@@ -120,7 +121,7 @@ class Editeur(QTextEdit):
         self.taille_texte = taille_texte
         self.def_functions = def_functions
         self.keywords = keywords
-        self.snippets = snippets
+        self.snippets = self.get_snippets()
 
         self.setTabStopWidth(20)
         self.setLineWrapMode(QTextEdit.NoWrap)
@@ -132,6 +133,21 @@ class Editeur(QTextEdit):
         self.setFocus()
 
         # self.append("int main ( int argc, char** argv ){\n\n\treturn 0;\n\n}")
+
+    def get_snippets(self):
+        """
+        Récupère les snippets : prédéfinitions de fonctions.
+        :rtype: list
+        """
+        try:
+            fichier = open("snippets/%s.json"%self.parent.project_type, "r")
+            res = json.loads(fichier.read())
+            fichier.close()
+        except BaseException as e:
+            res = []
+
+
+        return res
 
     def analyse(self):
         """ Cette fonction est liée au bouton Analyse si il y a au moins un éditeur d'ouvert. """
@@ -234,7 +250,7 @@ class Editeur(QTextEdit):
                 self.moveCursor(QTextCursor.Right)
 
             textCursor = self.textCursor()
-            textCursor.select(QCursor.WordUnderCursor)
+            textCursor.select(QTextCursor.WordUnderCursor)
             self.setTextCursor(textCursor)
 
             return True

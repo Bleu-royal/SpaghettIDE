@@ -69,8 +69,6 @@ class Fenetre(QWidget):
         self.def_structs = {}
         self.def_vars = {}
 
-        self.snippets = self.get_snippets()
-
         self.aller_en_haut_lignes = False
 
         self.gridLayout = QGridLayout()
@@ -265,20 +263,6 @@ class Fenetre(QWidget):
         Ouvre la boite de dialogue permettant de rechercher des éléments
         """
         document.find_dialog(self)
-
-    def get_snippets(self):
-        """
-        Récupère les snippets : prédéfinitions de fonctions.
-        :rtype: list
-        """
-        try:
-            fichier = open("snippets.json", "r")
-            res = json.loads(fichier.read())
-            fichier.close()
-        except:
-            res = []
-
-        return res
 
     def get_idx(self):
         """
@@ -577,7 +561,7 @@ class Fenetre(QWidget):
         """
 
         self.codes += [editeur.Editeur("ABeeZee", 14, self.def_functions, list(lex.get_keywords(current_ext).keys()) +
-                               lex.get_know_functions(current_ext), self, self.snippets)]
+                               lex.get_know_functions(current_ext), self)]
         self.highlighters += [couleurs.CodeHighLighter(self.codes[-1], self.codes[-1].document())]
         self.codes[-1].tabPress.connect(self.highlighters[-1].test)
         self.tab_widget.addTab(self.codes[-1], title)
