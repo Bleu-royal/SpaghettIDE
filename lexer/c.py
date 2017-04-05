@@ -173,7 +173,6 @@ tokens = [
 
 t_INCLUDE = r"\#include"
 t_INCLUDE_STRING = r"<[A-Za-z_]+.h>"
-
 t_STRING_LITERAL = r"[A-Za-z_]?\"(\.|[^\"])*\""
 t_ELLIPSIS = r"\.\.\."
 t_RIGHT_ASSIGN = r">>="
@@ -241,6 +240,7 @@ def t_newline(t):
 
 
 def t_error(t):
+    print("coucouc c'est moi")
     # print("Illegal character ’%s’" % t.value[0], "on line ", t.lineno)
     t.lexer.skip(1)
 
@@ -1024,6 +1024,7 @@ def p_function_definition(p):
 
 
 def p_error(p):
+    print("coucou c'est moi")
     if p and p.type != "COMMENT":
         global erreurs
         erreurs += [[p.lineno, p.lexpos, p.value]]
