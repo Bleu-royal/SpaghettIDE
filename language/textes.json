@@ -292,5 +292,10 @@
   "chang_lang": {
     "fr": "Langue : français. La langue du menu sera actualisée au redémarrage",
     "en": "Language : English. Menu language will be update when you'll restart the IDE"
+  },
+
+  "chg_workplace": {
+    "fr": "Changer l'emplacement du workplace",
+    "en": "Change workplace location"
   }
 }

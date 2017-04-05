@@ -479,6 +479,15 @@ class Fenetre(QWidget):
         """
         self.tab_widget.close_current_tab()
 
+    def change_worplace_location(self):
+        """
+        Change l'emplacement du workplace
+        """
+        chemin = QFileDialog.getExistingDirectory(self, get_text("chg_worplace"), self.workplace_path) + "/"
+        self.treeview.change_worplace(chemin)
+        self.workplace_path = chemin
+        write_xml("conf.xml", "current_workplace", chemin)
+
     def deja_ouvert(self, chemin):
         """
         Renvoie si un document est déjà ouvert

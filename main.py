@@ -38,7 +38,9 @@ try:
 
     remove_parsetab()
 
-    fenetre = Fenetre("SpaghettIDE (Bleu Royal)")  # Creation of the main window
+    workplace_path = open_xml("conf.xml")["current_workplace"] + "/"
+
+    fenetre = Fenetre("SpaghettIDE (Bleu Royal)", workplace_path)  # Creation of the main window
 
     if configuration['numerote_lines'] == 'False':
         fenetre.show_line_column()
