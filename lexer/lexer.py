@@ -1,53 +1,24 @@
 from lexer import c, python, ar
 
+lexers = {"c" : c, "h" : c, "py" : python}
 
 def lexing(language, word):
-    if language in ("c", "h"):
-        return c.lexing(word)
-    elif language in ("py", ):
-        return python.lexing(word)
-    else:
-        return []
+    return [] if language not in lexers else lexers[language].lexing(word)
 
 def tokenize(language, data):
-    if language in ("c", "h"):
-        return c.tokenize(data)
-    elif language in ("py", ):
-        return python.tokenize(data)
-    else:
-        []
+    return [] if language not in lexers else lexers[language].tokenize(data)
 
 def colorate(language, data):
-    if language in ("c", "h"):
-        return c.colorate(data)
-    elif language in ("py", ):
-        return python.colorate(data)
-    else:
-        return []
+    return [] if language not in lexers else lexers[language].colorate(data)
 
 def update_token_color(language):
-    if language in ("c", "h"):
-        c.update_token_color()
-    elif language in ("py", ):
-        python.update_token_color()
-
+    if language in lexers : lexers[language].update_token_color()
 
 def yaccing(language, data, get_errros=True):
-    if language in ("c", "h"):
-        return c.yaccing(data, get_errros)
-    else:
-        if get_errros: return ([],[])
-        else: return []
+    return [] if language not in lexers else lexers[language].yaccing(data, get_errros)
 
 def get_keywords(language):
-    if language in ("c", "h"):
-        return c.keywords
-    else:
-        return {}
-
+    return {} if language not in lexers else lexers[language].keywords
 
 def get_know_functions(language):
-    if language in ("c", "h"):
-        return c.know_functions
-    else:
-        return []
+    return [] if language not in lexers else lexers[language].know_functions
