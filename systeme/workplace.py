@@ -160,6 +160,8 @@ def importproject(parent):
         QDir(parent.workplace_path).mkpath(project_name)
 
         os.system("cp -r %s/ %s/"%(chemin.replace(" ", "\ "), workplace_path + project_name.replace(" ","\ ")))
+    
+    if not os.path.exists("%s%s/%s.xml"%(workplace_path, project_name, project_name)):
 
         date = str(datetime.now())
 
@@ -175,6 +177,7 @@ def importproject(parent):
         update_infos(parent,path,project_name,date,project_lang,project_nb_files)
         project_location = workplace_path + project_name
         add_projects_xml(project_name,project_lang,project_location,date,project_nb_files) 
+
 
 
 class Mem:
