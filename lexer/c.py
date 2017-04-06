@@ -11,6 +11,7 @@ tokenColor = get_color_from_theme("token")
 def update_token_color():
     global tokenColor
     tokenColor = get_color_from_theme("token")
+    print("changement of token colors : %s" %tokenColor)
 
 
 types = [
@@ -108,58 +109,58 @@ keywords = {
 }
 
 tokens = [
-             "INCLUDE_STRING",
-             "IDENTIFIER",
-             "CONSTANT",
-             "STRING_LITERAL",
-             "ELLIPSIS",
-             "RIGHT_ASSIGN",
-             "LEFT_ASSIGN",
-             "ADD_ASSIGN",
-             "SUB_ASSIGN",
-             "MUL_ASSIGN",
-             "DIV_ASSIGN",
-             "MOD_ASSIGN",
-             "AND_ASSIGN",
-             "XOR_ASSIGN",
-             "OR_ASSIGN",
-             "RIGHT_OP",
-             "LEFT_OP",
-             "INC_OP",
-             "DEC_OP",
-             "PTR_OP",
-             "AND_OP",
-             "OR_OP",
-             "LE_OP",
-             "GE_OP",
-             "EQ_OP",
-             "NE_OP",
-             "SEMICOLON",
-             "L_BRACE",
-             "R_BRACE",
-             "COMMA",
-             "COLON",
-             "EQUALS",
-             "L_BRACKET",
-             "R_BRACKET",
-             "L_HOOK",
-             "R_HOOK",
-             "POINT",
-             "AND",
-             "NOT",
-             "TILD",
-             "MINUS",
-             "PLUS",
-             "TIMES",
-             "DIVIDE",
-             "MOD",
-             "INF",
-             "SUP",
-             "EXOR",
-             "OR",
-             "INTER",
-             "COMMENT",
-         ] + list(keywords.values())
+    "INCLUDE_STRING",
+    "IDENTIFIER",
+    "CONSTANT",
+    "STRING_LITERAL",
+    "ELLIPSIS",
+    "RIGHT_ASSIGN",
+    "LEFT_ASSIGN",
+    "ADD_ASSIGN",
+    "SUB_ASSIGN",
+    "MUL_ASSIGN",
+    "DIV_ASSIGN",
+    "MOD_ASSIGN",
+    "AND_ASSIGN",
+    "XOR_ASSIGN",
+    "OR_ASSIGN",
+    "RIGHT_OP",
+    "LEFT_OP",
+    "INC_OP",
+    "DEC_OP",
+    "PTR_OP",
+    "AND_OP",
+    "OR_OP",
+    "LE_OP",
+    "GE_OP",
+    "EQ_OP",
+    "NE_OP",
+    "SEMICOLON",
+    "L_BRACE",
+    "R_BRACE",
+    "COMMA",
+    "COLON",
+    "EQUALS",
+    "L_BRACKET",
+    "R_BRACKET",
+    "L_HOOK",
+    "R_HOOK",
+    "POINT",
+    "AND",
+    "NOT",
+    "TILD",
+    "MINUS",
+    "PLUS",
+    "TIMES",
+    "DIVIDE",
+    "MOD",
+    "INF",
+    "SUP",
+    "EXOR",
+    "OR",
+    "INTER",
+    "COMMENT",
+] + list(keywords.values())
 
 """{
 
@@ -173,7 +174,6 @@ tokens = [
 
 t_INCLUDE = r"\#include"
 t_INCLUDE_STRING = r"<[A-Za-z_]+.h>"
-
 t_STRING_LITERAL = r"[A-Za-z_]?\"(\.|[^\"])*\""
 t_ELLIPSIS = r"\.\.\."
 t_RIGHT_ASSIGN = r">>="
@@ -241,6 +241,7 @@ def t_newline(t):
 
 
 def t_error(t):
+    print("erreur : %s"%t)
     # print("Illegal character ’%s’" % t.value[0], "on line ", t.lineno)
     t.lexer.skip(1)
 
@@ -272,8 +273,8 @@ def colorate(data):
             res += [[value, tokenColor["TYPE"]]]
         elif type_.lower() in operandes:
             res += [[value, tokenColor["OP"]]]
-        elif type_ == "IDENTIFIER" and value in know_functions:
-            res += [[value, [107, 217, 237]]]
+        elif type_ == "IDENTIFIER" and value.upper() in know_functions:
+            res += [[value, tokenColor["KNOWN_FUNC"]]]
         elif type_ == "IDENTIFIER" and value in know_const:
             res += [[value, tokenColor["CONSTANT"]]]
         elif type_ in list(keywords.values()):
@@ -281,11 +282,7 @@ def colorate(data):
         elif type_ in tokenColor:
             res += [[value, tokenColor[type_]]]
         else:
-            if "PONCT" not in tokenColor:
-                ponct = [255, 255, 255]
-            else:
-                ponct = tokenColor["PONCT"]
-            res += [[value, ponct]]
+            res += [[value, tokenColor["PONCT"]]]
     
     return res
 
@@ -296,7 +293,8 @@ erreurs = []
 start = "translation_unit"
 
 def p_include_expression(p):
-    '''include_expression : INCLUDE INCLUDE_STRING'''
+    '''include_expression : INCLUDE INCLUDE_STRING
+                          | include_expression INCLUDE INCLUDE_STRING'''
     if not str(p.lineno(0) - 1) in lignes:
         lignes[str(p.lineno(0) - 1)] = ["include_expression"]
     else:
@@ -1024,6 +1022,7 @@ def p_function_definition(p):
 
 
 def p_error(p):
+    print("erreur : %s"%p)
     if p and p.type != "COMMENT":
         global erreurs
         erreurs += [[p.lineno, p.lexpos, p.value]]

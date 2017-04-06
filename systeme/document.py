@@ -158,7 +158,7 @@ def save_document(parent):
         if idx != -1:
             if parent.docs[idx].chemin_enregistrement == "":
                 chemin = \
-                    QFileDialog.getSaveFileName(parent, get_text("save_file"), parent.project_path, var.file_by_language[parent.project_type])[0]
+                    QFileDialog.getSaveFileName(parent, get_text("save_file"), parent.project_path, var.file_by_language[parent.project_type] + ";;" + var.txt_extentions_filedialog)[0]
                 if chemin != "" and parent.project_path in chemin:
                     parent.docs[idx].set_chemin_enregistrement(chemin)
                     parent.docs[idx].sauvegarde_document(chemin)
@@ -188,7 +188,8 @@ def open_document(parent, chemin, secu=False):
 
     if parent.project_path != "":
         if not chemin:
-            chemin = QFileDialog.getOpenFileName(parent, get_text("ouverture_2"), parent.project_path, var.file_by_language[parent.project_type])[0]
+            print("ici")
+            chemin = QFileDialog.getOpenFileName(parent, get_text("ouverture_2"), parent.project_path, var.file_by_language[parent.project_type] + ";;" + var.txt_extentions_filedialog)[0]
         if chemin != "" and parent.project_path in chemin:
             if not parent.deja_ouvert(chemin):
                 title = chemin.split("/")[-1]
@@ -232,7 +233,6 @@ def open_project_and_document(parent, chemin):
 
 def open_doc_from_sig(e, parent, chemin):
     if e:
-        print("-----", chemin)
         open_document(parent, chemin, True)
 
 

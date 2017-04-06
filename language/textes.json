@@ -292,5 +292,20 @@
   "chang_lang": {
     "fr": "Langue : français. La langue du menu sera actualisée au redémarrage",
     "en": "Language : English. Menu language will be update when you'll restart the IDE"
+  },
+
+  "chg_workplace": {
+    "fr": "Changer l'emplacement du workplace",
+    "en": "Change workplace location"
+  },
+
+  "invalid_project": {
+    "fr": "Le projet selectionné n'est pas valide",
+    "en": "Selected project is invalid"
+  },
+
+  "please_import": {
+    "fr": "Veuillez importer le projet avant de l'ouvrir",
+    "en": "Please import the project before open it"
   }
 }

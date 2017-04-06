@@ -29,6 +29,11 @@
     "en": "Close current tab"
   },
 
+  "chg_workplace": {
+    "fr": "Changer l'emplacement du workplace",
+    "en": "Change workplace location"
+  },
+
   "full_screen": {
     "fr": "Plein écran",
     "en": "Fullscreen"

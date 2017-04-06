@@ -69,8 +69,6 @@ class Fenetre(QWidget):
         self.def_structs = {}
         self.def_vars = {}
 
-        self.snippets = self.get_snippets()
-
         self.aller_en_haut_lignes = False
 
         self.gridLayout = QGridLayout()
@@ -265,20 +263,6 @@ class Fenetre(QWidget):
         Ouvre la boite de dialogue permettant de rechercher des éléments
         """
         document.find_dialog(self)
-
-    def get_snippets(self):
-        """
-        Récupère les snippets : prédéfinitions de fonctions.
-        :rtype: list
-        """
-        try:
-            fichier = open("snippets.json", "r")
-            res = json.loads(fichier.read())
-            fichier.close()
-        except:
-            res = []
-
-        return res
 
     def get_idx(self):
         """
@@ -495,6 +479,21 @@ class Fenetre(QWidget):
         """
         self.tab_widget.close_current_tab()
 
+    def change_worplace_location(self):
+        """
+        Change l'emplacement du workplace
+        """
+        self.docs = []
+        self.highlighters = []
+        self.codes = []
+        self.tab_widget.clear()
+        self.project_path = ""
+
+        chemin = QFileDialog.getExistingDirectory(self, get_text("chg_worplace"), self.workplace_path) + "/"
+        self.treeview.change_worplace(chemin)
+        self.workplace_path = chemin
+        write_xml("conf.xml", "current_workplace", chemin)
+
     def deja_ouvert(self, chemin):
         """
         Renvoie si un document est déjà ouvert
@@ -522,6 +521,46 @@ class Fenetre(QWidget):
         # fin = time()
         # self.info_message(str(round((fin-debut), 3)), 1000)
 
+    def open_img(self, chemin):
+        """
+        Fonction d'ouverture d'une image
+
+        :param chemin: Chemin vers l'image
+        :type chemin: str
+        """
+
+        f_im = QDialog()
+
+        lab_img = QLabel()
+        pixmap_im = QPixmap(chemin)
+        lab_img.setPixmap(pixmap_im)
+        lab_img.setMaximumSize(self.ecran.screenGeometry().width() - 100, self.ecran.screenGeometry().height() - 100)
+
+        layout_im = QHBoxLayout()
+        layout_im.addWidget(lab_img)
+        f_im.setLayout(layout_im)
+        f_im.exec_()
+
+    def open_gif(self, chemin):
+        """
+        Fonction d'ouverture d'un gif
+
+        :param chemin: Chemin vers le GIF
+        """
+
+        f_gif = QDialog()
+
+        lab_gif = QLabel()
+        mov = QMovie(chemin)
+        lab_gif.setMovie(mov)
+
+        layout_gif = QHBoxLayout()
+        layout_gif.addWidget(lab_gif)
+        f_gif.setLayout(layout_gif)
+        mov.start()
+
+        f_gif.exec_()
+
     def add_code(self, title, new=False, current_ext="c"):
         """
         Fonction qui se charge d'ajouter à la liste des codes ouverts une nouvelle instance de la classe
@@ -537,7 +576,7 @@ class Fenetre(QWidget):
         """
 
         self.codes += [editeur.Editeur("ABeeZee", 14, self.def_functions, list(lex.get_keywords(current_ext).keys()) +
-                               lex.get_know_functions(current_ext), self, self.snippets)]
+                               lex.get_know_functions(current_ext), self)]
         self.highlighters += [couleurs.CodeHighLighter(self.codes[-1], self.codes[-1].document())]
         self.codes[-1].tabPress.connect(self.highlighters[-1].test)
         self.tab_widget.addTab(self.codes[-1], title)
@@ -669,11 +708,12 @@ class Fenetre(QWidget):
         """
         Met à jour le thème de tous les éléments de l'interface graphique
         """
+        print("full maj style------")
         l_objects = (self.treeview, self, self.tab_widget, self.statusbar, self.infobar, self.inspecteur, self.nb_lignes)
         for o in l_objects:
             o.maj_style()
 
-        lex.update_token_color(self.tab_widget.get_current_ext())
+        lex.update_token_color()
         self.token_recoloration()
 
     def show_cheminee(self):

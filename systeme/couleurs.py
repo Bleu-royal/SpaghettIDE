@@ -7,7 +7,7 @@ import json
 import os
 import re
 
-import lexer.ar as AR
+# import lexer.ar as AR
 
 
 class Proposition(QListWidget):
@@ -95,7 +95,7 @@ class CodeHighLighter(QSyntaxHighlighter):
 
         if not self.first_launch and text != "":
 
-            idx = self.editeur.parent.get_idx() - 1
+            idx = self.editeur.parent.get_idx()
             file_type = self.editeur.parent.docs[idx].extension
 
             textCursor = self.editeur.textCursor()
@@ -126,11 +126,11 @@ class CodeHighLighter(QSyntaxHighlighter):
             else:
                 last_char = text[-1]
 
-            if last_char in [str(i) for i in range(10)] or last_char in "/+*-":
-                poss = AR.parse(text)
-                self.prop.props += poss
-                self.prop.addElement(poss)
-                self.prop.show()
+            # if last_char in [str(i) for i in range(10)] or last_char in "/+*-":
+            #     poss = AR.parse(text)
+            #     self.prop.props += poss
+            #     self.prop.addElement(poss)
+            #     self.prop.show()
 
             x = self.editeur.cursorRect().x() + 10
             y = self.editeur.cursorRect().y()
@@ -162,7 +162,6 @@ class CodeHighLighter(QSyntaxHighlighter):
                 data = colored_cache[text]
                 colored = lex.colorate(file_type, data)
             else:
-                print("coloration par Lex")
                 data = lex.tokenize(file_type, text)
                 colored = lex.colorate(file_type, data)
                 if self.cache_name != "":

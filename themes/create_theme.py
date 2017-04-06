@@ -41,7 +41,7 @@ def make_files(name):
     """
 
     treeview_keys = ("BACKGROUND", "ITEMS", "ITEMSHOVER")
-    token_keys = ("IDENTIFIER", "KEYWORD", "STRING_LITERAL", "COMMENT", "CONSTANT", "TYPE", "OP")
+    token_keys = ("IDENTIFIER", "KEYWORD", "STRING_LITERAL", "COMMENT", "CONSTANT", "TYPE", "OP", "PONCT", "KNOWN_FUNC")
     textedit_keys = ("text-back-color", "text-color", "tab-color", "tab-back-color", "tab-hover-back-color",
                      "tab-hover-color", "tab-hover-bord-bot-color")
     statusbar_keys = ("BACKGROUND", "TEXT")

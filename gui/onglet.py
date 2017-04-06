@@ -50,6 +50,7 @@ class TabWidget(QTabWidget):
         self.setUsesScrollButtons(True)  # Si il y a trop d'onglets
 
     def get_current_ext(self):
+        print("ext ====> %s"%self.parent.codes[self.currentIndex()+1].split(".")[-1])
         return self.parent.codes[self.currentIndex()+1].split(".")[-1]
 
     def maj_style(self):
@@ -74,7 +75,7 @@ class TabWidget(QTabWidget):
 
         :rtype: None
         """
-        if len(self.parent.codes) != 0:  # On vérifie que la liste d'onglet n'est pas vide.
+        if self.count() != 0:  # On vérifie que la liste d'onglet n'est pas vide.
 
             if self.parent.get_current_widget_used() in ("Inspecteur", "Inspector"):
                 self.parent.change_affichage()  # On remplace l'Inspecteur par le navigateur si il était actif

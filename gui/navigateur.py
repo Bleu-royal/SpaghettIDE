@@ -50,7 +50,7 @@ class TreeView(QTreeView):
         self.setAnimated(True)  # Animations
 
         self.filters = []
-        extentions = var.extension_by_language[self.fenetre.project_type]
+        extentions = var.extension_by_language[self.fenetre.project_type] + var.ext_neutres
         for ext in extentions:
             self.filters.append(ext)
 
@@ -65,6 +65,10 @@ class TreeView(QTreeView):
         self.cacher_pas_projet()
 
         self.function_declarations.connect(self.load_project)
+
+    def change_worplace(self, workplace_path):
+        self.model.setRootPath(workplace_path)
+        self.setRootIndex(self.model.index(workplace_path))
 
     def maj_style(self):
         colors = themes.get_color_from_theme("treeview")
@@ -118,7 +122,11 @@ class TreeView(QTreeView):
         name = self.model.fileName(self.currentIndex())
         ext = name.split(".")[-1]
 
-        if ext in [i[1:] for i in var.extension_by_language[self.fenetre.project_type]]:
+        if ext in [i[1:] for i in var.extension_by_language[self.fenetre.project_type]] + [i[1:] for i in var.txt_extentions]:
             self.fenetre.open(path)
+        elif ext in [i[1:] for i in var.imgs_extentions]:
+            self.fenetre.open_img(path)
+        elif ext in [i[1:] for i in var.gif_extentions]:
+            self.fenetre.open_gif(path)
         else:
             QMessageBox.critical(self.fenetre, get_text("opening_fail"), get_text("opening_fail_text"))
