@@ -185,7 +185,38 @@ class Editeur(QTextEdit):
                 self.parent.def_vars[file_path] = declarators[2][file_path]
 
 
+    def auto_align(self):
+        idx = self.parent.get_idx()
+        lang = self.parent.docs[idx].extension
 
+        textCursor = self.textCursor()
+        textCursor.movePosition(QTextCursor.Up)
+        textCursor.select(QTextCursor.LineUnderCursor)
+        text = textCursor.selectedText()
+        if text != "":
+            nb_tab = self.get_current_tab()
+
+            if lang == "py" and text.strip()[-1] == ":":
+                nb_tab += 1
+            elif lang == "c":
+                if text.strip()[-1] == "{":
+                    nb_tab += 1
+            textCursor.movePosition(QTextCursor.Down)
+            textCursor.insertText("\t"*nb_tab)
+            self.setTextCursor(textCursor)
+
+
+
+    def get_current_tab(self):
+        textCursor = self.textCursor()
+        textCursor.movePosition(QTextCursor.Up)
+        textCursor.select(QTextCursor.LineUnderCursor)
+        text = textCursor.selectedText()
+
+        nb = 0
+        while text[nb] == "\t":
+            nb+=1
+        return nb    
 
 
     def keyPressEvent(self, event):
@@ -214,6 +245,11 @@ class Editeur(QTextEdit):
             return False
 
         super().keyPressEvent(event)
+
+        if event.key() == 16777220: # enter key
+            self.auto_align()
+
+
 
     def wheelEvent(self, e, syncr=False):
         """
