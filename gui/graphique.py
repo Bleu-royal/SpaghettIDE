@@ -490,7 +490,7 @@ class Fenetre(QWidget):
         self.project_path = ""
 
         chemin = QFileDialog.getExistingDirectory(self, get_text("chg_worplace"), self.workplace_path) + "/"
-        if chemine != "/":
+        if chemin != "/":
             self.treeview.change_worplace(chemin)
             self.workplace_path = chemin
             write_xml("conf.xml", "current_workplace", chemin)
