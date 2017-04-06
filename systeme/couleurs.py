@@ -162,7 +162,6 @@ class CodeHighLighter(QSyntaxHighlighter):
                 data = colored_cache[text]
                 colored = lex.colorate(file_type, data)
             else:
-                print("coloration par Lex")
                 data = lex.tokenize(file_type, text)
                 colored = lex.colorate(file_type, data)
                 if self.cache_name != "":

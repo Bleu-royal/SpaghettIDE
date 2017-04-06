@@ -1,11 +1,13 @@
 import sys
 import os
+import json
 from PySide.QtGui import *
 from PySide.QtCore import *
 
 import lexer.lexer as lex
 import themes.themes as themes
 import gui.bouton as b
+from systeme import workplace
 
 sys.path[:0] = ["../"]
 sys.path[:0] = ["gui"]
@@ -96,7 +98,7 @@ class Editeur(QTextEdit):
 
     tabPress = Signal()
 
-    def __init__(self, police, taille_texte, def_functions, keywords, parent, snippets):
+    def __init__(self, police, taille_texte, def_functions, keywords, parent):
         """
         Hérite de QTextEdit.
         C'est une zone de texte dans laquelle on peut écrire, que l'on utilise ici pour écrire du code.
@@ -119,7 +121,7 @@ class Editeur(QTextEdit):
         self.taille_texte = taille_texte
         self.def_functions = def_functions
         self.keywords = keywords
-        self.snippets = snippets
+        self.snippets = self.get_snippets()
 
         self.setTabStopWidth(20)
         self.setLineWrapMode(QTextEdit.NoWrap)
@@ -132,10 +134,26 @@ class Editeur(QTextEdit):
 
         # self.append("int main ( int argc, char** argv ){\n\n\treturn 0;\n\n}")
 
+    def get_snippets(self):
+        """
+        Récupère les snippets : prédéfinitions de fonctions.
+        :rtype: list
+        """
+        try:
+            fichier = open("snippets/%s.json"%self.parent.project_type, "r")
+            res = json.loads(fichier.read())
+            fichier.close()
+        except BaseException as e:
+            res = []
+
+
+        return res
+
     def analyse(self):
         """ Cette fonction est liée au bouton Analyse si il y a au moins un éditeur d'ouvert. """
         idx = self.parent.get_idx()
         file_type = self.parent.docs[idx].extension
+        file_path = self.parent.docs[idx].chemin_enregistrement
 
         self.parent.defaut_info_message()  # Actualisation des infos de base
 
@@ -145,8 +163,30 @@ class Editeur(QTextEdit):
         self.last_yacc_errors = self.yacc_errors
         self.yacc_errors, self.parent.def_functions = lex.yaccing(file_type, self.toPlainText())
 
+        def_fonctions = workplace.GetDefFonctions([file_path])
+        def_fonctions.resultat.connect(self.set_def_fonctions)
+        def_fonctions.run()
+
         if self.last_yacc_errors != self.yacc_errors:
             self.parent.highlighters[idx].rehighlight()
+
+    def set_def_fonctions(self, declarators):
+        idx = self.parent.get_idx()
+        file_path = self.parent.docs[idx].chemin_enregistrement
+
+        if declarators != (None, None, None):
+            if file_path in declarators[0]:
+                self.parent.def_functions[file_path] = declarators[0][file_path]
+
+            if file_path in declarators[1]:
+                self.parent.def_structs[file_path] = declarators[1][file_path]
+
+            if file_path in declarators[2]:
+                self.parent.def_vars[file_path] = declarators[2][file_path]
+
+
+
+
 
     def keyPressEvent(self, event):
         # self.parent.defaut_info_message()  # Actualisation des infos de base dès que l'on tape sur une touche
@@ -210,7 +250,7 @@ class Editeur(QTextEdit):
                 self.moveCursor(QTextCursor.Right)
 
             textCursor = self.textCursor()
-            textCursor.select(QCursor.WordUnderCursor)
+            textCursor.select(QTextCursor.WordUnderCursor)
             self.setTextCursor(textCursor)
 
             return True

@@ -9,11 +9,11 @@ def tokenize(language, data):
     return [] if language not in lexers else lexers[language].tokenize(data)
 
 def colorate(language, data):
-    print(language, data)
     return [] if language not in lexers else lexers[language].colorate(data)
 
-def update_token_color(language):
-    if language in lexers : lexers[language].update_token_color()
+def update_token_color():
+	for lexer in lexers.values():
+		lexer.update_token_color()
 
 def yaccing(language, data, get_errros=True):
     return [] if language not in lexers else lexers[language].yaccing(data, get_errros)

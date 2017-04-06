@@ -66,6 +66,7 @@ class MenuBar(QMenuBar):
         open_fic_action = MyAction(parent, get_tmenu("open_file"), "Ouvrir un fichier", parent.open, "Ctrl+O")
         sauv_fic_action = MyAction(parent, get_tmenu("save_file"), "Sauvegarder le fichier courant", parent.save, "Ctrl+S")
         close_fic_action = MyAction(parent, get_tmenu("close_file"), "Fermer le fichier courant", parent.close_current_tab, "Ctrl+W")
+        chg_workplace_action = MyAction(parent, get_tmenu("chg_workplace"), "Changer l'emplacement du workplace", parent.change_worplace_location, "")
         fullscreen_action = MyAction(parent, get_tmenu("full_screen"), "Plein Écran", parent.fullscreen, "F7")
         fullscreen_action.setCheckable(True)
         exit_ide_action = MyAction(parent, get_tmenu("exit"), "Fermer l'application", parent.quit_func, "Esc")
@@ -110,7 +111,7 @@ class MenuBar(QMenuBar):
         fichier_menu = self.addMenu(get_tmenu("fichier"))
         menu_new = fichier_menu.addMenu(get_tmenu("new"))
         self.set_actions(menu_new, new_fic_action, new_project_action)
-        self.set_actions(fichier_menu, open_fic_action, sauv_fic_action, close_fic_action, "sep")
+        self.set_actions(fichier_menu, open_fic_action, sauv_fic_action, close_fic_action, chg_workplace_action, "sep")
 
         # Compilation
 

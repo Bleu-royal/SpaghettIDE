@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from PySide.QtCore import *
+
 from lxml import etree
 
 def open_xml(fichier):
@@ -31,13 +33,13 @@ def project_compil_json(fichier):
     configuration = open_xml(fichier)
     return configuration["compil_json"] if configuration["compil_json"] != " " else ""
 
-def compil_xml(fichier,value):
+def compil_xml(fichier, value):
     write_xml(fichier,"compil",value)
 
-def compil_json_xml(fichier,value):
+def compil_json_xml(fichier, value):
     write_xml(fichier,"compil_json",value)
 
-def write_xml(fichier,config,value):
+def write_xml(fichier, config, value):
     tree = etree.parse(fichier)
     root = tree.getroot()
     for child in root.getchildren():
@@ -59,7 +61,7 @@ def create_xml(path):
                   "</project>")
     fichier.close()
 
-def add_projects_xml(project_name,project_lang,project_location,date,project_nb_files):
+def add_projects_xml(project_name, project_lang, project_location, date, project_nb_files):
     tree = etree.parse("projects.xml")
     projects=tree.getroot()
     project = etree.SubElement(projects, "project")
@@ -89,7 +91,8 @@ except :
               "     <loading>False</loading>\n"
               "     <numerote_lines>True</numerote_lines>\n"
               "     <language>en</language>\n"
-              "</configuration>")
+              "     <current_workplace>%s</current_workplace>\n"
+              "</configuration>"%(QDir.homePath() + "/workplace/"))
     new.close()
     
 try :

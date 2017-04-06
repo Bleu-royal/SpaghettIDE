@@ -66,6 +66,10 @@ class TreeView(QTreeView):
 
         self.function_declarations.connect(self.load_project)
 
+    def change_worplace(self, workplace_path):
+        self.model.setRootPath(workplace_path)
+        self.setRootIndex(self.model.index(workplace_path))
+
     def maj_style(self):
         colors = themes.get_color_from_theme("treeview")
         self.setStyleSheet("QTreeView{background: " + themes.get_rgb(colors["BACKGROUND"]) +
