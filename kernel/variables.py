@@ -4,5 +4,6 @@ supported_extensions = {"c": "C", "h": "C", "py": "Python", "jpg": "jpg", "png":
 
 imgs_extentions = ["*jpg", "*png"]
 txt_extentions = ["*txt"]
+txt_ext_open = "Fichier texte (*.txt)"  # Pour quand on ouvre avec Ctrl+O il faut l'ajouter aux fichiers ouvrable.
 gif_extentions = ["*gif"]
 ext_neutres = txt_extentions + imgs_extentions + gif_extentions

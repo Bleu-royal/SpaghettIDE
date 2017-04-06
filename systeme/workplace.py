@@ -150,6 +150,12 @@ def newproject(parent):
 
 #     print(projet)
 
+def delete_project_cache(project_path):
+    pass
+
+def delete_global_cache():
+    pass
+
 def importproject(parent):
     workplace_path = parent.workplace_path
 

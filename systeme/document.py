@@ -158,7 +158,7 @@ def save_document(parent):
         if idx != -1:
             if parent.docs[idx].chemin_enregistrement == "":
                 chemin = \
-                    QFileDialog.getSaveFileName(parent, get_text("save_file"), parent.project_path, var.file_by_language[parent.project_type])[0]
+                    QFileDialog.getSaveFileName(parent, get_text("save_file"), parent.project_path, var.file_by_language[parent.project_type] + ";;" + var.txt_ext_open)[0]
                 if chemin != "" and parent.project_path in chemin:
                     parent.docs[idx].set_chemin_enregistrement(chemin)
                     parent.docs[idx].sauvegarde_document(chemin)
@@ -188,7 +188,7 @@ def open_document(parent, chemin, secu=False):
 
     if parent.project_path != "":
         if not chemin:
-            chemin = QFileDialog.getOpenFileName(parent, get_text("ouverture_2"), parent.project_path, var.file_by_language[parent.project_type])[0]
+            chemin = QFileDialog.getOpenFileName(parent, get_text("ouverture_2"), parent.project_path, var.file_by_language[parent.project_type] + ";;" + var.txt_ext_open)[0]
         if chemin != "" and parent.project_path in chemin:
             if not parent.deja_ouvert(chemin):
                 title = chemin.split("/")[-1]
@@ -215,9 +215,9 @@ def open_document(parent, chemin, secu=False):
             if not secu:
                 open_project_and_document(parent, chemin)
     else:
-        if not secu  and chemin:
+        if not secu and chemin:
             open_project_and_document(parent, chemin)
-        # parent.status_message("Aucun projet ouvert, veuillez ouvrir ou créer un projet.", 2000)
+        parent.status_message(get_text("no_project_on"), 2000)
 
 def open_project_and_document(parent, chemin):
         parent.docs = []
