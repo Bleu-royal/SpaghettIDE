@@ -54,39 +54,55 @@ class MenuBar(QMenuBar):
         self.master = parent
 
         # # # # Projet
-        new_project_action = MyAction(parent, get_tmenu("new_proj"), "Nouveau projet", parent.new_project, "Ctrl+M")
-        import_project_action = MyAction(parent, get_tmenu("import_proj"), "Importer un projet", parent.import_project, "Ctrl+Shift+I")
-        del_project_action = MyAction(parent, get_tmenu("supr_proj"), "Supprimer le projet", parent.delete_project, "Ctrl+Alt+S")
-        info_project_action = MyAction(parent, get_tmenu("info_proj"), "Informations d'un projet", parent.infos_project, "Ctrl+Alt+I")
+        new_project_action = MyAction(parent, get_tmenu("new_proj"), "Nouveau projet",
+                                      parent.new_project, "Ctrl+M")
+        import_project_action = MyAction(parent, get_tmenu("import_proj"), "Importer un projet",
+                                         parent.import_project, "Ctrl+Shift+I")
+        del_project_action = MyAction(parent, get_tmenu("supr_proj"), "Supprimer le projet",
+                                      parent.delete_project, "Ctrl+Alt+S")
+        info_project_action = MyAction(parent, get_tmenu("info_proj"), "Informations d'un projet",
+                                       parent.infos_project, "Ctrl+Alt+I")
         # open_project_action = MyAction(parent, "&Ouvrir Projet", "Ouvrir un projet", parent.open_project, "Ctrl+P")
         # exit_project_action = MyAction(parent, "&Fermer Projet", "Fermer le projet", parent.close_project, "Ctrl+K")
 
         # # # # Fichier
-        new_fic_action = MyAction(parent, get_tmenu("new_file"), "Nouveau fichier", parent.new, "Ctrl+N")
-        open_fic_action = MyAction(parent, get_tmenu("open_file"), "Ouvrir un fichier", parent.open, "Ctrl+O")
-        sauv_fic_action = MyAction(parent, get_tmenu("save_file"), "Sauvegarder le fichier courant", parent.save, "Ctrl+S")
-        close_fic_action = MyAction(parent, get_tmenu("close_file"), "Fermer le fichier courant", parent.close_current_tab, "Ctrl+W")
-        fullscreen_action = MyAction(parent, get_tmenu("full_screen"), "Plein Écran", parent.fullscreen, "F7")
+        new_fic_action = MyAction(parent, get_tmenu("new_file"), "Nouveau fichier",
+                                  parent.new, "Ctrl+N")
+        open_fic_action = MyAction(parent, get_tmenu("open_file"), "Ouvrir un fichier",
+                                   parent.open, "Ctrl+O")
+        sauv_fic_action = MyAction(parent, get_tmenu("save_file"), "Sauvegarder le fichier courant",
+                                   parent.save, "Ctrl+S")
+        close_fic_action = MyAction(parent, get_tmenu("close_file"), "Fermer le fichier courant",
+                                    parent.close_current_tab, "Ctrl+W")
+        fullscreen_action = MyAction(parent, get_tmenu("full_screen"), "Plein Écran",
+                                     parent.fullscreen, "F7")
         fullscreen_action.setCheckable(True)
-        exit_ide_action = MyAction(parent, get_tmenu("exit"), "Fermer l'application", parent.quit_func, "Esc")
+        exit_ide_action = MyAction(parent, get_tmenu("exit"), "Fermer l'application",
+                                   parent.quit_func, "Esc")
 
         # # # # Edition
         indent_action = MyAction(parent, get_tmenu("indent"), "Indentation automatique du fichier",
                                  parent.indent, "Ctrl+Alt+L")
-        select_current_line_action = MyAction(parent, get_tmenu("select_line"),
-                                              "Sélectionner la ligne courante", parent.select_current_line, "Ctrl+L")
+        select_current_line_action = MyAction(parent, get_tmenu("select_line"), "Sélectionner la ligne courante",
+                                              parent.select_current_line, "Ctrl+L")
         select_current_word_action = MyAction(parent, get_tmenu("select_word"), "Sélectionner le mot courant",
                                               parent.select_current_word, "Ctrl+D")
-        duplicate_action = MyAction(parent, get_tmenu("duplicate"), "Dupliquer", parent.duplicate, "Ctrl+Shift+D")
-        find_action = MyAction(parent, get_tmenu("find"), "Rechercher", parent.find, "Ctrl+F")
-        comment_selection_action = MyAction(parent, get_tmenu("comment"), "Commenter", parent.comment_selection,
-                                            "Ctrl+Shift+:")
-        insert_action = MyAction(parent, get_tmenu("insert"), "insertion", parent.insert_mode, "Ctrl+I")
+        duplicate_action = MyAction(parent, get_tmenu("duplicate"), "Dupliquer",
+                                    parent.duplicate, "Ctrl+Shift+D")
+        find_action = MyAction(parent, get_tmenu("find"), "Rechercher",
+                               parent.find, "Ctrl+F")
+        comment_selection_action = MyAction(parent, get_tmenu("comment"), "Commenter",
+                                            parent.comment_selection, "Ctrl+Shift+:")
+        insert_action = MyAction(parent, get_tmenu("insert"), "insertion",
+                                 parent.insert_mode, "Ctrl+I")
+        
         insert_action.setCheckable(True)
 
         # # # # Menu compilation
-        compiler_action = MyAction(parent, get_tmenu("comp"), "Compiler le projet", parent.compiler, "F5")
-        configurer_compilation_action = MyAction(parent, get_tmenu("conf_comp"), "Configurer la compilation", parent.configuration_compilation, "Shift+F5")
+        compiler_action = MyAction(parent, get_tmenu("comp"), "Compiler le projet",
+                                   parent.compiler, "F5")
+        configurer_compilation_action = MyAction(parent, get_tmenu("conf_comp"), "Configurer la compilation",
+                                                 parent.configuration_compilation, "Maj+F5")
 
         # # # # Menu divers
         apropos_ide_action = MyAction(parent, get_tmenu("about"), "À propos de SpaghettIDE", parent.a_propos)
@@ -130,10 +146,12 @@ class MenuBar(QMenuBar):
         theme_forest = MyAction(parent, "&Forêt", "Thème Forêt", lambda: self.__change_theme_to("forest"))
         theme_ocean = MyAction(parent, "&Océan", "Thème Océan", lambda: self.__change_theme_to("ocean"))
         theme_galaxy = MyAction(parent, "&Galexio", "Thème Galaxie", lambda: self.__change_theme_to("galaxy"))
-        theme_blackwhite = MyAction(parent, "&Black n White", "Thème Black n White", lambda: self.__change_theme_to("black_white"))
+        theme_blackwhite = MyAction(parent, "&Black n White", "Thème Black n White",
+                                    lambda: self.__change_theme_to("black_white"))
         theme_pastel = MyAction(parent, "&Pastel", "Thème Pastel", lambda: self.__change_theme_to("pastel"))
         theme_awesome = MyAction(parent, "&Awesome", "Thème Awesome", lambda: self.__change_theme_to("awesome"))
-        # nomTheme = MyAction(parent, "&monNouveauTheme", "monNouveauTheme", lambda: self.__change_theme_to("monNouveauTheme"))
+        # nomTheme = MyAction(parent, "&monNouveauTheme", "monNouveauTheme",
+        # # # # # #  lambda: self.__change_theme_to("monNouveauTheme"))
 
         self.set_group(theme_basic, groupe_theme, fonce, "basic")
         self.set_group(theme_pimp, groupe_theme, clair, "pimp")
@@ -148,7 +166,8 @@ class MenuBar(QMenuBar):
         fire_action = MyAction(parent, get_tmenu("cheminee"), "Afficher la cheminée", parent.show_cheminee, "F6")
         fire_action.setCheckable(True)
 
-        load_action = MyAction(parent, get_tmenu("chargement"), "Afficher l'écran de chargement au démarrage", parent.show_loading, "F4")
+        load_action = MyAction(parent, get_tmenu("chargement"), "Afficher l'écran de chargement au démarrage",
+                               parent.show_loading, "F4")
         load_action.setCheckable(True)
 
         if configuration['loading'] == 'False':
@@ -158,13 +177,14 @@ class MenuBar(QMenuBar):
 
         line_action = MyAction(parent, get_tmenu("lines"), "Numérotation des lignes", parent.show_line_column, "F2")
         line_action.setCheckable(True)
+        
         if parent.is_show_line:
             if configuration['numerote_lines'] == 'False':
                 line_action.setChecked(False)
             else:
                 line_action.setChecked(True)
 
-        self.set_actions(apparence_menu, "sep", fire_action, load_action, line_action, assist_voc_action,"sep")
+        self.set_actions(apparence_menu, "sep", fire_action, load_action, line_action, assist_voc_action, "sep")
 
         # # # #Langues
         langues = apparence_menu.addMenu(get_tmenu("lang"))

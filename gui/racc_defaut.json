@@ -6,7 +6,7 @@
     "Sauvegarder":"Ctrl+S",
     "Fermer Onglet":"Ctrl+W",
     "Compiler":"F5",
-    "Configuration":"Maj+F5",
+    "Configuration":"Shift+F5",
     "Cheminee":"F6",
     "Ecran Chargement":"F4",
     "Num Lignes":"F2",
@@ -17,13 +17,13 @@
   "Edition": {
     "Ligne Courante":"Ctrl+L",
     "Mot Courant":"Ctrl+D",
-    "Dupliquer":"Maj+Ctrl+D",
+    "Dupliquer":"Shift+Ctrl+D",
     "Mode Insertion":"Ctrl+I",
     "Rechercher":"Ctrl+F",
     "Indenter":"Ctrl+Alt+L"
   },
   "Projet": {
-    "Importer Projet":"Maj+Ctrl+I",
+    "Importer Projet":"Shift+Ctrl+I",
     "Supprimer Projet":"Ctrl+Alt+S",
     "Informations Projet":"Ctrl+Alt+I"
   }
