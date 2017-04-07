@@ -342,10 +342,21 @@ class Editeur(QTextEdit):
 
         textCursor.insertText(textCursor.selectedText() + return_ + textCursor.selectedText())
 
+    def get_comment_char(self):
+        comment_char = {"py": "#", "h": "//", "c": "//"}
+        idx = self.parent.get_idx()
+        doc = self.parent.docs[idx]
+        ext = doc.extension
+
+        return comment_char.get(ext, "")
+
     def comment_selection(self):
         """
         Commente la zone sélectionnée ou la ligne sous le curseur si rien n'est sélectionné.
         """
+
+        comment_char = self.get_comment_char()
+
         textCursor = self.textCursor()
 
         if textCursor.selectedText() == "":
@@ -361,9 +372,9 @@ class Editeur(QTextEdit):
         for i in range(len(lines)):
             if lines[i].strip() != "":
                 if is_commented:
-                    lines[i] = lines[i][2:]
+                    lines[i] = lines[i][len(comment_char):]
                 else:
-                    lines[i] = "//" + lines[i]
+                    lines[i] = comment_char + lines[i]
 
         textCursor.insertText("\n".join(lines))
 
@@ -372,8 +383,11 @@ class Editeur(QTextEdit):
         Vérifie si une zone est commentée
         :rtype: bool
         """
+
+        comment_char = self.get_comment_char()
+
         for line in lines:
-            if line[:2] != "//" and line.strip() != "":
+            if line[:len(comment_char)] != comment_char and line.strip() != "":
                 return False
         return True
 
