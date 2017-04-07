@@ -95,6 +95,8 @@ class TabWidget(QTabWidget):
             self.parent.status_message(get_text("status_fic_closed"))
             self.parent.defaut_info_message()
 
+            if not doc.is_saved(): print("le document est fermé sans etre sauvgardé")
+
     def next_tab(self):
         """
         Afficher l'onglet suivant, relativement à la position courante.

@@ -142,6 +142,18 @@ class Document:
             idx += 1
         return text[idx:]
 
+    def is_saved(self):
+
+        if self.chemin_enregistrement == "":
+            return False
+
+        doc = open(self.chemin_enregistrement, "r")
+        val = doc.read()
+        doc.close()
+
+        return val == self.text_edit.toPlainText()
+
+
 
 def new_document(parent):
     new = get_text("nom_new_fic") + str(len(parent.docs) + 1)

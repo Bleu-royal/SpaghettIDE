@@ -183,7 +183,7 @@ tokens = [
     "DOTTED_NAME"
 ] + list(keywords.values())
 
-t_STRING_LITERAL = r"[A-Za-z_]?\"(\.|[^\"])*\""
+t_STRING_LITERAL = r"([A-Za-z_]?\"(\.|[^\"])*\")|([A-Za-z_]?\'(\.|[^\'])*\')"
 t_ELLIPSIS = r"\.\.\."
 t_ADD_ASSIGN = r"\+="
 t_SUB_ASSIGN = r"-="
