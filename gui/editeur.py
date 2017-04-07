@@ -196,7 +196,7 @@ class Editeur(QTextEdit):
         if text != "":
             nb_tab = self.get_current_tab()
 
-            if lang == "py" and text.strip()[-1] == ":":
+            if lang == "py" and text[-1] == ":":
                 nb_tab += 1
             elif lang == "c":
                 if text.strip()[-1] == "{":
@@ -214,7 +214,7 @@ class Editeur(QTextEdit):
         text = textCursor.selectedText()
 
         nb = 0
-        while text[nb] == "\t":
+        while nb < len(text) and text[nb] == "\t":
             nb+=1
         return nb    
 
