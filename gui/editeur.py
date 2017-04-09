@@ -121,7 +121,8 @@ class Editeur(QTextEdit):
         self.taille_texte = taille_texte
         self.def_functions = def_functions
         self.keywords = keywords
-        self.snippets = self.get_snippets()
+        # self.snippets = self.get_snippets()
+        self.snippets = []
 
         self.setTabStopWidth(20)
         self.setLineWrapMode(QTextEdit.NoWrap)
@@ -134,20 +135,6 @@ class Editeur(QTextEdit):
 
         # self.append("int main ( int argc, char** argv ){\n\n\treturn 0;\n\n}")
 
-    def get_snippets(self):
-        """
-        Récupère les snippets : prédéfinitions de fonctions.
-        :rtype: list
-        """
-        try:
-            fichier = open("snippets/%s.json"%self.parent.project_type, "r")
-            res = json.loads(fichier.read())
-            fichier.close()
-        except BaseException as e:
-            res = []
-
-
-        return res
 
     def analyse(self):
         """ Cette fonction est liée au bouton Analyse si il y a au moins un éditeur d'ouvert. """
@@ -265,6 +252,14 @@ class Editeur(QTextEdit):
             self.parent.nb_lignes.wheelEvent(e, True)
 
     def indent(self):
+        idx = self.parent.get_idx()
+        doc = self.parent.docs[idx]
+        ext = doc.extension
+
+        if ext in ("c", "h"):
+            self.indent_c()
+    
+    def indent_c(self):
 
         line_number = self.textCursor().blockNumber()  # Obtention du numero de la ligne
 
@@ -284,7 +279,7 @@ class Editeur(QTextEdit):
         for i in range(line_number):  # On remet le cursor au bon endroit
             self.moveCursor(QTextCursor.Down)
             self.moveCursor(QTextCursor.EndOfLine)
-        
+
     def remove_tabs(self, text):
         idx = 0
         while text[idx] == "\t" and idx in range(len(text)):

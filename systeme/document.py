@@ -91,6 +91,8 @@ class Document:
         if ouverture:
             self.ouverture_document()
 
+        self.set_snippets()
+
     def get_nb_lignes(self):
         # Obtention du nombre de lignes presentes dans le QTextEdit
         return self.text_edit.document().lineCount()
@@ -126,6 +128,18 @@ class Document:
 
         return val == self.text_edit.toPlainText()
 
+    def set_snippets(self):
+        idx = self.parent.get_idx()
+        code = self.parent.codes[idx]
+        
+        try:
+            fichier = open("snippets/%s.json"%self.extension, "r")
+            snippets = json.loads(fichier.read())
+            fichier.close()
+        except BaseException as e:
+            snippets = []
+
+        code.snippets = snippets
 
 
 def new_document(parent):
