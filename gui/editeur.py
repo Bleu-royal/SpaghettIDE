@@ -264,6 +264,34 @@ class Editeur(QTextEdit):
         if not syncr:
             self.parent.nb_lignes.wheelEvent(e, True)
 
+    def indent(self):
+
+        line_number = self.textCursor().blockNumber()  # Obtention du numero de la ligne
+
+        text = self.toPlainText()
+        lines = text.split("\n")
+
+        indent_level = 0
+
+        for i, line in enumerate(lines):
+            indent_level -= "}" in line  # Si il y'a un accolade fermante on retire un niveau d'indentation
+            if lines[i].strip() != "": lines[i] = "\t" * indent_level + self.remove_tabs(line)  # On ajoute indent_level
+            # fois un '\t' au debut de la ligne
+            indent_level += "{" in line  # Si il y'a un accolade ouvrante on ajoute un niveau d'indentation
+
+        self.setPlainText("\n".join(lines))
+
+        for i in range(line_number):  # On remet le cursor au bon endroit
+            self.moveCursor(QTextCursor.Down)
+            self.moveCursor(QTextCursor.EndOfLine)
+        
+    def remove_tabs(self, text):
+        idx = 0
+        while text[idx] == "\t" and idx in range(len(text)):
+            idx += 1
+        return text[idx:]
+
+
     def use_snippets(self):
         """
         Lorsque l'on presse "TAB" et que l'on définit une fonction ou une structure ou encore une boucle, on
@@ -277,7 +305,7 @@ class Editeur(QTextEdit):
             textCursor.removeSelectedText()
             textCursor.insertText(infos[0])
 
-            self.parent.indent()
+            self.indent()
 
             for i in range(infos[1]):
                 self.moveCursor(QTextCursor.Up)

@@ -309,7 +309,7 @@ class Fenetre(QWidget):
         Indente automatiquement le fichier
         Appelle la fonction indent() de Editeur
         """
-        if self.get_idx() != -1: self.docs[self.get_idx()].indent()
+        if self.get_idx() != -1: self.codes[self.get_idx()].indent()
 
     def show_progress_bar(self):
         """
