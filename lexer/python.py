@@ -180,7 +180,8 @@ tokens = [
     "INF",
     "SUP",
     "COMMENT",
-    "DOTTED_NAME"
+    "DOTTED_NAME",
+    "newline"
 ] + list(keywords.values())
 
 t_STRING_LITERAL = r"([A-Za-z_]?\"(\.|[^\"])*\")|([A-Za-z_]?\'(\.|[^\'])*\')"
@@ -250,6 +251,7 @@ def lexing(word):
     return token.type.lower() if token else ""
 
 def tokenize(data):
+
     lexer = lex.lex()
     lexer.input(data)
 
