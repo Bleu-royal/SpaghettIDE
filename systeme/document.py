@@ -187,7 +187,6 @@ def open_document(parent, chemin, secu=False):
 
     if parent.project_path != "":
         if not chemin:
-            print("ici")
             chemin = QFileDialog.getOpenFileName(parent, get_text("ouverture_2"), parent.project_path, var.file_by_language[parent.project_type] + ";;" + var.txt_extentions_filedialog)[0]
         if chemin != "" and parent.project_path in chemin:
             if not parent.deja_ouvert(chemin):
@@ -209,8 +208,9 @@ def open_document(parent, chemin, secu=False):
                         idx = i
                         break
                 parent.tab_widget.setCurrentIndex(idx)
-        else:
+        elif chemin != "":
             # parent.status_message("Impossible d'ouvrir ce document car il ne fait pas partie du projet courant.", 2000)
+            print("escape")
             if not secu:
                 open_project_and_document(parent, chemin)
     else:

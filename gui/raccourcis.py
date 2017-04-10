@@ -3,6 +3,7 @@ import json
 from PySide.QtCore import *
 from PySide.QtGui import *
 from language.language import get_tmenu
+from gui import bouton
 
 
 class Raccourcis(QDialog):
@@ -21,8 +22,7 @@ class Raccourcis(QDialog):
 		self.tab_widget.addTab(MenuEdition(parent), "Edition")
 		self.tab_widget.addTab(MenuProjet(parent), "Projet")
 		
-		self.bouton_valider = QPushButton("Valider")
-		self.bouton_valider.clicked.connect(self.valider)
+		self.bouton_valider = bouton.Bouton("Valider", self.valider)
 		
 		self.layout = QVBoxLayout()
 		
@@ -97,7 +97,7 @@ class MenuFichier(QWidget):
 		num_lignes = MenuFonction("Num Lignes",
 		                          donne_valeur_utilisateur(self.menu, "Num Lignes"))
 		assistance_vocale = MenuFonction("Assistance Vocale",
-		                                 donne_valeur_utilisateur(self.menu, "Assistance Vocale"))
+		                                 donne_valeur_utilisateur(self.menu, "Assistance vocale"))
 		plein_ecran = MenuFonction("Plein Ecran",
 		                           donne_valeur_utilisateur(self.menu, "Plein Ecran"))
 		quitter = MenuFonction("Quitter",
@@ -166,8 +166,12 @@ class MenuProjet(QWidget):
 		                         donne_valeur_utilisateur(self.menu, "Supprimer Projet"))
 		informations = MenuFonction("Informations Projet",
 		                            donne_valeur_utilisateur(self.menu, "Informations Projet"))
+		cache_projet = MenuFonction("Vider Cache Projet",
+		                            donne_valeur_utilisateur(self.menu, "Vider Cache Projet"))
+		tous_cache = MenuFonction("Vider Tout Le Cache",
+		                          donne_valeur_utilisateur(self.menu, "Vider Tous Caches"))
 		
-		self.liste_fonctions = [importer, supprimer, informations]
+		self.liste_fonctions = [importer, supprimer, informations, cache_projet, tous_cache]
 		
 		self.fic_layout = QVBoxLayout()
 		
@@ -233,5 +237,8 @@ def donne_valeur_utilisateur(clef_menu, clef_voulue):
 	if clef_menu in dico.keys():
 		if clef_voulue in dico[clef_menu].keys():
 			return dico[clef_menu][clef_voulue]
-	
+		else:
+			print("Clef voulue pas valide")
+	else:
+		print("Clef menu pas valide")
 	return ""

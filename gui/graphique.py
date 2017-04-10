@@ -598,10 +598,10 @@ class Fenetre(QWidget):
         workplace.newproject(self)
 
     def clear_cache(self):
-        workplace.delete_project_cache(self.project_path)
+        workplace.delete_project_cache(self, self.project_path)
 
     def clear_global_cache(self):
-        workplace.delete_global_cache()
+        workplace.delete_global_cache(self)
 
     def delete_project(self):
 

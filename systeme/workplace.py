@@ -154,11 +154,20 @@ def newproject(parent):
 
 #     print(projet)
 
-def delete_project_cache(project_path):
-    print("clear local", project_path)
+def delete_project_cache(parent, project_path):
+    if project_path != "":
+        project_name = project_path.split("/")[-1]
+        for file in os.listdir("cache/"):
+            if project_name in file.split("_"):
+                os.remove("cache/%s" % file)
+        parent.status_message(get_text("cleared_local_cache"))
+    else:
+        parent.status_message(get_text("text_please_open_project"))
 
-def delete_global_cache():
-    print("clear global")
+def delete_global_cache(parent):
+    for file in os.listdir("cache/"):
+        os.remove("cache/%s" % file)
+    parent.status_message(get_text("cleared_global_cache"))
 
 def importproject(parent):
     workplace_path = parent.workplace_path
