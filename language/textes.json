@@ -327,5 +327,15 @@
   "dont_save": {
     "fr": "Ne pas sauvegarder",
     "en": "Don't save"
+  },
+
+  "cleared_global_cache": {
+    "fr": "Tout le cache a été vidé",
+    "en": "Cache has completely been deleted"
+  },
+
+  "cleared_local_cache": {
+    "fr": "Le cache du projet courant a été vidé",
+    "en": "Project cache has been deleted"
   }
 }
