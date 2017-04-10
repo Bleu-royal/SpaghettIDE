@@ -77,8 +77,8 @@
   },
 
   "clear_cache_proj": {
-    "fr": "Vider le cache d'un projet",
-    "en": "Clear project cache"
+    "fr": "Vider le cache du projet courant",
+    "en": "Clear current project cache"
   },
 
   "clear_cache_global": {

@@ -3,6 +3,7 @@ import json
 from PySide.QtCore import *
 from PySide.QtGui import *
 from language.language import get_tmenu
+from gui import bouton
 
 
 class Raccourcis(QDialog):
@@ -21,8 +22,7 @@ class Raccourcis(QDialog):
 		self.tab_widget.addTab(MenuEdition(parent), "Edition")
 		self.tab_widget.addTab(MenuProjet(parent), "Projet")
 		
-		self.bouton_valider = QPushButton("Valider")
-		self.bouton_valider.clicked.connect(self.valider)
+		self.bouton_valider = bouton.Bouton("Valider", self.valider)
 		
 		self.layout = QVBoxLayout()
 		
@@ -233,5 +233,8 @@ def donne_valeur_utilisateur(clef_menu, clef_voulue):
 	if clef_menu in dico.keys():
 		if clef_voulue in dico[clef_menu].keys():
 			return dico[clef_menu][clef_voulue]
-	
+		else:
+			print("Clef voulue pas valide")
+	else:
+		print("Clef menu pas valide")
 	return ""

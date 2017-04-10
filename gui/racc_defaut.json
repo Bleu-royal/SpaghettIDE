@@ -6,25 +6,28 @@
     "Sauvegarder":"Ctrl+S",
     "Fermer Onglet":"Ctrl+W",
     "Compiler":"F5",
-    "Configuration":"Maj+F5",
+    "Configuration":"Shift+F5",
     "Cheminee":"F6",
     "Ecran Chargement":"F4",
     "Num Lignes":"F2",
     "Assistance vocale":"F12",
     "Plein Ecran":"F7",
-    "Quitter":"Echap"
+    "Quitter":"Esc"
   },
   "Edition": {
     "Ligne Courante":"Ctrl+L",
     "Mot Courant":"Ctrl+D",
-    "Dupliquer":"Maj+Ctrl+D",
+    "Dupliquer":"Shift+Ctrl+D",
     "Mode Insertion":"Ctrl+I",
     "Rechercher":"Ctrl+F",
-    "Indenter":"Ctrl+Alt+L"
+    "Indenter":"Ctrl+Alt+L",
+    "Commenter":"Ctrl+Shift+:"
   },
   "Projet": {
-    "Importer Projet":"Maj+Ctrl+I",
+    "Importer Projet":"Shift+Ctrl+I",
     "Supprimer Projet":"Ctrl+Alt+S",
-    "Informations Projet":"Ctrl+Alt+I"
+    "Informations Projet":"Ctrl+Alt+I",
+    "Vider Cache Projet":"Ctrl+J",
+    "Vider Tous Caches":"Ctrl+Shift+J"
   }
 }
