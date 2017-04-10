@@ -93,7 +93,7 @@ class MenuBar(QMenuBar):
         line_action.setCheckable(True)
         assist_voc_action = MyAction(parent, get_tmenu("voice"), "Assistance vocale",
                                      parent.assist_voc,
-                                     donne_valeur_utilisateur("Fichier", "Assistance_vocale"))
+                                     donne_valeur_utilisateur("Fichier", "Assistance vocale"))
         fullscreen_action = MyAction(parent, get_tmenu("full_screen"), "Plein Écran",
                                      parent.fullscreen,
                                      donne_valeur_utilisateur("Fichier", "Plein Ecran"))
