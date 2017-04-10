@@ -17,7 +17,7 @@ class LineEditPath(QLineEdit):
         return False
 
     def open_selection_window(self):
-        nom_fichier, filtre = QFileDialog.getOpenFileName(self, "Ouvrir", self.parent.project_path)
+        nom_fichier, filtre = QFileDialog.getOpenFileName(self, get_text("open"), self.parent.project_path)
         self.setText(nom_fichier)
 
 class LineEditPathDirectory(QLineEdit):
@@ -33,7 +33,7 @@ class LineEditPathDirectory(QLineEdit):
         return False
 
     def open_selection_window(self):
-        nom_fichier = QFileDialog.getExistingDirectory(self, "Ouvrir", self.parent.project_path)
+        nom_fichier = QFileDialog.getExistingDirectory(self, get_text("open"), self.parent.project_path)
         self.setText(nom_fichier)
 
 
