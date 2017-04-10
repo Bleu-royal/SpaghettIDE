@@ -97,7 +97,7 @@ class MenuFichier(QWidget):
 		num_lignes = MenuFonction("Num Lignes",
 		                          donne_valeur_utilisateur(self.menu, "Num Lignes"))
 		assistance_vocale = MenuFonction("Assistance Vocale",
-		                                 donne_valeur_utilisateur(self.menu, "Assistance Vocale"))
+		                                 donne_valeur_utilisateur(self.menu, "Assistance vocale"))
 		plein_ecran = MenuFonction("Plein Ecran",
 		                           donne_valeur_utilisateur(self.menu, "Plein Ecran"))
 		quitter = MenuFonction("Quitter",

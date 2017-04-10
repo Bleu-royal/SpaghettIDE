@@ -7,7 +7,7 @@
     "Informations Projet": "Ctrl+Alt+I"
   },
   "Fichier": {
-    "Nouveau Projet": "bite",
+    "Nouveau Projet": "Ctrl+M",
     "Sauvegarder": "Ctrl+S",
     "Compiler": "F5",
     "Fermer Onglet": "Ctrl+W",
