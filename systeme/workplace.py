@@ -219,6 +219,7 @@ def open_project(parent, name=False):
             parent.fenetre.highlighters = []
             parent.fenetre.codes = []
             parent.fenetre.tab_widget.clear()
+            
 
         parent.fenetre.show_progress_bar()
 

@@ -503,6 +503,14 @@ class Fenetre(QWidget):
         self.tab_widget.clear()
         self.project_path = ""
 
+        widgets = [("Navigateur", "TreeView"), ("Inspecteur", "Inspector")]
+        actual = self.bouton_change.text()
+
+        if actual in widgets[1]:  # Affichage du navigateur de fichiers
+            self.treeview.setMaximumHeight(self.ecran.screenGeometry().height())
+            self.inspecteur.setMaximumHeight(1)
+
+
         chemin = QFileDialog.getExistingDirectory(self, get_text("chg_worplace"), self.workplace_path) + "/"
         if chemin != "/":
             self.treeview.change_worplace(chemin)
