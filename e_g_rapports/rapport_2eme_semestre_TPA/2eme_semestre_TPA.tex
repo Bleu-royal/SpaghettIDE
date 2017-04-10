@@ -1,0 +1,445 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[top=2cm,bottom=2cm,left=2cm,right=2cm]{geometry}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{url}
+
+\begin{document}
+
+\begin{titlepage}
+	\begin{center}
+		\Large{Année universitaire 2016-2017}\\
+		\Large{Université de Caen Basse-Normandie}\\[1cm]
+		
+		\huge{Rapport sur le deuxième semestre de TPA}\\
+		\vspace{3cm}
+		
+		Alexis Carreau\\
+		Thomas Lécluse\\
+		Emma Mauger\\
+		Théo Sarrazin\\
+		
+		\normalsize{\textit{ ~ L2 Informatique}}\\
+		\medskip
+		\vspace{2cm}
+		
+		\huge{\textbf{Réalisation d'un IDE en Python}}
+		
+	\end{center}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+\section{Introduction}
+
+	Voici un résumé de ce que nous avions à la fin du premier semestre.\\
+	
+	Notre IDE était capable d'ouvrir des documents avec l'extention .c ou .h à partir de projets qu'on avait créé. On pouvait ouvrir plusieurs documents, et avoir une liste d'onglets. Nous avions un navigateur de fichiers qui nous permettait de naviguer entre nos différents projets et leurs documents. Une barre de menu nous permettait d'accéder à nos différentes fonctionnalités, et on affichait à l'aide d'une barre de status différents messages répondant aux requête de l'utilisateur.\\
+	
+	\includegraphics[scale=0.3]{images/ide_v1.png}
+	
+	Nous colorions le contenu des documents à l'aide du logiciel Lex les différents tokens (éléments du code) selon leur fonction. Et nous analysions les documents pour détecter des erreurs de syntaxe à l'aide du logiciel Yacc. Nous utilisons pour cela une grammaire.
+	
+	\subsection{Grammaire pour Lex et Yacc}
+	
+		À l'aide du module PLY (Python Lex and Yacc), nous définissons une liste de tokens afin de déterminer tous les mots clefs du langage.
+		
+		\begin{figure}[!h]
+			\begin{center}
+				\includegraphics[scale=0.7]{images/tokens}
+				\caption{Exemple de liste de tokens pour les déclarations de type en C.}
+			\end{center}
+		\end{figure}
+		
+		Nous avons aussi des fonctions à définir, pour Yacc afin de définir la syntaxe à suivre pour le langage (ici le langage C).
+		Pour donner un exemple, sur les expressions de multiplication, nous indiquons qu'une multiplication peut prendre plusieurs formes.
+		
+		\begin{figure}[!h]
+			\begin{center}
+				\includegraphics[scale=0.7]{images/yacc1}
+				\caption{Différentes formes d'expressions de multiplication.}
+			\end{center}
+		\end{figure}
+		
+		Soit une "cast\_expression", soit une expression multiplicative multipliée par une "cast\_expression", soit une expression multiplicative divisée par une "cast\_expression" ou soit expression multiplicative modulo une "cast\_expression".
+		
+		\begin{figure}[!h]
+			\begin{center}
+				\includegraphics[scale=0.7]{images/yacc2}
+				\caption{Une "cast\_expression"}
+			\end{center}
+		\end{figure}
+		
+		Une "cast\_expression" étant définie par une expression unitaire ou bien un "type\_name" entre parenthèses suivi d'une "cast\_expression". Où un "type\_name" est une autre fonction définissant ce que c'est.
+		
+		\begin{figure}[!h]
+			\begin{center}
+				\includegraphics[scale=0.7]{images/yacc3}
+				\caption{Une expression unitaire}
+			\end{center}
+		\end{figure}
+		
+		On décrit ci-dessus toutes les formes possibles d'expressions unitaires. C'est donc ainsi de suite et en remonttant toutes les clauses que l'on définit les règles syntaxiques du langage.
+		
+	\subsection{Pour ce semestre}
+	
+		Nous avons beaucoup travaillé à étoffer et rajouter de nombreuses fonctionnalités à notre éditeur afin qu'il soit complet et qu'il ressemble à des éditeurs déjà existant au niveau du contenu.\\
+		
+		Voici donc la liste de ce qui a été ajouté depuis les vacances de Noël :
+		
+		\begin{itemize}
+			\item Différents thèmes et styles pour l'éditeur et ses éléments
+			\item Traitement des projets
+			\item Fichiers de configuration au format XML
+			\item Intégration d'un compilateur
+			\item Fonctionnalités diverses de recherche et d'édition de texte
+			\item Inspecteur d'éléments
+			\item Une autre barre de status pour d'autres types d'informations
+			\item Les numéros de lignes
+			\item Fenêtre de paramétrage des raccourcis
+			\item Ajout de cache afin d'optimiser l'ouverture de fichiers
+			\item Grammaire arithmétique puis grammaire python
+			\item Ajout de l'Anglais
+			\item Quelques bonus \\
+		\end{itemize}
+		
+		\textit{À noter que nous avions réalisé des rapports au fur et à mesure de l'avancement. Nous les reprennons ici donc en les ré-adaptant à l'aspect global évidemment. Mais il peut rester des images notamment sur la barre de menu où les fonctionnalités ne sont plus placées au même endroit. Par exemple, le menu apparence est maintenant placé dans Fichier/Paramètres.}
+		
+		
+\section{Les thèmes et les styles}
+	
+	Afin de pouvoir rendre plus personnalisable l'application, nous avons choisi de permettre la personnalisation du thème global.
+	Voici quelques exemples de thèmes : 
+	
+	
+		\begin{figure}[h!]
+			\begin{center}
+				\includegraphics[scale=0.23]{images/imgs_themes/theme_forest}
+				\caption{Thème Forêt}
+			\end{center}
+		\end{figure}
+		
+		\begin{figure}[h!]
+			\begin{center}
+				\includegraphics[scale=0.23]{images/imgs_themes/theme_basic}
+				\caption{Thème de base}
+			\end{center}
+		\end{figure}
+		
+		\begin{figure}[h!]
+			\begin{center}
+				\includegraphics[scale=0.23]{images/imgs_themes/theme_pastel}
+				\caption{Thème Pastel}
+			\end{center}
+		\end{figure}
+		
+		\newpage
+		\subsection{Changer de thème}
+		
+			Le changement de thème est très simple. Il suffit de se rendre dans le menu "Fichier/Paramètres" puis de choisir son thème parmi ceux proposés dans les catégories clairs et sombres.
+	
+			\begin{figure}[h!]
+				\begin{center}
+					\includegraphics[scale=0.5]{images/imgs_themes/choix_theme}
+					\caption{Choix de son thème}
+				\end{center}
+			\end{figure}
+			
+			Les thèmes sont triés en fonction de si ils sont plutôt clairs ou plutôt sombres.\\
+			Lorsque l'on sélectionne son thème il est immédiatement changé, il n'y a pas besoin de relancer l'application. De plus, une petite icone apparaît à côté du thème que vous avez choisi dans la barre de menu\\
+			
+			Le thème sélectionné est alors écrit de le fichier conf.xml qui est situé à la racine du projet. Ainsi, lorsque vous relancerez l'IDE, le dernier thème que vous avez utilisé sera rechargé.
+			
+		\subsection{Gestion des thèmes}
+		
+			Les thèmes sont regroupés dans des répertoires distincts, le tout dans le répertoire "theme" situé à la racine du projet. 
+			\begin{figure}[h!]
+				\begin{center}
+					\includegraphics[scale=0.7]{images/imgs_themes/themes}
+					\caption{Contenu du répertoire "theme"}
+				\end{center}
+			\end{figure}
+			
+			Chaque répertoire de thème regroupe les fichiers en format .json. Les différents fichiers .json contiennent les couleurs en RGB d'un élément de l'interface graphique.
+			
+			\begin{figure}[h!]
+				\begin{center}
+					\includegraphics[scale=0.7]{images/imgs_themes/basic_json}
+					\caption{Contenu du répertoire "basic" (le contenu est semblable pour tous les thèmes)}
+				\end{center}
+			\end{figure}
+			\begin{figure}[h!]
+				\begin{center}
+					\includegraphics[scale=0.7]{images/imgs_themes/exemple_json}
+					\caption{Exemple de fichier .json pour les thèmes.}
+				\end{center}
+			\end{figure}
+			
+			Le module theme.py nous permet de récupérer le thème sauvegardé (dans le fichier conf.xml) lors du chargement de l'application notament. Ici sont également contenues les méthodes permettant à l'interface d'aller chercher les couleurs qu'elle doit appliquer aux différents éléments.\\
+			
+			Au niveau technique, nous utilisons la méthode .setStyleSheet() de QT qui peut s'appliquer à la majorité des widgets (tous dans notre cas) et qui nous permet donc de spécifier et de modifier les couleusr de fond ainsi que de police des widgets en fonction du thème choisi.
+			
+		\subsection{Création de thèmes}
+		
+			Vous pouvez utiliser les thèmes pré-définis, qui ont été pour la plupart validés et certifiés par la totalité du groupe comme étant jolis, mais vous pouvez aussi créer vos propres thèmes.\\
+			
+			Le script "createtheme.py" vous permet cela, et la démarche à suivre est expliquée dans le fichier README.txt.\\
+			
+			Pour résumer, on lance le fichier createtheme.py via un terminal en spécifiant le nom du thème. Tapez par exemple :
+			"python3 createtheme.py monNouveauTheme" et cela créera un répertoire "monNouveauTheme" qui contiendra les fichiers nécessaires à la gestion de votre thème. Ouvrez ensuite les fichiers .json et définissez vos propres couleurs (par défaut tout est noir).\\
+			
+			Une fois cela fait, vous devrez ajouter deux lignes dans le module menu.py pour que votre thème apparaisse dans la séléction.
+			
+			\newpage
+
+			\begin{figure}[h!]
+				\begin{center}
+					\includegraphics[scale=0.5]{images/imgs_themes/add2}
+					\caption{Où nomTheme est le nom de la variable pour le thème, et monNouveauTheme le nom que vous avez donné à votre thème}
+				\end{center}
+			\end{figure}
+			\begin{figure}[h!]
+				\begin{center}
+					\includegraphics[scale=0.7]{images/imgs_themes/add1}
+					\caption{Où nomTheme est le nom de la variable pour le thème, et groupetheme le groupe (clair ou sombre) auquel appartient votre thème}
+				\end{center}
+			\end{figure}
+			
+			Votre thème apparaît maintenant dans la barre de menu et il est sélectionnable !
+					
+		\subsection{Style externe}
+	
+		Dans le répertoire "gui" qui contient tout ce qui est relatif à l'interface graphique, il y a un répertoire "style" qui regroupe des éléments auxquels on applique également des feuilles de styles (via la méthode setStyleSheet() des widgets dans QT; de même que pour les thèmes).
+		
+		\begin{figure}[h!]
+			\begin{center}
+				\includegraphics[scale=1]{images/imgs_themes/style}
+				\caption{Contenu du répertoire style}
+			\end{center}
+		\end{figure}
+				
+		Chaque document .css contient le style relatif à des éléments. Nous retrouvons ici le style appliqué :
+		
+		\begin{itemize}
+			\item aux boites de dialogue
+				\begin{figure}[h!]
+					\begin{center}
+						\includegraphics[scale=0.4]{images/imgs_themes/quit}
+						\caption{ Exemple de la fermeture de l'IDE : une popup qui apparaît demandant la confirmation.}
+					\end{center}
+				\end{figure}
+				
+			\item aux boutons, à qui on inverse les couleurs lorsqu'on les survole
+				\begin{figure}[h!]
+					\begin{center}
+						\includegraphics[scale=1]{images/imgs_themes/bout1}
+						\caption{Style appliqué à un bouton normal.}
+					\end{center}
+				\end{figure}
+				\begin{figure}[h!]
+					\begin{center}
+						\includegraphics[scale=1]{images/imgs_themes/bout2}
+						\caption{Le même bouton lorsqu'il est survolé par la souris.}
+					\end{center}
+				\end{figure}
+				
+			\newpage
+			\item à la barre de progression
+			\begin{figure}[h!]
+					\begin{center}
+						\includegraphics[scale=0.7]{images/imgs_themes/progress2}
+						\caption{La barre de status (voir ci-dessous).}
+					\end{center}
+				\end{figure}
+		\end{itemize}
+		
+	\section{Une autre barre de status}
+	
+		Nous avons également travaillé à étoffer l'interface. Nous avons rajouté une seconde barre de status (en bas à droite), servant à afficher des informations sur le code lui-même :
+		
+		\begin{figure}[h!]
+			\begin{center}
+				\includegraphics[scale=1]{images/imgs_themes/nb_lignes}
+				\caption{Le nombre de lignes du fichier courant}
+			\end{center}
+		\end{figure}
+		\begin{figure}[h!]
+			\begin{center}
+				\includegraphics[scale=1]{images/imgs_themes/nb_occu}
+				\caption{Le nombre d'occurences d'une recherche effectuée}
+			\end{center}
+		\end{figure}
+		
+		Nous utilisons de plus cet emplacement (en bas à droite) pour afficher une barre de status qui sert pour le moment uniquement à indiquer la progression lors du chargement de projet (Yacc lisant tous les fichiers afin de récupérer les différentes fonctions à travers les modules, cela peut prendre plusieurs secondes).
+		\begin{figure}[h!]
+			\begin{center}
+				\includegraphics[scale=1]{images/imgs_themes/progress}
+				\caption{Barre de progression lors du chargement d'un projet de l'utilisateur}
+			\end{center}
+		\end{figure}
+		
+		L'ouverture de projets est maintenant beaucoup plus rapide qu'au début du semestre, notament grâce à l'utilisation du cache. La barre de progression apparaît toujours, mais c'est souvent très rapide.
+		
+		
+\section{Recherche et édition du texte}
+
+	\subsection{Selection de la ligne courante}
+
+	Dans un premier temps, nous avons ajoutés une fonction permettant de selectionner la ligne où ce trouve le curseur.
+	Pour cela, nous recuperons l'objet QTextCursor de notre class Editeur (héritant de QTextEdit) puis nous utilisons la méthode \textbf{select} de cet objet qui nous permet de selectionner du texte dans notre Editeur, cette méthode prend en paramètre une méthode de selection, QTextCursor.LineUnderCursor dans notre cas. La ligne ou ce trouve notre cuseur va donc être selectionner.
+	Pour appliquer ces modifications, nous devons appliquer notre objet QTextCursor à notre Editeur, pour cela on utilise la méthode \textbf{setTextCursor} de l'objet Editeur et on lui passe en paramètre notre QTextCursor.  
+
+
+	\begin{figure}[h!]
+		\begin{center}
+			\includegraphics[scale=0.8]{images/imgs_edit/utilisation_selection_ligne}
+			\caption{Action du menu permettant la selection de la ligne courante}
+		\end{center}
+	\end{figure}
+
+	\begin{figure}[h!]
+		\begin{center}
+			\includegraphics[scale=0.8]{images/imgs_edit/resultat_selection_ligne}
+			\caption{Résultat de l'utilisation de la fonction selection de la ligne courante}
+		\end{center}
+	\end{figure}
+
+\subsection{Selection du mot courant}
+
+	Pour l'ajout de la selection du mot courant, la démarche est exactement la même que pour la selection de la ligne courante, nous devons simplement changer la méthode de selection, passant de QTextCursor.LineUnderCursor à QTextCursor.WordUnderCursor, afin de ne plus sélectionner la ligne mais le mot présent au niveau du curseur. 
+
+	\begin{figure}[h!]
+		\begin{center}
+			\includegraphics[scale=0.4]{images/imgs_edit/utilisation_selection_mot}
+			\caption{Action du menu permettant la selection du mot courant}
+		\end{center}
+	\end{figure}
+
+	\begin{figure}[h!]
+		\begin{center}
+			\includegraphics[scale=0.8]{images/imgs_edit/resultat_selection_mot}
+			\caption{Résultat de l'utilisation de la fonction selection du mot courant}
+		\end{center}
+	\end{figure}
+	
+	\newpage
+
+\subsection{Duplication}
+
+	Pour l'ajout de la duplication du texte, nous avons choisi de différencier deux cas, le premier où rien n'est selectionné et le second où du texte est déjà selectionné. Dans le premier cas toutes la ligne est dupliquée et dans le second seulement la partie selectionnée est dupliquée.
+
+	Pour cela, nous recupperons une nouvelle fois le QTextCursor de notre Editeur, puis pour savoir dans quel cas nous sommes on utilise la méthode selectedText de l'objet QTextCursor. Ainsi si aucun text n'est selectionné nous selectionnons la ligne courante de le même façon que précédement de plus on assigne la valeur  \textbf{\\n} à la variable \textbf{return\_} en effet si on duplique une ligne entière, on ajoute on retoure à la ligne entre la selection d'origine et la partie dupliquée. Puis on ajoute le texte dans notre objet Editeur grâce à la méthode \textbf{inserText} avec en paramètre la selection du QTextCursor (recuperrée grâce à la méthode \textbf{selectedText}) suivi de la variable \textbf{return\_} elle même suivi de la selection du QTextCursor.
+
+	\begin{figure}[h!]
+		\begin{center}
+			\includegraphics[scale=0.8]{images/imgs_edit/utilisation_duplication}
+			\caption{Action du menu permettant de dupliquer}
+		\end{center}
+	\end{figure}
+
+
+	\begin{figure}[h!]
+		\begin{center}
+			\includegraphics[scale=0.8]{images/imgs_edit/resultat_duplication}
+			\caption{Résultat de l'utilisation de la fonction permettant de dupliquer}
+		\end{center}
+	\end{figure}
+
+	\newpage
+\subsection{Recherche}
+
+	Pour la recherche dans le document, nous avons decidés d'ajouter une boite de dialogue permettant d'entrée le texte à rechercher. Pour cela nous avons créés une classe SearchDialog (héritant de QDialog), lors de l'affichage de cette boite de dialogue nous utilisons la méthode \textbf{exec}, qui rend impossible l'interaction avec la fenetre en arrière plan tant que la boite de dialogue est ouverte.
+
+	Cette boite de dialogue nous permer de taper le texte à rechercher, de choisir si on recherche en avant ou en arrière , mais aussi si on veut être sensible à la case.
+
+	\begin{figure}[h!]
+		\begin{center}
+			\includegraphics[scale=0.8]{images/imgs_edit/boite_dialog_recherche}
+			\caption{Boite de dialogue relative à la recherche}
+		\end{center}
+	\end{figure}
+
+	Pour la recherche on utilise la méthode \textbf{find} de notre objet Editeur. Cette méthode prend en paramètre le texte à rechercher, suivit de differents drapeaux. Dans notre cas nous utilisons le drapeau permettant d'executer la rechercher en arrière et le drapeau permettant de faire la recherche en étant sensible à la case (respectivement les drapeaux \textbf{QTextDocument.FindBackward} et \textbf{QTextDocument.FindCaseSensitively})
+
+	\begin{figure}[h!]
+		\begin{center}
+			\includegraphics[scale=0.8]{images/imgs_edit/utilisation_rechercher}
+			\caption{Action du menu permettant de rechercher}
+		\end{center}
+	\end{figure}
+
+	\begin{figure}[h!]
+		\begin{center}
+			\includegraphics[scale=0.8]{images/imgs_edit/resultat_rechercher}
+			\caption{Résultat de l'utilisation de la fonction permettant de rechercher}
+		\end{center}
+	\end{figure}
+	\newpage
+
+\subsection{Indentation du fichier}
+
+	Pour l'indentation du document, nous allons changer son contenue (ajout/retrait de tabulation) nous devons donc stocker la position courante du curseur (grâce à la méthode \textbf{blockNumber} de l'objet QTextCursor). Par la suite on recupère le contenue du document grâce à la méthode \textbf{toPlainText} de l'objet Editeur. On créer une variable \textbf{indent\_level}, qui contient le niveau courant d'indentation, puis on parcoure toutes les lignes de notre document, si le ligne contient le charactère "\}", on retire 1 au niveau d'indentation puis on change la ligne pour ajouter au debut de cette dernière \textbf{indent\_level} fois une tabulation, puis on ajoute 1 au niveau d'indentation si la ligne contient "\{".
+	Pour finir on defini le nouveau texte ainsi obtenu comme texte de notre document avec la méthode \textbf{setPlainText} et on replace le curseur au bon endroit.
+
+	\begin{figure}[h!]
+
+		\begin{center}
+			\includegraphics[scale=0.8]{images/imgs_edit/utilisation_indentation}
+			\caption{Action du menu permettant d'indenter le fichier}
+		\end{center}
+	\end{figure}
+
+	\begin{figure}[h!]
+		\begin{center}
+			\includegraphics[scale=0.8]{images/imgs_edit/resultat_indentation}
+			\caption{Résultat de l'utilisation de la fonction permettant d'indenter le fichier}
+		\end{center}
+	\end{figure}
+
+\subsection{Commenter la sélection}
+
+	De la même façon que pour la duplication du texte, nous avons séparés cette action en deux cas, soit du texte est sélectionné soit rien n'est selectionné.
+	Dans le cas ou du text est selectionné nous commenterons seulement à partir du debut de la selection. Si plusieurs lignes sont selectionnées elles seron evidement toutes commentées. Si il n'y a pas de texte selectionné, on commente la ligne courante.
+
+	Dans un premier temps, comme pour la duplication, si rien n'est selectionné on selectionne la ligne courante, puis on sauvegarde le text selectionné que l'on recupère grâce à la méthode \textbf{selectedText}, puis on supprime le texte selectionné avec la méthode \textbf{removeSelectedText}. Pour savoir si le texte est deja commenté, nous parcourons toutes les lignes, si une des lignes ne commence pas par "//" la selection est considérée comme non commenté. Par la suite nous parcourons chaque ligne du texte puis pour chaque ligne nous ajoutons/retirons les charactères "//" en fonction de si le texte et oui ou non déjà commenté.
+
+	Puis on ajoute le texte ainsi modifié à notre document en utilisant la méthode \textbf{insertText} (de l'objet QTextCursor).
+
+	\begin{figure}[h!]
+
+		\begin{center}
+			\includegraphics[scale=0.8]{images/imgs_edit/utilisation_commentaire}
+			\caption{Action du menu permettant de commenter le fichier}
+		\end{center}
+	\end{figure}
+
+	\begin{figure}[h!]
+		\begin{center}
+			\includegraphics[scale=0.8]{images/imgs_edit/resultat_commentaire}
+			\caption{Résultat de l'utilisation de la fonction permettant de commenter le fichier}
+		\end{center}
+	\end{figure}
+	
+\section{Traitement des projets}
+
+	\subsection{Import d'un projet}
+	
+	\subsection{Informations d'un projet}
+	
+	
+\section{Fichier de configuartion XML}
+
+
+\section{Compilateur}
+
+\section{Insecteur d'éléments}
+
+	Lorsqu'un document est ouvert, nous avons la possibilité d'afficher l'inspecteur d'éléments.
+		
+	
+
+\end{document}
