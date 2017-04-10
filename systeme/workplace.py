@@ -18,6 +18,7 @@ class NewProject(QDialog):
         super().__init__()
 
         self.cancel = False
+        self.valider = False
 
         self.setWindowTitle(get_text("proj_choice"))
 
@@ -60,6 +61,7 @@ class NewProject(QDialog):
         self.done(0)
 
     def valider_action(self):
+        self.valider = True
         self.done(0)
 
     def get_project_name(self):
@@ -113,14 +115,16 @@ def newproject(parent):
     project_name = np.get_project_name()
     project_lang = np.get_project_lang()
     cancel = np.cancel
+    valider = np.valider
 
-    while (project_name == '' or "/" in project_name) and not cancel:
+    while (project_name == '' or "/" in project_name) and not cancel and valider:
         QMessageBox.critical(parent, get_text("text_erreur"), get_text("proj_name_fail"))
         np = NewProject()
         np.exec()
         project_name = np.get_project_name()
         project_lang = np.get_project_lang()
         cancel = np.cancel
+        valider = np.valider
 
     if not QDir(parent.workplace_path + project_name).exists() and not cancel:
         QDir(parent.workplace_path).mkpath(project_name)
@@ -136,7 +140,7 @@ def newproject(parent):
         add_projects_xml(project_name,project_lang,project_location,date,project_nb_files) 
 
     # elif parent.project_path[1]:
-    elif not cancel:
+    elif not cancel and valider:
         QMessageBox.critical(parent, get_text("text_erreur"), get_text("proj_choose_other"))
         parent.new_project()
 
