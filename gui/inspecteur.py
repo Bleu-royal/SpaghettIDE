@@ -64,7 +64,7 @@ class Inspecteur(QListWidget):
             self.add("Variables : ")
 
         for def_var in self.def_vars_infos:
-            self.add("    -%s"%def_var)
+            self.add("    - %s"%def_var)
 
     def add(self, item):
 
@@ -74,7 +74,7 @@ class Inspecteur(QListWidget):
         """
         Lorsqu'on double-clique sur un élément, on l'affiche dans le code
         """
-        selected = self.currentItem().text()[2:]
+        selected = self.currentItem().text()[6:]
         find(self.parent, selected, False, True)
 
     def maj_style(self):
