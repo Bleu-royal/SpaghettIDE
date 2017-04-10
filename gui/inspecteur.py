@@ -25,8 +25,11 @@ class Inspecteur(QListWidget):
     def load(self):
         self.clear()
 
+        class_name = {"py" : "Classes", "c": "Structs", "h" : "Structs"}
+
         idx = self.parent.get_idx()
         doc = self.parent.docs[idx]
+        ext = doc.extension
         current_file = doc.chemin_enregistrement
 
         self.def_functions_infos = ""
@@ -42,14 +45,26 @@ class Inspecteur(QListWidget):
         if current_file in self.parent.def_vars:
             self.def_vars_infos = self.parent.def_vars[current_file]
 
+        if self.def_functions_infos != []:
+            self.add("Fonctions : ")
+
         for def_functions in self.def_functions_infos:
-            self.add("+ " + def_functions[0])
+            if isinstance(def_functions, list):
+                self.add("    - %s"%def_functions[0])
+            else:
+                self.add("    - %s"%def_functions)
+
+        if self.def_structs_infos != []:
+            self.add("%s : "%class_name[ext])
 
         for def_struct in self.def_structs_infos:
-            self.add("- " + def_struct)
+            self.add("    - %s"%def_struct)
+
+        if self.def_vars_infos != []:
+            self.add("Variables : ")
 
         for def_var in self.def_vars_infos:
-            self.add("* " + def_var)
+            self.add("    - %s"%def_var)
 
     def add(self, item):
 
@@ -59,7 +74,7 @@ class Inspecteur(QListWidget):
         """
         Lorsqu'on double-clique sur un élément, on l'affiche dans le code
         """
-        selected = self.currentItem().text()[2:]
+        selected = self.currentItem().text()[6:]
         find(self.parent, selected, False, True)
 
     def maj_style(self):

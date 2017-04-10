@@ -7,10 +7,11 @@
     "Fermer Onglet":"Ctrl+W",
     "Compiler":"F5",
     "Configuration":"Shift+F5",
+    "Emplacement Workplace":"Ctrl+Shift+W",
     "Cheminee":"F6",
     "Ecran Chargement":"F4",
-    "Num Lignes":"F2",
-    "Assistance vocale":"F12",
+    "Numerotation Des Lignes":"F2",
+    "Assistance Vocale":"F12",
     "Plein Ecran":"F7",
     "Quitter":"Esc"
   },
@@ -28,6 +29,6 @@
     "Supprimer Projet":"Ctrl+Alt+S",
     "Informations Projet":"Ctrl+Alt+I",
     "Vider Cache Projet":"Ctrl+J",
-    "Vider Tous Caches":"Ctrl+Shift+J"
+    "Vider Tout Le Cache":"Ctrl+Shift+J"
   }
 }

@@ -1,7 +1,7 @@
 {
   "Projet": {
     "Vider Cache Projet": "Ctrl+J",
-    "Vider Tous Caches": "Ctrl+Shift+J",
+    "Vider Tout Le Cache": "Ctrl+Shift+J",
     "Importer Projet": "Shift+Ctrl+I",
     "Supprimer Projet": "Ctrl+Alt+S",
     "Informations Projet": "Ctrl+Alt+I"
@@ -11,14 +11,15 @@
     "Sauvegarder": "Ctrl+S",
     "Compiler": "F5",
     "Fermer Onglet": "Ctrl+W",
-    "Assistance vocale": "F12",
+    "Assistance Vocale": "F12",
     "Ouvrir": "Ctrl+O",
     "Plein Ecran": "F7",
+    "Emplacement Workplace":"Ctrl+Shift+W",
     "Quitter": "Esc",
     "Nouveau Fichier": "Ctrl+N",
     "Cheminee": "F6",
     "Ecran Chargement": "F4",
-    "Num Lignes": "F2",
+    "Numerotation Des Lignes": "F2",
     "Configuration": "Shift+F5"
   },
   "Edition": {

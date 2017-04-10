@@ -6,7 +6,7 @@ from xml import *
 from themes import themes
 from language import language
 from language.language import get_tmenu, get_text
-from gui.raccourcis import donne_valeur_utilisateur
+from gui.raccourcis.raccourcis import donne_valeur_utilisateur
 
 sys.path[:0] = ["../"]
 sys.path[:0] = ["gui"]
@@ -89,17 +89,19 @@ class MenuBar(QMenuBar):
         load_action.setCheckable(True)
         line_action = MyAction(parent, get_tmenu("lines"), "Numérotation des lignes",
                                parent.show_line_column,
-                               donne_valeur_utilisateur("Fichier", "Num Lignes"))
+                               donne_valeur_utilisateur("Fichier", "Numerotation Des Lignes"))
         line_action.setCheckable(True)
         assist_voc_action = MyAction(parent, get_tmenu("voice"), "Assistance vocale",
                                      parent.assist_voc,
-                                     donne_valeur_utilisateur("Fichier", "Assistance vocale"))
+                                     donne_valeur_utilisateur("Fichier", "Assistance Vocale"))
+        raccourcis_action = MyAction(parent, get_tmenu("raccourcis"), "Raccourcis", parent.menu_raccourcis)
         fullscreen_action = MyAction(parent, get_tmenu("full_screen"), "Plein Écran",
                                      parent.fullscreen,
                                      donne_valeur_utilisateur("Fichier", "Plein Ecran"))
         fullscreen_action.setCheckable(True)
         chg_workplace_action = MyAction(parent, get_tmenu("chg_workplace"), "Changer l'emplacement du workplace",
-                                        parent.change_worplace_location, "")
+                                        parent.change_worplace_location,
+                                        donne_valeur_utilisateur("Fichier", "Emplacement Workplace"))
         exit_ide_action = MyAction(parent, get_tmenu("exit"), "Fermer l'application",
                                    parent.quit_func, donne_valeur_utilisateur("Fichier", "Quitter"))
 
@@ -142,14 +144,13 @@ class MenuBar(QMenuBar):
                                            donne_valeur_utilisateur("Projet", "Vider Cache Projet"))
         clear_cache_global_action = MyAction(parent, get_tmenu("clear_cache_global"), "Vider tout le cache",
                                              parent.clear_global_cache,
-                                             donne_valeur_utilisateur("Projet", "Vider Tous Caches"))
+                                             donne_valeur_utilisateur("Projet", "Vider Tout Le Cache"))
 
         # # # # Menu Divers
         apropos_ide_action = MyAction(parent, get_tmenu("about"), "À propos de SpaghettIDE", parent.a_propos)
         contact_ide_action = MyAction(parent, get_tmenu("contact"), "", parent.contact)
         site_ide_action = MyAction(parent, get_tmenu("site"), "Site", parent.site)
         help_ide_action = MyAction(parent, get_tmenu("help"), "Aide sur l'IDE", parent.help_func)
-        raccourcis_action = MyAction(parent, get_tmenu("raccourcis"), "Raccourcis", parent.menu_raccourcis)
 
         # # # # Assistance vocale
         assist_voc_action.setCheckable(True)
@@ -212,7 +213,8 @@ class MenuBar(QMenuBar):
             else:
                 line_action.setChecked(True)
 
-        self.set_actions(apparence_menu, "sep", fire_action, load_action, line_action, assist_voc_action, "sep")
+        self.set_actions(apparence_menu, "sep", fire_action, load_action, line_action, assist_voc_action,
+                         "sep", raccourcis_action)
 
         # # # # Langues
         langues = apparence_menu.addMenu(get_tmenu("lang"))
@@ -238,7 +240,7 @@ class MenuBar(QMenuBar):
         # # # # Menu SpaghettIDE # # # #
         spaghettide_menu = self.addMenu("&SpaghettIDE")
         self.set_actions(spaghettide_menu, apropos_ide_action, contact_ide_action, site_ide_action,
-                         help_ide_action, raccourcis_action)
+                         help_ide_action)
 
     def set_actions(self, menu, *args):
         """

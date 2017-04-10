@@ -24,11 +24,16 @@ class Raccourcis(QDialog):
 		
 		self.bouton_valider = bouton.Bouton("Valider", self.valider)
 		
+		self.bouton_raz = bouton.Bouton("Remise à zéro", self.raz)
+		
 		self.layout = QVBoxLayout()
+		self.layout_bouton = QHBoxLayout()
 		
 		self.layout.addWidget(self.tab_widget)
-		self.layout.addWidget(self.bouton_valider)
-	
+		self.layout_bouton.addWidget(self.bouton_valider)
+		self.layout_bouton.addWidget(self.bouton_raz)
+		
+		self.layout.addLayout(self.layout_bouton)
 		self.setLayout(self.layout)
 	
 	def valider(self):
@@ -67,7 +72,40 @@ class Raccourcis(QDialog):
 		wfi = open("gui/racc_utilisateur.json", "w")
 		wfi.write(save)
 		wfi.close()
-
+		
+		self.done(0)
+		
+	def raz(self):
+		""" Fonction de remise à zéro des raccourcis, càd que les raccourcis personnalisés seront
+		transformés en raccourcis de base. """
+		
+		val_menu_fic = self.tab_widget.widget(0)  # Retourne MenuFichier
+		val_menu_edit = self.tab_widget.widget(1)  # Retourne MenuEdition
+		val_menu_proj = self.tab_widget.widget(2)  # Retourne MenuProjet
+		
+		dictio_util = dico_utilisateur()
+		dico_def = dico_defaut()
+		
+		for element in val_menu_fic.liste_fonctions:
+			clef = element.label.text()
+			dictio_util["Fichier"][clef] = dico_def["Fichier"][clef]
+		
+		for element in val_menu_edit.liste_fonctions:
+				clef = element.label.text()
+				dictio_util["Edition"][clef] = dico_def["Edition"][clef]
+		
+		for element in val_menu_proj.liste_fonctions:
+				clef = element.label.text()
+				dictio_util["Projet"][clef] = dico_def["Projet"][clef]
+		
+		save = json.dumps(dictio_util, indent=2)
+		
+		wfi = open("gui/racc_utilisateur.json", "w")
+		wfi.write(save)
+		wfi.close()
+		
+		self.done(0)
+		
 
 class MenuFichier(QWidget):
 	
@@ -90,21 +128,23 @@ class MenuFichier(QWidget):
 		                        donne_valeur_utilisateur(self.menu, "Compiler"))
 		configuration = MenuFonction("Configuration",
 		                             donne_valeur_utilisateur(self.menu, "Configuration"))
+		workplace = MenuFonction("Emplacement Workplace",
+		                         donne_valeur_utilisateur(self.menu, "Emplacement Workplace"))
 		cheminee = MenuFonction("Cheminee",
 		                        donne_valeur_utilisateur(self.menu, "Cheminee"))
 		ecran_chargement = MenuFonction("Ecran Chargement",
 		                                donne_valeur_utilisateur(self.menu, "Ecran Chargement"))
-		num_lignes = MenuFonction("Num Lignes",
-		                          donne_valeur_utilisateur(self.menu, "Num Lignes"))
+		num_lignes = MenuFonction("Numerotation Des Lignes",
+		                          donne_valeur_utilisateur(self.menu, "Numerotation Des Lignes"))
 		assistance_vocale = MenuFonction("Assistance Vocale",
-		                                 donne_valeur_utilisateur(self.menu, "Assistance vocale"))
+		                                 donne_valeur_utilisateur(self.menu, "Assistance Vocale"))
 		plein_ecran = MenuFonction("Plein Ecran",
 		                           donne_valeur_utilisateur(self.menu, "Plein Ecran"))
 		quitter = MenuFonction("Quitter",
 		                       donne_valeur_utilisateur(self.menu, "Quitter"))
 		
 		self.liste_fonctions = [new_projet, new_fichier, ouvrir, sauver, fermer_onglet, compiler,
-		                        configuration, cheminee, ecran_chargement, num_lignes, assistance_vocale,
+		                        configuration, workplace, cheminee, ecran_chargement, num_lignes, assistance_vocale,
 		                        plein_ecran, quitter]
 		
 		self.fic_layout = QHBoxLayout()
@@ -143,6 +183,8 @@ class MenuEdition(QWidget):
 		                          donne_valeur_utilisateur(self.menu, "Rechercher"))
 		indenter = MenuFonction("Indenter",
 		                        donne_valeur_utilisateur(self.menu, "Indenter"))
+		commenter = MenuFonction("Commenter",
+		                         donne_valeur_utilisateur(self.menu, "Commenter"))
 		
 		self.liste_fonctions = [ligne_courante, mot_courant, dupliquer, mode_insertion, rechercher, indenter]
 		
@@ -169,7 +211,7 @@ class MenuProjet(QWidget):
 		cache_projet = MenuFonction("Vider Cache Projet",
 		                            donne_valeur_utilisateur(self.menu, "Vider Cache Projet"))
 		tous_cache = MenuFonction("Vider Tout Le Cache",
-		                          donne_valeur_utilisateur(self.menu, "Vider Tous Caches"))
+		                          donne_valeur_utilisateur(self.menu, "Vider Tout Le Cache"))
 		
 		self.liste_fonctions = [importer, supprimer, informations, cache_projet, tous_cache]
 		
@@ -201,7 +243,7 @@ class MenuFonction(QWidget):
 def dico_defaut():
 	""" Fonction qui enregistre dans une variable le contenu du json de base."""
 	
-	dictio = open("gui/racc_defaut.json", "r")
+	dictio = open("gui/raccourcis/racc_defaut.json", "r")
 	dico = json.load(dictio)
 	dictio.close()
 	
@@ -210,7 +252,7 @@ def dico_defaut():
 def dico_utilisateur():
 	""" Fonction qui enregistre dans une variable le contenu du json de l'utilisateur. """
 	
-	dictio = open("gui/racc_utilisateur.json", "r")
+	dictio = open("gui/raccourcis/racc_utilisateur.json", "r")
 	dico = json.load(dictio)
 	dictio.close()
 	
@@ -231,14 +273,13 @@ def donne_valeur_defaut(clef_menu, clef_voulue):
 def donne_valeur_utilisateur(clef_menu, clef_voulue):
 	""" Fonction qui donne la valeur de la clef voulue, qui est contenue dans le dico correspondant
 		à la valeur de la clef_menu, qui est contenue dans le dico des raccourcis d'utilisateur. """
-	
 	dico = dico_utilisateur()
 	
 	if clef_menu in dico.keys():
 		if clef_voulue in dico[clef_menu].keys():
 			return dico[clef_menu][clef_voulue]
 		else:
-			print("Clef voulue pas valide")
+			print("Clef voulue pas valide", clef_voulue)
 	else:
-		print("Clef menu pas valide")
+		print("Clef menu pas valide", clef_menu)
 	return ""
