@@ -6,6 +6,7 @@ from xml import *
 from themes import themes
 from language import language
 from language.language import get_tmenu, get_text
+from gui.raccourcis import donne_valeur_utilisateur
 
 sys.path[:0] = ["../"]
 sys.path[:0] = ["gui"]

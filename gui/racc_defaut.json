@@ -25,6 +25,8 @@
   "Projet": {
     "Importer Projet":"Shift+Ctrl+I",
     "Supprimer Projet":"Ctrl+Alt+S",
-    "Informations Projet":"Ctrl+Alt+I"
+    "Informations Projet":"Ctrl+Alt+I",
+    "Vider cache projet":"Ctrl+J",
+    "Vider tous caches":"Ctrl+Shift+J"
   }
 }
