@@ -418,6 +418,6 @@ DEDENT: '<DEDENT>';
 EOF: '<EOF>';
 
 ###
-from plyplus.grammars.python_indent_postlex import PythonIndentTracker
+from lexer.plyplus.grammars.python_indent_postlex import PythonIndentTracker
 self.lexer_postproc = PythonIndentTracker
 
