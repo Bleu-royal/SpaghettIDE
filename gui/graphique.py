@@ -235,6 +235,7 @@ class Fenetre(QWidget):
             self.status_message(self.bouton_change.text() + get_text("text_chang_bout") + actual)
 
             if actual in widgets[0]:  # Affichage de l'inspecteur
+                self.get_definitions()
                 self.inspecteur.setMaximumHeight(self.ecran.screenGeometry().height())
                 self.inspecteur.load()
                 self.inspecteur.maj_style()
@@ -242,6 +243,18 @@ class Fenetre(QWidget):
             elif actual in widgets[1]:  # Affichage du navigateur de fichiers
                 self.treeview.setMaximumHeight(self.ecran.screenGeometry().height())
                 self.inspecteur.setMaximumHeight(1)
+
+    def get_definitions(self):
+        idx = self.get_idx()
+        doc = self.docs[idx]
+        code = self.codes[idx].toPlainText()
+        ext = doc.extension
+        path = doc.chemin_enregistrement
+
+        if ext in lex.plyPlusLexers:
+            self.def_functions[path] = lex.get_def_functions(ext, code)
+            self.def_structs[path] = lex.get_def_class(ext, code)
+            self.def_vars[path] = lex.get_def_vars(ext, code)
 
     def get_current_widget_used(self):
         """

@@ -275,7 +275,7 @@ def colorate(data):
             res += [[value, tokenColor["OP"]]]
         elif type_ == "IDENTIFIER" and value.lower() in know_functions:
             res += [[value, tokenColor["KNOWN_FUNC"]]]
-        elif type_ == "IDENTIFIER" and value in know_const:
+        elif type_ == "IDENTIFIER" and value.upper() in know_const:
             res += [[value, tokenColor["CONSTANT"]]]
         elif type_ in list(keywords.values()):
             res += [[value, tokenColor["KEYWORD"]]]
@@ -296,19 +296,19 @@ def p_error(p):
 
 
 def yaccing(data, get_errros=True):
-    global erreurs, lignes
-    erreurs = []
-    lignes = {}
+    # global erreurs, lignes
+    # erreurs = []
+    # lignes = {}
 
-    lexer = lex.lex()
-    lexer.input(data)
+    # lexer = lex.lex()
+    # lexer.input(data)
 
-    import lexer.ply.yacc as yacc
-    parser = yacc.yacc()
-    parser.parse(data, tracking=True)
-    # parser.parse(data)
+    # import lexer.ply.yacc as yacc
+    # parser = yacc.yacc()
+    # parser.parse(data, tracking=True)
+    # # parser.parse(data)
 
-    # for i in sorted([int(i) for i in list(lignes.keys())]):
-    #     print("ligne numero %s: %s" % (i + 1, lignes[str(i)]), "\n\n")
+    # # for i in sorted([int(i) for i in list(lignes.keys())]):
+    # #     print("ligne numero %s: %s" % (i + 1, lignes[str(i)]), "\n\n")
 
     return [erreurs, lignes] if get_errros else lignes

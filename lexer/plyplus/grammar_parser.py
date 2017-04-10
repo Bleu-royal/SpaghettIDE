@@ -1,6 +1,6 @@
 from __future__ import absolute_import
 
-from ply import yacc
+from lexer.ply import yacc
 
 from .strees import STree as S
 
