@@ -12,7 +12,7 @@ import themes.themes as themes
 import gui.style.style as style
 from language.language import get_text
 
-from systeme.workplace import *
+from systeme import workplace
 from systeme import compilateur
 # Importation du module relatif à la coloration lexicale et de la gestion des documents
 from systeme import couleurs
@@ -594,27 +594,25 @@ class Fenetre(QWidget):
         :rtype: None
         """
 
-        newproject(self)
+        workplace.newproject(self)
 
-    # def open_project(self):
-    # 	"""
-    # 	Ouvre un projet
-    # 	:rtype: None
-    # 	"""
+    def clear_cache(self):
+        workplace.delete_project_cache(self.project_path)
 
-    # 	open_projects(self)
+    def clear_global_cache(self):
+        workplace.delete_global_cache()
 
     def delete_project(self):
 
-        deleteproject(self)
+        workplace.deleteproject(self)
 
     def infos_project(self):
 
-        infosproject(self)
+        workplace.infosproject(self)
 
     def import_project(self):
 
-        importproject(self)
+        workplace.importproject(self)
 
     def close_document(self):
 

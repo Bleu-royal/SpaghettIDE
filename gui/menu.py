@@ -58,6 +58,8 @@ class MenuBar(QMenuBar):
         import_project_action = MyAction(parent, get_tmenu("import_proj"), "Importer un projet", parent.import_project, "Ctrl+Shift+I")
         del_project_action = MyAction(parent, get_tmenu("supr_proj"), "Supprimer le projet", parent.delete_project, "Ctrl+Alt+S")
         info_project_action = MyAction(parent, get_tmenu("info_proj"), "Informations d'un projet", parent.infos_project, "Ctrl+Alt+I")
+        clear_cache_proj_action = MyAction(parent, get_tmenu("clear_cache_proj"), "Vider le cache d'un projet", parent.clear_cache, "Ctrl+J")
+        clear_cache_global_action = MyAction(parent, get_tmenu("clear_cache_global"), "Vider tout le cache", parent.clear_global_cache, "Ctrl+Shift+J")
         # open_project_action = MyAction(parent, "&Ouvrir Projet", "Ouvrir un projet", parent.open_project, "Ctrl+P")
         # exit_project_action = MyAction(parent, "&Fermer Projet", "Fermer le projet", parent.close_project, "Ctrl+K")
 
@@ -185,7 +187,7 @@ class MenuBar(QMenuBar):
 
         # # # # Menu Projet et ses sous-menus # # # #
         projet_menu = self.addMenu(get_tmenu("proj"))
-        self.set_actions(projet_menu, import_project_action, del_project_action, info_project_action)
+        self.set_actions(projet_menu, import_project_action, del_project_action, info_project_action, "sep", clear_cache_proj_action, clear_cache_global_action)
 
         # # # # Menu SpaghettIDE # # # #
         spaghettide_menu = self.addMenu("&SpaghettIDE")
