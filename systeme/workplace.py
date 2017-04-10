@@ -151,10 +151,10 @@ def newproject(parent):
 #     print(projet)
 
 def delete_project_cache(project_path):
-    pass
+    print("clear local", project_path)
 
 def delete_global_cache():
-    pass
+    print("clear global")
 
 def importproject(parent):
     workplace_path = parent.workplace_path

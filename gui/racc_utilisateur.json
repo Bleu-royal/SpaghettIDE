@@ -20,13 +20,14 @@
     "Rechercher": "Ctrl+F",
     "Dupliquer": "Shift+Ctrl+D",
     "Mode Insertion": "Ctrl+I",
-    "Mot Courant": "Ctrl+D"
+    "Mot Courant": "Ctrl+D",
+    "Commenter":"Ctrl+Shift+:"
   },
   "Projet": {
     "Informations Projet": "Ctrl+Alt+I",
     "Supprimer Projet": "Ctrl+Alt+S",
     "Importer Projet": "Shift+Ctrl+I",
-    "Vider cache projet":"Ctrl+J",
-    "Vider tous caches":"Ctrl+Shift+J"
+    "Vider Cache Projet":"Ctrl+J",
+    "Vider Tous Caches":"Ctrl+Shift+J"
   }
 }

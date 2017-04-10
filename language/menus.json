@@ -76,6 +76,16 @@
     "en": "About project"
   },
 
+  "clear_cache_proj": {
+    "fr": "Vider le cache d'un projet",
+    "en": "Clear project cache"
+  },
+
+  "clear_cache_global": {
+    "fr": "Vider tout le cache",
+    "en": "Clear all cache"
+  },
+
 
 
   "edit": {

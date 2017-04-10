@@ -54,61 +54,95 @@ class MenuBar(QMenuBar):
         super().__init__(parent)
         self.master = parent
 
-        # # # # Projet
-        new_project_action = MyAction(parent, get_tmenu("new_proj"), "Nouveau projet",
-                                      parent.new_project, "Ctrl+M")
-        import_project_action = MyAction(parent, get_tmenu("import_proj"), "Importer un projet",
-                                         parent.import_project, "Ctrl+Shift+I")
-        del_project_action = MyAction(parent, get_tmenu("supr_proj"), "Supprimer le projet",
-                                      parent.delete_project, "Ctrl+Alt+S")
-        info_project_action = MyAction(parent, get_tmenu("info_proj"), "Informations d'un projet",
-                                       parent.infos_project, "Ctrl+Alt+I")
         # open_project_action = MyAction(parent, "&Ouvrir Projet", "Ouvrir un projet", parent.open_project, "Ctrl+P")
         # exit_project_action = MyAction(parent, "&Fermer Projet", "Fermer le projet", parent.close_project, "Ctrl+K")
 
-        # # # # Fichier
+        # # # # Menu Fichier
         new_fic_action = MyAction(parent, get_tmenu("new_file"), "Nouveau fichier",
-                                  parent.new, "Ctrl+N")
+                                  parent.new,
+                                  donne_valeur_utilisateur("Fichier", "Nouveau Fichier"))
+        new_project_action = MyAction(parent, get_tmenu("new_proj"), "Nouveau projet",
+                                      parent.new_project,
+                                      donne_valeur_utilisateur("Fichier", "Nouveau projet"))
         open_fic_action = MyAction(parent, get_tmenu("open_file"), "Ouvrir un fichier",
-                                   parent.open, "Ctrl+O")
+                                   parent.open,
+                                   donne_valeur_utilisateur("Fichier", "Ouvrir"))
         sauv_fic_action = MyAction(parent, get_tmenu("save_file"), "Sauvegarder le fichier courant",
-                                   parent.save, "Ctrl+S")
+                                   parent.save,
+                                   donne_valeur_utilisateur("Fichier", "Sauvegarder"))
         close_fic_action = MyAction(parent, get_tmenu("close_file"), "Fermer le fichier courant",
-                                    parent.close_current_tab, "Ctrl+W")
+                                    parent.close_current_tab,
+                                    donne_valeur_utilisateur("Fichier", "Fermer Onglet"))
+        compiler_action = MyAction(parent, get_tmenu("comp"), "Compiler le projet",
+                                   parent.compiler,
+                                   donne_valeur_utilisateur("Fichier", "Compiler"))
+        configurer_compilation_action = MyAction(parent, get_tmenu("conf_comp"), "Configurer la compilation",
+                                                 parent.configuration_compilation,
+                                                 donne_valeur_utilisateur("Fichier", "Configuration"))
+        fire_action = MyAction(parent, get_tmenu("cheminee"), "Afficher la cheminée",
+                               parent.show_cheminee,
+                               donne_valeur_utilisateur("Fichier", "Cheminee"))
+        fire_action.setCheckable(True)
+        load_action = MyAction(parent, get_tmenu("chargement"), "Afficher l'écran de chargement au démarrage",
+                               parent.show_loading,
+                               donne_valeur_utilisateur("Fichier", "Ecran Chargement"))
+        load_action.setCheckable(True)
+        line_action = MyAction(parent, get_tmenu("lines"), "Numérotation des lignes",
+                               parent.show_line_column,
+                               donne_valeur_utilisateur("Fichier", "Num Lignes"))
+        line_action.setCheckable(True)
+        assist_voc_action = MyAction(parent, get_tmenu("voice"), "Assistance vocale",
+                                     parent.assist_voc,
+                                     donne_valeur_utilisateur("Fichier", "Assistance_vocale"))
         fullscreen_action = MyAction(parent, get_tmenu("full_screen"), "Plein Écran",
-                                     parent.fullscreen, "F7")
+                                     parent.fullscreen,
+                                     donne_valeur_utilisateur("Fichier", "Plein Ecran"))
+        fullscreen_action.setCheckable(True)
         chg_workplace_action = MyAction(parent, get_tmenu("chg_workplace"), "Changer l'emplacement du workplace",
                                         parent.change_worplace_location, "")
-
-        fullscreen_action.setCheckable(True)
         exit_ide_action = MyAction(parent, get_tmenu("exit"), "Fermer l'application",
-                                   parent.quit_func, "Esc")
+                                   parent.quit_func, donne_valeur_utilisateur("Fichier", "Quitter"))
 
-        # # # # Edition
-        indent_action = MyAction(parent, get_tmenu("indent"), "Indentation automatique du fichier",
-                                 parent.indent, "Ctrl+Alt+L")
+        # # # # Menu Edition
         select_current_line_action = MyAction(parent, get_tmenu("select_line"), "Sélectionner la ligne courante",
-                                              parent.select_current_line, "Ctrl+L")
+                                              parent.select_current_line,
+                                              donne_valeur_utilisateur("Edition", "Ligne Courante"))
+        indent_action = MyAction(parent, get_tmenu("indent"), "Indentation automatique du fichier",
+                                 parent.indent,
+                                 donne_valeur_utilisateur("Edition", "Indenter"))
         select_current_word_action = MyAction(parent, get_tmenu("select_word"), "Sélectionner le mot courant",
-                                              parent.select_current_word, "Ctrl+D")
+                                              parent.select_current_word,
+                                              donne_valeur_utilisateur("Edition", "Mot Courant"))
         duplicate_action = MyAction(parent, get_tmenu("duplicate"), "Dupliquer",
-                                    parent.duplicate, "Ctrl+Shift+D")
+                                    parent.duplicate,
+                                    donne_valeur_utilisateur("Edition", "Dupliquer"))
         find_action = MyAction(parent, get_tmenu("find"), "Rechercher",
-                               parent.find, "Ctrl+F")
+                               parent.find,
+                               donne_valeur_utilisateur("Edition", "Rechercher"))
         comment_selection_action = MyAction(parent, get_tmenu("comment"), "Commenter",
                                             parent.comment_selection, "Ctrl+Shift+:")
         insert_action = MyAction(parent, get_tmenu("insert"), "insertion",
-                                 parent.insert_mode, "Ctrl+I")
-        
+                                 parent.insert_mode, donne_valeur_utilisateur("Edition", "Mode Insertion"))
         insert_action.setCheckable(True)
 
-        # # # # Menu compilation
-        compiler_action = MyAction(parent, get_tmenu("comp"), "Compiler le projet",
-                                   parent.compiler, "F5")
-        configurer_compilation_action = MyAction(parent, get_tmenu("conf_comp"), "Configurer la compilation",
-                                                 parent.configuration_compilation, "Maj+F5")
+        # # # # Menu Projet
+        import_project_action = MyAction(parent, get_tmenu("import_proj"), "Importer un projet",
+                                         parent.import_project,
+                                         donne_valeur_utilisateur("Projet", "Importer Projet"))
+        del_project_action = MyAction(parent, get_tmenu("supr_proj"), "Supprimer le projet",
+                                      parent.delete_project,
+                                      donne_valeur_utilisateur("Projet", "Supprimer Projet"))
+        info_project_action = MyAction(parent, get_tmenu("info_proj"), "Informations d'un projet",
+                                       parent.infos_project,
+                                       donne_valeur_utilisateur("Projet", "Informations Projet"))
+        clear_cache_proj_action = MyAction(parent, get_tmenu("clear_cache_proj"), "Vider le cache d'un projet",
+                                           parent.clear_cache,
+                                           donne_valeur_utilisateur("Projet", "Vider Cache Projet"))
+        clear_cache_global_action = MyAction(parent, get_tmenu("clear_cache_global"), "Vider tout le cache",
+                                             parent.clear_global_cache,
+                                             donne_valeur_utilisateur("Projet", "Vider Tous Caches"))
 
-        # # # # Menu divers
+        # # # # Menu Divers
         apropos_ide_action = MyAction(parent, get_tmenu("about"), "À propos de SpaghettIDE", parent.a_propos)
         contact_ide_action = MyAction(parent, get_tmenu("contact"), "", parent.contact)
         site_ide_action = MyAction(parent, get_tmenu("site"), "Site", parent.site)
@@ -116,7 +150,6 @@ class MenuBar(QMenuBar):
         raccourcis_action = MyAction(parent, get_tmenu("raccourcis"), "Raccourcis", parent.menu_raccourcis)
 
         # # # # Assistance vocale
-        assist_voc_action = MyAction(parent, get_tmenu("voice"), "Assistance vocale", parent.assist_voc, "F12")
         assist_voc_action.setCheckable(True)
         if configuration['assistance_vocale'] == 'False':
             assist_voc_action.setChecked(False)
@@ -133,11 +166,10 @@ class MenuBar(QMenuBar):
         self.set_actions(fichier_menu, open_fic_action, sauv_fic_action, close_fic_action, chg_workplace_action, "sep")
 
         # Compilation
-
         compilation_menu = fichier_menu.addMenu(get_tmenu("compil"))
         self.set_actions(compilation_menu, compiler_action, configurer_compilation_action)
 
-        # sous-menu Apparence #
+        # Sous-menu Apparence
         apparence_menu = fichier_menu.addMenu(get_tmenu("settings"))
 
         clair = apparence_menu.addMenu(get_tmenu("theme_clair"))
@@ -167,20 +199,10 @@ class MenuBar(QMenuBar):
         self.set_group(theme_awesome, groupe_theme, fonce, "awesome")
         # self.set_group(nomTheme, groupe_theme, apparence_menu, "monNouveauTheme")
 
-        fire_action = MyAction(parent, get_tmenu("cheminee"), "Afficher la cheminée", parent.show_cheminee, "F6")
-        fire_action.setCheckable(True)
-
-        load_action = MyAction(parent, get_tmenu("chargement"), "Afficher l'écran de chargement au démarrage",
-                               parent.show_loading, "F4")
-        load_action.setCheckable(True)
-
         if configuration['loading'] == 'False':
             load_action.setChecked(False)
         else:
             load_action.setChecked(True)
-
-        line_action = MyAction(parent, get_tmenu("lines"), "Numérotation des lignes", parent.show_line_column, "F2")
-        line_action.setCheckable(True)
         
         if parent.is_show_line:
             if configuration['numerote_lines'] == 'False':
@@ -190,7 +212,7 @@ class MenuBar(QMenuBar):
 
         self.set_actions(apparence_menu, "sep", fire_action, load_action, line_action, assist_voc_action, "sep")
 
-        # # # #Langues
+        # # # # Langues
         langues = apparence_menu.addMenu(get_tmenu("lang"))
         groupe_langue = QActionGroup(parent)
         fr = MyAction(parent, "&Français", "Français", lambda: self.__change_language_to("fr"))
@@ -208,7 +230,8 @@ class MenuBar(QMenuBar):
 
         # # # # Menu Projet et ses sous-menus # # # #
         projet_menu = self.addMenu(get_tmenu("proj"))
-        self.set_actions(projet_menu, import_project_action, del_project_action, info_project_action)
+        self.set_actions(projet_menu, import_project_action, del_project_action, info_project_action, "sep",
+                         clear_cache_proj_action, clear_cache_global_action)
 
         # # # # Menu SpaghettIDE # # # #
         spaghettide_menu = self.addMenu("&SpaghettIDE")
