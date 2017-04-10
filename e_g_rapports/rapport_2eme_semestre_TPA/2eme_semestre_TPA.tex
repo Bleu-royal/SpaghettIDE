@@ -257,7 +257,9 @@
 				\end{figure}
 		\end{itemize}
 		
-	\section{Une autre barre de status}
+\section{Informations sur le code}
+
+	\subsection{Une autre barre de status}
 	
 		Nous avons également travaillé à étoffer l'interface. Nous avons rajouté une seconde barre de status (en bas à droite), servant à afficher des informations sur le code lui-même :
 		
@@ -283,6 +285,8 @@
 		\end{figure}
 		
 		L'ouverture de projets est maintenant beaucoup plus rapide qu'au début du semestre, notament grâce à l'utilisation du cache. La barre de progression apparaît toujours, mais c'est souvent très rapide.
+		
+	\subsection{Numérotation des lignes}
 		
 		
 \section{Recherche et édition du texte}
@@ -424,6 +428,8 @@
 		\end{center}
 	\end{figure}
 	
+\subsection{Les snippets et l'autocomplétion}
+	
 \section{Traitement des projets}
 
 	\subsection{Import d'un projet}
@@ -438,8 +444,42 @@
 
 \section{Insecteur d'éléments}
 
-	Lorsqu'un document est ouvert, nous avons la possibilité d'afficher l'inspecteur d'éléments.
-		
+	Lorsqu'un document est ouvert, nous avons la possibilité d'afficher l'inspecteur d'éléments. Pour cela, nous avons le bouton "Navigateur" sous le navigateur de fichiers, et lorsque l'on clique dessus, on affiche l'inspecteur à la place. De même si on reclique dessus, on ré-affiche le navigateur.
 	
+	\begin{figure}[h!]
+		\begin{center}
+			\includegraphics[scale=0.5]{images/insp_nav.png}
+			\caption{Respectivement l'inspecteur et le navigateur de fichiers sont affichés}
+		\end{center}
+	\end{figure}
+	
+	Au niveau du code, le navigateur de fichiers est créé à l'aide d'un QTreeView (comme au premier semestre), et il est remplacé par un QTextEdit qui constitue l'inspecteur lorsqu'on clique sur le bouton.\\
+	
+	On affiche dans l'inspecteur toute la structure du code grâce au logiciel Yacc, qui peut nous renvoyer des listes contenant pour un fichier :
+	
+	\begin{itemize}
+		\item Ses variables
+		\item Ses fonctions
+		\item Ses struct (en C) ou ses Class (en Python)\\
+	\end{itemize}
+	
+	Lorsque l'on clique sur un élément par exemple un nom de variable, cette variable est sélectionné dans le document courant.
+
+\section{Personnalisation des raccourcis}
+
+\section{Cache des documents}
+
+\section{Nouvelles grammaires}
+
+	\subsection{Grammaire Arithmétique}
+	
+	\subsection{Grammaire Python}
+	
+\section{Langue du système en Anglais}
+
+\section{Ajouts bonus}
+
+	
+
 
 \end{document}
