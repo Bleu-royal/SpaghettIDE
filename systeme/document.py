@@ -141,6 +141,9 @@ class Document:
 
         code.snippets = snippets
 
+    def maj_ext(self):
+        self.extension = self.chemin_enregistrement.split(".")[-1]
+        self.set_snippets()
 
 def new_document(parent):
     new = get_text("nom_new_fic") + str(len(parent.docs) + 1)
@@ -161,10 +164,13 @@ def save_document(parent):
                 if chemin != "" and parent.project_path in chemin:
                     parent.docs[idx].set_chemin_enregistrement(chemin)
                     parent.docs[idx].sauvegarde_document(chemin)
+                    parent.docs[idx].maj_ext()
                     parent.tab_widget.setTabText(idx, parent.docs[idx].nom)
 
                     parent.status_message(parent.docs[idx].nom+get_text("save_complete"), 2000)
                     # Message de statut
+
+
                 elif parent.project_path in chemin:
                     QMessageBox.critical(parent, get_text("save_failed"), get_text("save_fail_text"))
             else:

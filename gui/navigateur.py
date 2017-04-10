@@ -60,11 +60,46 @@ class TreeView(QTreeView):
         self.model.setReadOnly(False)
         self.setRootIndex(self.model.index(self.fenetre.workplace_path))
 
+        self.customContextMenuRequested.connect(self.create_menu)
+        self.setContextMenuPolicy(Qt.CustomContextMenu)
+
         self.maj_style()  # Load theme using stylesheets
 
         self.cacher_pas_projet()
 
         self.function_declarations.connect(self.load_project)
+
+    def create_menu(self, point):
+        menu = QMenu(self.fenetre)
+
+        act_import = QAction("&Importer le projet", menu)
+        act_import.triggered.connect(self.act_import_func)
+        menu.addAction(act_import)
+
+        act_delete = QAction("&Supprimer le projet", menu)
+        act_delete.triggered.connect(self.act_delete_func)
+        menu.addAction(act_delete)
+
+        act_infos = QAction("&Informations sur le projet", menu)
+        act_infos.triggered.connect(self.act_infos_func)
+        menu.addAction(act_infos)
+
+        menu.popup(self.fenetre.mapToGlobal(point))
+
+    def act_import_func(self):
+        chemin = self.fenetre.workplace_path + self.model.fileName(self.currentIndex())
+        if os.path.exists(chemin):
+            workplace.importproject(self.fenetre, chemin)
+
+    def act_delete_func(self):
+        chemin = self.fenetre.workplace_path + self.model.fileName(self.currentIndex())
+        if os.path.exists(chemin):
+            workplace.deleteproject(self.fenetre, chemin)
+
+    def act_infos_func(self):
+        chemin = self.fenetre.workplace_path + self.model.fileName(self.currentIndex())
+        if os.path.exists(chemin):
+            workplace.infoproject(self.fenetre, chemin)
 
     def change_worplace(self, workplace_path):
         self.model.setRootPath(workplace_path)

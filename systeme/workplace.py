@@ -169,10 +169,12 @@ def delete_global_cache(parent):
         os.remove("cache/%s" % file)
     parent.status_message(get_text("cleared_global_cache"))
 
-def importproject(parent):
+def importproject(parent, chemin=False):
     workplace_path = parent.workplace_path
 
-    chemin = QFileDialog.getExistingDirectory(parent, get_text("proj_import"), workplace_path)
+    if not chemin:
+        chemin = QFileDialog.getExistingDirectory(parent, get_text("proj_import"), workplace_path)
+
     if chemin != "":
         project_name = chemin.split("/")[-1]
 
@@ -185,10 +187,12 @@ def importproject(parent):
 
             date = str(datetime.now())
 
+            project_lang = "Python"
+
             for e in os.listdir(chemin):
                 if os.path.isfile("%s/%s"%(chemin,e)) and e[0] != ".":
                     ext = e.split(".")[-1]
-                    project_lang = var.supported_extensions.get(ext, "Arithmétique")
+                    project_lang = var.supported_extensions.get(ext, "Python")
                     break
 
             create_xml("%s/%s.xml" % (QDir(workplace_path + project_name).path(), project_name))
@@ -197,8 +201,6 @@ def importproject(parent):
             update_infos(parent,path,project_name,date,project_lang,project_nb_files)
             project_location = workplace_path + project_name
             add_projects_xml(project_name,project_lang,project_location,date,project_nb_files) 
-
-
 
 class Mem:
     def __init__(self):
@@ -462,17 +464,18 @@ class DeleteProject(QDialog):
 
         super().keyPressEvent(event)
 
-def deleteproject(parent):
+def deleteproject(parent,chemin=False):
+    if not chemin:
+        dp = DeleteProject(parent)
+        dp.exec()
+        project_name = dp.get_project()
+        valider = dp.valider
 
-    dp = DeleteProject(parent)
-    dp.exec()
-    project_name = dp.get_project()
-    valider = dp.valider
-
-    if QDir(parent.workplace_path + project_name).exists() and valider:
-        shutil.rmtree(parent.workplace_path + project_name)
-        #open_projects_xml("projects.xml",project_name)
-
+        if QDir(parent.workplace_path + project_name).exists() and valider:
+            shutil.rmtree(parent.workplace_path + project_name)
+        
+    else:
+        shutil.rmtree(chemin)
 
 
 class InfosProject(QDialog):
@@ -555,6 +558,48 @@ class InfosProject(QDialog):
 
         super().keyPressEvent(event)
 
+class InfoProject(QDialog):
+    def __init__(self, parent,chemin):
+        super().__init__()
+
+        self.parent = parent
+        self.setWindowTitle("Informations du projet :")
+
+        self.layout = QVBoxLayout()
+
+        project_name = chemin.split("/")[-1]
+        project = open_xml("%s/%s.xml"%(chemin, project_name))
+        self.name = QLabel("Nom du projet : " + project["name"])
+        self.language = QLabel("Langage du projet : " + project["language"])
+        self.creation_date = QLabel("Date de création du projet : " + project["creation_date"])
+        self.location = QLabel("Localisation du projet : " + chemin)
+        self.number_files = QLabel("Nombre de fichiers du projet : " + project["number_files"])
+
+        self.layout.addWidget(self.name)
+        self.layout.addWidget(self.creation_date)
+        self.layout.addWidget(self.language)
+        self.layout.addWidget(self.location)
+        self.layout.addWidget(self.number_files)
+
+        self.setLayout(self.layout)
+
+        self.activateWindow()
+
+        def get_project(self):
+            return self.project_name.currentText()#.replace("é","e").lower()
+
+        def get_project_name(self):
+            return self.name.text()
+
+        def get_project_lang(self):
+            return self.language.currentText()#.replace("é","e").lower()
+
+        def keyPressEvent(self, event):
+
+            if event.key() == 16777216:
+                self.done(0)
+            super().keyPressEvent(event)
+
 def infosproject(parent):
 
     ip = InfosProject(parent)
@@ -574,7 +619,7 @@ def infosproject(parent):
         project_name = ip.get_project() 
         path = "%s/%s.xml" % (QDir(parent.workplace_path + project_name).path(), project_name)
         project = open_xml(path)
-        update_infos(parent,path,project_name,project["creation_date"],project["language"],get_nb_files(parent,project_name))
+        #update_infos(parent,path,project_name,project["creation_date"],project["language"],get_nb_files(parent,project_name))
         ip.name.setParent(None)
         ip.name = QLabel("Nom du projet : " + project["name"])
         ip.layout.addWidget(ip.name)
@@ -593,7 +638,7 @@ def infosproject(parent):
         ip.buttons_layout.addWidget(ip.modification_button)
         if not cancel and not modification and not appliquer:
             ip.exec()
-            
+
     if modification and not cancel:
         ip.name.setParent(None)
         ip.name = QLineEdit()
@@ -638,8 +683,8 @@ def infosproject(parent):
         os.rename("%s/%s.xml" % (QDir(parent.workplace_path + project_name).path(), project["name"]), "%s/%s.xml" % (QDir(parent.workplace_path + project_name).path(), project_name))
         path = "%s/%s.xml" % (QDir(parent.workplace_path + project_name).path(), project_name)
         project = open_xml(path)
-        update_infos(parent,path,project_name,project["creation_date"],ip.get_project_lang(),project["number_files"])
+        update_infos(parent,path,project_name,project["creation_date"],ip.get_project_lang(),project["number_files"])  
 
-
-
-        
+def infoproject(parent, chemin):
+    ip = InfoProject(parent, chemin)
+    ip.exec()
