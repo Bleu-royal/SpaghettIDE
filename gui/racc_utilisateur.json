@@ -1,34 +1,33 @@
 {
-  "Edition": {
-    "Indenter": "Ctrl+Alt+L",
-    "Dupliquer": "Shift+Ctrl+D",
-    "Mot Courant": "Ctrl+D",
-    "Rechercher": "Ctrl+F",
-    "Mode Insertion": "Ctrl+I",
-    "Commenter": "Ctrl+Shift+:",
-    "Ligne Courante": "Ctrl+L"
-  },
   "Projet": {
-    "Vider Tous Caches": "Ctrl+Shift+J",
     "Vider Cache Projet": "Ctrl+J",
+    "Vider Tous Caches": "Ctrl+Shift+J",
     "Importer Projet": "Shift+Ctrl+I",
     "Supprimer Projet": "Ctrl+Alt+S",
     "Informations Projet": "Ctrl+Alt+I"
   },
   "Fichier": {
-    "Fermer Onglet": "Ctrl+W",
     "Nouveau Projet": "Ctrl+M",
     "Sauvegarder": "Ctrl+S",
+    "Compiler": "F5",
+    "Fermer Onglet": "Ctrl+W",
     "Assistance vocale": "F12",
+    "Ouvrir": "Ctrl+O",
     "Plein Ecran": "F7",
-    "Ecran Chargement": "F4",
     "Quitter": "Esc",
     "Nouveau Fichier": "Ctrl+N",
-    "Num Lignes": "F2",
-    "Configuration": "Shift+F5",
-    "Assistance vocale": "F12",
-    "Compiler": "F5",
     "Cheminee": "F6",
-    "Ouvrir": "Ctrl+O"
+    "Ecran Chargement": "F4",
+    "Num Lignes": "F2",
+    "Configuration": "Shift+F5"
+  },
+  "Edition": {
+    "Indenter": "Ctrl+Alt+L",
+    "Rechercher": "Ctrl+F",
+    "Mode Insertion": "Ctrl+I",
+    "Dupliquer": "Shift+Ctrl+D",
+    "Mot Courant": "Ctrl+D",
+    "Commenter": "Ctrl+Shift+:",
+    "Ligne Courante": "Ctrl+L"
   }
 }

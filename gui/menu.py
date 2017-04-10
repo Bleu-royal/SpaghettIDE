@@ -63,7 +63,7 @@ class MenuBar(QMenuBar):
                                   donne_valeur_utilisateur("Fichier", "Nouveau Fichier"))
         new_project_action = MyAction(parent, get_tmenu("new_proj"), "Nouveau projet",
                                       parent.new_project,
-                                      donne_valeur_utilisateur("Fichier", "Nouveau projet"))
+                                      donne_valeur_utilisateur("Fichier", "Nouveau Projet"))
         open_fic_action = MyAction(parent, get_tmenu("open_file"), "Ouvrir un fichier",
                                    parent.open,
                                    donne_valeur_utilisateur("Fichier", "Ouvrir"))
@@ -120,9 +120,11 @@ class MenuBar(QMenuBar):
                                parent.find,
                                donne_valeur_utilisateur("Edition", "Rechercher"))
         comment_selection_action = MyAction(parent, get_tmenu("comment"), "Commenter",
-                                            parent.comment_selection, "Ctrl+Shift+:")
+                                            parent.comment_selection,
+                                            donne_valeur_utilisateur("Edition", "Commenter"))
         insert_action = MyAction(parent, get_tmenu("insert"), "insertion",
-                                 parent.insert_mode, donne_valeur_utilisateur("Edition", "Mode Insertion"))
+                                 parent.insert_mode,
+                                 donne_valeur_utilisateur("Edition", "Mode Insertion"))
         insert_action.setCheckable(True)
 
         # # # # Menu Projet
