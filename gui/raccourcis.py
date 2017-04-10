@@ -166,8 +166,12 @@ class MenuProjet(QWidget):
 		                         donne_valeur_utilisateur(self.menu, "Supprimer Projet"))
 		informations = MenuFonction("Informations Projet",
 		                            donne_valeur_utilisateur(self.menu, "Informations Projet"))
+		cache_projet = MenuFonction("Vider Cache Projet",
+		                            donne_valeur_utilisateur(self.menu, "Vider Cache Projet"))
+		tous_cache = MenuFonction("Vider Tout Le Cache",
+		                          donne_valeur_utilisateur(self.menu, "Vider Tous Caches"))
 		
-		self.liste_fonctions = [importer, supprimer, informations]
+		self.liste_fonctions = [importer, supprimer, informations, cache_projet, tous_cache]
 		
 		self.fic_layout = QVBoxLayout()
 		
