@@ -292,6 +292,7 @@ class Editeur(QTextEdit):
         Lorsque l'on presse "TAB" et que l'on définit une fonction ou une structure ou encore une boucle, on
         complète automatiquement la suite avec une liste prédéfinie de le fichier snippets.json.
         """
+        
         textCursor = self.textCursor()
         textCursor.select(QTextCursor.WordUnderCursor)
         word = textCursor.selectedText()
