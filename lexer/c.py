@@ -273,7 +273,7 @@ def colorate(data):
             res += [[value, tokenColor["TYPE"]]]
         elif type_.lower() in operandes:
             res += [[value, tokenColor["OP"]]]
-        elif type_ == "IDENTIFIER" and value.upper() in know_functions:
+        elif type_ == "IDENTIFIER" and value.lower() in know_functions:
             res += [[value, tokenColor["KNOWN_FUNC"]]]
         elif type_ == "IDENTIFIER" and value in know_const:
             res += [[value, tokenColor["CONSTANT"]]]

@@ -91,6 +91,8 @@ class Document:
         if ouverture:
             self.ouverture_document()
 
+        self.set_snippets()
+
     def get_nb_lignes(self):
         # Obtention du nombre de lignes presentes dans le QTextEdit
         return self.text_edit.document().lineCount()
@@ -115,32 +117,29 @@ class Document:
         self.nom = self.chemin_enregistrement.split("/")[-1]
         self.extension = self.nom.split(".")[-1]
 
-    def indent(self):
+    def is_saved(self):
 
-        line_number = self.text_edit.textCursor().blockNumber()  # Obtention du numero de la ligne
+        if self.chemin_enregistrement == "":
+            return False
 
-        text = self.text_edit.toPlainText()
-        lines = text.split("\n")
+        doc = open(self.chemin_enregistrement, "r")
+        val = doc.read()
+        doc.close()
 
-        indent_level = 0
+        return val == self.text_edit.toPlainText()
 
-        for i, line in enumerate(lines):
-            indent_level -= "}" in line  # Si il y'a un accolade fermante on retire un niveau d'indentation
-            if lines[i].strip() != "": lines[i] = "\t" * indent_level + self.remove_tabs(line)  # On ajoute indent_level
-            # fois un '\t' au debut de la ligne
-            indent_level += "{" in line  # Si il y'a un accolade ouvrante on ajoute un niveau d'indentation
+    def set_snippets(self):
+        idx = self.parent.get_idx()
+        code = self.parent.codes[idx]
+        
+        try:
+            fichier = open("snippets/%s.json"%self.extension, "r")
+            snippets = json.loads(fichier.read())
+            fichier.close()
+        except BaseException as e:
+            snippets = []
 
-        self.text_edit.setPlainText("\n".join(lines))
-
-        for i in range(line_number):  # On remet le cursor au bon endroit
-            self.text_edit.moveCursor(QTextCursor.Down)
-            self.text_edit.moveCursor(QTextCursor.EndOfLine)
-
-    def remove_tabs(self, text):
-        idx = 0
-        while text[idx] == "\t" and idx in range(len(text)):
-            idx += 1
-        return text[idx:]
+        code.snippets = snippets
 
 
 def new_document(parent):

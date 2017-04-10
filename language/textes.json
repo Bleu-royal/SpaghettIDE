@@ -307,5 +307,25 @@
   "please_import": {
     "fr": "Veuillez importer le projet avant de l'ouvrir",
     "en": "Please import the project before open it"
+  },
+
+  "close_without_save_title": {
+    "fr": "Voulez-vous sauvegarder le document ?",
+    "en": "Would you save the document ?"
+  },
+
+  "close_without_save": {
+    "fr": "Le document va être fermé sans être sauvegardé.\nVoulez-vous le sauvegarder ?",
+    "en": "Document will be closed without be saved.\nWould you save it ?"
+  },
+
+  "save": {
+    "fr": "Sauvegarder",
+    "en": "Save"
+  },
+
+  "dont_save": {
+    "fr": "Ne pas sauvegarder",
+    "en": "Don't save"
   }
 }

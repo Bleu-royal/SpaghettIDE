@@ -3,12 +3,48 @@ import os
 from PySide.QtGui import *
 from PySide.QtCore import *
 from themes import themes
+from systeme import document
 
 from language.language import get_text
 
 sys.path[:0] = ["../"]
 sys.path[:0] = ["gui"]
 
+
+class CloseDialog(QDialog):
+
+    def __init__(self):
+        super().__init__()
+
+        self.save = False
+
+        layout = QVBoxLayout()
+
+        self.setWindowTitle(get_text("close_without_save_title"))
+
+        lbl = QLabel(text=get_text("close_without_save"))
+        layout.addWidget(lbl)
+
+        layout_btn = QHBoxLayout()
+
+        btn_save = QPushButton(text=get_text("save")) 
+        btn_save.clicked.connect(self.save_cls)
+        layout_btn.addWidget(btn_save)
+
+        btn_dont_save = QPushButton(text=get_text("dont_save"))
+        btn_dont_save.clicked.connect(self.dont_save_cls)
+        layout_btn.addWidget(btn_dont_save)
+
+        layout.addLayout(layout_btn)
+
+        self.setLayout(layout)
+
+    def save_cls(self):
+        self.save = True
+        self.done(0)
+
+    def dont_save_cls(self):
+        self.done(0)
 
 class TabWidget(QTabWidget):
     def __init__(self, parent):
@@ -50,7 +86,6 @@ class TabWidget(QTabWidget):
         self.setUsesScrollButtons(True)  # Si il y a trop d'onglets
 
     def get_current_ext(self):
-        print("ext ====> %s"%self.parent.codes[self.currentIndex()+1].split(".")[-1])
         return self.parent.codes[self.currentIndex()+1].split(".")[-1]
 
     def maj_style(self):
@@ -77,16 +112,22 @@ class TabWidget(QTabWidget):
         """
         if self.count() != 0:  # On vérifie que la liste d'onglet n'est pas vide.
 
-            if self.parent.get_current_widget_used() in ("Inspecteur", "Inspector"):
-                self.parent.change_affichage()  # On remplace l'Inspecteur par le navigateur si il était actif
-
             idx = self.currentIndex()
-
-            self.removeTab(idx)
 
             doc = self.parent.docs[idx]
             code = self.parent.codes[idx]
             highlighter = self.parent.highlighters[idx]
+
+            if not doc.is_saved():
+                close = CloseDialog()
+                close.exec()
+                if close.save:
+                    document.save_document(self.parent)
+
+            if self.parent.get_current_widget_used() in ("Inspecteur", "Inspector"):
+                self.parent.change_affichage()  # On remplace l'Inspecteur par le navigateur si il était actif
+
+            self.removeTab(idx)
 
             self.parent.docs.remove(doc)
             self.parent.codes.remove(code)
