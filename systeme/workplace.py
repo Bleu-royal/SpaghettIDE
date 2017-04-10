@@ -86,6 +86,9 @@ def update_infos(parent,path,project_name,date,project_lang,nb_files):
     write_xml(path,"compil"," ")
     write_xml(path,"compil_json"," ")
 
+def update_nb_files(parent, path, project_name):
+    write_xml(path,"number_files", get_nb_files(parent, project_name))
+
 def get_nb_files(parent,project_name):
     nb_files = 0
     project_path = QDir(parent.workplace_path + project_name).path()
@@ -568,7 +571,9 @@ class InfoProject(QDialog):
         self.layout = QVBoxLayout()
 
         project_name = chemin.split("/")[-1]
-        project = open_xml("%s/%s.xml"%(chemin, project_name))
+        path = "%s/%s.xml"%(chemin, project_name)
+        update_nb_files(parent, path, project_name)
+        project = open_xml(path)
         self.name = QLabel("Nom du projet : " + project["name"])
         self.language = QLabel("Langage du projet : " + project["language"])
         self.creation_date = QLabel("Date de création du projet : " + project["creation_date"])
@@ -618,8 +623,8 @@ def infosproject(parent):
         appliquer = ip.appliquer
         project_name = ip.get_project() 
         path = "%s/%s.xml" % (QDir(parent.workplace_path + project_name).path(), project_name)
+        update_nb_files(parent, path, project_name)
         project = open_xml(path)
-        #update_infos(parent,path,project_name,project["creation_date"],project["language"],get_nb_files(parent,project_name))
         ip.name.setParent(None)
         ip.name = QLabel("Nom du projet : " + project["name"])
         ip.layout.addWidget(ip.name)
