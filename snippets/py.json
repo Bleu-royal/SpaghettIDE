@@ -1,5 +1,5 @@
 {
-	"for" :  ["for e in liste:\n     pass", 2, 3],
+	"for" :  ["for e in liste:\n    pass", 2, 3],
 	"while" :  ["while True:\n     pass", 2, 1],
 	"if" : ["if True:\n      pass\n", 2, 3],
 	"elif" : ["elif True:\n      pass\n", 2, 7],
@@ -8,5 +8,7 @@
 	"defclass" : ["def maFonction(self):\n      pass", 2, 5],
 	"class" : ["class MaClasse:\n      pass", 2, 4],
 	"init" : ["def __init__(self):\n      pass", 0, 0],
-	"print" : ["print(\"texte\")", 0, 8]
+	"repr" : ["def __repr__(self):\n      pass", 0, 0],
+	"print" : ["print(\"texte\")", 0, 8],
+	"try" : ["try:\n      pass\nexcept:\n      pass", 3, 9]
 }

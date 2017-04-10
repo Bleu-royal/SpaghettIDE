@@ -180,10 +180,11 @@ tokens = [
     "INF",
     "SUP",
     "COMMENT",
-    "DOTTED_NAME"
+    "DOTTED_NAME",
+    "newline"
 ] + list(keywords.values())
 
-t_STRING_LITERAL = r"[A-Za-z_]?\"(\.|[^\"])*\""
+t_STRING_LITERAL = r"([A-Za-z_]?\"(\.|[^\"])*\")|([A-Za-z_]?\'(\.|[^\'])*\')"
 t_ELLIPSIS = r"\.\.\."
 t_ADD_ASSIGN = r"\+="
 t_SUB_ASSIGN = r"-="
@@ -250,6 +251,7 @@ def lexing(word):
     return token.type.lower() if token else ""
 
 def tokenize(data):
+
     lexer = lex.lex()
     lexer.input(data)
 
@@ -271,7 +273,7 @@ def colorate(data):
             res += [[value, tokenColor["TYPE"]]]
         elif type_.lower() in operandes:
             res += [[value, tokenColor["OP"]]]
-        elif type_ == "IDENTIFIER" and value.upper() in know_functions:
+        elif type_ == "IDENTIFIER" and value.lower() in know_functions:
             res += [[value, tokenColor["KNOWN_FUNC"]]]
         elif type_ == "IDENTIFIER" and value in know_const:
             res += [[value, tokenColor["CONSTANT"]]]

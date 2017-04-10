@@ -100,10 +100,10 @@ def create_workplace():
 
     :rtype: None
     """
-    path = QDir.homePath()
+    workplace_path = open_xml("conf.xml")["current_workplace"]
 
-    if not QDir(path + '/workplace/').exists():
-        QDir(path).mkpath("workplace")
+    if not QDir(workplace_path).exists():
+        QDir("/").mkpath(workplace_path)
 
 
 def newproject(parent):

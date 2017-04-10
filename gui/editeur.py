@@ -121,7 +121,8 @@ class Editeur(QTextEdit):
         self.taille_texte = taille_texte
         self.def_functions = def_functions
         self.keywords = keywords
-        self.snippets = self.get_snippets()
+        # self.snippets = self.get_snippets()
+        self.snippets = []
 
         self.setTabStopWidth(20)
         self.setLineWrapMode(QTextEdit.NoWrap)
@@ -134,20 +135,6 @@ class Editeur(QTextEdit):
 
         # self.append("int main ( int argc, char** argv ){\n\n\treturn 0;\n\n}")
 
-    def get_snippets(self):
-        """
-        Récupère les snippets : prédéfinitions de fonctions.
-        :rtype: list
-        """
-        try:
-            fichier = open("snippets/%s.json"%self.parent.project_type, "r")
-            res = json.loads(fichier.read())
-            fichier.close()
-        except BaseException as e:
-            res = []
-
-
-        return res
 
     def analyse(self):
         """ Cette fonction est liée au bouton Analyse si il y a au moins un éditeur d'ouvert. """
@@ -185,7 +172,38 @@ class Editeur(QTextEdit):
                 self.parent.def_vars[file_path] = declarators[2][file_path]
 
 
+    def auto_align(self):
+        idx = self.parent.get_idx()
+        lang = self.parent.docs[idx].extension
 
+        textCursor = self.textCursor()
+        textCursor.movePosition(QTextCursor.Up)
+        textCursor.select(QTextCursor.LineUnderCursor)
+        text = textCursor.selectedText()
+        if text != "":
+            nb_tab = self.get_current_tab()
+
+            if lang == "py" and text[-1] == ":":
+                nb_tab += 1
+            elif lang == "c":
+                if text.strip()[-1] == "{":
+                    nb_tab += 1
+            textCursor.movePosition(QTextCursor.Down)
+            textCursor.insertText("\t"*nb_tab)
+            self.setTextCursor(textCursor)
+
+
+
+    def get_current_tab(self):
+        textCursor = self.textCursor()
+        textCursor.movePosition(QTextCursor.Up)
+        textCursor.select(QTextCursor.LineUnderCursor)
+        text = textCursor.selectedText()
+
+        nb = 0
+        while nb < len(text) and text[nb] == "\t":
+            nb+=1
+        return nb    
 
 
     def keyPressEvent(self, event):
@@ -215,6 +233,11 @@ class Editeur(QTextEdit):
 
         super().keyPressEvent(event)
 
+        if event.key() == 16777220: # enter key
+            self.auto_align()
+
+
+
     def wheelEvent(self, e, syncr=False):
         """
         Évenement appelé lors du scroll via la souris
@@ -227,6 +250,42 @@ class Editeur(QTextEdit):
         QTextEdit.wheelEvent(self, e)
         if not syncr:
             self.parent.nb_lignes.wheelEvent(e, True)
+
+    def indent(self):
+        idx = self.parent.get_idx()
+        doc = self.parent.docs[idx]
+        ext = doc.extension
+
+        if ext in ("c", "h"):
+            self.indent_c()
+    
+    def indent_c(self):
+
+        line_number = self.textCursor().blockNumber()  # Obtention du numero de la ligne
+
+        text = self.toPlainText()
+        lines = text.split("\n")
+
+        indent_level = 0
+
+        for i, line in enumerate(lines):
+            indent_level -= "}" in line  # Si il y'a un accolade fermante on retire un niveau d'indentation
+            if lines[i].strip() != "": lines[i] = "\t" * indent_level + self.remove_tabs(line)  # On ajoute indent_level
+            # fois un '\t' au debut de la ligne
+            indent_level += "{" in line  # Si il y'a un accolade ouvrante on ajoute un niveau d'indentation
+
+        self.setPlainText("\n".join(lines))
+
+        for i in range(line_number):  # On remet le cursor au bon endroit
+            self.moveCursor(QTextCursor.Down)
+            self.moveCursor(QTextCursor.EndOfLine)
+
+    def remove_tabs(self, text):
+        idx = 0
+        while text[idx] == "\t" and idx in range(len(text)):
+            idx += 1
+        return text[idx:]
+
 
     def use_snippets(self):
         """
@@ -241,7 +300,7 @@ class Editeur(QTextEdit):
             textCursor.removeSelectedText()
             textCursor.insertText(infos[0])
 
-            self.parent.indent()
+            self.indent()
 
             for i in range(infos[1]):
                 self.moveCursor(QTextCursor.Up)
@@ -306,10 +365,21 @@ class Editeur(QTextEdit):
 
         textCursor.insertText(textCursor.selectedText() + return_ + textCursor.selectedText())
 
+    def get_comment_char(self):
+        comment_char = {"py": "#", "h": "//", "c": "//"}
+        idx = self.parent.get_idx()
+        doc = self.parent.docs[idx]
+        ext = doc.extension
+
+        return comment_char.get(ext, "")
+
     def comment_selection(self):
         """
         Commente la zone sélectionnée ou la ligne sous le curseur si rien n'est sélectionné.
         """
+
+        comment_char = self.get_comment_char()
+
         textCursor = self.textCursor()
 
         if textCursor.selectedText() == "":
@@ -325,9 +395,9 @@ class Editeur(QTextEdit):
         for i in range(len(lines)):
             if lines[i].strip() != "":
                 if is_commented:
-                    lines[i] = lines[i][2:]
+                    lines[i] = lines[i][len(comment_char):]
                 else:
-                    lines[i] = "//" + lines[i]
+                    lines[i] = comment_char + lines[i]
 
         textCursor.insertText("\n".join(lines))
 
@@ -336,8 +406,11 @@ class Editeur(QTextEdit):
         Vérifie si une zone est commentée
         :rtype: bool
         """
+
+        comment_char = self.get_comment_char()
+
         for line in lines:
-            if line[:2] != "//" and line.strip() != "":
+            if line[:len(comment_char)] != comment_char and line.strip() != "":
                 return False
         return True
 
