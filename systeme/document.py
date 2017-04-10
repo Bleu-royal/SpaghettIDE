@@ -191,6 +191,8 @@ def document_deja_ouvert(parent, chemin):
 
 def open_document(parent, chemin, secu=False):
 
+    print(chemin)
+
     if parent.project_path != "":
         if not chemin:
             chemin = QFileDialog.getOpenFileName(parent, get_text("ouverture_2"), parent.project_path, var.file_by_language[parent.project_type] + ";;" + var.txt_extentions_filedialog)[0]

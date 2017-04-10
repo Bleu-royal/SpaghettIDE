@@ -250,6 +250,7 @@ def open_project(parent, name=False):
         """
 
     else:
+        print(parent)
         parent.open()
 
 
@@ -576,14 +577,14 @@ class InfoProject(QDialog):
         project = open_xml(path)
         self.name = QLabel("Nom du projet : " + project["name"])
         self.language = QLabel("Langage du projet : " + project["language"])
-        self.creation_date = QLabel("Date de création du projet : " + project["creation_date"])
         self.location = QLabel("Localisation du projet : " + chemin)
+        self.creation_date = QLabel("Date de création du projet : " + project["creation_date"])
         self.number_files = QLabel("Nombre de fichiers du projet : " + project["number_files"])
 
         self.layout.addWidget(self.name)
-        self.layout.addWidget(self.creation_date)
         self.layout.addWidget(self.language)
         self.layout.addWidget(self.location)
+        self.layout.addWidget(self.creation_date)  
         self.layout.addWidget(self.number_files)
 
         self.setLayout(self.layout)

@@ -72,19 +72,40 @@ class TreeView(QTreeView):
     def create_menu(self, point):
         menu = QMenu(self.fenetre)
 
-        act_import = QAction("&Importer le projet", menu)
-        act_import.triggered.connect(self.act_import_func)
-        menu.addAction(act_import)
+        path = self.model.filePath(self.currentIndex())
+        
+        project_name = path.replace(self.fenetre.workplace_path, "")
+        project_name = project_name.split("/")
 
-        act_delete = QAction("&Supprimer le projet", menu)
-        act_delete.triggered.connect(self.act_delete_func)
-        menu.addAction(act_delete)
+        if os.path.isfile(path):
+            act_remove_file = QAction("&Supprimer le fichier", menu)
+            act_remove_file.triggered.connect(self.act_remove_file_func)
+            menu.addAction(act_remove_file)
 
-        act_infos = QAction("&Informations sur le projet", menu)
-        act_infos.triggered.connect(self.act_infos_func)
-        menu.addAction(act_infos)
+        elif len(project_name)<=1:
+
+            if not os.path.exists(path + "/" + project_name[0] + ".xml"):
+
+                act_import = QAction("&Importer le projet", menu)
+                act_import.triggered.connect(self.act_import_func)
+                menu.addAction(act_import)
+
+            else:
+
+                act_delete = QAction("&Supprimer le projet", menu)
+                act_delete.triggered.connect(self.act_delete_func)
+                menu.addAction(act_delete)
+
+                act_infos = QAction("&Informations sur le projet", menu)
+                act_infos.triggered.connect(self.act_infos_func)
+                menu.addAction(act_infos)
 
         menu.popup(self.fenetre.mapToGlobal(point))
+
+    def act_remove_file_func(self):
+
+        path = self.model.filePath(self.currentIndex())
+        os.remove(path)
 
     def act_import_func(self):
         chemin = self.fenetre.workplace_path + self.model.fileName(self.currentIndex())
