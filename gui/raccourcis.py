@@ -233,5 +233,8 @@ def donne_valeur_utilisateur(clef_menu, clef_voulue):
 	if clef_menu in dico.keys():
 		if clef_voulue in dico[clef_menu].keys():
 			return dico[clef_menu][clef_voulue]
-	
+		else:
+			print("Clef voulue pas valide")
+	else:
+		print("Clef menu pas valide")
 	return ""
