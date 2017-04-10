@@ -30,7 +30,8 @@ from gui import statusbar
 from gui.bouton import Bouton
 from gui.label import Label
 from gui import inspecteur
-from gui.raccourcis import Raccourcis
+from gui.raccourcis.raccourcis import Raccourcis
+
 
 # sys.path[:0] = ["../"]
 # sys.path[:0] = ["gui"]
@@ -183,7 +184,7 @@ class Fenetre(QWidget):
         self.sig_progress.connect(self.prog_val)
         self.sig_update_lines.connect(self.change_lines)
         self.sig_update_lines_termine.connect(self.nb_lignes.go_top)
-
+        
     def compiler(self):
         if self.project_path != "":
             compilateur.compiler(self)
@@ -625,7 +626,6 @@ class Fenetre(QWidget):
 
     def menu_raccourcis(self):
         """ Sous-menu permettant d'ouvrir la fenêtre de modification des raccourcis."""
-        
         fen_raccourcis = Raccourcis(self, "Paramètrage raccourcis")
         fen_raccourcis.exec()
 
