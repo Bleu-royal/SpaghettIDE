@@ -2,7 +2,7 @@ import re
 import types
 import logging
 
-from ply import lex, yacc
+from lexer.ply import lex, yacc
 
 from .common import *
 from .strees import is_stree

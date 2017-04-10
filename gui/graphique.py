@@ -30,7 +30,8 @@ from gui import statusbar
 from gui.bouton import Bouton
 from gui.label import Label
 from gui import inspecteur
-from gui.raccourcis import Raccourcis
+from gui.raccourcis.raccourcis import Raccourcis
+
 
 # sys.path[:0] = ["../"]
 # sys.path[:0] = ["gui"]
@@ -183,7 +184,7 @@ class Fenetre(QWidget):
         self.sig_progress.connect(self.prog_val)
         self.sig_update_lines.connect(self.change_lines)
         self.sig_update_lines_termine.connect(self.nb_lignes.go_top)
-
+        
     def compiler(self):
         if self.project_path != "":
             compilateur.compiler(self)
@@ -234,6 +235,7 @@ class Fenetre(QWidget):
             self.status_message(self.bouton_change.text() + get_text("text_chang_bout") + actual)
 
             if actual in widgets[0]:  # Affichage de l'inspecteur
+                self.get_definitions()
                 self.inspecteur.setMaximumHeight(self.ecran.screenGeometry().height())
                 self.inspecteur.load()
                 self.inspecteur.maj_style()
@@ -241,6 +243,18 @@ class Fenetre(QWidget):
             elif actual in widgets[1]:  # Affichage du navigateur de fichiers
                 self.treeview.setMaximumHeight(self.ecran.screenGeometry().height())
                 self.inspecteur.setMaximumHeight(1)
+
+    def get_definitions(self):
+        idx = self.get_idx()
+        doc = self.docs[idx]
+        code = self.codes[idx].toPlainText()
+        ext = doc.extension
+        path = doc.chemin_enregistrement
+
+        if ext in lex.plyPlusLexers:
+            self.def_functions[path] = lex.get_def_functions(ext, code)
+            self.def_structs[path] = lex.get_def_class(ext, code)
+            self.def_vars[path] = lex.get_def_vars(ext, code)
 
     def get_current_widget_used(self):
         """
@@ -489,6 +503,14 @@ class Fenetre(QWidget):
         self.tab_widget.clear()
         self.project_path = ""
 
+        widgets = [("Navigateur", "TreeView"), ("Inspecteur", "Inspector")]
+        actual = self.bouton_change.text()
+
+        if actual in widgets[1]:  # Affichage du navigateur de fichiers
+            self.treeview.setMaximumHeight(self.ecran.screenGeometry().height())
+            self.inspecteur.setMaximumHeight(1)
+
+
         chemin = QFileDialog.getExistingDirectory(self, get_text("chg_worplace"), self.workplace_path) + "/"
         if chemin != "/":
             self.treeview.change_worplace(chemin)
@@ -625,7 +647,6 @@ class Fenetre(QWidget):
 
     def menu_raccourcis(self):
         """ Sous-menu permettant d'ouvrir la fenêtre de modification des raccourcis."""
-        
         fen_raccourcis = Raccourcis(self, "Paramètrage raccourcis")
         fen_raccourcis.exec()
 
