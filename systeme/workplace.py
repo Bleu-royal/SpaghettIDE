@@ -164,29 +164,30 @@ def importproject(parent):
     workplace_path = parent.workplace_path
 
     chemin = QFileDialog.getExistingDirectory(parent, get_text("proj_import"), workplace_path)
-    project_name = chemin.split("/")[-1]
+    if chemin != "":
+        project_name = chemin.split("/")[-1]
 
-    if not os.path.exists(workplace_path+project_name):
-        QDir(parent.workplace_path).mkpath(project_name)
+        if not os.path.exists(workplace_path+project_name):
+            QDir(parent.workplace_path).mkpath(project_name)
 
-        os.system("cp -r %s/ %s/"%(chemin.replace(" ", "\ "), workplace_path + project_name.replace(" ","\ ")))
-    
-    if not os.path.exists("%s%s/%s.xml"%(workplace_path, project_name, project_name)):
+            os.system("cp -r %s/ %s/"%(chemin.replace(" ", "\ "), workplace_path + project_name.replace(" ","\ ")))
+        
+        if not os.path.exists("%s%s/%s.xml"%(workplace_path, project_name, project_name)):
 
-        date = str(datetime.now())
+            date = str(datetime.now())
 
-        for e in os.listdir(chemin):
-            if os.path.isfile("%s/%s"%(chemin,e)) and e[0] != ".":
-                ext = e.split(".")[-1]
-                project_lang = var.supported_extensions.get(ext, "Arithmétique")
-                break
+            for e in os.listdir(chemin):
+                if os.path.isfile("%s/%s"%(chemin,e)) and e[0] != ".":
+                    ext = e.split(".")[-1]
+                    project_lang = var.supported_extensions.get(ext, "Arithmétique")
+                    break
 
-        create_xml("%s/%s.xml" % (QDir(workplace_path + project_name).path(), project_name))
-        path = "%s/%s.xml" % (QDir(workplace_path + project_name).path(), project_name)
-        project_nb_files = get_nb_files(parent,project_name)
-        update_infos(parent,path,project_name,date,project_lang,project_nb_files)
-        project_location = workplace_path + project_name
-        add_projects_xml(project_name,project_lang,project_location,date,project_nb_files) 
+            create_xml("%s/%s.xml" % (QDir(workplace_path + project_name).path(), project_name))
+            path = "%s/%s.xml" % (QDir(workplace_path + project_name).path(), project_name)
+            project_nb_files = get_nb_files(parent,project_name)
+            update_infos(parent,path,project_name,date,project_lang,project_nb_files)
+            project_location = workplace_path + project_name
+            add_projects_xml(project_name,project_lang,project_location,date,project_nb_files) 
 
 
 
@@ -548,7 +549,7 @@ def infosproject(parent):
 
     ip = InfosProject(parent)
     ip.exec()
-    project = {}
+    project = {"name":""}
     project_name = ip.get_project()
     valider = ip.valider
     cancel = ip.cancel
@@ -618,7 +619,7 @@ def infosproject(parent):
         ip.appliquer_button.setFocus()
         ip.exec()
 
-    if not appliquer and not cancel:
+    if not appliquer and not cancel and project["name"]!="":
         if ip.get_project_name() == "":
             project_name = project["name"]
         else:
