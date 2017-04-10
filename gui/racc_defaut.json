@@ -12,7 +12,7 @@
     "Num Lignes":"F2",
     "Assistance vocale":"F12",
     "Plein Ecran":"F7",
-    "Quitter":"Echap"
+    "Quitter":"Esc"
   },
   "Edition": {
     "Ligne Courante":"Ctrl+L",
