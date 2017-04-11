@@ -6,7 +6,7 @@ from themes.themes import *
 # ----------- LEX -----------#
 
 tokenColor = get_color_from_theme("token")
-
+text = ""
 
 def update_token_color():
     global tokenColor
@@ -250,6 +250,10 @@ def lexing(word):
     lexer.input(word)
     token = lexer.token()
     return token.type.lower() if token else ""
+
+def update_text(data):
+    global text
+    text = data
 
 def tokenize(data):
     lexer = lex.lex()

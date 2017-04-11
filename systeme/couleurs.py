@@ -61,6 +61,7 @@ class CodeHighLighter(QSyntaxHighlighter):
         super().__init__(parent)
 
         self.editeur = editeur
+        self.parent = editeur.parent
         self.prop = Proposition(self.editeur)
         self.props = ["int\nvoid\nbool\nchar", "(\n{", "+\n-\n*\n/"]
 
@@ -94,6 +95,10 @@ class CodeHighLighter(QSyntaxHighlighter):
         self.prop.hide()
 
         if not self.first_launch and text != "":
+            idx = self.parent.get_idx()
+            doc = self.parent.docs[idx]
+            ext = doc.extension
+            lex.update_text(ext, self.editeur.toPlainText())
 
             idx = self.editeur.parent.get_idx()
             file_type = self.editeur.parent.docs[idx].extension

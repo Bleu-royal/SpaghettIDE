@@ -1,11 +1,14 @@
 # Module relatif à l'analyseur lexical LEX
 
 import lexer.ply.lex as lex
+from lexer import plyPlusPython as lexPly
 from themes.themes import *
 
 # ----------- LEX -----------#
 
 tokenColor = get_color_from_theme("token")
+
+text = ""
 
 
 def update_token_color():
@@ -250,6 +253,10 @@ def lexing(word):
     token = lexer.token()
     return token.type.lower() if token else ""
 
+def update_text(data):
+    global text
+    text = data
+
 def tokenize(data):
 
     lexer = lex.lex()
@@ -257,10 +264,16 @@ def tokenize(data):
 
     res = []
 
+    if text != "":
+        lexPly.set_data_to_parse(text)
+
     while True:
         token = lexer.token()
         if not token: break
-        res += [(token.type, token.value)]
+        if lexPly.is_function(token.value):
+            res += [("KNOWN_FUNC", token.value)]
+        else:
+            res += [(token.type, token.value)]
 
     return res
 
@@ -273,7 +286,7 @@ def colorate(data):
             res += [[value, tokenColor["TYPE"]]]
         elif type_.lower() in operandes:
             res += [[value, tokenColor["OP"]]]
-        elif type_ == "IDENTIFIER" and value.lower() in know_functions:
+        elif type_ == "IDENTIFIER" and value.lower() in know_functions or type_ == "KNOWN_FUNC":
             res += [[value, tokenColor["KNOWN_FUNC"]]]
         elif type_ == "IDENTIFIER" and value.upper() in know_const:
             res += [[value, tokenColor["CONSTANT"]]]

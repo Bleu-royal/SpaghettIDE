@@ -16,6 +16,10 @@ def update_token_color():
 	for lexer in lexers.values():
 		lexer.update_token_color()
 
+def update_text(language, data):
+	if language in lexers:
+		lexers[language].update_text(data)
+
 def yaccing(language, data, get_errros=True):
 	return [] if language not in lexers else lexers[language].yaccing(data, get_errros)
 
