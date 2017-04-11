@@ -12,18 +12,18 @@ class Raccourcis(QDialog):
 	def __init__(self, parent, titre):
 		QDialog.__init__(self)
 		
+		# La fenêtre
 		self.setWindowTitle(titre)
 		self.setGeometry(20, 50, 500, 500)
 		
 		self.tab_widget = QTabWidget()
 		
 		self.tab_widget.addTab(MenuFichier(parent), "Fichier")
-		
 		self.tab_widget.addTab(MenuEdition(parent), "Edition")
 		self.tab_widget.addTab(MenuProjet(parent), "Projet")
 		
+		# Les boutons
 		self.bouton_valider = bouton.Bouton("Valider", self.valider)
-		
 		self.bouton_raz = bouton.Bouton("Remise à zéro", self.raz)
 		
 		self.layout = QVBoxLayout()
@@ -45,6 +45,8 @@ class Raccourcis(QDialog):
 		val_menu_proj = self.tab_widget.widget(2)  # Retourne MenuProjet
 		
 		dictio = dico_utilisateur()
+		
+		# On repète la même opération pour chacun des menus
 		
 		for element in val_menu_fic.liste_fonctions:
 			val = self.valider_raccourci(element.raccourci.text())  # Nouveau raccourci
@@ -76,6 +78,7 @@ class Raccourcis(QDialog):
 		self.done(0)
 		
 	def valider_raccourci(self, val):
+		""" La fonction qui vérifie que les raccourcis soient corrects. """
 		
 		ligne = val.split("+")
 		res = ""
@@ -135,6 +138,7 @@ class Raccourcis(QDialog):
 class MenuFichier(QWidget):
 	
 	def __init__(self, parent):
+		""" La classe pour le menu Fichier. """
 		QWidget.__init__(self)
 		
 		self.menu = "Fichier"
@@ -192,6 +196,7 @@ class MenuFichier(QWidget):
 class MenuEdition(QWidget):
 	
 	def __init__(self, parent):
+		""" La classe pour le menu Edition. """
 		QWidget.__init__(self)
 		
 		self.menu = "Edition"
@@ -223,6 +228,7 @@ class MenuEdition(QWidget):
 class MenuProjet(QWidget):
 	
 	def __init__(self, parent):
+		""" La classe pour le menu Projet. """
 		QWidget.__init__(self)
 		
 		self.menu = "Projet"
@@ -251,6 +257,7 @@ class MenuProjet(QWidget):
 class MenuFonction(QWidget):
 	
 	def __init__(self, nom_label, valeur_defaut):
+		""" La classe qui permet de réaliser les lignes de saisies et d'indiquer ce à quoi elles correspondent. """
 		QWidget.__init__(self)
 		
 		self.label = QLabel(nom_label)
@@ -265,8 +272,8 @@ class MenuFonction(QWidget):
 		self.setLayout(self.fonction_layout)
 	
 	def keyPressEvent(self, event):
+		""" Le fonction qui permet d'écrire "Ctrl" quand on tape sur la touche Ctrl (et autres). """
 		
-
 		if event.key() == 16777249:  # Ctrl
 			self.raccourci.insert("Ctrl+")
 		elif event.key() == 16777248:  # Shift/Maj
