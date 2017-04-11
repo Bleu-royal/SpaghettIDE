@@ -11,6 +11,32 @@ import kernel.variables as var
 sys.path[:0] = ["../"]
 sys.path[:0] = ["gui"]
 
+class RenameDialog(QDialog):
+
+    def __init__(self, name):
+        super().__init__()
+
+        self.setWindowTitle(get_text("rename_btn"))
+
+        self.valid = False
+
+        layout = QVBoxLayout()
+
+        self.line_name = QLineEdit(text=name)
+        layout.addWidget(self.line_name)
+
+        btn_valider = QPushButton(text=get_text("rename_btn"))
+        btn_valider.clicked.connect(self.validate)
+        layout.addWidget(btn_valider)
+
+        self.setLayout(layout)
+
+    def validate(self):
+        if self.line_name.text() != "":
+            self.valid = True
+            self.done(0)
+        else:
+            QMessageBox.critical(self, get_text("invalid_name"), get_text("invalid_name"))
 
 class TreeView(QTreeView):
     function_declarations = Signal(tuple)
@@ -85,6 +111,10 @@ class TreeView(QTreeView):
             act_remove_file.triggered.connect(self.act_remove_file_func)
             menu.addAction(act_remove_file)
 
+            act_rename_file = QAction(get_tmenu("rename_file"), menu)
+            act_rename_file.triggered.connect(self.act_rename_file_func)
+            menu.addAction(act_rename_file)
+
         elif len(project_name)<=1:
 
             if not os.path.exists(path + "/" + project_name[0] + ".xml"):
@@ -109,7 +139,35 @@ class TreeView(QTreeView):
             act_rm_folder.triggered.connect(self.act_rm_folder_func)
             menu.addAction(act_rm_folder)
 
+            act_rename_folder = QAction(get_tmenu("rename_folder"), menu)
+            act_rename_folder.triggered.connect(self.act_rename_folder)
+            menu.addAction(act_rename_folder)
+
         menu.popup(self.fenetre.mapToGlobal(point))
+
+    def act_rename_file_func(self):
+        name = self.model.fileName(self.currentIndex())
+        path = self.model.filePath(self.currentIndex())
+
+        rename_file_dialog = RenameDialog(name)
+        rename_file_dialog.exec()
+
+        if rename_file_dialog.valid:
+            new_name = rename_file_dialog.line_name.text()
+            new_path = path.replace(name, new_name)
+            os.rename(path, new_path)
+
+    def act_rename_folder(self):
+        name = self.model.fileName(self.currentIndex())
+        path = self.model.filePath(self.currentIndex())
+
+        rename_folder_dialog = RenameDialog(name)
+        rename_folder_dialog.exec()
+
+        if rename_folder_dialog.valid:
+            new_name = rename_folder_dialog.line_name.text()
+            new_path = path.replace(name, new_name)
+            os.rename(path, new_path)
 
     def act_rm_folder_func(self):
         path = self.model.filePath(self.currentIndex())

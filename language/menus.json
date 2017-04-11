@@ -234,6 +234,16 @@
   "rm_folder": {
     "fr": "Supprimer le dossier",
     "en": "Delete folder"
+  },
+
+  "rename_folder": {
+    "fr": "Renommer le dossier",
+    "en": "Rename folder"
+  },
+
+  "rename_file": {
+    "fr": "Renommer le fichier",
+    "en": "Rename file"
   }
 
 }

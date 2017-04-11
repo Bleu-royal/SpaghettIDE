@@ -412,6 +412,16 @@
   "info_modify_project": {
     "fr": "Modifier les informations du projet",
     "en": "Modify informations project"
+  },
+
+  "rename_btn": {
+    "fr": "Renommer",
+    "en": "Rename"
+  },
+
+  "invalid_name": {
+    "fr": "Le nom n'est pas valide",
+    "en": "Invalid name"
   }
 
 }
