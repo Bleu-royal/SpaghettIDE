@@ -1,5 +1,7 @@
 __pycache__/
 
+bleu_royal_ide_g3.iml
+
 cache/*
 
 .DS_Store
