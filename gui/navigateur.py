@@ -5,7 +5,7 @@ from PySide.QtCore import *
 from systeme import workplace
 from themes import themes
 from language.language import get_text, get_tmenu
-
+import shutil
 import kernel.variables as var
 
 sys.path[:0] = ["../"]
@@ -103,8 +103,18 @@ class TreeView(QTreeView):
                 act_infos.triggered.connect(self.act_infos_func)
                 menu.addAction(act_infos)
 
+        elif os.path.isdir(path):
+
+            act_rm_folder = QAction(get_tmenu("rm_folder"), menu)
+            act_rm_folder.triggered.connect(self.act_rm_folder_func)
+            menu.addAction(act_rm_folder)
+
         menu.popup(self.fenetre.mapToGlobal(point))
 
+    def act_rm_folder_func(self):
+        path = self.model.filePath(self.currentIndex())
+        shutil.rmtree(path)
+    
     def act_remove_file_func(self):
 
         path = self.model.filePath(self.currentIndex())

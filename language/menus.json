@@ -229,6 +229,11 @@
   "info_project": {
     "fr": "Informations sur le projet",
     "en": "About project"
+  },
+
+  "rm_folder": {
+    "fr": "Supprimer le dossier",
+    "en": "Delete folder"
   }
 
 }
