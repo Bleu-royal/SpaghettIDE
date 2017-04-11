@@ -6,10 +6,13 @@ t = ""
 
 def set_data_to_parse(data):
 	global t
-	t = g.parse(data + "\n")
-
+	try :
+		t = g.parse(data + "\n")
+	except:
+		t = False
 def is_function(word):
-	return word in t.select("funccall > name > *") or word in t.select("funcdef > name > *") or word in t.select("classdef > name > *")
+	if t:
+		return word in t.select("funccall > name > *") or word in t.select("funcdef > name > *") or word in t.select("classdef > name > *")
 
 def get_def_functions(data):
 	t = g.parse(data)
