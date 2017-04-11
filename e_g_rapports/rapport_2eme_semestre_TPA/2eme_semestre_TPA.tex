@@ -491,6 +491,35 @@
 	
 \subsection{Les snippets}
 	
+	\subsubsection{Les snippets : explication}
+
+		Les snippets sont des bouts de code qui sont réutilisables d'un projet à un autre (comme les conditions, les boucles et les définitions de fonction par example). Dans notre IDE nous utilisons des mots clés que l'on associes à ces bouts de code. Lorsque l'on tape un des mots clés puis que l'on presse la touche \textbf{tabulation}, le mot clé est remplacé par le bout de code qui correspond.
+
+	\subsubsection{Intergration des bouts de code dans l'IDE}
+
+		\paragraph{Utilisation du JSON}
+
+			Pour l'intégration des snippets dans l'IDE, nous avons utilisés des fichier JSON, qui contiennent des dictionnaires avec comme clé le mot clé qui correspond au bout de code et en valeur le dit bout de code, suivit de nombre de ligne de le cursor doit remonter, puis le nombre de charactère char que le cursor doit parcourir vers la droite pour être à l'emplacement voulu. De plus nous avons un fichier JSON par language (C, python, etc ... )
+
+			\begin{figure}[h!]
+				\begin{center}
+					\includegraphics[scale=0.7]{images/exempleJSON}
+					\caption{Extrait du fichier JSON pour le language C}
+				\end{center}
+			\end{figure}
+
+		\paragraph{Connection entre le JSON et l'IDE}
+
+			Pour capturer l'appuie sur la touche \textbf{tabulation}, nous utilisons le méthode \textbf{keyPressEvent} de notre classes \textbf{Editeur}. Cette méthode est appelée à l'appuie sur une des touches du clavier. Par la suite, si la touche est la touche \textbf{tabulation}, nous parsons le JSON pour avoir touts les couples mot clé - bout de code. Puis en fonction du mot placé au niveau du curseur, on le remplace ou non par le bout de code correspondant.
+
+			\begin{figure}[h!]
+				\begin{center}
+					\includegraphics[scale=0.7]{images/exampleFor}
+					\caption{Exemple d'utilisation des snippets avec une boucle for en Python}
+				\end{center}
+			\end{figure}
+
+	
 \section{Traitement des projets}
 
 	\subsection{Import d'un projet}
@@ -502,6 +531,43 @@
 
 
 \section{Compilateur}
+
+	\subsection{Compilateurs utilisés}
+
+		Pour notre IDE, nous avons utilisés le compilateur \textbf{GCC}, pour compiler les projets de type \textbf{C}. Mais nous utilisons aussi les interpréteur de python afin d'interpréter les projets de type \textbf{Python}. Par la suite, pour chaque nouveaux languages il nous suffit d'utiliser le bon compilateur ou le bon interpréteur.
+		
+	\subsection{Integration de \textbf{GCC} à notre IDE}
+
+		Pour utilisé \textbf{GCC} avec notre IDE nous avons créé une fenêtre de configuration afin de permettre à l'utilisateur de choisir la configuration adéquate à la compilation de son projet.
+
+			\begin{figure}[h!]
+				\begin{center}
+					\includegraphics[scale=0.7]{images/fenCompEx}
+					\caption{Fenêtre de configuration de GCC}
+				\end{center}
+			\end{figure}
+
+		Par la suite, chaque information de cette fenêtre est convertie en une chaîne de caractère du type : 
+
+		gcc /Users/theosarrazin/workplaceC/ProjetDeTest/test.c  -I /Users/theosarrazin/workplaceC/
+
+		ProjetDeTest/header -o MonExecutable
+
+		Cette chaîne de caractère est stockée dans le fichier XML de configuration du projet.
+
+		Par la suite on exécute cette ligne de commande, puis on récupère sur la sortie d'erreurs les eventuelles erreurs afin de pouvoir les afficher à l'utilisateur après les avoir parsé pour avoir un bon formatage.
+
+		\newpage
+
+			\begin{figure}[h!]
+				\begin{center}
+					\includegraphics[scale=0.7]{images/fenErreurEx}
+					\caption{Affichage des erreurs de GCC dans l'IDE}
+				\end{center}
+			\end{figure}
+
+		Pour la partie interpréteur la demarche est identique. 
+
 
 \section{Inspecteur d'éléments}
 
@@ -554,9 +620,100 @@ En ce qui concerne la modification des raccourcis, il est possible de d'écrire 
 
 \section{Cache des documents}
 
+	\subsection{Utilité du cache}
+
+		Afin de pouvoir faire de la coloration, nous avons utilisés \textbf{Lex} mais pour les fichiers de plusieurs 100\up{ène} de lignes \textbf{Lex} prend plusieurs secondes pour nous donner la listes des tokens du fichier. Nous avons donc décidé d'utiliser un fichier de cache afin de ne pas utiliser \textbf{Lex} pour colorer des lignes que nous avons déjà coloré de manière ultérieure.
+
+	\subsection{Intégration du cache dans l'IDE}
+
+		Pour le cache, nous avons décidé d'utiliser un fichier JSON pour l'enregistrer. Le fonctionnement est assez simple la clé est le bout de code que l'on donne à \textbf{Lex} et la valeur est la réponse de ce dernier. Par la suite il nous reste plus qu'à utiliser les valeurs du fichier JSON à la place de \textbf{Lex}
+
+			\begin{figure}[h!]
+				\begin{center}
+					\includegraphics[scale=0.5]{images/exempleJsonCache}
+					\caption{Extrait d'un JSON contenant le cache}
+				\end{center}
+			\end{figure}
+
+		Grâce au cache nous avons un gain de temps considérable sur l'ouverture des documents.
+		
+		Nous pouvons que 2 fonctions existent, l'une vide le cache du projet courant et l'autre vide tout le cache. 
+
 \section{Nouvelles grammaires}
 
 	\subsection{Grammaire Arithmétique}
+
+		\subsubsection{Lex}
+			
+			Comme nous avons pu le voir, les regles de lex sont définis par des tokens, chaques tokens étant associés à un expression régulière. 
+
+			\paragraph{Les tokens}
+
+				Dans le cadre d'un grammaire arithmétique nous avons besoin de différents tokens : 
+				\begin{itemize}
+					\item Number : le token qui va reconnaitre les nombres
+					\item Plus : le token qui va reconnaitre le signe +
+					\item Minus : le token qui va reconnaitre le signe -
+					\item Times : le token qui va reconnaitre le signe *
+					\item Divide : le token qui va reconnaitre le signe /
+					\item LParen : le token qui va reconnaitre la parenthèse gauche
+					\item RParen : le token qui va reconnaitre la parenthèse droite
+				\end{itemize}
+
+				Pour être reconnnu par Lex ces tokens sont stockés dans un tuple \textbf{tokens} 
+
+			\paragraph{Les expressions régulières}
+
+				A chacun des tokens précédents, nous devons associer une expression régulière pour que Lex puisse reconnaitre les tokens.
+				Pour cela, nous devons simplement créer une variable de la forme t\_NomDuToken, est qui prend comme valeur l'expression régulière à associer à ce token.
+
+				Pour le token Number, nous utilisons l'expression suivante : \textbf{\"\\b+\"}, le \textbf{\"\\b\"} signifiant n'importe quel chiffre compris entre 0 et 9 de plus le \textbf{+} signifie répété une ou plusieur fois. En effet un nombre est une suite de chiffre.
+
+				Pour les six autres tokens, nous utilisons simplement le signe qui doit correspondre au token (+ pour le token Plus, - pour le token Minus, etc...)
+			
+				\begin{figure}[h!]
+					\begin{center}
+						\includegraphics[scale=1]{images/exp_regex}
+						\caption{Exemple de création d'une expression régulière}
+					\end{center}
+				\end{figure}
+
+
+			\paragraph{Fonctions et variables supplémentaires}
+
+				De plus, pour l'utilisation de Lex, nous pouvons définir une variable \textbf{t\_ignore} qui va preciser les éléments à ne pas prendre en compte, dans notre cas la variable vaut \textbf{" \t"}, nous ignorons donc les espaces et les tabulations.
+
+				Nous pouvons aussi définir une fonction \textbf{t\_newline(t)}, qui prend un token en paramètre et qui va être utilisée pour matcher tous les retours à la lignes grâce à l'expression régulière \textbf{\"\\n+\"}, de plus cette fonction va ajouter pour chaque ligne trouvé 1 à l'attribut \textbf{lineno}, qui contient le nombre de lignes.
+
+				Pour finir un autre fonction peut être utilisée, la fonction \textbf{t\_error(t)}, qui prend elle aussi on token en paramètre et qui va être appelée par le lexer à chaque token non reconnue par notre lexer. Cette fonction va afficher un message d'erreur puis ignorer le token grâce à l'instruction \textbf{t.lexer.skip(1)}, t étant le token courrant grâce au quel on recupère le lexer. 
+
+		\subsubsection{Yacc}
+
+			\paragraph{Création de la grammaire}
+
+				Pour fonctionner Yacc à besoin de différentes règles de grammaires, chaques règles definissants comment peuvent s'"assembler" les différents tokens reconnus pour Lex.
+
+				Pour definir des règles nous devons créer des fonctions nommer de la façons suivante : \textbf{p\_NomDeLaRegle}. Cette fonction doit contenir une docstring definissant les regles à respecter.
+
+				\begin{figure}[h!]
+					\begin{center}
+						\includegraphics[scale=1]{images/exp_grammaire_yacc}
+						\caption{Exemple d'une règle de grammaire de Yacc}
+					\end{center}
+				\end{figure}
+
+				Voici nos différentes règles : 
+				\begin{itemize}
+					\item expression : correspond à une somme/soustraction de deux expressions. Une expression pouvant aussi être terme.
+					\item terme : correspond à une multiplication/division de deux termes. Un terme pouvant aussi être un facteur.
+					\item facteur : correspond à un nombre, une expression entre parenthèse ou - un facteur.
+				\end{itemize}
+
+				De plus, chacune de ces fonctions ajoute des propositions à une variable \textbf{prop} afin de les afficher par la suite dans notre IDE.
+
+			\paragraph{Création du parser}
+
+				Par la suite, nous devons appliquer nos règles sur du contenu, pour cela nous avons créés une fonction \textbf{parse}, qui prend en paramètre le code à parser. Par la suite, cette fonction créée le lexer (en faisant appelle à Lex), puis créée le parser (en faisant appelle à Yacc), pour finir elle revoit les listes des propostions afin de pouvoir les ajouter à les listes des propostions de notre IDE.
 	
 	\subsection{Grammaire Python}
 	
