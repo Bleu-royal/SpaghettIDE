@@ -10,7 +10,7 @@ import shutil
 import lexer.lexer as lex
 from xml import *
 from systeme.parallele import ProgressOpening, ProgressDisp
-from language.language import get_text
+from language.language import get_text, get_tmenu
 import kernel.variables as var
 
 class NewProject(QDialog):
@@ -610,7 +610,7 @@ def infosproject(parent):
 
     ip = InfosProject(parent)
     ip.exec()
-    project = {"name":""}
+    project = {}
     project_name = ip.get_project()
     valider = ip.valider
     cancel = ip.cancel
@@ -622,6 +622,7 @@ def infosproject(parent):
         cancel = ip.cancel
         modification = ip.modification
         appliquer = ip.appliquer
+        ip.setWindowTitle(get_text("info_project"))
         project_name = ip.get_project() 
         path = "%s/%s.xml" % (QDir(parent.workplace_path + project_name).path(), project_name)
         update_nb_files(parent, path, project_name)
@@ -646,6 +647,7 @@ def infosproject(parent):
             ip.exec()
 
     if modification and not cancel:
+        ip.setWindowTitle(get_text("info_modify_project"))
         ip.name.setParent(None)
         ip.name = QLineEdit()
         ip.name.setPlaceholderText(project["name"])
@@ -680,7 +682,7 @@ def infosproject(parent):
         ip.appliquer_button.setFocus()
         ip.exec()
 
-    if not appliquer and not cancel and project["name"]!="":
+    if not appliquer and not cancel and project != {}:
         if ip.get_project_name() == "":
             project_name = project["name"]
         else:

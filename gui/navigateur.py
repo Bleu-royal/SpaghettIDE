@@ -4,7 +4,7 @@ from PySide.QtGui import *
 from PySide.QtCore import *
 from systeme import workplace
 from themes import themes
-from language.language import get_text
+from language.language import get_text, get_tmenu
 
 import kernel.variables as var
 
@@ -78,7 +78,7 @@ class TreeView(QTreeView):
         project_name = project_name.split("/")
 
         if os.path.isfile(path):
-            act_remove_file = QAction(get_text("delete_file"), menu)
+            act_remove_file = QAction(get_tmenu("delete_file"), menu)
             act_remove_file.triggered.connect(self.act_remove_file_func)
             menu.addAction(act_remove_file)
 
@@ -86,17 +86,17 @@ class TreeView(QTreeView):
 
             if not os.path.exists(path + "/" + project_name[0] + ".xml"):
 
-                act_import = QAction(get_text("import_project"), menu)
+                act_import = QAction(get_tmenu("import_project"), menu)
                 act_import.triggered.connect(self.act_import_func)
                 menu.addAction(act_import)
 
             else:
 
-                act_delete = QAction(get_text("delete_project"), menu)
+                act_delete = QAction(get_tmenu("delete_project"), menu)
                 act_delete.triggered.connect(self.act_delete_func)
                 menu.addAction(act_delete)
 
-                act_infos = QAction(get_text("info_project"), menu)
+                act_infos = QAction(get_tmenu("info_project"), menu)
                 act_infos.triggered.connect(self.act_infos_func)
                 menu.addAction(act_infos)
 

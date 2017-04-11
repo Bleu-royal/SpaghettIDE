@@ -379,11 +379,6 @@
     "en": "Apply"
   },
 
-  "infos_project": {
-    "fr": "Informations du projet :",
-    "en": "Informations of the project :"
-  },
-
   "project_name": {
     "fr": "Nom du projet : ",
     "en": "Project name : "
@@ -407,6 +402,16 @@
   "project_number_files": {
     "fr": "Nombre de fichiers du projet : ",
     "en": "Number of files of the project : "
+  },
+
+  "info_project": {
+    "fr": "Informations sur le projet",
+    "en": "About project"
+  },
+
+  "info_modify_project": {
+    "fr": "Modifier les informations du projet",
+    "en": "Modify informations project"
   }
 
 }
