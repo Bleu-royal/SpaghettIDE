@@ -5,8 +5,10 @@ import os, sys
 from xml import *
 
 def change_theme(theme):
-
-    write_xml("conf.xml",'theme', theme)
+   """
+   Permet le changement de thème via son écriture dans le fichier xml.
+   """  
+   write_xml("conf.xml",'theme', theme)
     
 
 def get_current_theme():

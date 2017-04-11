@@ -620,29 +620,45 @@ class Fenetre(QWidget):
         workplace.newproject(self)
 
     def clear_cache(self):
+        """
+        Supprime le cache de la partie courante.
+        """
         workplace.delete_project_cache(self, self.project_path)
 
     def clear_global_cache(self):
+        """
+        Supprime le cache de tout l'IDE.
+        """
         workplace.delete_global_cache(self)
 
     def delete_project(self):
-
+        """
+        Supprime un projet.
+        """
         workplace.deleteproject(self)
 
     def infos_project(self):
-
+        """
+        Affiche les informations du projet.
+        """
         workplace.infosproject(self)
 
     def import_project(self):
-
+        """
+        Importe un projet.
+        """
         workplace.importproject(self)
 
     def close_document(self):
-
+        """
+        Ferme un fichier.
+        """
         document.closedocument(self)
 
     def delete_document(self):
-
+        """
+        Contient le bouton d'annimation de l'affichage des lignes ainsi que la zone de numérotation des lignes.
+        """
         document.deletedocument(self)
 
     def menu_raccourcis(self):
@@ -753,6 +769,9 @@ class Fenetre(QWidget):
             self.status_message(get_text("status_cheminee_off"))
 
     def show_loading(self):
+        """
+        Affiche ou masque l'écran de chargement.
+        """
         if configuration['loading'] == 'False':
             write_xml("conf.xml", "loading", "True")
         else:

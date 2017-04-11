@@ -15,6 +15,9 @@ import kernel.variables as var
 
 class NewProject(QDialog):
     def __init__(self):
+        """
+        Créé l'affichage pour la fenêtre de création de projet.
+        """
         super().__init__()
 
         self.cancel = False
@@ -57,27 +60,44 @@ class NewProject(QDialog):
         self.valider_button.setFocus()
 
     def cancel_action(self):
+        """
+        Fonction associée au bouton Cancel.
+        """     
         self.cancel = True
         self.done(0)
 
     def valider_action(self):
+        """
+        Fonction associée au bouton Valider.
+        """
         self.valider = True
         self.done(0)
 
     def get_project_name(self):
+        """
+        Fonction retournant le nom du projet.
+        """
         return self.line_edit.text()
 
     def get_project_lang(self):
+        """
+        Fonction retournant le langage du projet.
+        """
         return self.project_name_lang.currentText()#.replace("é","e").lower()
 
     def keyPressEvent(self, event):
-
+        """
+        Fonction associée au bouton échap.
+        """
         if event.key() == 16777216:
             self.cancel = True
 
         super().keyPressEvent(event)
 
 def update_infos(parent,path,project_name,date,project_lang,nb_files):
+    """
+    Fonction permettant de mettre à jour les informations de projet.
+    """
     write_xml(path,"name",project_name)
     write_xml(path,"creation_date",date)
     write_xml(path,"language",project_lang)
@@ -87,15 +107,23 @@ def update_infos(parent,path,project_name,date,project_lang,nb_files):
     write_xml(path,"compil_json"," ")
 
 def update_nb_files(parent, path, project_name):
+    """
+    Fonction permettant de mettre à jour le nombre de fichiers d'un projet.
+    """
     write_xml(path,"number_files", get_nb_files(parent, project_name))
 
 def get_nb_files(parent,project_name):
+    """
+    Fonction permettant de récupérer le nombre de fichiers.
+    """
     nb_files = 0
     project_path = QDir(parent.workplace_path + project_name).path()
 
     for e in os.listdir(project_path):
         if os.path.isfile(project_path+"/"+e) and e!="%s.xml" %(project_name) and e[0]!=".":
             nb_files+=1
+        elif os.path.isdir(project_path+"/"+e) and e[0] != ".":
+            nb_files += int(get_nb_files(parent, "%s/%s"%(project_name, e)))
 
     return str(nb_files)
 
@@ -112,7 +140,9 @@ def create_workplace():
 
 
 def newproject(parent):
-
+    """
+    Fonction associée au bouton pour créer un nouveau projet.
+    """
     np = NewProject()
     np.exec()
     project_name = np.get_project_name()
@@ -173,6 +203,9 @@ def delete_global_cache(parent):
     parent.status_message(get_text("cleared_global_cache"))
 
 def importproject(parent, chemin=False):
+    """
+    Fonction associée au bouton pour importer un projet.
+    """
     workplace_path = parent.workplace_path
 
     if not chemin:
@@ -416,6 +449,9 @@ class ProgressWin(QObject):
 
 class DeleteProject(QDialog):
     def __init__(self, parent):
+        """
+        Fonction permettant d'afficher la fenêtre pour supprimer un projet.
+        """
         super().__init__()
 
         self.parent = parent
@@ -450,24 +486,38 @@ class DeleteProject(QDialog):
         self.valider_button.setFocus()
 
     def cancel_action(self):
+        """
+        Fonction associée au bouton Cancel.
+        """
         self.cancel = True
         self.done(0)
 
     def valider_action(self):
+        """
+        Fonction associée au bouton Valider.
+        """
         self.valider = True
         self.done(0)
 
     def get_project(self):
+        """
+        Fonction permettant de récupérer le nom du projet.
+        """
         return self.project_name.currentText()#.replace("é","e").lower()
 
     def keyPressEvent(self, event):
-
+        """
+        Fonction associée au bouton échap.
+        """
         if event.key() == 16777216:
             self.cancel = True
 
         super().keyPressEvent(event)
 
 def deleteproject(parent,chemin=False):
+    """
+    Fonction associée au bouton de suppresion de projet.
+    """
     if not chemin:
         dp = DeleteProject(parent)
         dp.exec()
@@ -483,6 +533,9 @@ def deleteproject(parent,chemin=False):
 
 class InfosProject(QDialog):
     def __init__(self, parent):
+        """
+        Fonction permettant l'affichage de la fenêtre des informations de projet.
+        """
         super().__init__()
 
         self.parent = parent
@@ -530,32 +583,55 @@ class InfosProject(QDialog):
         self.valider_button.setFocus()
 
     def cancel_action(self):
+        """
+        Fonction associée au bouton Cancel.
+        """
         self.cancel = True
         self.done(0)
 
     def valider_action(self):
+        """
+        Fonction associée au bouton Valider.
+        """
         self.valider = True
         self.done(0)
 
     def modification_action(self):
+        """
+        Fonction associée au bouton Modifier.
+        """
         self.modification = True
         self.done(0)
 
     def appliquer_action(self):
+        """
+        Fonction associée au bouton Appliquer.
+        """
         self.appliquer = True
         self.done(0)
 
     def get_project(self):
+        """
+        Fonction permettant de récupérer le nom du projet.
+        """
         return self.project_name.currentText()#.replace("é","e").lower()
 
     def get_project_name(self):
+        """
+        Fonction permettant de récupérer le nom du projet.
+        """
         return self.name.text()
 
     def get_project_lang(self):
+        """
+        Fonction permettant de récupérer le langage du projet.
+        """
         return self.language.currentText()#.replace("é","e").lower()
 
     def keyPressEvent(self, event):
-
+        """
+        Fonction associée au boutoné échap.
+        """
         if event.key() == 16777216:
             self.cancel = True
 
@@ -563,6 +639,9 @@ class InfosProject(QDialog):
 
 class InfoProject(QDialog):
     def __init__(self, parent,chemin):
+        """
+        Fonction permettant l'affichage de la fenêtre des informations de projet dans le menu clic droit du navigateur de projets.
+        """
         super().__init__()
 
         self.parent = parent
@@ -591,22 +670,35 @@ class InfoProject(QDialog):
         self.activateWindow()
 
         def get_project(self):
+            """
+            Fonction permettant de récupérer le nom du projet.
+            """
             return self.project_name.currentText()#.replace("é","e").lower()
 
         def get_project_name(self):
+            """
+            Fonction permettant de récupérer le nom du projet.
+            """
             return self.name.text()
 
         def get_project_lang(self):
+            """
+            Fonction permettant de récupérer le langage du projet.
+            """
             return self.language.currentText()#.replace("é","e").lower()
 
         def keyPressEvent(self, event):
-
+            """
+            Fonction associée au bouton échap.
+            """
             if event.key() == 16777216:
                 self.done(0)
             super().keyPressEvent(event)
 
 def infosproject(parent):
-
+    """
+    Fonction associée au bouton des informations de projet.
+    """
     ip = InfosProject(parent)
     ip.exec()
     project = {}
@@ -693,5 +785,8 @@ def infosproject(parent):
         update_infos(parent,path,project_name,project["creation_date"],ip.get_project_lang(),project["number_files"])  
 
 def infoproject(parent, chemin):
+    """
+    Fonction associée au bouton du menu clic droit des informations de projet du navigateur.
+    """
     ip = InfoProject(parent, chemin)
     ip.exec()
