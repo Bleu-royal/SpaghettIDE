@@ -250,7 +250,6 @@ def open_project(parent, name=False):
         """
 
     else:
-        print(parent)
         parent.open()
 
 
