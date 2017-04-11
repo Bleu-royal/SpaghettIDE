@@ -62,7 +62,7 @@ class NewProject(QDialog):
     def cancel_action(self):
         """
         Fonction associée au bouton Cancel.
-        """
+        """     
         self.cancel = True
         self.done(0)
 
@@ -515,9 +515,9 @@ class DeleteProject(QDialog):
         super().keyPressEvent(event)
 
 def deleteproject(parent,chemin=False):
-        """
-        Fonction associée au bouton de suppresion de projet.
-        """
+    """
+    Fonction associée au bouton de suppresion de projet.
+    """
     if not chemin:
         dp = DeleteProject(parent)
         dp.exec()

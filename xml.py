@@ -6,9 +6,9 @@ from PySide.QtCore import *
 from lxml import etree
 
 def open_xml(fichier):
-  """
-  Permet l'ouverture d'une fichier xml et le stockage de ses informations dans un dico.
-  """
+    """
+    Permet l'ouverture d'une fichier xml et le stockage de ses informations dans un dico.
+    """
     configuration = {}
     tree = etree.parse(fichier)
     root = tree.getroot()
@@ -46,21 +46,21 @@ def project_compil_json(fichier):
     return configuration["compil_json"] if configuration["compil_json"] != " " else ""
 
 def compil_xml(fichier, value):
-  """
-  Permet d'écrire la valeur de la balise compil dans un fichier xml d'un projet.
-  """
+    """
+    Permet d'écrire la valeur de la balise compil dans un fichier xml d'un projet.
+    """
     write_xml(fichier,"compil",value)
 
 def compil_json_xml(fichier, value):
-  """
-  Permet d'écrire la valeur de la balise compil_json dans un fichier xml d'un projet.
-  """
+    """
+    Permet d'écrire la valeur de la balise compil_json dans un fichier xml d'un projet.
+    """
     write_xml(fichier,"compil_json",value)
 
 def write_xml(fichier, config, value):
-  """
-  Permet d'écrire la valeur d'une balise dans un fichier xml.
-  """
+    """
+    Permet d'écrire la valeur d'une balise dans un fichier xml.
+    """
     tree = etree.parse(fichier)
     root = tree.getroot()
     for child in root.getchildren():
@@ -70,9 +70,9 @@ def write_xml(fichier, config, value):
     tree.write(fichier)
 
 def create_xml(path):
-  """
-  Permet de créér un fichier xml avec l'initialisation de ses balises.
-  """
+    """
+    Permet de créér un fichier xml avec l'initialisation de ses balises.
+    """
     fichier = open(path, "w")
     fichier.write("<project>\n"
                   "     <name></name>\n"
@@ -86,9 +86,9 @@ def create_xml(path):
     fichier.close()
 
 def add_projects_xml(project_name, project_lang, project_location, date, project_nb_files):
-  """
-  Permet d'ajouter les différentes balises composant un projet qui est ajouté à la liste des projets.
-  """
+    """
+    Permet d'ajouter les différentes balises composant un projet qui est ajouté à la liste des projets.
+    """
     tree = etree.parse("projects.xml")
     projects=tree.getroot()
     project = etree.SubElement(projects, "project")
