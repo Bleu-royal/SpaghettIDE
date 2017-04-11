@@ -38,11 +38,11 @@
 
 	Voici un résumé de ce que nous avions à la fin du premier semestre.\\
 	
-	Notre IDE était capable d'ouvrir des documents avec l'extention .c ou .h à partir de projets qu'on avait créé. On pouvait ouvrir plusieurs documents, et avoir une liste d'onglets. Nous avions un navigateur de fichiers qui nous permettait de naviguer entre nos différents projets et leurs documents. Une barre de menu nous permettait d'accéder à nos différentes fonctionnalités, et on affichait à l'aide d'une barre de status différents messages répondant aux requête de l'utilisateur.\\
+	Notre IDE était capable d'ouvrir des documents avec l'extention .c ou .h à partir de projets qu'on avait créé. On pouvait ouvrir plusieurs documents, et avoir une liste d'onglets. Nous avions un navigateur de fichiers qui nous permettait de naviguer entre nos différents projets et leurs documents. Une barre de menu nous permettait d'accéder à nos différentes fonctionnalités, et on affichait à l'aide d'une barre de statut différents messages répondant aux requêtes de l'utilisateur.\\
 	
 	\includegraphics[scale=0.3]{images/ide_v1.png}
 	
-	Nous colorions le contenu des documents à l'aide du logiciel Lex les différents tokens (éléments du code) selon leur fonction. Et nous analysions les documents pour détecter des erreurs de syntaxe à l'aide du logiciel Yacc. Nous utilisons pour cela une grammaire.
+	Nous colorions le contenu des documents à l'aide du logiciel Lex, en particulier les différents tokens (éléments du code) selon leur fonction. Et nous analysions les documents pour détecter des erreurs de syntaxe à l'aide du logiciel Yacc. Nous utilisons pour cela une grammaire.
 	
 	\subsection{Grammaire pour Lex et Yacc}
 	
@@ -50,10 +50,12 @@
 		
 		\begin{figure}[!h]
 			\begin{center}
-				\includegraphics[scale=0.7]{images/tokens}
+				\includegraphics[scale=0.6]{images/tokens}
 				\caption{Exemple de liste de tokens pour les déclarations de type en C.}
 			\end{center}
 		\end{figure}
+		
+		\newpage
 		
 		Nous avons aussi des fonctions à définir, pour Yacc afin de définir la syntaxe à suivre pour le langage (ici le langage C).
 		Pour donner un exemple, sur les expressions de multiplication, nous indiquons qu'une multiplication peut prendre plusieurs formes.
@@ -87,7 +89,7 @@
 		
 	\subsection{Pour ce semestre}
 	
-		Nous avons beaucoup travaillé à étoffer et rajouter de nombreuses fonctionnalités à notre éditeur afin qu'il soit complet et qu'il ressemble à des éditeurs déjà existant au niveau du contenu.\\
+		Nous avons beaucoup travaillé pour rajouter de nombreuses fonctionnalités à notre éditeur afin qu'il soit complet et qu'il ressemble à des éditeurs déjà existant au niveau du contenu.\\
 		
 		Voici donc la liste de ce qui a été ajouté depuis les vacances de Noël :
 		
@@ -98,7 +100,7 @@
 			\item Intégration d'un compilateur
 			\item Fonctionnalités diverses de recherche et d'édition de texte
 			\item Inspecteur d'éléments
-			\item Une autre barre de status pour d'autres types d'informations
+			\item Une autre barre de statut pour d'autres types d'informations
 			\item Les numéros de lignes
 			\item Fenêtre de paramétrage des raccourcis
 			\item Ajout de cache afin d'optimiser l'ouverture de fichiers
@@ -118,21 +120,21 @@
 	
 		\begin{figure}[h!]
 			\begin{center}
-				\includegraphics[scale=0.23]{images/imgs_themes/theme_forest}
+				\includegraphics[scale=0.2]{images/imgs_themes/theme_forest}
 				\caption{Thème Forêt}
 			\end{center}
 		\end{figure}
 		
 		\begin{figure}[h!]
 			\begin{center}
-				\includegraphics[scale=0.23]{images/imgs_themes/theme_basic}
+				\includegraphics[scale=0.2]{images/imgs_themes/theme_basic}
 				\caption{Thème de base}
 			\end{center}
 		\end{figure}
 		
 		\begin{figure}[h!]
 			\begin{center}
-				\includegraphics[scale=0.23]{images/imgs_themes/theme_pastel}
+				\includegraphics[scale=0.2]{images/imgs_themes/theme_pastel}
 				\caption{Thème Pastel}
 			\end{center}
 		\end{figure}
@@ -149,8 +151,7 @@
 				\end{center}
 			\end{figure}
 			
-			Les thèmes sont triés en fonction de si ils sont plutôt clairs ou plutôt sombres.\\
-			Lorsque l'on sélectionne son thème il est immédiatement changé, il n'y a pas besoin de relancer l'application. De plus, une petite icone apparaît à côté du thème que vous avez choisi dans la barre de menu\\
+			Lorsqu'on sélectionne son thème il est immédiatement changé, il n'y a pas besoin de relancer l'application. De plus, une petite icone apparaît à côté du thème que vous avez choisi dans la barre de menu.\\
 			
 			Le thème sélectionné est alors écrit de le fichier conf.xml qui est situé à la racine du projet. Ainsi, lorsque vous relancerez l'IDE, le dernier thème que vous avez utilisé sera rechargé.
 			
@@ -164,7 +165,7 @@
 				\end{center}
 			\end{figure}
 			
-			Chaque répertoire de thème regroupe les fichiers en format .json. Les différents fichiers .json contiennent les couleurs en RGB d'un élément de l'interface graphique.
+			Chaque répertoire de thème regroupe les fichiers en format .json qui contiennent les couleurs en RGB de chaque élément de l'interface graphique.
 			
 			\begin{figure}[h!]
 				\begin{center}
@@ -193,19 +194,17 @@
 			"python3 createtheme.py monNouveauTheme" et cela créera un répertoire "monNouveauTheme" qui contiendra les fichiers nécessaires à la gestion de votre thème. Ouvrez ensuite les fichiers .json et définissez vos propres couleurs (par défaut tout est noir).\\
 			
 			Une fois cela fait, vous devrez ajouter deux lignes dans le module menu.py pour que votre thème apparaisse dans la séléction.
-			
-			\newpage
 
 			\begin{figure}[h!]
 				\begin{center}
 					\includegraphics[scale=0.5]{images/imgs_themes/add2}
-					\caption{Où nomTheme est le nom de la variable pour le thème, et monNouveauTheme le nom que vous avez donné à votre thème}
+					\caption{Ici nomTheme est le nom de la variable pour le thème, et monNouveauTheme le nom que vous avez donné à votre thème}
 				\end{center}
 			\end{figure}
 			\begin{figure}[h!]
 				\begin{center}
 					\includegraphics[scale=0.7]{images/imgs_themes/add1}
-					\caption{Où nomTheme est le nom de la variable pour le thème, et groupetheme le groupe (clair ou sombre) auquel appartient votre thème}
+					\caption{Ici nomTheme est le nom de la variable pour le thème, et groupetheme le groupe (clair ou sombre) auquel appartient votre thème}
 				\end{center}
 			\end{figure}
 			
@@ -217,10 +216,11 @@
 		
 		\begin{figure}[h!]
 			\begin{center}
-				\includegraphics[scale=1]{images/imgs_themes/style}
+				\includegraphics[scale=0.5]{images/imgs_themes/style}
 				\caption{Contenu du répertoire style}
 			\end{center}
 		\end{figure}
+		\newpage
 				
 		Chaque document .css contient le style relatif à des éléments. Nous retrouvons ici le style appliqué :
 		
@@ -247,21 +247,20 @@
 					\end{center}
 				\end{figure}
 				
-			\newpage
 			\item à la barre de progression
 			\begin{figure}[h!]
 					\begin{center}
 						\includegraphics[scale=0.7]{images/imgs_themes/progress2}
-						\caption{La barre de status (voir ci-dessous).}
+						\caption{La barre de statut (voir ci-dessous).}
 					\end{center}
 				\end{figure}
 		\end{itemize}
 		
 \section{Informations sur le code}
 
-	\subsection{Une autre barre de status}
+	\subsection{Une autre barre de statut}
 	
-		Nous avons également travaillé à étoffer l'interface. Nous avons rajouté une seconde barre de status (en bas à droite), servant à afficher des informations sur le code lui-même :
+		Nous avons également travaillé à étoffer l'interface. Nous avons rajouté une seconde barre de statut (en bas à droite), servant à afficher des informations sur le code lui-même :
 		
 		\begin{figure}[h!]
 			\begin{center}
@@ -276,7 +275,7 @@
 			\end{center}
 		\end{figure}
 		
-		Nous utilisons de plus cet emplacement (en bas à droite) pour afficher une barre de status qui sert pour le moment uniquement à indiquer la progression lors du chargement de projet (Yacc lisant tous les fichiers afin de récupérer les différentes fonctions à travers les modules, cela peut prendre plusieurs secondes).
+		Nous utilisons de plus cet emplacement (en bas à droite) pour afficher une barre de statut qui sert à indiquer la progression lors du chargement de projet (Yacc lisant tous les fichiers afin de récupérer les différentes fonctions à travers les modules, cela peut prendre plusieurs secondes).
 		\begin{figure}[h!]
 			\begin{center}
 				\includegraphics[scale=1]{images/imgs_themes/progress}
@@ -287,46 +286,108 @@
 		L'ouverture de projets est maintenant beaucoup plus rapide qu'au début du semestre, notament grâce à l'utilisation du cache. La barre de progression apparaît toujours, mais c'est souvent très rapide.
 		
 	\subsection{Numérotation des lignes}
+	
+	\subsubsection{Insertion dans l'interface graphique}
+
+	L'objet que nous utilisons pour afficher et éditer le code est un QTextEdit de QT. Il ne possède pas de méthode pour afficher les numéros de lignes, et il n'y a pas d'autres alternatives à celui-ci pour faire cela non plus.
+	
+	Il nous fallait donc un autre élément, afin d'afficher les numéros de lignes qui serait placé sur le côté, nous avons choisi le côté droit.
+	
+		\begin{figure}[h!]
+			\begin{center}
+				\includegraphics[scale=0.17]{images/imgs_lines/avant}
+				\caption{Sans la barre de numérotation des lignes}
+			\end{center}
+		\end{figure}
+		
+		\begin{figure}[h!]
+			\begin{center}
+				\includegraphics[scale=0.17]{images/imgs_lines/apres}
+				\caption{Avec la barre de numérotation des lignes}
+			\end{center}
+		\end{figure}
+		
+		\newpage
+		
+	L'utilisateur peut choisir d'afficher ou non cette barre.
+	
+		\begin{figure}[h!]
+			\begin{center}
+				\includegraphics[scale=0.8]{images/imgs_lines/menu}
+				\caption{Dans le menu apparence}
+			\end{center}
+		\end{figure}
+		
+	\subsubsection{Surcharger les méthodes originales}
+
+	La difficulté n'était pas d'afficher une barre avec des numéros dedans, ni de récupérer le nombre de lignes, car nous avons une méthode pour cela. La difficulté était de syncroniser le défilement des deux éléments (widgets).\\
+		
+		Lorsque l'on fait un défilement avec la molette de souris ou le pad \textbf{uniquement}, la méthode appelée sur le QTextEdit est le "wheelEvent(e)" où "e" est l'évenement utilisé par QT pour effectuer le défilement.\\
+		
+		Le principe consiste à appeler la fonction d'origine ainsi que celle de l'autre objet avec le même argument "e" lorsque la méthode "wheelEvent()" est appelée.
+		
+		\newpage
+		
+		\begin{figure}[h!]
+			\begin{center}
+				\includegraphics[scale=0.9]{images/imgs_lines/wheel_lines}
+				\caption{Méthode de l'objet contenant la numérotation des lignes}
+			\end{center}
+		\end{figure}
+		
+		
+		Ici, "self.master.codes" désigne la liste des onglets de codes ouverts, et "self.master.get\_idx()" retourne l'indice de l'onglet courant. On appelle donc la méthode "wheelEvent()" de l'onglet courant lorsque l'on fait défiler la liste de numérotation des lignes. L'argument booléen sert à dire qu'il ne faut pas rappeler la méthode "wheelEvent()" car sinon on rentrerait dans une boucle infinie.\\
+		
+		\begin{figure}[h!]
+			\begin{center}
+				\includegraphics[scale=0.7]{images/imgs_lines/wheel_code}
+				\caption{Méthode de l'objet contenant le code}
+			\end{center}
+		\end{figure}
+		
+		"self.parent.nb\_lignes" désigne l'objet contenant la numérotation des lignes, on y appelle donc la méthode "wheelEvent()" avec les même arguments. Et toujours l'argument empêchant la boucle infinie.\\
+		
+		Nous arrivons ainsi à syncroniser les deux éléments lors du défilement de l'un comme de l'autre avec la souris ou le pad.
 		
 		
 \section{Recherche et édition du texte}
 
 	\subsection{Selection de la ligne courante}
 
-	Dans un premier temps, nous avons ajoutés une fonction permettant de selectionner la ligne où ce trouve le curseur.
-	Pour cela, nous recuperons l'objet QTextCursor de notre class Editeur (héritant de QTextEdit) puis nous utilisons la méthode \textbf{select} de cet objet qui nous permet de selectionner du texte dans notre Editeur, cette méthode prend en paramètre une méthode de selection, QTextCursor.LineUnderCursor dans notre cas. La ligne ou ce trouve notre cuseur va donc être selectionner.
+	Dans un premier temps, nous avons ajouté une fonction permettant de sélectionner la ligne où se trouve le curseur.
+	Pour cela, nous récupérons l'objet QTextCursor de notre classe Editeur (héritant de QTextEdit) puis nous utilisons la méthode \textbf{select} de cet objet qui nous permet de sélectionner du texte dans notre Editeur, cette méthode prend en paramètre une méthode de selection, QTextCursor.LineUnderCursor dans notre cas. La ligne où se trouve notre cuseur va donc être selectionnée.
 	Pour appliquer ces modifications, nous devons appliquer notre objet QTextCursor à notre Editeur, pour cela on utilise la méthode \textbf{setTextCursor} de l'objet Editeur et on lui passe en paramètre notre QTextCursor.  
 
 
 	\begin{figure}[h!]
 		\begin{center}
 			\includegraphics[scale=0.8]{images/imgs_edit/utilisation_selection_ligne}
-			\caption{Action du menu permettant la selection de la ligne courante}
+			\caption{Action du menu permettant la sélection de la ligne courante}
 		\end{center}
 	\end{figure}
 
 	\begin{figure}[h!]
 		\begin{center}
 			\includegraphics[scale=0.8]{images/imgs_edit/resultat_selection_ligne}
-			\caption{Résultat de l'utilisation de la fonction selection de la ligne courante}
+			\caption{Résultat de l'utilisation de la fonction sélection de la ligne courante}
 		\end{center}
 	\end{figure}
 
 \subsection{Selection du mot courant}
 
-	Pour l'ajout de la selection du mot courant, la démarche est exactement la même que pour la selection de la ligne courante, nous devons simplement changer la méthode de selection, passant de QTextCursor.LineUnderCursor à QTextCursor.WordUnderCursor, afin de ne plus sélectionner la ligne mais le mot présent au niveau du curseur. 
+	Pour l'ajout de la sélection du mot courant, la démarche est exactement la même que pour la sélection de la ligne courante, nous devons simplement changer la méthode de sélection, passant de QTextCursor.LineUnderCursor à QTextCursor.WordUnderCursor, afin de ne plus sélectionner la ligne mais le mot présent au niveau du curseur. 
 
 	\begin{figure}[h!]
 		\begin{center}
 			\includegraphics[scale=0.4]{images/imgs_edit/utilisation_selection_mot}
-			\caption{Action du menu permettant la selection du mot courant}
+			\caption{Action du menu permettant la sélection du mot courant}
 		\end{center}
 	\end{figure}
 
 	\begin{figure}[h!]
 		\begin{center}
 			\includegraphics[scale=0.8]{images/imgs_edit/resultat_selection_mot}
-			\caption{Résultat de l'utilisation de la fonction selection du mot courant}
+			\caption{Résultat de l'utilisation de la fonction sélection du mot courant}
 		\end{center}
 	\end{figure}
 	
@@ -336,7 +397,7 @@
 
 	Pour l'ajout de la duplication du texte, nous avons choisi de différencier deux cas, le premier où rien n'est selectionné et le second où du texte est déjà selectionné. Dans le premier cas toutes la ligne est dupliquée et dans le second seulement la partie selectionnée est dupliquée.
 
-	Pour cela, nous recupperons une nouvelle fois le QTextCursor de notre Editeur, puis pour savoir dans quel cas nous sommes on utilise la méthode selectedText de l'objet QTextCursor. Ainsi si aucun text n'est selectionné nous selectionnons la ligne courante de le même façon que précédement de plus on assigne la valeur  \textbf{\\n} à la variable \textbf{return\_} en effet si on duplique une ligne entière, on ajoute on retoure à la ligne entre la selection d'origine et la partie dupliquée. Puis on ajoute le texte dans notre objet Editeur grâce à la méthode \textbf{inserText} avec en paramètre la selection du QTextCursor (recuperrée grâce à la méthode \textbf{selectedText}) suivi de la variable \textbf{return\_} elle même suivi de la selection du QTextCursor.
+	Pour cela, nous récuppérons une nouvelle fois le QTextCursor de notre Editeur, puis pour savoir dans quel cas nous sommes on utilise la méthode selectedText de l'objet QTextCursor. Ainsi si aucun text n'est sélectionné nous sélectionnons la ligne courante de le même façon que précédement de plus on assigne la valeur  \textbf{\\n} à la variable \textbf{return\_} en effet si on duplique une ligne entière, on ajoute on retoure à la ligne entre la sélection d'origine et la partie dupliquée. Puis on ajoute le texte dans notre objet Editeur grâce à la méthode \textbf{inserText} avec en paramètre la sélection du QTextCursor (recuperrée grâce à la méthode \textbf{selectedText}) suivie de la variable \textbf{return\_} elle même suivie de la sélection du QTextCursor.
 
 	\begin{figure}[h!]
 		\begin{center}
@@ -356,9 +417,9 @@
 	\newpage
 \subsection{Recherche}
 
-	Pour la recherche dans le document, nous avons decidés d'ajouter une boite de dialogue permettant d'entrée le texte à rechercher. Pour cela nous avons créés une classe SearchDialog (héritant de QDialog), lors de l'affichage de cette boite de dialogue nous utilisons la méthode \textbf{exec}, qui rend impossible l'interaction avec la fenetre en arrière plan tant que la boite de dialogue est ouverte.
+	Pour la recherche dans le document, nous avons decidés d'ajouter une boite de dialogue permettant d'entrer le texte à rechercher. Pour cela nous avons créé une classe SearchDialog (héritant de QDialog), lors de l'affichage de cette boite de dialogue nous utilisons la méthode \textbf{exec}, qui rend impossible l'interaction avec la fenetre en arrière plan tant que la boite de dialogue est ouverte.
 
-	Cette boite de dialogue nous permer de taper le texte à rechercher, de choisir si on recherche en avant ou en arrière , mais aussi si on veut être sensible à la case.
+	Cette boite de dialogue nous permer de taper le texte à rechercher, de choisir si on recherche en avant ou en arrière, mais aussi si on veut être sensible à la case.
 
 	\begin{figure}[h!]
 		\begin{center}
@@ -367,7 +428,7 @@
 		\end{center}
 	\end{figure}
 
-	Pour la recherche on utilise la méthode \textbf{find} de notre objet Editeur. Cette méthode prend en paramètre le texte à rechercher, suivit de differents drapeaux. Dans notre cas nous utilisons le drapeau permettant d'executer la rechercher en arrière et le drapeau permettant de faire la recherche en étant sensible à la case (respectivement les drapeaux \textbf{QTextDocument.FindBackward} et \textbf{QTextDocument.FindCaseSensitively})
+	Pour la recherche on utilise la méthode \textbf{find} de notre objet Editeur. Cette méthode prend en paramètre le texte à rechercher, suivi de différents drapeaux. Dans notre cas nous utilisons le drapeau permettant d'exécuter la rechercher en arrière et le drapeau permettant de faire la recherche en étant sensible à la case (respectivement les drapeaux \textbf{QTextDocument.FindBackward} et \textbf{QTextDocument.FindCaseSensitively})
 
 	\begin{figure}[h!]
 		\begin{center}
@@ -386,7 +447,7 @@
 
 \subsection{Indentation du fichier}
 
-	Pour l'indentation du document, nous allons changer son contenue (ajout/retrait de tabulation) nous devons donc stocker la position courante du curseur (grâce à la méthode \textbf{blockNumber} de l'objet QTextCursor). Par la suite on recupère le contenue du document grâce à la méthode \textbf{toPlainText} de l'objet Editeur. On créer une variable \textbf{indent\_level}, qui contient le niveau courant d'indentation, puis on parcoure toutes les lignes de notre document, si le ligne contient le charactère "\}", on retire 1 au niveau d'indentation puis on change la ligne pour ajouter au debut de cette dernière \textbf{indent\_level} fois une tabulation, puis on ajoute 1 au niveau d'indentation si la ligne contient "\{".
+	Pour l'indentation du document, nous allons changer son contenu (ajout/retrait de tabulation) nous devons donc stocker la position courante du curseur (grâce à la méthode \textbf{blockNumber} de l'objet QTextCursor). Par la suite on recupère le contenu du document grâce à la méthode \textbf{toPlainText} de l'objet Editeur. On créé une variable \textbf{indent\_level}, qui contient le niveau courant d'indentation, puis on parcourt toutes les lignes de notre document, si la ligne contient le charactère "\}", on retire 1 au niveau d'indentation puis on change la ligne pour ajouter au debut de cette dernière \textbf{indent\_level} fois une tabulation, puis on ajoute 1 au niveau d'indentation si la ligne contient "\{".
 	Pour finir on defini le nouveau texte ainsi obtenu comme texte de notre document avec la méthode \textbf{setPlainText} et on replace le curseur au bon endroit.
 
 	\begin{figure}[h!]
@@ -406,10 +467,10 @@
 
 \subsection{Commenter la sélection}
 
-	De la même façon que pour la duplication du texte, nous avons séparés cette action en deux cas, soit du texte est sélectionné soit rien n'est selectionné.
-	Dans le cas ou du text est selectionné nous commenterons seulement à partir du debut de la selection. Si plusieurs lignes sont selectionnées elles seron evidement toutes commentées. Si il n'y a pas de texte selectionné, on commente la ligne courante.
+	De la même façon que pour la duplication du texte, nous avons séparé cette action en deux cas, soit du texte est sélectionné soit rien n'est sélectionné.
+	Dans le cas ou du text est sélectionné nous commenterons seulement à partir du debut de la selection. Si plusieurs lignes sont selectionnées elles seront évidemment toutes commentées. Si il n'y a pas de texte sélectionné, on commente la ligne courante.
 
-	Dans un premier temps, comme pour la duplication, si rien n'est selectionné on selectionne la ligne courante, puis on sauvegarde le text selectionné que l'on recupère grâce à la méthode \textbf{selectedText}, puis on supprime le texte selectionné avec la méthode \textbf{removeSelectedText}. Pour savoir si le texte est deja commenté, nous parcourons toutes les lignes, si une des lignes ne commence pas par "//" la selection est considérée comme non commenté. Par la suite nous parcourons chaque ligne du texte puis pour chaque ligne nous ajoutons/retirons les charactères "//" en fonction de si le texte et oui ou non déjà commenté.
+	Dans un premier temps, comme pour la duplication, si rien n'est selectionné on sélectionne la ligne courante, puis on sauvegarde le texte sélectionné que l'on recupère grâce à la méthode \textbf{selectedText}, puis on supprime le texte sélectionné avec la méthode \textbf{removeSelectedText}. Pour savoir si le texte est deja commenté, nous parcourons toutes les lignes, si une des lignes ne commence pas par "//" la sélection est considérée comme non commenté. Par la suite nous parcourons chaque ligne du texte puis pour chaque ligne nous ajoutons/retirons les charactères "//" en fonction de si le texte et oui ou non déjà commenté.
 
 	Puis on ajoute le texte ainsi modifié à notre document en utilisant la méthode \textbf{insertText} (de l'objet QTextCursor).
 
@@ -428,7 +489,7 @@
 		\end{center}
 	\end{figure}
 	
-\subsection{Les snippets et l'autocomplétion}
+\subsection{Les snippets}
 	
 \section{Traitement des projets}
 

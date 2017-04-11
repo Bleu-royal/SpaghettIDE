@@ -47,21 +47,21 @@ class Raccourcis(QDialog):
 		dictio = dico_utilisateur()
 		
 		for element in val_menu_fic.liste_fonctions:
-			val = element.raccourci.text()  # Nouveau raccourci
+			val = self.valider_raccourci(element.raccourci.text())  # Nouveau raccourci
 			if val != "":  # Si il a été modifié, on doit enregistrer la nouvelle valeur dans le dico utilisateur.
 				clef = element.label.text()  # Ecrire json
 				
 				dictio["Fichier"][clef] = val
 		
 		for element in val_menu_edit.liste_fonctions:
-			val = element.raccourci.text()  # Nouveau raccourci
+			val = self.valider_raccourci(element.raccourci.text())  # Nouveau raccourci
 			if val != "":  # Si il a été modifié, on doit enregistrer la nouvelle valeur dans le dico utilisateur.
 				clef = element.label.text()  # Ecrire json
 				
 				dictio["Edition"][clef] = val
 		
 		for element in val_menu_proj.liste_fonctions:
-			val = element.raccourci.text()  # Nouveau raccourci
+			val = self.valider_raccourci(element.raccourci.text())  # Nouveau raccourci
 			if val != "":  # Si il a été modifié, on doit enregistrer la nouvelle valeur dans le dico utilisateur.
 				clef = element.label.text()  # Ecrire json
 				
@@ -69,11 +69,36 @@ class Raccourcis(QDialog):
 		
 		save = json.dumps(dictio, indent=2)
 		
-		wfi = open("gui/racc_utilisateur.json", "w")
+		wfi = open("gui/raccourcis/racc_utilisateur.json", "w")
 		wfi.write(save)
 		wfi.close()
 		
 		self.done(0)
+		
+	def valider_raccourci(self, val):
+		
+		ligne = val.split("+")
+		res = ""
+		if "Ctrl" in ligne:
+			res += "Ctrl+"
+		if "Alt" in ligne:
+			res += "Alt+"
+		if "AltGr" in ligne:
+			res += "AltGr+"
+		if "Shift" in ligne:
+			res += "Shift+"
+		
+		if "Esc" in ligne:
+			return res + "Esc"
+		for i in range(1, 13):
+			if "F" + str(i) in ligne:
+				return res + "F" + str(i)
+			
+		for trucs in ligne:
+			if trucs not in res:
+				return res + trucs[0]
+	
+		return ""
 		
 	def raz(self):
 		""" Fonction de remise à zéro des raccourcis, càd que les raccourcis personnalisés seront
@@ -100,7 +125,7 @@ class Raccourcis(QDialog):
 		
 		save = json.dumps(dictio_util, indent=2)
 		
-		wfi = open("gui/racc_utilisateur.json", "w")
+		wfi = open("gui/raccourcis/racc_utilisateur.json", "w")
 		wfi.write(save)
 		wfi.close()
 		
@@ -238,8 +263,29 @@ class MenuFonction(QWidget):
 		self.fonction_layout.addWidget(self.raccourci)
 		
 		self.setLayout(self.fonction_layout)
+	
+	def keyPressEvent(self, event):
 		
 
+		if event.key() == 16777249:  # Ctrl
+			self.raccourci.insert("Ctrl+")
+		elif event.key() == 16777248:  # Shift/Maj
+			self.raccourci.insert("Shift+")
+		elif event.key() == 16777251:  # Alt
+			self.raccourci.insert("Alt+")
+		elif event.key() == 16781571:  # Alt Gr
+			self.raccourci.insert("AltGr+")
+		elif event.key() == 16777216:  # Echap
+			self.raccourci.insert("Esc")
+			
+		if "darwin" in sys.platform:
+			if event.key() == 16777250:  # Ctrl des Macs
+				self.raccourci.insert("^")
+		
+		for touche in range(64, 76):
+			if event.key() == 16777200 + touche:
+				self.raccourci.insert("F%s" % (touche-63))
+		
 def dico_defaut():
 	""" Fonction qui enregistre dans une variable le contenu du json de base."""
 	
@@ -283,17 +329,3 @@ def donne_valeur_utilisateur(clef_menu, clef_voulue):
 	else:
 		print("Clef menu pas valide", clef_menu)
 	return ""
-
-"""
-def keyPressEvent(self, event):
-	"
-	Bind de la touche entrée.
-	Lorsque l'on sélectionne un document et que l'on appuie sur entrée, on ouvre le document
-	ou le projet sélectionné.
-
-	Contient les positions x et y de l'endroit où on a cliqué. NON UTILISÉ ICI.
-	:rtype: None
-	"
-	if event.key() == 16777220:  # Référence de la touche "entrée"
-	
-"""
