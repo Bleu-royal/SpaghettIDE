@@ -1,6 +1,6 @@
-from lexer import c, python, ar, plyPlusPython
+from lexer import c, python, ar, json, plyPlusPython
 
-lexers = {"c" : c, "h" : c, "py" : python}
+lexers = {"c" : c, "h" : c, "py" : python, "json": json}
 plyPlusLexers = {"py" : plyPlusPython}
 
 def lexing(language, word):
