@@ -1,1 +1,7 @@
-{"int" : ["int maFonction(){\n\treturn 0;\n}", 2, 12], "void" : ["void maFonction(){\n\n}", 2, 12], "bool" : ["bool maFonction(){\n\treturn true;\n}", 2, 12], "char" : ["char maFonction(){\n\treturn \"a\";\n}", 2, 12], "double" : ["double maFonction(){\n\treturn 0.0;\n}", 2, 12], "if" : ["if(true){\n\tsomeStuffHere();\n}", 2, 4], "elseif":["else if(true){\n\tStuffHere();\n}", 2, 10], "else":["else{\n\totherStuffHere();\n}", 2, 6],"switch":["switch(Var){\n\tcase 1:\n\n\t\tbreak;\n\tdefault:\n}", 5, 8], "struct": ["struct monStruct{\n\n};", 2, 10], "main" : ["int main (int argc, char** argv){\n\t\n\treturn 0;\n}", 2, 1], "printf":["printf(\"text\");\n", 1, 10], "do" : ["do{\n\n}while(true);", 1, 10], "while" : ["while(true){\n\n}", 2, 7], "for" : ["for(i = 0 ; i < max ; i++){\n\n}", 2, 16]}
+{
+	"int" : ["int maFonction(){\n\treturn 0;\n}", 2, 12],
+	"void" : ["void maFonction(){\n\n}", 2, 12],
+	"bool" : ["bool maFonction(){\n\treturn true;\n}", 2, 12],
+	"char" : ["char maFonction(){\n\treturn \"a\";\n}", 2, 12], 
+	"double" : ["double maFonction(){\n\treturn 0.0;\n}", 2, 12],
+	"if" : ["if(true){\n\tsomeStuffHere();\n}", 2, 4], "elseif":["else if(true){\n\tStuffHere();\n}", 2, 10], "else":["else{\n\totherStuffHere();\n}", 2, 6],"switch":["switch(Var){\n\tcase 1:\n\n\t\tbreak;\n\tdefault:\n}", 5, 8], "struct": ["struct monStruct{\n\n};", 2, 10], "main" : ["int main (int argc, char** argv){\n\t\n\treturn 0;\n}", 2, 1], "printf":["printf(\"text\");\n", 1, 10], "do" : ["do{\n\n}while(true);", 1, 10], "while" : ["while(true){\n\n}", 2, 7], "for" : ["for(i = 0 ; i < max ; i++){\n\n}", 2, 16]}
