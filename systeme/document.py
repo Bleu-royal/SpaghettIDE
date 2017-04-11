@@ -56,19 +56,35 @@ class SearchDialog(QDialog):
 
     def research(self, prev=False):
 
+        """
+        Cette fonction envoie l'évènement de recherche
+        :type prev: bool
+        :param prev:Permet de savoir si l'on recherche dans le sens inverse
+        """
         text = self.line_edit.text()
         if text.strip() != "":
             self.searchEvent.emit(self.parent, text, prev, self.case_sensitive_checkbox.isChecked())
             self.parent.show_nb_found(text)
 
     def research_next(self):
+        """
+        Appelle la fonction research
+        """
         self.research()
 
     def research_prev(self):
+        """
+        Appelle la fonction research
+        """
         self.research(True)
 
     def keyPressEvent(self, event):
 
+        """
+        Cette fonction gère les pressions sur les touches
+        :type event: Event
+        :param event: l'évènement
+        """
         if event.key() == 16777216:  # if esc key pressed then quit
             self.done(0)
             self.parent.defaut_info_message()
@@ -82,6 +98,17 @@ class SearchDialog(QDialog):
 class Document:
     def __init__(self, parent, text_edit, chemin_enregistrement, ouverture=False):  # Sauvegarde des variables dans la classe
 
+        """
+
+        :type parent: QWidget
+        :param parent: Le parent
+        :type text_edit: QTextEdit
+        :param text_edit: L'editeur
+        :type chemin_enregistrement: str
+        :param chemin_enregistrement: Le chemin d'enregistrement du fichier
+        :type ouverture: bool
+        :param ouverture: True si le document doit être ouvert
+        """
         self.parent = parent
         self.text_edit = text_edit  # Objet QTextEdit
         self.chemin_enregistrement = chemin_enregistrement
@@ -95,9 +122,17 @@ class Document:
 
     def get_nb_lignes(self):
         # Obtention du nombre de lignes presentes dans le QTextEdit
+        """
+        retourne le nombre de lignes
+        :return: le nombre de lignes
+        :rtype: int
+        """
         return self.text_edit.document().lineCount()
 
     def ouverture_document(self):
+        """
+        ouvre le document
+        """
         fichier = open(self.chemin_enregistrement, "r")
         code = fichier.read()  # lecture du fichier
         fichier.close()
@@ -105,6 +140,11 @@ class Document:
         # ICI
 
     def sauvegarde_document(self, path=False):
+        """
+        Sauvegarde le document
+        :type path: bool
+        :param path: False si l'on veut prendre le chemin d'enregistrement comme path
+        """
         if not path:
             fichier = open(self.chemin_enregistrement, "w")
         else:
@@ -113,12 +153,22 @@ class Document:
         fichier.close()
 
     def set_chemin_enregistrement(self, value):
+        """
+
+        :type value: str
+        :param value: le chemin d'enregistrement
+        """
         self.chemin_enregistrement = value
         self.nom = self.chemin_enregistrement.split("/")[-1]
         self.extension = self.nom.split(".")[-1]
 
     def is_saved(self):
 
+        """
+        Retourne vrai si le document est sauvegardé
+        :return: True si le document est sauvegardé
+        :rtype: bool
+        """
         if self.chemin_enregistrement == "":
             return False
 
@@ -129,6 +179,9 @@ class Document:
         return val == self.text_edit.toPlainText()
 
     def set_snippets(self):
+        """
+        Ajoute les snippets
+        """
         idx = self.parent.get_idx()
         code = self.parent.codes[idx]
         
@@ -142,10 +195,18 @@ class Document:
         code.snippets = snippets
 
     def maj_ext(self):
+        """
+        Met à jour l'extension du document
+        """
         self.extension = self.chemin_enregistrement.split(".")[-1]
         self.set_snippets()
 
 def new_document(parent):
+    """
+    Créé un nouveau document
+    :type parent: QWidget
+    :param parent: Le parent
+    """
     new = get_text("nom_new_fic") + str(len(parent.docs) + 1)
     parent.status_message((get_text("new_file") + new), 2000)
     parent.defaut_info_message()

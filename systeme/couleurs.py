@@ -11,7 +11,18 @@ import re
 
 
 class Proposition(QListWidget):
+    """
+        Cette classes est la classes qui permet l'affichage des propositions.
+        Elle herite de QListWiget.
+    """
     def __init__(self, parent, font_size=16):
+        """
+            Fonction d'initialisation de la liste des propositions
+            :type parent: QWidget
+            :param parent: Le parent de notre liste
+            :type font_size: Int
+            :param font_size: La taille du texte
+        """
         super().__init__(parent)
         
         self.parent = parent
@@ -26,6 +37,9 @@ class Proposition(QListWidget):
         self.maj_style()
 
     def maj_style(self):
+        """
+            Met à jour le style de notre liste de proposition
+        """
         self.setStyleSheet("QListView{"
                            "color:white;"
                            "background-color: grey;"
@@ -38,14 +52,29 @@ class Proposition(QListWidget):
                            %self.font_size)
 
     def addElement(self, elements):
+        """
+        Ajoute les éléments elements à la liste des propositions
+        :type elements: list
+        :param elements: La liste des éléments
+        """
         for element in elements:
             self.addItem(QListWidgetItem(element))
 
     def mouseDoubleClickEvent(self, event):
+        """
+        Complète l'editeur avec la proposition selectionnée, à l'aide de la méthode complete
+        :type event: Event
+        :param event: L'évènement du double clique
+        """
         idx = self.currentRow()
         self.complete(idx)
 
     def complete(self, idx=0):
+        """
+        Complète l'editeur avec la proposition selectionnée
+        :type idx: int
+        :param idx: l'index de l'élément à ajouté
+        """
         prop = self.props[idx]
         
         textCursor = self.parent.textCursor()
@@ -58,6 +87,13 @@ class Proposition(QListWidget):
 
 class CodeHighLighter(QSyntaxHighlighter):
     def __init__(self, editeur, parent=None):  # Parent --> QTextEdit
+        """
+
+        :type editeur: QTextEdit
+        :param editeur: l'editeur associé à ce codehighlighter
+        :type parent: QWidget
+        :param parent: le parent du codehighlighter
+        """
         super().__init__(parent)
 
         self.editeur = editeur
@@ -71,6 +107,13 @@ class CodeHighLighter(QSyntaxHighlighter):
 
     def compare(self, word):
 
+        """
+        Compare le mot courant avec la liste des noms de fonction
+        :type word: str
+        :param word: le mort à comparer
+        :return: La liste des éléments
+        :rtype: list
+        """
         self.def_functions = []
 
         for e in self.editeur.def_functions:
@@ -90,6 +133,11 @@ class CodeHighLighter(QSyntaxHighlighter):
 
     def highlightBlock(self, text):  # Appelée lorsqu'on change du texte dans le QTextEdit
 
+        """
+        Cette fonction colore le texte
+        :type text: str
+        :param text: La ligne courante
+        """
         self.prop.clear()
         self.prop.props = []
         self.prop.hide()
@@ -222,6 +270,9 @@ class CodeHighLighter(QSyntaxHighlighter):
             self.prop.complete()
 
 def create_cache_folder():
+    """
+    Créé le dossier cache si l n'existe pas
+    """
     if not os.path.exists("cache"):
         os.makedirs("cache")
 
