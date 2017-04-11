@@ -207,5 +207,28 @@
   "lang": {
     "fr": "Langues",
     "en": "Languages"
+  },
+
+
+
+  "delete_file": {
+    "fr": "Supprimer le fichier",
+    "en": "Delete file"
+  },
+
+  "import_project": {
+    "fr": "Importer le projet",
+    "en": "Import project"
+  },
+
+  "delete_project": {
+    "fr": "Supprimer le projet",
+    "en": "Delete project"
+  },
+
+  "info_project": {
+    "fr": "Informations sur le projet",
+    "en": "About project"
   }
+
 }

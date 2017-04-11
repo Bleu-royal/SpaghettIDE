@@ -337,5 +337,81 @@
   "cleared_local_cache": {
     "fr": "Le cache du projet courant a été vidé",
     "en": "Project cache has been deleted"
+  },
+
+  "open": {
+    "fr": "Ouvrir",
+    "en": "Open"
+  },
+
+  "select_delete_project": {
+    "fr": "Sélectionnez un projet à supprimer :",
+    "en": "Select a project to be deleted"
+  },
+
+  "delete": {
+    "fr": "Supprimer",
+    "en": "Delete"
+  },
+
+  "select_infos_project": {
+    "fr": "Sélectionnez un projet pour obtenir ses informations :",
+    "en": "Select a project to obtain it's informations"
+  },
+
+  "select": {
+    "fr": "Sélectionner",
+    "en": "Select"
+  },
+
+  "modify": {
+    "fr": "Modifier",
+    "en": "Modify"
+  },
+
+  "modify": {
+    "fr": "Modifier",
+    "en": "Modify"
+  },
+
+  "apply": {
+    "fr": "Appliquer",
+    "en": "Apply"
+  },
+
+  "project_name": {
+    "fr": "Nom du projet : ",
+    "en": "Project name : "
+  },
+
+  "project_language": {
+    "fr": "Langage du projet : ",
+    "en": "Language of the project : "
+  },
+
+  "project_location": {
+    "fr": "Localisation du projet : ",
+    "en": "Location of the project : "
+  },
+
+  "project_creation_date": {
+    "fr": "Date de création du projet : ",
+    "en": "Date of creation of the project : "
+  },
+
+  "project_number_files": {
+    "fr": "Nombre de fichiers du projet : ",
+    "en": "Number of files of the project : "
+  },
+
+  "info_project": {
+    "fr": "Informations sur le projet",
+    "en": "About project"
+  },
+
+  "info_modify_project": {
+    "fr": "Modifier les informations du projet",
+    "en": "Modify informations project"
   }
+
 }

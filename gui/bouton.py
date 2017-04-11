@@ -15,8 +15,5 @@ class Bouton(QPushButton):
         self.setStyleSheet(style.get("buttons"))
 
     def enterEvent(self, event):
-        """
-        Evenement lors ce qu'on survole le Bouton
-        Ici on change le curseur
-        """
+        """ Événement lorsqu'on survole le Bouton. Ici on change le curseur """
         self.setCursor(Qt.PointingHandCursor)

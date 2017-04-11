@@ -4,7 +4,7 @@ from PySide.QtGui import *
 from PySide.QtCore import *
 from systeme import workplace
 from themes import themes
-from language.language import get_text
+from language.language import get_text, get_tmenu
 
 import kernel.variables as var
 
@@ -60,11 +60,67 @@ class TreeView(QTreeView):
         self.model.setReadOnly(False)
         self.setRootIndex(self.model.index(self.fenetre.workplace_path))
 
+        self.customContextMenuRequested.connect(self.create_menu)
+        self.setContextMenuPolicy(Qt.CustomContextMenu)
+
         self.maj_style()  # Load theme using stylesheets
 
         self.cacher_pas_projet()
 
         self.function_declarations.connect(self.load_project)
+
+    def create_menu(self, point):
+        menu = QMenu(self.fenetre)
+
+        path = self.model.filePath(self.currentIndex())
+        
+        project_name = path.replace(self.fenetre.workplace_path, "")
+        project_name = project_name.split("/")
+
+        if os.path.isfile(path):
+            act_remove_file = QAction(get_tmenu("delete_file"), menu)
+            act_remove_file.triggered.connect(self.act_remove_file_func)
+            menu.addAction(act_remove_file)
+
+        elif len(project_name)<=1:
+
+            if not os.path.exists(path + "/" + project_name[0] + ".xml"):
+
+                act_import = QAction(get_tmenu("import_project"), menu)
+                act_import.triggered.connect(self.act_import_func)
+                menu.addAction(act_import)
+
+            else:
+
+                act_delete = QAction(get_tmenu("delete_project"), menu)
+                act_delete.triggered.connect(self.act_delete_func)
+                menu.addAction(act_delete)
+
+                act_infos = QAction(get_tmenu("info_project"), menu)
+                act_infos.triggered.connect(self.act_infos_func)
+                menu.addAction(act_infos)
+
+        menu.popup(self.fenetre.mapToGlobal(point))
+
+    def act_remove_file_func(self):
+
+        path = self.model.filePath(self.currentIndex())
+        os.remove(path)
+
+    def act_import_func(self):
+        chemin = self.fenetre.workplace_path + self.model.fileName(self.currentIndex())
+        if os.path.exists(chemin):
+            workplace.importproject(self.fenetre, chemin)
+
+    def act_delete_func(self):
+        chemin = self.fenetre.workplace_path + self.model.fileName(self.currentIndex())
+        if os.path.exists(chemin):
+            workplace.deleteproject(self.fenetre, chemin)
+
+    def act_infos_func(self):
+        chemin = self.fenetre.workplace_path + self.model.fileName(self.currentIndex())
+        if os.path.exists(chemin):
+            workplace.infoproject(self.fenetre, chemin)
 
     def change_worplace(self, workplace_path):
         self.model.setRootPath(workplace_path)
