@@ -70,6 +70,9 @@ class TreeView(QTreeView):
         self.function_declarations.connect(self.load_project)
 
     def create_menu(self, point):
+        """
+        Créé le menu clic droit du navigateur de projets.
+        """
         menu = QMenu(self.fenetre)
 
         path = self.model.filePath(self.currentIndex())
