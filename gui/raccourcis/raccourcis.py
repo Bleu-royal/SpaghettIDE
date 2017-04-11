@@ -283,3 +283,17 @@ def donne_valeur_utilisateur(clef_menu, clef_voulue):
 	else:
 		print("Clef menu pas valide", clef_menu)
 	return ""
+
+"""
+def keyPressEvent(self, event):
+	"
+	Bind de la touche entrée.
+	Lorsque l'on sélectionne un document et que l'on appuie sur entrée, on ouvre le document
+	ou le projet sélectionné.
+
+	Contient les positions x et y de l'endroit où on a cliqué. NON UTILISÉ ICI.
+	:rtype: None
+	"
+	if event.key() == 16777220:  # Référence de la touche "entrée"
+	
+"""
