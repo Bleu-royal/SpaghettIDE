@@ -540,7 +540,6 @@ class Fenetre(QWidget):
         """
         # debut = time()
         self.aller_en_haut_lignes = True
-        print(chemin)
         document.open_document(self, chemin)
         # fin = time()
         # self.info_message(str(round((fin-debut), 3)), 1000)
