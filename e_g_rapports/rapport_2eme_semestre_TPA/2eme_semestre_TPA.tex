@@ -716,6 +716,15 @@ En ce qui concerne la modification des raccourcis, il est possible de d'écrire 
 				Par la suite, nous devons appliquer nos règles sur du contenu, pour cela nous avons créés une fonction \textbf{parse}, qui prend en paramètre le code à parser. Par la suite, cette fonction créée le lexer (en faisant appelle à Lex), puis créée le parser (en faisant appelle à Yacc), pour finir elle revoit les listes des propostions afin de pouvoir les ajouter à les listes des propostions de notre IDE.
 	
 	\subsection{Grammaire Python}
+
+		\subsubsection{Création de la grammaire}
+
+			Dans un premier temps, nous avions commencé à rédiger une grammaire pour Python. Cependant nous avons rencontré plusieurs problèmes, notamment le fait qu'il n'est pas possible d'avoir des tokens imbriqués les uns dans les autres rendant ainsi les expressions régulière de \textbf{Lex} bien trop complèxe. De plus la gestion de l'indentation n'était pas facile. En effet \textbf{PLY} ne peut pas analyser l'indentation par ces grammaires, il nous faut donc révalider chacun des tokens identifiés par \textbf{Lex} dans un second temps. Chose qui n'est pas simple à faire avec la librairie \textbf{Ply}. Voila donc pourquoi nous avons décidé d'utiliser la librairie \textbf{PlyPlus}
+
+		\subsubsection{Utilisation de la librairie PlyPlus}
+
+			Pour pallier aux problèmes précédents, nous avons donc choisi d'utiliser la librairie \textbf{PlyPlus}. Cette librairie ce base sur la librairie \textbf{Ply} sur laquelle nous avons travaillé jusqu'à présent, il nous a donc était simple d'ajouter \textbf{PlyPlus} à notre projet. \textbf{PlyPlus} a plusieurs avantages, dont notament le fais d'avoir un système de grammaire totalement différent de \textbf{Ply}, nous permettant ainsi de résoudre les problèmes cités auparavant. Ce ne sont pas les seuls avantages de \textbf{PlyPlus}, en effet il nous permet aussi de sélectionner très simplement un type d'élément (le nom des fonctions ou des classes présentent par exemple) rendant ainsi possible leur coloration. De plus \textbf{PlyPlus}, vient avec une grammaire python et un post-analyseur syntaxique permettant ainsi de traiter l'indentation du fichier. 
+
 	
 \section{Langue du système en Anglais}
 
