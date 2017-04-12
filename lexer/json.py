@@ -11,8 +11,6 @@ text = ""
 def update_token_color():
     global tokenColor
     tokenColor = get_color_from_theme("token")
-    print("changement of token colors : %s" %tokenColor)
-
 
 types = [
 ]

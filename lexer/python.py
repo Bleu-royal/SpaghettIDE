@@ -243,7 +243,7 @@ def t_newline(t):
 
 
 def t_error(t):
-    print("erreur : %s"%t)
+    # print("erreur : %s"%t)
     # print("Illegal character ’%s’" % t.value[0], "on line ", t.lineno)
     t.lexer.skip(1)
 
@@ -305,7 +305,8 @@ erreurs = []
 
 
 def p_error(p):
-    print("erreur : %s"%p)
+    # print("erreur : %s"%p)
+    pass
 
 
 def yaccing(data, get_errros=True):
