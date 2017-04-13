@@ -878,8 +878,43 @@ En ce qui concerne la modification des raccourcis, il est possible de d'écrire 
 			
 			Nous utilisons donc \textbf{PlyPlus} pour interpréter notre grammaire Python et nous gardons \textbf{Ply} pour la grammaire C, car elle suffit pour ce langage.
 
-	
+\newpage
+
 \section{Langue du système en Anglais}
+
+	\subsection{Gestion des langues}
+
+	Nous avons ajouté la possibilité de mettre la langue de l'IDE en Anglais en plus du Français. Il suffit d'aller dans : Fichier/Paramètres/Langue et de choisir sa langue.\\
+	
+	\begin{figure}[h!]
+			\begin{center}
+					\includegraphics[scale=0.3]{images/langues}
+					\caption{Dictionnaire des textes}
+			\end{center}
+	\end{figure}
+	
+	Il y a un répertoire langue situé à la racine du projet qui contient le module language.py qui permet de gérer le changement de langue ainsi que la récupération des textes selon la langue.
+	
+	Pour l'aspect technique, nous utilisons un dictionnaire contenu dans un fichier ".json", qui associe à chaque élément sa traduction Française et Anglaise comme le montre l'exemple suivant.
+	
+	\begin{figure}[h!]
+			\begin{center}
+					\includegraphics[scale=1]{images/langue_json}
+					\caption{Dictionnaire des textes}
+			\end{center}
+	\end{figure}
+	
+	Pour chaque message, texte à afficher ou texte du menu, nous allons chercher la clef correspondante dans ce dictionnaire afin de l'afficher. 
+	
+	\textit{A noter que nous utilisons un second dictionnaire réservé aux textes de la barre de menu, cela nous permettais juste de ne pas avoir un très long fichier ".json" mais de répartir en deux pour des raisons de lisibilités. Mais le fonctionnement est strictement le même.}\\
+	
+	Nous n'avons pas trouvé de moyen d'actualiser la barre de menu lors du changement de langue. Il faut donc redémarrer l'IDE afin d'avoir les textes de la barre de menu dans la nouvelle langue choisie. En revanche tous les autres textes, c'est à dire les messages affichés sont directement dans la nouvelle langue.
+	
+\subsection{Rajouter une langue}
+
+	Si nous souhaitons intégrer une nouvelle langue, rien de plus simple !\\
+	
+	Il nous suffit juste d'ajouter pour chaque textes des dictionnaires la langue et sa traduction. Par exemple si on ajoute l'espagnol, sur la figure 63, on aura une clef supplémentaire "es" à chaque sous-dictionnaire qui aura pour valeur le texte correspondant à la traduction.
 
 \section{Ajouts bonus}
 
