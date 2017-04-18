@@ -918,7 +918,50 @@ En ce qui concerne la modification des raccourcis, il est possible de d'écrire 
 
 \section{Ajouts bonus}
 
+	Pendant la réalisation du projet, nous avons également rajouté 2 ajouts purement ludiques qui n'ont pas forcément d'intérêt. 
 	
-
+	\subsection{L'assistance vocale}
+	
+		Il existe sous Mac une commande "say" qui permet de lire dans la langue du système le texte rentré après à l'aide de la synthèse vocale de la machine. C'est ce que nous avons utilisé ici, mais cette commande n'existant que sous Mac, et n'ayant pas trouvé d'alternatives, cette fonctionnalité n'est donc pas disponnible ailleurs (rassurez-vous, vous ne ratez pas grand chose !).\\
+		
+		L'assistance vocale ne fait que lire les messages apparaissant dans la barre de status comme : "Le projet séléctionné a bien été ouvert." par exemple.\\
+		
+		Pour l'activer, il suffit d'aller dans le menu Fichier/Paramètres et de cocher la ligne Assistance vocale.
+		
+		\begin{figure}[h!]
+			\begin{center}
+					\includegraphics[scale=0.15]{images/assist_voc}
+					\caption{Fonctionnalité assistance vocale}
+			\end{center}
+	\end{figure}
+	
+	L'état de l'assistance vocale (si elle est activée ou non) est stocké dans le fichier de configuration conf.xml. Ainsi, au redémarrage, vous retrouverez l'assistance vocale telle que vous l'avez laissé (A l'unanimité, nous conseillons fortement de la désactiver, c'est très vite pénible) !\\
+	
+	Si vous n'êtes pas sous Mac, la fonctionnalité sera grisée dans le menu et vous ne pourrez pas l'activer.
+	
+	\subsection{La cheminée}
+	
+		Les hivers étant parfois rudes, avoir chaud aux mains peut s'avérer très confortable quand on code. C'est ce qu'on s'est dit et nous avons au plus vite intégré une cheminée traditionnelle à notre IDE pour le confort de nos utilisateurs.\\
+		
+		La cheminée en elle-même est un GIF qui est affiché dans un objet QLabel de QT et démarré à l'aide d'un QMovie.\\
+		
+		\begin{figure}[h!]
+			\begin{center}
+					\includegraphics[scale=0.3]{images/cheminee}
+					\caption{Chaleureux n'est-ce pas ?}
+			\end{center}
+	\end{figure}
+	
+	On l'active au même endroit que pour l'assistance vocale, et elle est disponnible sous toutes les plateformes !\\
+	
+	\begin{figure}[h!]
+			\begin{center}
+					\includegraphics[scale=0.2]{images/activ_cheminee}
+					\caption{Fonctionnalité affichage de la cheminée}
+			\end{center}
+	\end{figure}
+	
+	Attention de ne pas vous brûler !
+	
 
 \end{document}
