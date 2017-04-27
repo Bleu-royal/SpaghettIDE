@@ -101,7 +101,7 @@ class Fenetre(QWidget):
             self.line_tab.setMaximumWidth(1)
 
         self.img_logo = QLabel()
-        pixmap_img = QPixmap("content/medium.gif")
+        pixmap_img = QPixmap("content/logo.png")
         self.img_logo.setPixmap(pixmap_img)
         self.img_logo.setFixedWidth(1)
 
