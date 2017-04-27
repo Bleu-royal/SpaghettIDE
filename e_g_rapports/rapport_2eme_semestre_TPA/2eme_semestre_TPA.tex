@@ -38,7 +38,7 @@
 
 	Voici un résumé de ce que nous avions à la fin du premier semestre.\\
 	
-	Notre IDE était capable d'ouvrir des documents avec l'extention .c ou .h à partir de projets qu'on avait créé. On pouvait ouvrir plusieurs documents, et avoir une liste d'onglets. Nous avions un navigateur de fichiers qui nous permettait de naviguer entre nos différents projets et leurs documents. Une barre de menu nous permettait d'accéder à nos différentes fonctionnalités, et on affichait à l'aide d'une barre de statut différents messages répondant aux requêtes de l'utilisateur.\\
+	Notre IDE était capable d'ouvrir des documents avec l'extension .c ou .h à partir de projets qu'on avait créé. Nous pouvions ouvrir plusieurs documents, et avoir une liste d'onglets. Nous avions un navigateur de fichiers qui nous permettait de naviguer entre nos différents projets et leurs documents. Une barre de menu nous permettait d'accéder à nos différentes fonctionnalités, et on affichait à l'aide d'une barre de statut différents messages répondant aux requêtes de l'utilisateur.\\
 	
 	\includegraphics[scale=0.3]{images/ide_v1.png}
 	
@@ -85,7 +85,7 @@
 			\end{center}
 		\end{figure}
 		
-		On décrit ci-dessus toutes les formes possibles d'expressions unitaires. C'est donc ainsi de suite et en remonttant toutes les clauses que l'on définit les règles syntaxiques du langage.
+		On décrit ci-dessus toutes les formes possibles d'expressions unitaires. C'est donc ainsi de suite et en remontant toutes les clauses que l'on définit les règles syntaxiques du langage.
 		
 	\subsection{Pour ce semestre}
 	
@@ -109,12 +109,38 @@
 			\item Quelques bonus \\
 		\end{itemize}
 		
-		\textit{À noter que nous avions réalisé des rapports au fur et à mesure de l'avancement. Nous les reprennons ici donc en les ré-adaptant à l'aspect global évidemment. Mais il peut rester des images notamment sur la barre de menu où les fonctionnalités ne sont plus placées au même endroit. Par exemple, le menu apparence est maintenant placé dans Fichier/Paramètres.}
+		\textit{À noter que nous avions réalisé des rapports au fur et à mesure de l'avancement. Nous les reprenons ici donc en les ré-adaptant à l'aspect global évidemment. Mais il peut rester des images notamment sur la barre de menu où les fonctionnalités ne sont plus placées au même endroit. Par exemple, le menu apparence est maintenant placé dans Fichier/Paramètres.}
+
+\section{Les schémas UML de l'IDE}
+
+Dans la même lignée que le premier semestre, nous avons continué à générer des schémas UML pour que chacun comprenne le fonctionnement de chaque nouveau module, et son utilité. Nous avons pu voir quels objets de Qt nous utilisions ce qui nous a aidé à corriger l'utilisation de certains objets et d'en utiliser d'autres plus appropriés.
+
+		\begin{figure}[h!]
+			\begin{center}
+				\includegraphics[scale=0.3]{images/imgs_uml/new_relation_Qt.png}
+				\caption{Les objets utilisés en fonction des différents modules}
+			\end{center}
+		\end{figure}
 		
+Cela nous a aussi permis de comprendre quel module avait besoin de quel autre, et ainsi de ré-arranger nos imports, qui devenaient de plus en plus lourds.
+		
+		\begin{figure}[h!]
+			\begin{center}
+				\includegraphics[scale=0.3]{images/imgs_uml/dependances_modules_gui.png}
+				\caption{Les dépendances entre nos principaux modules}
+			\end{center}
+		\end{figure}
+		
+		\begin{figure}[h!]
+			\begin{center}
+				\includegraphics[scale=0.3]{images/imgs_uml/dependances_graphique.png}
+				\caption{Les dépendances entre les modules principaux}
+			\end{center}
+		\end{figure}
 		
 \section{Les thèmes et les styles}
 	
-	Afin de pouvoir rendre plus personnalisable l'application, nous avons choisi de permettre la personnalisation du thème global.
+	Afin de pouvoir rendre l'application plus agréable à utiliser pour chaque utilisateur, nous avons choisi de permettre la personnalisation du thème global.
 	Voici quelques exemples de thèmes : 
 	
 	
@@ -151,9 +177,9 @@
 				\end{center}
 			\end{figure}
 			
-			Lorsqu'on sélectionne son thème il est immédiatement changé, il n'y a pas besoin de relancer l'application. De plus, une petite icone apparaît à côté du thème que vous avez choisi dans la barre de menu.\\
+			Lorsqu'on sélectionne son thème il est immédiatement changé, il n'y a pas besoin de relancer l'application. De plus, une petite icône apparaît à côté du thème que vous avez choisi dans la barre de menu.\\
 			
-			Le thème sélectionné est alors écrit de le fichier conf.xml qui est situé à la racine du projet. Ainsi, lorsque vous relancerez l'IDE, le dernier thème que vous avez utilisé sera rechargé.
+			Le thème sélectionné est alors écrit dans le fichier conf.xml qui est situé à la racine du projet. Ainsi, lorsque vous relancerez l'IDE, le dernier thème que vous avez utilisé sera rechargé.
 			
 		\subsection{Gestion des thèmes}
 		
@@ -180,9 +206,9 @@
 				\end{center}
 			\end{figure}
 			
-			Le module theme.py nous permet de récupérer le thème sauvegardé (dans le fichier conf.xml) lors du chargement de l'application notament. Ici sont également contenues les méthodes permettant à l'interface d'aller chercher les couleurs qu'elle doit appliquer aux différents éléments.\\
+			Le module theme.py nous permet de récupérer le thème sauvegardé (dans le fichier conf.xml) lors du chargement de l'application notamment. Ici sont également contenues les méthodes permettant à l'interface d'aller chercher les couleurs qu'elle doit appliquer aux différents éléments.\\
 			
-			Au niveau technique, nous utilisons la méthode .setStyleSheet() de QT qui peut s'appliquer à la majorité des widgets (tous dans notre cas) et qui nous permet donc de spécifier et de modifier les couleusr de fond ainsi que de police des widgets en fonction du thème choisi.
+			Au niveau technique, nous utilisons la méthode .setStyleSheet() de QT qui peut s'appliquer à la majorité des widgets (tous dans notre cas) et qui nous permet donc de spécifier et de modifier les couleurs de fond ainsi que de police des widgets en fonction du thème choisi.
 			
 		\subsection{Création de thèmes}
 		
@@ -193,7 +219,7 @@
 			Pour résumer, on lance le fichier createtheme.py via un terminal en spécifiant le nom du thème. Tapez par exemple :
 			"python3 createtheme.py monNouveauTheme" et cela créera un répertoire "monNouveauTheme" qui contiendra les fichiers nécessaires à la gestion de votre thème. Ouvrez ensuite les fichiers .json et définissez vos propres couleurs (par défaut tout est noir).\\
 			
-			Une fois cela fait, vous devrez ajouter deux lignes dans le module menu.py pour que votre thème apparaisse dans la séléction.
+			Une fois cela fait, vous devrez ajouter deux lignes dans le module menu.py pour que votre thème apparaisse dans la sélection.
 
 			\begin{figure}[h!]
 				\begin{center}
@@ -220,7 +246,7 @@
 				\caption{Contenu du répertoire style}
 			\end{center}
 		\end{figure}
-		\newpage
+		% \newpage
 				
 		Chaque document .css contient le style relatif à des éléments. Nous retrouvons ici le style appliqué :
 		
@@ -283,7 +309,7 @@
 			\end{center}
 		\end{figure}
 		
-		L'ouverture de projets est maintenant beaucoup plus rapide qu'au début du semestre, notament grâce à l'utilisation du cache. La barre de progression apparaît toujours, mais c'est souvent très rapide.
+		L'ouverture de projets est maintenant beaucoup plus rapide qu'au début du semestre, notamment grâce à l'utilisation du cache. La barre de progression apparaît toujours, mais c'est souvent très rapide.
 		
 	\subsection{Numérotation des lignes}
 	
@@ -320,13 +346,13 @@
 		
 	\subsubsection{Surcharger les méthodes originales}
 
-	La difficulté n'était pas d'afficher une barre avec des numéros dedans, ni de récupérer le nombre de lignes, car nous avons une méthode pour cela. La difficulté était de syncroniser le défilement des deux éléments (widgets).\\
+	La difficulté n'était pas d'afficher une barre avec des numéros dedans, ni de récupérer le nombre de lignes, car nous avons une méthode pour cela. La difficulté était de synchroniser le défilement des deux éléments (widgets).\\
 		
-		Lorsque l'on fait un défilement avec la molette de souris ou le pad \textbf{uniquement}, la méthode appelée sur le QTextEdit est le "wheelEvent(e)" où "e" est l'évenement utilisé par QT pour effectuer le défilement.\\
+		Lorsque l'on fait un défilement avec la molette de souris ou le pad \textbf{uniquement}, la méthode appelée sur le QTextEdit est le "wheelEvent(e)" où "e" est l'événement utilisé par QT pour effectuer le défilement.\\
 		
 		Le principe consiste à appeler la fonction d'origine ainsi que celle de l'autre objet avec le même argument "e" lorsque la méthode "wheelEvent()" est appelée.
 		
-		\newpage
+		%\newpage
 		
 		\begin{figure}[h!]
 			\begin{center}
@@ -347,15 +373,15 @@
 		
 		"self.parent.nb\_lignes" désigne l'objet contenant la numérotation des lignes, on y appelle donc la méthode "wheelEvent()" avec les même arguments. Et toujours l'argument empêchant la boucle infinie.\\
 		
-		Nous arrivons ainsi à syncroniser les deux éléments lors du défilement de l'un comme de l'autre avec la souris ou le pad.
+		Nous arrivons ainsi à synchroniser les deux éléments lors du défilement de l'un comme de l'autre avec la souris ou le pad.
 		
 		
 \section{Recherche et édition du texte}
 
-	\subsection{Selection de la ligne courante}
+	\subsection{Sélection de la ligne courante}
 
 	Dans un premier temps, nous avons ajouté une fonction permettant de sélectionner la ligne où se trouve le curseur.
-	Pour cela, nous récupérons l'objet QTextCursor de notre classe Editeur (héritant de QTextEdit) puis nous utilisons la méthode \textbf{select} de cet objet qui nous permet de sélectionner du texte dans notre Editeur, cette méthode prend en paramètre une méthode de selection, QTextCursor.LineUnderCursor dans notre cas. La ligne où se trouve notre cuseur va donc être selectionnée.
+	Pour cela, nous récupérons l'objet QTextCursor de notre classe Editeur (héritant de QTextEdit) puis nous utilisons la méthode \textbf{select} de cet objet qui nous permet de sélectionner du texte dans notre Editeur, cette méthode prend en paramètre une méthode de selection, QTextCursor.LineUnderCursor dans notre cas. La ligne où se trouve notre curseur va donc être éelectionnée.
 	Pour appliquer ces modifications, nous devons appliquer notre objet QTextCursor à notre Editeur, pour cela on utilise la méthode \textbf{setTextCursor} de l'objet Editeur et on lui passe en paramètre notre QTextCursor.  
 
 
@@ -373,7 +399,7 @@
 		\end{center}
 	\end{figure}
 
-\subsection{Selection du mot courant}
+\subsection{Sélection du mot courant}
 
 	Pour l'ajout de la sélection du mot courant, la démarche est exactement la même que pour la sélection de la ligne courante, nous devons simplement changer la méthode de sélection, passant de QTextCursor.LineUnderCursor à QTextCursor.WordUnderCursor, afin de ne plus sélectionner la ligne mais le mot présent au niveau du curseur. 
 
@@ -395,9 +421,9 @@
 
 \subsection{Duplication}
 
-	Pour l'ajout de la duplication du texte, nous avons choisi de différencier deux cas, le premier où rien n'est selectionné et le second où du texte est déjà selectionné. Dans le premier cas toutes la ligne est dupliquée et dans le second seulement la partie selectionnée est dupliquée.
+	Pour l'ajout de la duplication du texte, nous avons choisi de différencier deux cas, le premier où rien n'est sélectionné et le second où du texte est déjà sélectionné. Dans le premier cas, toute la ligne est dupliquée et dans le second seule la partie sélectionnée est dupliquée.
 
-	Pour cela, nous récuppérons une nouvelle fois le QTextCursor de notre Editeur, puis pour savoir dans quel cas nous sommes on utilise la méthode selectedText de l'objet QTextCursor. Ainsi si aucun text n'est sélectionné nous sélectionnons la ligne courante de le même façon que précédement de plus on assigne la valeur  \textbf{\\n} à la variable \textbf{return\_} en effet si on duplique une ligne entière, on ajoute on retoure à la ligne entre la sélection d'origine et la partie dupliquée. Puis on ajoute le texte dans notre objet Editeur grâce à la méthode \textbf{inserText} avec en paramètre la sélection du QTextCursor (recuperrée grâce à la méthode \textbf{selectedText}) suivie de la variable \textbf{return\_} elle même suivie de la sélection du QTextCursor.
+	Pour cela, nous récupérons une nouvelle fois le QTextCursor de notre Editeur, puis pour savoir dans quel cas nous sommes on utilise la méthode selectedText de l'objet QTextCursor. Ainsi, si aucun text n'est sélectionné nous sélectionnons la ligne courante comme précédemment. De plus, on assigne la valeur  \textbf{\\n} à la variable \textbf{return\_}. En effet si on duplique une ligne entière, on retourne à la ligne entre la sélection d'origine et la partie dupliquée. Puis on ajoute le texte dans notre objet Editeur grâce à la méthode \textbf{inserText} avec en paramètre la sélection du QTextCursor (récupérée grâce à la méthode \textbf{selectedText}) suivie de la variable \textbf{return\_} elle même suivie de la sélection du QTextCursor.
 
 	\begin{figure}[h!]
 		\begin{center}
@@ -417,18 +443,18 @@
 	\newpage
 \subsection{Recherche}
 
-	Pour la recherche dans le document, nous avons decidés d'ajouter une boite de dialogue permettant d'entrer le texte à rechercher. Pour cela nous avons créé une classe SearchDialog (héritant de QDialog), lors de l'affichage de cette boite de dialogue nous utilisons la méthode \textbf{exec}, qui rend impossible l'interaction avec la fenetre en arrière plan tant que la boite de dialogue est ouverte.
+	Pour la recherche dans le document, nous avons décidé d'ajouter une boîte de dialogue permettant d'entrer le texte à rechercher. Pour cela nous avons créé une classe SearchDialog (héritant de QDialog). Lors de l'affichage de cette boîte de dialogue nous utilisons la méthode \textbf{exec}, qui rend impossible l'interaction avec la fenêtre en arrière-plan tant que la boite de dialogue est ouverte.
 
-	Cette boite de dialogue nous permer de taper le texte à rechercher, de choisir si on recherche en avant ou en arrière, mais aussi si on veut être sensible à la case.
+	Cette boite de dialogue nous permet de taper le texte à rechercher, de choisir si on recherche en avant ou en arrière, mais aussi si on veut être sensible à la case.
 
 	\begin{figure}[h!]
 		\begin{center}
 			\includegraphics[scale=0.8]{images/imgs_edit/boite_dialog_recherche}
-			\caption{Boite de dialogue relative à la recherche}
+			\caption{Boîte de dialogue relative à la recherche}
 		\end{center}
 	\end{figure}
 
-	Pour la recherche on utilise la méthode \textbf{find} de notre objet Editeur. Cette méthode prend en paramètre le texte à rechercher, suivi de différents drapeaux. Dans notre cas nous utilisons le drapeau permettant d'exécuter la rechercher en arrière et le drapeau permettant de faire la recherche en étant sensible à la case (respectivement les drapeaux \textbf{QTextDocument.FindBackward} et \textbf{QTextDocument.FindCaseSensitively})
+	Pour la recherche, nous utilisons la méthode \textbf{find} de notre objet Editeur. Cette méthode prend en paramètre le texte à rechercher, suivi de différents drapeaux. Dans notre cas, nous utilisons le drapeau permettant d'exécuter la rechercher en arrière et le drapeau permettant de faire la recherche en étant sensible à la case (respectivement les drapeaux \textbf{QTextDocument.FindBackward} et \textbf{QTextDocument.FindCaseSensitively})
 
 	\begin{figure}[h!]
 		\begin{center}
@@ -447,8 +473,8 @@
 
 \subsection{Indentation du fichier}
 
-	Pour l'indentation du document, nous allons changer son contenu (ajout/retrait de tabulation) nous devons donc stocker la position courante du curseur (grâce à la méthode \textbf{blockNumber} de l'objet QTextCursor). Par la suite on recupère le contenu du document grâce à la méthode \textbf{toPlainText} de l'objet Editeur. On créé une variable \textbf{indent\_level}, qui contient le niveau courant d'indentation, puis on parcourt toutes les lignes de notre document, si la ligne contient le charactère "\}", on retire 1 au niveau d'indentation puis on change la ligne pour ajouter au debut de cette dernière \textbf{indent\_level} fois une tabulation, puis on ajoute 1 au niveau d'indentation si la ligne contient "\{".
-	Pour finir on defini le nouveau texte ainsi obtenu comme texte de notre document avec la méthode \textbf{setPlainText} et on replace le curseur au bon endroit.
+	Pour l'indentation du document, nous allons changer son contenu (ajout/retrait de tabulation). Nous devons donc stocker la position courante du curseur (grâce à la méthode \textbf{blockNumber} de l'objet QTextCursor). Par la suite, on récupère le contenu du document grâce à la méthode \textbf{toPlainText} de l'objet Editeur. On créé une variable \textbf{indent\_level}, qui contient le niveau courant d'indentation, puis on parcourt toutes les lignes de notre document. Si la ligne contient le caractère "\}", on retire 1 au niveau d'indentation puis on change la ligne pour ajouter au début de cette dernière \textbf{indent\_level} fois une tabulation, puis on ajoute 1 au niveau d'indentation si la ligne contient "\{".
+	Pour finir on définit le nouveau texte ainsi obtenu comme texte de notre document avec la méthode \textbf{setPlainText} et on replace le curseur au bon endroit.
 
 	\begin{figure}[h!]
 
@@ -468,9 +494,9 @@
 \subsection{Commenter la sélection}
 
 	De la même façon que pour la duplication du texte, nous avons séparé cette action en deux cas, soit du texte est sélectionné soit rien n'est sélectionné.
-	Dans le cas ou du text est sélectionné nous commenterons seulement à partir du debut de la selection. Si plusieurs lignes sont selectionnées elles seront évidemment toutes commentées. Si il n'y a pas de texte sélectionné, on commente la ligne courante.
+	Dans le cas où du texte est sélectionné nous commenterons seulement à partir du début de la sélection. Si plusieurs lignes sont sélectionnées elles seront évidemment toutes commentées. Si il n'y a pas de texte sélectionné, on commente la ligne courante.
 
-	Dans un premier temps, comme pour la duplication, si rien n'est selectionné on sélectionne la ligne courante, puis on sauvegarde le texte sélectionné que l'on recupère grâce à la méthode \textbf{selectedText}, puis on supprime le texte sélectionné avec la méthode \textbf{removeSelectedText}. Pour savoir si le texte est deja commenté, nous parcourons toutes les lignes, si une des lignes ne commence pas par "//" la sélection est considérée comme non commenté. Par la suite nous parcourons chaque ligne du texte puis pour chaque ligne nous ajoutons/retirons les charactères "//" en fonction de si le texte et oui ou non déjà commenté.
+	Dans un premier temps, comme pour la duplication, si rien n'est sélectionné on sélectionne la ligne courante, puis on sauvegarde le texte sélectionné que l'on récupère grâce à la méthode \textbf{selectedText}, puis on supprime le texte sélectionné avec la méthode \textbf{removeSelectedText}. Pour savoir si le texte est déjà commenté, nous parcourons toutes les lignes, si une des lignes ne commence pas par "//" la sélection est considérée comme non commentée. Par la suite nous parcourons chaque ligne du texte puis pour chaque ligne nous ajoutons/retirons les caractères "//" en fonction de si le texte est déjà commenté ou non.
 
 	Puis on ajoute le texte ainsi modifié à notre document en utilisant la méthode \textbf{insertText} (de l'objet QTextCursor).
 
@@ -493,13 +519,13 @@
 	
 	\subsubsection{Les snippets : explication}
 
-		Les snippets sont des bouts de code qui sont réutilisables d'un projet à un autre (comme les conditions, les boucles et les définitions de fonction par example). Dans notre IDE nous utilisons des mots clés que l'on associes à ces bouts de code. Lorsque l'on tape un des mots clés puis que l'on presse la touche \textbf{tabulation}, le mot clé est remplacé par le bout de code qui correspond.
+		Les snippets sont des bouts de code qui sont réutilisables d'un projet à un autre (comme les conditions, les boucles et les définitions de fonction par exemple). Dans notre IDE nous utilisons des mots clés que l'on associe à ces bouts de code. Lorsque l'on tape un des mots clés puis que l'on presse la touche \textbf{tabulation}, le mot clé est remplacé par le bout de code qui correspond.
 
 	\subsubsection{Intergration des bouts de code dans l'IDE}
 
 		\paragraph{Utilisation du JSON}
 
-			Pour l'intégration des snippets dans l'IDE, nous avons utilisé des fichiers JSON, qui contiennent des dictionnaires avec comme clé le mot clé qui correspond au bout de code et en valeur le-dit bout de code, suivit de nombre de lignes que le cursor doit remonter, puis le nombre de charactère char que le cursor doit parcourir vers la droite pour être à l'emplacement voulu. De plus nous avons un fichier JSON par language (C, python, etc ... )
+			Pour l'intégration des snippets dans l'IDE, nous avons utilisé des fichiers JSON, qui contiennent des dictionnaires avec comme clé le mot clé qui correspond au bout de code et comme valeur le-dit bout de code, suivi de nombre de lignes que le curseur doit remonter, puis le nombre de caractères "char" que le curseur doit parcourir vers la droite pour être à l'emplacement voulu. Nous avons un fichier JSON par langage (C, python, etc ... ).
 
 			\begin{figure}[h!]
 				\begin{center}
@@ -523,11 +549,11 @@
 
 \subsection{Pourquoi le XML}
 
-Au fur et à mesure de l'ajout de fonctionnalités dans notre IDE, l'utilisation du XML s'est vite imposée du fait de son efficacité et également par convention. Nous devions ainsi lire, parcourir et écrire dans un fichier XML afin de subvenir à nos besoins dans l'élaboration des différentes fonctionnalités de notre IDE dans différentes conditions. Nous utilisons plusieurs fichiers xml, un pour chaque projet, un pour tous les projets et un fichier de configuration.
+Au fur et à mesure de l'ajout de fonctionnalités dans notre IDE, l'utilisation du XML s'est vite imposée du fait de son efficacité. Nous devions ainsi lire, parcourir et écrire dans un fichier XML afin de subvenir à nos besoins dans l'élaboration des différentes fonctionnalités de notre IDE dans différentes conditions. Nous utilisons plusieurs fichiers xml, un pour chaque projet, un pour tous les projets et un fichier de configuration.
 
 \subsection{Le module XML et le fichier de configuration}
 
-Nous avons donc ainsi créé un module XML pour les fonctions de parcours et d'écriture de fichier XML et bien entendu, le fichier de configuration XML. Voici d'ailleurs leur disposition dans notre IDE, ils sont à la racine du projet.
+Nous avons donc ainsi créé un module XML pour les fonctions de parcours et d'écriture de fichier XML et pour le fichier de configuration XML. Voici d'ailleurs leur disposition dans notre IDE, ils sont à la racine du projet.
 
 \begin{figure}[h!]
 			\begin{center}
@@ -536,9 +562,9 @@ Nous avons donc ainsi créé un module XML pour les fonctions de parcours et d'�
 			\end{center}
 		\end{figure}
 		
-Dans le module XML, nous avons une fonction open\_xml, qui ouvre, parse et parcours le fichier de configuration XML pour retourner un dictionnaire avec comme clés le nom des balises XML, et comme valeurs la valeur des balises. Nous avons également une fonction write\_xml qui permet d'écrire des modifications dans le fichier de configuration. On rentre le nom d'une balise et la valeur voulue en arguments, la fonction trouve la balise et lui associe cette valeur, puis nous écrivons dans le fichier. Enfin, pour éviter tout problème, si le fichier de configuration n'existe pas ainsi que le fichier comportant tous les projets, on les créé et leur ajoute les valeurs de configuration de base. \\
+Dans le module XML, nous avons une fonction open\_xml, qui ouvre, parse et parcourt le fichier de configuration XML pour retourner un dictionnaire avec comme clés le nom des balises XML, et comme valeurs la valeur des balises. Nous avons également une fonction write\_xml qui permet d'écrire des modifications dans le fichier de configuration. On rentre le nom d'une balise et la valeur voulue en arguments, la fonction trouve la balise et lui associe cette valeur, puis nous écrivons dans le fichier. Enfin, pour éviter tout problème, si le fichier de configuration n'existe pas ainsi que le fichier comportant tous les projets, on les crée et leur ajoute les valeurs de configuration de base. \\
 		
-Dans le fichier de configuration ".xml", nous utilisons une balise pour stocker : le thème sélectionné actuellement, le booléen suivant l'activation ou non de l'assistance vocale dans l'interface graphique, le booléen suivant l'activation ou non de l'écran de chargement au démarrage, celui de la numérotation des lignes, le langage de l'IDE (Français ou Anglais) ainsi que la localisation du workplace (voir partie suivante).
+Dans le fichier de configuration ".xml", nous utilisons une balise pour stocker : le thème sélectionné actuel, le booléen suivant l'activation ou non de l'assistance vocale dans l'interface graphique, le booléen suivant l'activation ou non de l'écran de chargement au démarrage, celui de la numérotation des lignes, le langage de l'IDE (Français ou Anglais) ainsi que la localisation du workplace (voir partie suivante).
 		
 \begin{figure}[h!]
 			\begin{center}
@@ -549,7 +575,7 @@ Dans le fichier de configuration ".xml", nous utilisons une balise pour stocker 
 		
 \subsection{Les projets et le XML}
 
-	Il y a un fichier ".xml" dans chaque projet. Ce fichier contient notament le langage du projet, la date de création, son nom, son emplacement, le nombre de fichiers qu'il contient, l'emplacement de son compilateur et l'emplacement de son fichier de sortie.\\
+	Il y a un fichier ".xml" dans chaque projet. Ce fichier contient notamment le langage du projet, la date de création, son nom, son emplacement, le nombre de fichiers qu'il contient, l'emplacement de son compilateur et l'emplacement de son fichier de sortie.\\
 	
 	\begin{figure}[h!]
 			\begin{center}
@@ -564,11 +590,11 @@ Dans le fichier de configuration ".xml", nous utilisons une balise pour stocker 
 
 \subsection{La mise en place du concept de projet}
 
-Le concept, le principe de projet dans IDE consiste à avoir un dossier Workplace qui comporte tous les dossiers de projet et ce dossier Workplace peut être placé où on veut. Après avoir réalisé ce concept, il ne restait plus qu'à faire les différentes fonctions associées aux projets, comme la création d'un nouveau projet, l'import, la suppression et les informations de chaque projet.
+Le concept de projet dans un IDE consiste à avoir un dossier Workplace qui comporte tous les dossiers de projets et il peut être placé où on veut. Après avoir réalisé ce concept, il ne restait plus qu'à faire les différentes fonctions associées aux projets, comme la création d'un nouveau projet, l'import, la suppression et les informations de chaque projet.
 	
 \subsection{La création d'un nouveau projet}
 		
-Pour créer un nouveau projet, il suffit de cliquer sur le bouton du menu "Nouveau projet", une fenêtre s'ouvre et propose de choisir un nom de projet et un langage et après validation le dossier de projet est créé avec l'xml contenant ses informations dedans. Le dossier est considéré comme un projet et est stocké dans le fichier xml contenant tous les projets.
+Pour créer un nouveau projet, il suffit de cliquer sur le bouton du menu "Nouveau projet", une fenêtre s'ouvre et propose de choisir un nom de projet et un langage. Après validation le dossier du projet est créé avec l'xml contenant ses informations dedans. Le dossier est considéré comme un projet et est stocké dans le fichier xml contenant tous les projets.
 
 \begin{figure}[h!]
 			\begin{center}
@@ -581,7 +607,7 @@ Nous pouvons maintenant ajouter du code et donc des fichiers dans le nouveau pro
 
 \subsection{Importation de projet}
 
-Pour importer un projet, un ancien projet en fait, dans le Workplace ou ailleurs, qui ne comprend donc pas de fichier xml, qui n'est donc pas considéré comme un projet encore par l'IDE, il suffit de cliquer sur le bouton du menu "Importer projet". Il l'ajoute au Workplace avec un fichier xml et fait toutes les formalités comme lors de la création d'un projet. Tous les cas sont gérés, à savoir par exemple, l'ajout d'un projet déjà existant, le projet n'est pas écrasé mais rien ne se passe. Il est également possible d'importer un ancien projet qui est dans le Workplace avec le menu clic droit du navigateur de projets et en cliquant sur "Importer le projet".
+Pour importer un projet déjà créé dans le Workplace ou ailleurs, qui ne comprend donc pas de fichier xml, qui n'est donc pas encore considéré comme un projet par l'IDE, il suffit de cliquer sur le bouton du menu "Importer projet". Il l'ajoute au Workplace avec un fichier xml et fait toutes les formalités comme lors de la création d'un projet. Tous les cas sont gérés, à savoir par exemple, l'ajout d'un projet déjà existant dans le Workplace : rien ne se passe et le projet n'est pas écrasé. Il est également possible d'importer un ancien projet qui est dans le Workplace avec le menu clic droit du navigateur de projets et en cliquant sur "Importer le projet".
 
 \begin{figure}[h!]
 			\begin{center}
@@ -603,7 +629,7 @@ Pour supprimer un projet, il suffit de cliquer sur le bouton du menu "Supprimer 
 
 \subsection{Informations de projet}
 
-Pour accéder aux informations de projet, il suffit de cliquer sur le bouton du menu "Informations projet". Ainsi, une fenêtre s'ouvre et propose de choisir un projet. Une fois le projet choisi, ses informations sont affichées, soit le nom, le langage, la localisation, la date de création et le nombre de fichiers du projet. On peut également modifier les informations, enfin seulement le nom et le langage du projet, pour finir il faut simplement appliquer les modifications effectuées avec le bouton correspondant. Vous pouvez le voir avec les images ci-dessous :
+Pour accéder aux informations d'un projet, il suffit de cliquer sur le bouton du menu "Informations projet". Ainsi, une fenêtre s'ouvre et propose de choisir un projet. Une fois le projet choisi, ses informations sont affichées, soit le nom, le langage, la localisation, la date de création et le nombre de fichiers du projet. On peut également modifier les informations, enfin seulement le nom et le langage du projet. Pour finir, il faut simplement appliquer les modifications effectuées avec le bouton correspondant. Vous pouvez le voir avec les images ci-dessous :
 
 \begin{figure}[h!]
 			\begin{center}
@@ -628,7 +654,7 @@ Pour accéder aux informations de projet, il suffit de cliquer sur le bouton du 
 
 \subsection{Menu clic droit du navigateur de projets}
 
-Un menu s'affichant par un clic droit dans le navigateur de projets a été mis en place permettant d'importer un projet, de le supprimer et d'afficher ses informations. Il est également possible de renommer et de supprimer les dossiers et fichiers présents un projet. C'est donc les mêmes fonctionnalités que précédemment (avec en plus la suppression et la possibilité de renommer les dossiers et fichiers de projets) mais présentées de façon plus pratique, efficace, optimale pour travailler. Vous pouvez le voir avec les images ci-dessous :
+Un menu s'affichant par un clic droit dans le navigateur de projets a été mis en place. Il permet d'importer un projet, de le supprimer et d'afficher ses informations. Il est également possible de renommer et de supprimer les dossiers et fichiers présents un projet. Ce sont donc les mêmes fonctionnalités que précédemment (avec en plus la suppression et la possibilité de renommer les dossiers et fichiers de projets) mais présentées de façon plus pratique, efficace, optimale pour travailler. Vous pouvez le voir avec les images ci-dessous :
 
 
 \begin{figure}[h!]
@@ -673,7 +699,7 @@ Lorsque que l'on clique sur le bouton pour renommer, nous obtenons l'affichage d
 		\end{figure}
 		
 		
-Lorsque l'on clique sur le bouton pour afficher les informations de projet, nous obtenons un affichage différents de cette même fonctionnalité présentée dans la partie précédente étant donné qu'il faut présenter les informations d'un seul projet. Il est impossible de modifier les informations de part ce menu clic droit, ni de renommer le nom de projet, il faut pour cela faire comme expliqué dans la partie précédente via le menu principal. Nous pouvons le voir avec l'image ci-dessous :
+Lorsque l'on clique sur le bouton pour afficher les informations de projet, nous obtenons un affichage différent de cette même fonctionnalité présentée dans la partie précédente étant donné qu'il faut présenter les informations d'un seul projet. Il est impossible de modifier les informations de part ce menu clic droit et de renommer le nom de projet, il faut pour cela faire comme expliqué dans la partie précédente via le menu principal. Nous pouvons le voir avec l'image ci-dessous :
 
  \begin{figure}[h!]
 			\begin{center}
@@ -687,11 +713,11 @@ Lorsque l'on clique sur le bouton pour afficher les informations de projet, nous
 
 	\subsection{Compilateurs utilisés}
 
-		Pour notre IDE, nous avons utilisé le compilateur \textbf{GCC}, pour compiler les projets de type \textbf{C}. Mais nous utilisons aussi les interpréteur de python afin d'interpréter les projets de type \textbf{Python}. Par la suite, pour chaque nouveaux languages il nous suffit d'utiliser le bon compilateur ou le bon interpréteur.
+		Pour notre IDE, nous avons utilisé le compilateur \textbf{GCC}, pour compiler les projets de type \textbf{C}. Mais nous utilisons aussi les interpréteur de python afin d'interpréter les projets de type \textbf{Python}. Par la suite, pour chaque nouveaux langages il nous suffit d'utiliser le bon compilateur ou le bon interpréteur.
 		
 	\subsection{Integration de \textbf{GCC} à notre IDE}
 
-		Pour utiliser \textbf{GCC} avec notre IDE nous avons créé une fenêtre de configuration afin de permettre à l'utilisateur de choisir la configuration adéquate à la compilation de son projet.
+		Pour utiliser \textbf{GCC} avec notre IDE, nous avons créé une fenêtre de configuration afin de permettre à l'utilisateur de choisir la configuration adéquate à la compilation de son projet.
 
 			\begin{figure}[h!]
 				\begin{center}
@@ -708,7 +734,7 @@ Lorsque l'on clique sur le bouton pour afficher les informations de projet, nous
 
 		Cette chaîne de caractère est stockée dans le fichier XML de configuration du projet.
 
-		Pour finir, on exécute cette ligne de commande, puis on récupère sur la sortie d'erreurs les eventuelles erreurs afin de pouvoir les afficher à l'utilisateur après les avoir parsé pour avoir un bon formatage.
+		Pour finir, on exécute cette ligne de commande, puis on récupère sur la sortie d'erreur les éventuelles erreurs afin de pouvoir les afficher à l'utilisateur après les avoir parsées pour avoir un bon formatage.
 
 			\begin{figure}[h!]
 				\begin{center}
@@ -717,7 +743,7 @@ Lorsque l'on clique sur le bouton pour afficher les informations de projet, nous
 				\end{center}
 			\end{figure}
 
-		En ce qui concerne la partie interpréteur pour le langage Python, la demarche est semblable. 
+		En ce qui concerne la partie interpréteur pour le langage Python, la démarche est semblable. 
 
 
 \section{Inspecteur d'éléments}
@@ -767,17 +793,19 @@ Lorsque l'on clique sur le bouton pour afficher les informations de projet, nous
 
 	\subsection{Partie modification}
 
-En ce qui concerne la modification des raccourcis, il est possible de d'écrire tout ce que l'on veut dans les lignes de saisies. C'est lorsque l'on clique sur le bouton valider que la fonction qui valide un raccourci va être appelée. Ainsi, certaines combinaisons de touches ne sont pas permises, telles que "M+Shift+Ctrl". Nous avons aussi décidé de faire en sorte que si l'utilisateur écrit quelque chose de ce style : "Ctrl+Shift+JHGFFUTRF", on écrive dans le fichier "racc\_utilisateur.json" : "Ctrl+Shift+J".
+En ce qui concerne la modification des raccourcis, il est possible de d'écrire tout ce que l'on veut dans les lignes de saisies.
+Il n'est néanmoins pas nécessaire de d'écrire à la main "Ctrl" "+" "...". Les touches telles que "Ctrl", "Shift", "Alt" verront leurs noms écrit après simple pression sur leur touche (utilisation de la fonction "keyPressEvent").
+C'est lorsque l'on clique sur le bouton valider que la fonction qui valide un raccourci va être appelée. Ainsi, certaines combinaisons de touches ne sont pas permises, telles que "M+Shift+Ctrl". Nous avons aussi décidé de faire en sorte que si l'utilisateur écrit quelque chose de ce style : "Ctrl+Shift+JHGFFUTRF", on écrive dans le fichier "racc\_utilisateur.json" : "Ctrl+Shift+J".
 
 \section{Cache des documents}
 
 	\subsection{Utilité du cache}
 
-		Afin de pouvoir faire de la coloration, nous avons utilisés \textbf{Lex} mais pour les fichiers de plusieurs centaines de lignes \textbf{Lex} prend plusieurs secondes pour nous donner la listes des tokens du fichier. Nous avons donc décidé d'utiliser un fichier de cache afin de ne pas utiliser \textbf{Lex} pour colorer des lignes que nous avons déjà coloré auparavent.
+		Afin de pouvoir faire de la coloration du code, nous avons utilisé \textbf{Lex} mais pour les fichiers de plusieurs centaines de lignes \textbf{Lex} prend plusieurs secondes pour nous donner la listes des tokens du fichier. Nous avons donc décidé d'utiliser un fichier de cache afin de ne pas utiliser \textbf{Lex} pour colorer des lignes que nous avons déjà coloré auparavant.
 
 	\subsection{Intégration du cache dans l'IDE}
 
-		Pour le cache, nous avons décidé d'utiliser un fichier JSON pour l'enregistrer. Le fonctionnement est assez simple la clé est le bout de code que l'on donne à \textbf{Lex} et la valeur est la réponse de ce dernier. Par la suite il nous reste plus qu'à utiliser les valeurs du fichier JSON à la place de \textbf{Lex}
+		Pour le cache, nous avons décidé d'utiliser un fichier JSON pour l'enregistrer. Le fonctionnement est assez simple la clé est le bout de code (snippet) que l'on donne à \textbf{Lex} et la valeur est la réponse de ce dernier. Par la suite, il ne nous reste plus qu'à utiliser les valeurs du fichier JSON à la place de \textbf{Lex}
 
 			\begin{figure}[h!]
 				\begin{center}
@@ -796,29 +824,29 @@ En ce qui concerne la modification des raccourcis, il est possible de d'écrire 
 
 		\subsubsection{Lex}
 			
-			Comme nous avons pu le voir, les regles de lex sont définis par des tokens, chaques tokens étant associés à un expression régulière. 
+			Comme nous avons pu le voir, les règles de Lex sont définis par des tokens, chaque token étant associé à une expression régulière. 
 
 			\paragraph{Les tokens}
 
-				Dans le cadre d'un grammaire arithmétique nous avons besoin de différents tokens : 
+				Dans le cadre d'une grammaire arithmétique nous avons besoin de différents tokens : 
 				\begin{itemize}
-					\item Number : le token qui va reconnaitre les nombres
-					\item Plus : le token qui va reconnaitre le signe +
-					\item Minus : le token qui va reconnaitre le signe -
-					\item Times : le token qui va reconnaitre le signe *
-					\item Divide : le token qui va reconnaitre le signe /
-					\item LParen : le token qui va reconnaitre la parenthèse gauche
-					\item RParen : le token qui va reconnaitre la parenthèse droite
+					\item Number : le token qui va reconnaître les nombres
+					\item Plus : le token qui va reconnaître le signe +
+					\item Minus : le token qui va reconnaître le signe -
+					\item Times : le token qui va reconnaître le signe *
+					\item Divide : le token qui va reconnaître le signe /
+					\item LParen : le token qui va reconnaître la parenthèse gauche
+					\item RParen : le token qui va reconnaître la parenthèse droite
 				\end{itemize}
 
-				Pour être reconnnu par Lex ces tokens sont stockés dans un tuple \textbf{tokens} 
+				Pour être reconnu par Lex ces tokens sont stockés dans un tuple \textbf{tokens} .
 
 			\paragraph{Les expressions régulières}
 
-				A chacun des tokens précédents, nous devons associer une expression régulière pour que Lex puisse reconnaitre les tokens.
-				Pour cela, nous devons simplement créer une variable de la forme t\_NomDuToken, est qui prend comme valeur l'expression régulière à associer à ce token.
+				A chacun des tokens précédents, nous devons associer une expression régulière pour que Lex puisse reconnaître les tokens.
+				Pour cela, nous devons simplement créer une variable de la forme t\_NomDuToken, qui prend comme valeur l'expression régulière à associer à ce token.
 
-				Pour le token Number, nous utilisons l'expression suivante : \textbf{\"\\b+\"}, le \textbf{\"\\b\"} signifiant n'importe quel chiffre compris entre 0 et 9 de plus le \textbf{+} signifie répété une ou plusieur fois. En effet un nombre est une suite de chiffre.
+				Pour le token Number, nous utilisons l'expression suivante : \textbf{\"\\b+\"}, le \textbf{\"\\b\"} signifiant n'importe quel chiffre compris entre 0 et 9 de plus le \textbf{+} signifie répété une ou plusieurs fois. En effet, un nombre est une suite de chiffre.
 
 				Pour les six autres tokens, nous utilisons simplement le signe qui doit correspondre au token (+ pour le token Plus, - pour le token Minus, etc...)
 			
@@ -832,19 +860,19 @@ En ce qui concerne la modification des raccourcis, il est possible de d'écrire 
 
 			\paragraph{Fonctions et variables supplémentaires\\}
 
-				De plus, pour l'utilisation de Lex, nous pouvons définir une variable \textbf{t\_ignore} qui va preciser les éléments à ne pas prendre en compte, dans notre cas la variable vaut \textbf{" \t"}, nous ignorons donc les espaces et les tabulations.
+				De plus, pour l'utilisation de Lex, nous pouvons définir une variable \textbf{t\_ignore} qui va préciser les éléments à ne pas prendre en compte. Dans notre cas la variable vaut \textbf{" \t"}, nous ignorons donc les espaces et les tabulations.
 
-				Nous pouvons aussi définir une fonction \textbf{t\_newline(t)}, qui prend un token en paramètre et qui va être utilisée pour matcher tous les retours à la lignes grâce à l'expression régulière \textbf{\"\\n+\"}, de plus cette fonction va ajouter pour chaque ligne trouvé 1 à l'attribut \textbf{lineno}, qui contient le nombre de lignes.
+				Nous pouvons aussi définir une fonction \textbf{t\_newline(t)}, qui prend un token en paramètre et qui va être utilisée pour matcher tous les retours à la lignes grâce à l'expression régulière \textbf{\"\\n+\"}. Cette fonction va ajouter pour chaque ligne trouvée 1 à l'attribut \textbf{lineno}, qui contient le nombre de lignes.
 
-				Pour finir une autre fonction peut être utilisée, la fonction \textbf{t\_error(t)}, qui prend elle aussi on token en paramètre et qui va être appelée par le lexer à chaque token non reconnue par notre lexer. Cette fonction va afficher un message d'erreur puis ignorer le token grâce à l'instruction \textbf{t.lexer.skip(1)}, t étant le token courrant grâce au quel on recupère le lexer. 
+				Pour finir, une autre fonction peut être utilisée, la fonction \textbf{t\_error(t)}, qui prend elle aussi un token en paramètre et qui va être appelée par le lexer à chaque token non reconnu par ce dernier. Cette fonction va afficher un message d'erreur puis ignorer le token grâce à l'instruction \textbf{t.lexer.skip(1)}, t étant le token courant grâce auquel on récupère le lexer. 
 
 		\subsubsection{Yacc}
 
 			\paragraph{Création de la grammaire}
 
-				Pour fonctionner Yacc a besoin de différentes règles de grammaires, chaque règle definissant comment peuvent "s'assembler" les différents tokens reconnus pour Lex.
+				Pour fonctionner Yacc a besoin de différentes règles de grammaires, chaque règle définissant comment peuvent "s'assembler" les différents tokens reconnus pour Lex.
 
-				Pour définir des règles nous devons créer des fonctions nommées de la façons suivante : \textbf{p\_NomDeLaRegle}. Cette fonction doit contenir une docstring definissant les regles à respecter.
+				Pour définir des règles nous devons créer des fonctions nommées de la façons suivante : \textbf{p\_NomDeLaRegle}. Cette fonction doit contenir une docstring définissant les règles à respecter.
 
 				\begin{figure}[h!]
 					\begin{center}
@@ -864,7 +892,7 @@ En ce qui concerne la modification des raccourcis, il est possible de d'écrire 
 
 			\paragraph{Création du parser}
 
-				Par la suite, nous devons appliquer nos règles sur du contenu, pour cela nous avons créés une fonction \textbf{parse}, qui prend en paramètre le code à parser. Par la suite, cette fonction créée le lexer (en faisant appelle à Lex), puis créée le parser (en faisant appelle à Yacc), pour finir elle revoit les listes des propostions afin de pouvoir les ajouter à les listes des propostions de notre IDE.
+				Par la suite, nous devons appliquer nos règles sur du contenu, pour cela nous avons créé une fonction \textbf{parse}, qui prend en paramètre le code à parser. Par la suite, cette fonction créée le lexer (en faisant appelle à Lex), puis crée le parser (en faisant appel à Yacc). Pour finir elle revoit les listes des propositions afin de pouvoir les ajouter à les listes des propositions de notre IDE.
 	
 	\subsection{Grammaire Python}
 
@@ -874,11 +902,11 @@ En ce qui concerne la modification des raccourcis, il est possible de d'écrire 
 
 		\subsubsection{Utilisation de la librairie PlyPlus}
 
-			Pour pallier aux problèmes précédents, nous avons donc choisi d'utiliser la librairie \textbf{PlyPlus}. Cette librairie se base sur la librairie \textbf{Ply} sur laquelle nous avons travaillé jusqu'à présent, il nous a donc était simple d'ajouter \textbf{PlyPlus} à notre projet. \textbf{PlyPlus} a plusieurs avantages, dont notament le fais d'avoir un système de grammaire totalement différent de \textbf{Ply}, nous permettant ainsi de résoudre les problèmes cités auparavant. Ce ne sont pas les seuls avantages de \textbf{PlyPlus}. En effet il nous permet aussi de sélectionner très simplement un type d'élément (le nom des fonctions ou des classes présentes par exemple) rendant ainsi possible leur coloration. De plus \textbf{PlyPlus}, vient avec une grammaire python et un post-analyseur syntaxique permettant ainsi de traiter l'indentation du fichier. \\
+			Pour pallier aux problèmes précédents, nous avons donc choisi d'utiliser la librairie \textbf{PlyPlus}. Cette librairie se base sur la librairie \textbf{Ply} sur laquelle nous avons travaillé jusqu'à présent, il nous a donc était simple d'ajouter \textbf{PlyPlus} à notre projet. \textbf{PlyPlus} a plusieurs avantages, dont notamment le fait d'avoir un système de grammaire totalement différent de \textbf{Ply}, nous permettant ainsi de résoudre les problèmes cités auparavant. Ce ne sont pas les seuls avantages de \textbf{PlyPlus}. En effet il nous permet aussi de sélectionner très simplement un type d'élément (le nom des fonctions ou des classes présentes par exemple) rendant ainsi possible leur coloration. De plus \textbf{PlyPlus}, vient avec une grammaire python et un post-analyseur syntaxique permettant ainsi de traiter l'indentation du fichier. \\
 			
 			Nous utilisons donc \textbf{PlyPlus} pour interpréter notre grammaire Python et nous gardons \textbf{Ply} pour la grammaire C, car elle suffit pour ce langage.
 
-\newpage
+%\newpage
 
 \section{Langue du système en Anglais}
 
@@ -906,7 +934,7 @@ En ce qui concerne la modification des raccourcis, il est possible de d'écrire 
 	
 	Pour chaque message, texte à afficher ou texte du menu, nous allons chercher la clef correspondante dans ce dictionnaire afin de l'afficher. 
 	
-	\textit{A noter que nous utilisons un second dictionnaire réservé aux textes de la barre de menu, cela nous permettais juste de ne pas avoir un très long fichier ".json" mais de répartir en deux pour des raisons de lisibilités. Mais le fonctionnement est strictement le même.}\\
+	\textit{A noter que nous utilisons un second dictionnaire réservé aux textes de la barre de menu, cela nous permettait juste de ne pas avoir un très long fichier ".json" mais de répartir en deux pour des raisons de lisibilités. Mais le fonctionnement est strictement le même.}\\
 	
 	Nous n'avons pas trouvé de moyen d'actualiser la barre de menu lors du changement de langue. Il faut donc redémarrer l'IDE afin d'avoir les textes de la barre de menu dans la nouvelle langue choisie. En revanche tous les autres textes, c'est à dire les messages affichés sont directement dans la nouvelle langue.
 	
@@ -914,7 +942,7 @@ En ce qui concerne la modification des raccourcis, il est possible de d'écrire 
 
 	Si nous souhaitons intégrer une nouvelle langue, rien de plus simple !\\
 	
-	Il nous suffit juste d'ajouter pour chaque textes des dictionnaires la langue et sa traduction. Par exemple si on ajoute l'espagnol, sur la figure 63, on aura une clef supplémentaire "es" à chaque sous-dictionnaire qui aura pour valeur le texte correspondant à la traduction.
+	Il nous suffit juste d'ajouter pour chaque texte des dictionnaires la langue et sa traduction. Par exemple si on ajoute l'espagnol, sur la figure 63, on aura une clef supplémentaire "es" à chaque sous-dictionnaire qui aura pour valeur le texte correspondant à la traduction.
 
 \section{Ajouts bonus}
 
@@ -922,9 +950,9 @@ En ce qui concerne la modification des raccourcis, il est possible de d'écrire 
 	
 	\subsection{L'assistance vocale}
 	
-		Il existe sous Mac une commande "say" qui permet de lire dans la langue du système le texte rentré après à l'aide de la synthèse vocale de la machine. C'est ce que nous avons utilisé ici, mais cette commande n'existant que sous Mac, et n'ayant pas trouvé d'alternatives, cette fonctionnalité n'est donc pas disponnible ailleurs (rassurez-vous, vous ne ratez pas grand chose !).\\
+		Il existe sous Mac une commande "say" qui permet de lire dans la langue du système le texte rentré après à l'aide de la synthèse vocale de la machine. C'est ce que nous avons utilisé ici, mais cette commande n'existant que sous Mac, et n'ayant pas trouvé d'alternatives, cette fonctionnalité n'est donc pas disponible ailleurs (rassurez-vous, vous ne ratez pas grand chose !).\\
 		
-		L'assistance vocale ne fait que lire les messages apparaissant dans la barre de status comme : "Le projet séléctionné a bien été ouvert." par exemple.\\
+		L'assistance vocale ne fait que lire les messages apparaissant dans la barre de statut comme : "Le projet sélectionné a bien été ouvert." par exemple.\\
 		
 		Pour l'activer, il suffit d'aller dans le menu Fichier/Paramètres et de cocher la ligne Assistance vocale.
 		
@@ -952,7 +980,7 @@ En ce qui concerne la modification des raccourcis, il est possible de d'écrire 
 			\end{center}
 	\end{figure}
 	
-	On l'active au même endroit que pour l'assistance vocale, et elle est disponnible sous toutes les plateformes !\\
+	On l'active au même endroit que pour l'assistance vocale, et elle est disponible sous toutes les plate-formes !\\
 	
 	\begin{figure}[h!]
 			\begin{center}
