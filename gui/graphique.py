@@ -100,9 +100,15 @@ class Fenetre(QWidget):
         else:
             self.line_tab.setMaximumWidth(1)
 
+        self.img_logo = QLabel()
+        pixmap_img = QPixmap("content/medium.gif")
+        self.img_logo.setPixmap(pixmap_img)
+        self.img_logo.setFixedWidth(1)
+
         self.central_area = QSplitter()
         self.central_area.addWidget(self.line_tab)
         self.central_area.addWidget(self.tab_widget)
+        self.central_area.addWidget(self.img_logo)
         self.central_area.setOrientation(Qt.Horizontal)
         self.central_area.setHandleWidth(1)
         self.central_area.setChildrenCollapsible(False)
@@ -184,6 +190,8 @@ class Fenetre(QWidget):
         self.sig_progress.connect(self.prog_val)
         self.sig_update_lines.connect(self.change_lines)
         self.sig_update_lines_termine.connect(self.nb_lignes.go_top)
+
+        self.show_img()
         
     def compiler(self):
         if self.project_path != "":
@@ -472,6 +480,7 @@ class Fenetre(QWidget):
         """
         if self.project_path != "":
             document.new_document(self)
+            self.show_img(False)
         else:
             self.status_message(get_text("text_please_open_project"), 1000)
 
@@ -492,6 +501,23 @@ class Fenetre(QWidget):
         Appelle la fonction close_current_tab() de TabWidget.
         """
         self.tab_widget.close_current_tab()
+        if self.get_idx() == -1:  # Affichage de l'image
+            self.show_img()
+
+    def show_img(self, display=True):
+        """
+        Affiche l'image du logo de l'IDE si aucun fichier n'est ouvert
+
+        :param display: Si on doit l'afficher ou la masquer
+        :type display: bool
+        """
+
+        if display and self.img_logo.width() == 1:
+            self.img_logo.setFixedWidth(self.tab_widget.width())
+            self.tab_widget.setFixedWidth(1)
+        elif not display and self.img_logo.width() > 1:
+            self.tab_widget.setFixedWidth(self.img_logo.width())
+            self.img_logo.setFixedWidth(1)
 
     def change_worplace_location(self):
         """
@@ -509,7 +535,6 @@ class Fenetre(QWidget):
         if actual in widgets[1]:  # Affichage du navigateur de fichiers
             self.treeview.setMaximumHeight(self.ecran.screenGeometry().height())
             self.inspecteur.setMaximumHeight(1)
-
 
         chemin = QFileDialog.getExistingDirectory(self, get_text("chg_worplace"), self.workplace_path) + "/"
         if chemin != "/":
@@ -541,6 +566,8 @@ class Fenetre(QWidget):
         # debut = time()
         self.aller_en_haut_lignes = True
         document.open_document(self, chemin)
+        if self.get_idx() != -1:
+            self.show_img(False)
         # fin = time()
         # self.info_message(str(round((fin-debut), 3)), 1000)
 
