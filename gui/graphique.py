@@ -28,7 +28,7 @@ from gui import onglet
 from gui import editeur
 from gui import statusbar
 from gui.bouton import Bouton
-from gui.label import Label
+from gui.label import Label, LabelLogo
 from gui import inspecteur
 from gui.raccourcis.raccourcis import Raccourcis
 
@@ -100,10 +100,7 @@ class Fenetre(QWidget):
         else:
             self.line_tab.setMaximumWidth(1)
 
-        self.img_logo = QLabel()
-        pixmap_img = QPixmap("content/logo.png")
-        self.img_logo.setPixmap(pixmap_img)
-        self.img_logo.setFixedWidth(1)
+        self.img_logo = LabelLogo(self, "content/logo.png")
 
         self.central_area = QSplitter()
         self.central_area.addWidget(self.line_tab)

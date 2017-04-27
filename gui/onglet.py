@@ -93,9 +93,7 @@ class TabWidget(QTabWidget):
         Met à jour le style du TabWidget
         """
         c = themes.get_color_from_theme("textedit")
-        self.setStyleSheet("QTabWidget::pane{background-image: url(content/medium.gif);"
-                           "background-repeat: no-repeat;background-position: center}"
-                           "QTabWidget::tab-bar{left:0;}QTabBar::tab{color: " + themes.get_rgb(c["tab-color"]) +
+        self.setStyleSheet("QTabWidget::tab-bar{left:0;}QTabBar::tab{color: " + themes.get_rgb(c["tab-color"]) +
                            ";""background-color:" + themes.get_rgb(c["tab-back-color"]) +
                            ";""border-bottom: 2px solid transparent;padding:7px 15px;"
                            "margin-top:0px;border-top-left-radius:10px;border-top-right-radius:10px;}"

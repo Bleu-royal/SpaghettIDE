@@ -23,3 +23,19 @@ class Label(QLabel):
     def leaveEvent(self, event):
         if self.message is not None:
             self.parent.setCursor(Qt.ArrowCursor)
+
+
+class LabelLogo(QLabel):
+    def __init__(self, parent, img):
+        QLabel.__init__(self)
+
+        self.parent = parent
+        pixmap_img = QPixmap(img)
+        self.setPixmap(pixmap_img)
+        self.setFixedWidth(1)
+        self.setAlignment(Qt.AlignCenter)
+
+    def mousePressEvent(self, e):
+        self.parent.new()
+
+
