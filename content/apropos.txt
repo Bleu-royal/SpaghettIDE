@@ -11,7 +11,7 @@ Il s'agit d'un IDE réalisé dans le cadre du projet de TPA de L2 INFO.
 
 
 
-Année : 2016-2017                               Version bêta : 0.3
+Année : 2016-2017                               Version bêta : 4.2
 
 
 
