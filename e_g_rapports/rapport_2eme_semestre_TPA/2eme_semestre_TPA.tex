@@ -14,13 +14,13 @@
 		\Large{Année universitaire 2016-2017}\\
 		\Large{Université de Caen Basse-Normandie}\\[1cm]
 		
-		\huge{Rapport sur le deuxième semestre de TPA}\\
+		\huge{Rapport du projet "IDE" de TPA}\\
 		\vspace{3cm}
 		
-		Alexis Carreau\\
-		Thomas Lécluse\\
-		Emma Mauger\\
-		Théo Sarrazin\\
+		Alexis CARREAU\\
+		Thomas LÉCLUSE\\
+		Emma MAUGER\\
+		Théo SARRAZIN\\
 		
 		\normalsize{\textit{ ~ L2 Informatique}}\\
 		\medskip
@@ -36,13 +36,11 @@
 
 \section{Introduction}
 
-	Voici un résumé de ce que nous avions à la fin du premier semestre.\\
-	
-	Notre IDE était capable d'ouvrir des documents avec l'extension .c ou .h à partir de projets qu'on avait créé. Nous pouvions ouvrir plusieurs documents, et avoir une liste d'onglets. Nous avions un navigateur de fichiers qui nous permettait de naviguer entre nos différents projets et leurs documents. Une barre de menu nous permettait d'accéder à nos différentes fonctionnalités, et on affichait à l'aide d'une barre de statut différents messages répondant aux requêtes de l'utilisateur.\\
+	A la fin du premier semestre, notre IDE était capable d'ouvrir des documents avec l'extension .c ou .h à partir de projets que nous avions créé. Nous pouvions ouvrir plusieurs documents, et avoir une liste d'onglets. Nous avions un navigateur de fichiers qui nous permettait de naviguer entre nos différents projets et leurs documents. Une barre de menu nous permettait d'accéder à nos différentes fonctionnalités, et nous affichions à l'aide d'une barre de statut différents messages répondant aux requêtes de l'utilisateur.\\
 	
 	\includegraphics[scale=0.3]{images/ide_v1.png}
 	
-	Nous colorions le contenu des documents à l'aide du logiciel Lex, en particulier les différents tokens (éléments du code) selon leur fonction. Et nous analysions les documents pour détecter des erreurs de syntaxe à l'aide du logiciel Yacc. Nous utilisons pour cela une grammaire.
+	Nous colorions le contenu des documents à l'aide du logiciel Lex, en particulier les différents tokens (éléments du code) selon leur fonction, et nous analysions les documents pour détecter des erreurs de syntaxe à l'aide du logiciel Yacc. Nous utilisons pour cela une grammaire.
 	
 	\subsection{Grammaire pour Lex et Yacc}
 	
@@ -57,8 +55,8 @@
 		
 		\newpage
 		
-		Nous avons aussi des fonctions à définir, pour Yacc afin de définir la syntaxe à suivre pour le langage (ici le langage C).
-		Pour donner un exemple, sur les expressions de multiplication, nous indiquons qu'une multiplication peut prendre plusieurs formes.
+		Nous avons aussi défini des fonctions pour Yacc afin de lui indiquer la syntaxe à suivre pour le langage de programmation utilisé (ici le langage C).
+		Pour donner un exemple, sur les expressions de multiplications, nous indiquons qu'une multiplication peut prendre plusieurs formes.
 		
 		\begin{figure}[!h]
 			\begin{center}
@@ -67,7 +65,7 @@
 			\end{center}
 		\end{figure}
 		
-		Soit une "cast\_expression", soit une expression multiplicative multipliée par une "cast\_expression", soit une expression multiplicative divisée par une "cast\_expression" ou soit expression multiplicative modulo une "cast\_expression".
+		Les formes sont soit une "cast\_expression", soit une expression multiplicative multipliée par une "cast\_expression", soit une expression multiplicative divisée par une "cast\_expression" ou soit expression multiplicative modulo une "cast\_expression".
 		
 		\begin{figure}[!h]
 			\begin{center}
@@ -85,11 +83,11 @@
 			\end{center}
 		\end{figure}
 		
-		On décrit ci-dessus toutes les formes possibles d'expressions unitaires. C'est donc ainsi de suite et en remontant toutes les clauses que l'on définit les règles syntaxiques du langage.
+		Nous décrivons ci-dessus toutes les formes possibles d'expressions unitaires. C'est donc en remontant toutes les clauses que l'on définit les règles syntaxiques d'un langage.
 		
 	\subsection{Pour ce semestre}
 	
-		Nous avons beaucoup travaillé pour rajouter de nombreuses fonctionnalités à notre éditeur afin qu'il soit complet et qu'il ressemble à des éditeurs déjà existant au niveau du contenu.\\
+		Nous avons beaucoup travaillé pour rajouter de nombreuses fonctionnalités à notre éditeur afin qu'il soit complet et qu'il ressemble à des éditeurs déjà existant.\\
 		
 		Voici donc la liste de ce qui a été ajouté depuis les vacances de Noël :
 		
@@ -110,33 +108,75 @@
 		\end{itemize}
 		
 		\textit{À noter que nous avions réalisé des rapports au fur et à mesure de l'avancement. Nous les reprenons ici donc en les ré-adaptant à l'aspect global évidemment. Mais il peut rester des images notamment sur la barre de menu où les fonctionnalités ne sont plus placées au même endroit. Par exemple, le menu apparence est maintenant placé dans Fichier/Paramètres.}
+		
+\section{Librairies utilisées}
+
+Pour mener ce projet, nous avons eu besoin de librairies extérieures. Nous utilisons Qt (version 4.8.7) qui est une interface de programmation orientée objet développée en C++ qui supporte les bindings avec notre langage de programmation, Python (version 3.4) grâce à la librairie PySide (version 1.2.1).
+Nous utilisons le XML (confère partie 7) et le JSON. Le JSON (JavaScript Object Notation) est un format de données textuelles. Il ne comprend que deux types d'éléments structurels : des ensembles de paires noms/valeurs et des listes ordonnées de valeurs. Nous l'avons utilisé plutôt que le XML pour stocker certaines données, par simplicité.
+Pour pouvoir colorer et analyser nos fichiers, nous utilisons PlyPlus, basée sur la librairie Ply "Python Lex et Yacc" (confère partie 13).
 
 \section{Les schémas UML de l'IDE}
 
-Dans la même lignée que le premier semestre, nous avons continué à générer des schémas UML pour que chacun comprenne le fonctionnement de chaque nouveau module, et son utilité. Nous avons pu voir quels objets de Qt nous utilisions ce qui nous a aidé à corriger l'utilisation de certains objets et d'en utiliser d'autres plus appropriés.
+L'UML (langage de modélisation unifié) est un langage qui nous a permis, au travers de ce projet, d'en visualiser la conception. Nous avons pu, grâce à cette modélisation, voir quels étaient les modules principaux de notre IDE, de voir ce que nous allions utiliser, comment nous allions le faire...
 
-		\begin{figure}[h!]
+	\subsection{Premier semestre}
+	
+	Au premier semestre, nos schémas présentaient quels objets de Qt étaient utilisés et les relations entre les modules que nous avions. Les voici :
+	
+	\begin{figure}[h!]
 			\begin{center}
-				\includegraphics[scale=0.3]{images/imgs_uml/new_relation_Qt.png}
-				\caption{Les objets utilisés en fonction des différents modules}
+				\includegraphics[scale=0.35]{images/imgs_uml/uml_module_gui_heritage.jpg}
+				\caption{L'héritage des objets de Qt}
 			\end{center}
-		\end{figure}
-		
-Cela nous a aussi permis de comprendre quel module avait besoin de quel autre, et ainsi de ré-arranger nos imports, qui devenaient de plus en plus lourds.
-		
-		\begin{figure}[h!]
+	\end{figure}
+
+\newpage
+	
+	\begin{figure}[h!]
 			\begin{center}
-				\includegraphics[scale=0.3]{images/imgs_uml/dependances_modules_gui.png}
-				\caption{Les dépendances entre nos principaux modules}
+				\includegraphics[scale=0.4]{images/imgs_uml/relations_modules.jpg}
+				\caption{Les relations entre nos vieux modules}
 			\end{center}
-		\end{figure}
+	\end{figure}
+	
+	Nous avons ré-utilisé ces modules. Ils sont dorénavant plus complets, et en utilisent de nouveaux.
+	
+	\subsection{Deuxième semestre}
+
+Nous avons donc continué à générer des schémas UML pour que chacun comprenne le fonctionnement de chaque nouveau module et son utilité. Nous avons une partie IHM et une partie qui travaille en arrière-plan (comme l'analyse et la compilation) :
+
+	\begin{figure}[h!]
+		\begin{center}
+			\includegraphics[scale=0.43]{images/imgs_uml/dependances_graphique.png}
+				\caption{Les dépendances entre tous les modules}
+		\end{center}
+	\end{figure}
+	
+	\newpage
+	
+	Aussi, nos modules IHM utilisent quasiment tous des modules d'arrière-plan, et même s'utilisent entre eux. Il nous a fallu faire attention aux dépendances circulaires, ce à quoi le schéma suivant nous a aidé.
 		
-		\begin{figure}[h!]
-			\begin{center}
-				\includegraphics[scale=0.3]{images/imgs_uml/dependances_graphique.png}
-				\caption{Les dépendances entre les modules principaux}
-			\end{center}
-		\end{figure}
+	\begin{figure}[h!]
+		\begin{center}
+			\includegraphics[scale=0.425]{images/imgs_uml/dependances_modules_gui.png}
+				\caption{Les dépendances entre nos modules concernant l'IHM et l'arrière-plan}
+		\end{center}
+	\end{figure}
+	
+	\newpage
+	
+		Cela nous a aussi permis de comprendre quel module avait besoin de quel autre, et ainsi de ré-arranger nos importations des différents modules, qui devenaient de plus en plus longues au fur et à mesure que nous en ajoutions. Nous avons pu voir quels objets de Qt nous utilisions ce qui nous a aidé à corriger l'utilisation de certains et d'en utiliser d'autres plus appropriés.
+		
+Nous avons un nombre élevé de modules pour des raisons de lisibilité. Il faut préciser ici que l'on considère chaque fichier comme un module. En effet, si, par exemple, nous avions laissé le code de notre IHM dans notre module graphique, nous nous serions retrouvés avec beaucoup trop de lignes dans un seul fichier. Ce nombre élevé de modules permet donc de trouver et de régler plus facilement les erreurs.
+
+Pour cette partie IHM, nous avons comme objet un éditeur de texte, un navigateur de fichiers, un inspecteur de fichiers, un onglet, un menu, une barre de statut, un bouton (qui eux, sont rassemblés dans la fenêtre principale) et une fenêtre pop-up. Ainsi, nous avons une classe de QT correspondant à chaque objet, comme vous pouvez le voir sur le schéma suivant :
+		
+	\begin{figure}[h!]
+		\begin{center}
+			\includegraphics[scale=0.46]{images/imgs_uml/new_relation_Qt.png}
+				\caption{Les objets utilisés en fonction des différents modules de l'IHM}
+		\end{center}
+	\end{figure}
 		
 \newpage
 		

@@ -4,7 +4,6 @@ from PySide.QtGui import *
 from PySide.QtCore import *
 from themes import themes
 from systeme import document
-
 from language.language import get_text
 
 sys.path[:0] = ["../"]
@@ -124,7 +123,6 @@ class TabWidget(QTabWidget):
 
             if self.parent.get_current_widget_used() in ("Inspecteur", "Inspector"):
                 self.parent.change_affichage()  # On remplace l'Inspecteur par le navigateur si il était actif
-
             self.removeTab(idx)
 
             self.parent.docs.remove(doc)

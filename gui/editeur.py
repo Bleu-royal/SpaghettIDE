@@ -8,7 +8,6 @@ import lexer.lexer as lex
 import themes.themes as themes
 import gui.bouton as b
 from systeme import workplace
-
 sys.path[:0] = ["../"]
 sys.path[:0] = ["gui"]
 
@@ -170,7 +169,6 @@ class Editeur(QTextEdit):
             if file_path in declarators[2]:
                 self.parent.def_vars[file_path] = declarators[2][file_path]
 
-
     def auto_align(self):
         idx = self.parent.get_idx()
         lang = self.parent.docs[idx].extension
@@ -191,8 +189,6 @@ class Editeur(QTextEdit):
             textCursor.insertText("\t"*nb_tab)
             self.setTextCursor(textCursor)
 
-
-
     def get_current_tab(self):
         textCursor = self.textCursor()
         textCursor.movePosition(QTextCursor.Up)
@@ -201,9 +197,8 @@ class Editeur(QTextEdit):
 
         nb = 0
         while nb < len(text) and text[nb] == "\t":
-            nb+=1
+            nb += 1
         return nb    
-
 
     def keyPressEvent(self, event):
         # self.parent.defaut_info_message()  # Actualisation des infos de base dès que l'on tape sur une touche
@@ -234,8 +229,6 @@ class Editeur(QTextEdit):
 
         if event.key() == 16777220: # enter key
             self.auto_align()
-
-
 
     def wheelEvent(self, e, syncr=False):
         """
@@ -284,7 +277,6 @@ class Editeur(QTextEdit):
         while text[idx] == "\t" and idx in range(len(text)):
             idx += 1
         return text[idx:]
-
 
     def use_snippets(self):
         """

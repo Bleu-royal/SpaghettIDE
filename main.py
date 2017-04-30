@@ -63,4 +63,3 @@ except FileNotFoundError:
     mess.setStandardButtons(QMessageBox.Close)
     mess.setDefaultButton(QMessageBox.Close)
     mess.exec_()
-

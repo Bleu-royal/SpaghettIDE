@@ -95,7 +95,7 @@ class ConfigCompilC(QDialog):
         lbl_titre = QLabel(get_text("comp_config"))
         layout.addWidget(lbl_titre, 0, 0, 1, 2)
 
-        #Gestion des fichiers à compiler
+        # Gestion des fichiers à compiler
         lbl_fichiers_compiler = QLabel(get_text("comp_files"))
         layout.addWidget(lbl_fichiers_compiler, 1, 0)
 
@@ -103,7 +103,7 @@ class ConfigCompilC(QDialog):
         layout.addWidget(self.lineEdit_fichiers_compiler, 1, 1)
         self.informations += [self.lineEdit_fichiers_compiler]
 
-        #Gestion de l'emplacement des headers
+        # Gestion de l'emplacement des headers
         lbl_fichier_header = QLabel(get_text("comp_headers"))
         layout.addWidget(lbl_fichier_header, 2, 0)
 
@@ -111,7 +111,7 @@ class ConfigCompilC(QDialog):
         layout.addWidget(self.lineEdit_fichier_header, 2, 1)
         self.informations += [self.lineEdit_fichier_header]
 
-        #Gestion de l'emplacement des librairies
+        # Gestion de l'emplacement des librairies
         lbl_emplacement_librairie = QLabel(get_text("comp_lib"))
         layout.addWidget(lbl_emplacement_librairie, 3, 0)
 
@@ -119,7 +119,7 @@ class ConfigCompilC(QDialog):
         layout.addWidget(self.lineEdit_emplacement_librairie, 3, 1)
         self.informations += [self.lineEdit_emplacement_librairie]
 
-        #Gestion de l'emplacement des librairies
+        # Gestion de l'emplacement des librairies
         lbl_nom_librairie = QLabel(get_text("comp_lib_name"))
         layout.addWidget(lbl_nom_librairie, 4, 0)
 
@@ -127,7 +127,7 @@ class ConfigCompilC(QDialog):
         layout.addWidget(self.lineEdit_nom_librairie, 4, 1)
         self.informations += [self.lineEdit_nom_librairie]
 
-        #Gestion du nom du fichier de sortie
+        # Gestion du nom du fichier de sortie
         lbl_fichier_sortie = QLabel(get_text("comp_out"))
         layout.addWidget(lbl_fichier_sortie, 5, 0)
 
@@ -135,12 +135,12 @@ class ConfigCompilC(QDialog):
         layout.addWidget(self.lineEdit_fichier_sortie, 5, 1)
         self.informations += [self.lineEdit_fichier_sortie]
 
-        #Gestion des options de compilation
+        # Gestion des options de compilation
         self.group_options = GroupBoxOptions()
         layout.addWidget(self.group_options, 6, 0, 1, 2)
         self.informations += self.group_options.get_options()
 
-        #Gestion de l'execution au lancement
+        # Gestion de l'execution au lancement
         self.checkBox_launch = QCheckBox(get_text("lanch_comp"))
         layout.addWidget(self.checkBox_launch, 7, 0, 1, 2)
         self.informations += [self.checkBox_launch]
@@ -158,7 +158,6 @@ class ConfigCompilC(QDialog):
             self.done(0)
         else:
             QMessageBox.critical(self, get_text("text_erreur"), get_text("comp_enter_good"))
-
 
     def est_configuration_valide(self):
         return self.lineEdit_fichiers_compiler.text().strip() != "" and len(self.lineEdit_fichier_sortie.text().split()) <= 1 and len(self.lineEdit_fichier_header.text().split()) <= 1 and len(self.lineEdit_emplacement_librairie.text().split()) <= 1 and len(self.lineEdit_nom_librairie.text().split()) <= 1

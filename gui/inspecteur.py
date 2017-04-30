@@ -50,25 +50,25 @@ class Inspecteur(QListWidget):
 
         for def_functions in self.def_functions_infos:
             if isinstance(def_functions, list):
-                self.add("    - %s"%def_functions[0])
+                self.add("    - %s" % def_functions[0])
             else:
-                self.add("    - %s"%def_functions)
+                self.add("    - %s" % def_functions)
 
         if self.def_structs_infos != []:
-            self.add("%s : "%class_name[ext])
+            self.add("%s : " % class_name[ext])
 
         for def_struct in self.def_structs_infos:
-            self.add("    - %s"%def_struct)
+            self.add("    - %s" % def_struct)
 
         if self.def_vars_infos != []:
             self.add("Variables : ")
 
         for def_var in self.def_vars_infos:
-            self.add("    - %s"%def_var)
+            self.add("    - %s" % def_var)
 
     def add(self, item):
 
-         self.addItem(QListWidgetItem(item))
+        self.addItem(QListWidgetItem(item))
 
     def mouseDoubleClickEvent(self, e):
         """

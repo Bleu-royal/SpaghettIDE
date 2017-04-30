@@ -68,8 +68,8 @@ class TreeView(QTreeView):
 
         for i in range(1, 4):
              self.hideColumn(i)
-        #irmodel = QDirModel()
-        #dirmodel.setHeaderData(1,Qt.Horizontal,"Folders");
+        # irmodel = QDirModel()
+        # dirmodel.setHeaderData(1,Qt.Horizontal,"Folders");
 
         self.setHeaderHidden(True)
 

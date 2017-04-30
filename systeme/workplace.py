@@ -83,7 +83,7 @@ class NewProject(QDialog):
         """
         Fonction retournant le langage du projet.
         """
-        return self.project_name_lang.currentText()#.replace("é","e").lower()
+        return self.project_name_lang.currentText()  # .replace("é","e").lower()
 
     def keyPressEvent(self, event):
         """
@@ -790,3 +790,4 @@ def infoproject(parent, chemin):
     """
     ip = InfoProject(parent, chemin)
     ip.exec()
+    
