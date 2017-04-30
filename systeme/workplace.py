@@ -257,7 +257,6 @@ def open_project(parent, name=False):
             parent.fenetre.highlighters = []
             parent.fenetre.codes = []
             parent.fenetre.tab_widget.clear()
-            
 
         parent.fenetre.show_progress_bar()
 
@@ -276,6 +275,7 @@ def open_project(parent, name=False):
         gdf.start()  # Processing of the opening project function
         disp_gdf = ProgressDisp(memory, parent)
         disp_gdf.start()  # Displays of the files studied
+        parent.fenetre.show_img()
         """
         # Problèmes de plantage du serveur graphique sur Linux lors de la modification du GUI via un Thread
         ProgressWin(project_files, memory)
