@@ -78,7 +78,7 @@ class Raccourcis(QDialog):
 		self.done(0)
 		
 	def valider_raccourci(self, val):
-		""" La fonction qui vérifie que les raccourcis soient corrects. """
+		""" La fonction qui vérifie que les raccourcis sont corrects. """
 		
 		ligne = val.split("+")
 		res = ""
@@ -216,7 +216,7 @@ class MenuEdition(QWidget):
 		commenter = MenuFonction("Commenter",
 		                         donne_valeur_utilisateur(self.menu, "Commenter"))
 		
-		self.liste_fonctions = [ligne_courante, mot_courant, dupliquer, mode_insertion, rechercher, indenter]
+		self.liste_fonctions = [ligne_courante, mot_courant, dupliquer, mode_insertion, rechercher, indenter, commenter]
 		
 		self.fic_layout = QVBoxLayout()
 		
