@@ -109,7 +109,7 @@
 		
 		\textit{À noter que nous avions réalisé des rapports au fur et à mesure de l'avancement. Nous les reprenons ici donc en les ré-adaptant à l'aspect global évidemment. Mais il peut rester des images notamment sur la barre de menu où les fonctionnalités ne sont plus placées au même endroit. Par exemple, le menu apparence est maintenant placé dans Fichier/Paramètres.}
 		
-\section{Librairies utilisées}
+	\subsection{Librairies utilisées}
 
 Pour mener ce projet, nous avons eu besoin de librairies extérieures. Nous utilisons Qt (version 4.8.7) qui est une interface de programmation orientée objet développée en C++ qui supporte les bindings avec notre langage de programmation, Python (version 3.4) grâce à la librairie PySide (version 1.2.1).
 Nous utilisons le XML (confère partie 7) et le JSON. Le JSON (JavaScript Object Notation) est un format de données textuelles. Il ne comprend que deux types d'éléments structurels : des ensembles de paires noms/valeurs et des listes ordonnées de valeurs. Nous l'avons utilisé plutôt que le XML pour stocker certaines données, par simplicité.
@@ -179,8 +179,10 @@ Pour cette partie IHM, nous avons comme objet un éditeur de texte, un navigateu
 	\end{figure}
 		
 \newpage
+
+\section{Interface Homme-Machine (IHM)}
 		
-\section{Les thèmes et les styles}
+	\subsection{Les thèmes et les styles}
 	
 	Afin de pouvoir rendre l'application plus agréable à utiliser pour chaque utilisateur, nous avons choisi de permettre la personnalisation du thème global.
 	Voici quelques exemples de thèmes : 
@@ -208,7 +210,7 @@ Pour cette partie IHM, nous avons comme objet un éditeur de texte, un navigateu
 		\end{figure}
 		
 		\newpage
-		\subsection{Changer de thème}
+			\subsubsection{Changer de thème}
 		
 			Le changement de thème est très simple. Il suffit de se rendre dans le menu "Fichier/Paramètres" puis de choisir son thème parmi ceux proposés dans les catégories clairs et sombres.
 	
@@ -223,7 +225,7 @@ Pour cette partie IHM, nous avons comme objet un éditeur de texte, un navigateu
 			
 			Le thème sélectionné est alors écrit dans le fichier conf.xml qui est situé à la racine du projet. Ainsi, lorsque vous relancerez l'IDE, le dernier thème que vous avez utilisé sera rechargé.
 			
-		\subsection{Gestion des thèmes}
+			\subsubsection{Gestion des thèmes}
 		
 			Les thèmes sont regroupés dans des répertoires distincts, le tout dans le répertoire "theme" situé à la racine du projet. 
 			\begin{figure}[h!]
@@ -252,7 +254,7 @@ Pour cette partie IHM, nous avons comme objet un éditeur de texte, un navigateu
 			
 			Au niveau technique, nous utilisons la méthode .setStyleSheet() de QT qui peut s'appliquer à la majorité des widgets (tous dans notre cas) et qui nous permet donc de spécifier et de modifier les couleurs de fond ainsi que de police des widgets en fonction du thème choisi.
 			
-		\subsection{Création de thèmes}
+			\subsubsection{Création de thèmes}
 		
 			Vous pouvez utiliser les thèmes pré-définis, qui ont été pour la plupart validés et certifiés par la totalité du groupe comme étant jolis, mais vous pouvez aussi créer vos propres thèmes.\\
 			
@@ -278,7 +280,7 @@ Pour cette partie IHM, nous avons comme objet un éditeur de texte, un navigateu
 			
 			Votre thème apparaît maintenant dans la barre de menu et il est sélectionnable !
 					
-		\subsection{Style externe}
+			\subsubsection{Style externe}
 	
 		Dans le répertoire "gui" qui contient tout ce qui est relatif à l'interface graphique, il y a un répertoire "style" qui regroupe des éléments auxquels on applique également des feuilles de styles (via la méthode setStyleSheet() des widgets dans QT; de même que pour les thèmes).
 		
@@ -324,9 +326,9 @@ Pour cette partie IHM, nous avons comme objet un éditeur de texte, un navigateu
 				\end{figure}
 		\end{itemize}
 		
-\section{Informations sur le code}
+	\subsection{Informations sur le code}
 
-	\subsection{Une autre barre de statut}
+		\subsubsection{Une autre barre de statut}
 	
 		Nous avons également travaillé à étoffer l'interface. Nous avons rajouté une seconde barre de statut (en bas à droite), servant à afficher des informations sur le code lui-même :
 		
@@ -355,7 +357,7 @@ Pour cette partie IHM, nous avons comme objet un éditeur de texte, un navigateu
 		
 	\subsection{Numérotation des lignes}
 	
-	\subsubsection{Insertion dans l'interface graphique}
+		\subsubsection{Insertion dans l'interface graphique}
 
 	L'objet que nous utilisons pour afficher et éditer le code est un QTextEdit de QT. Il ne possède pas de méthode pour afficher les numéros de lignes, et il n'y a pas d'autres alternatives à celui-ci pour faire cela non plus.
 	
@@ -386,7 +388,7 @@ Pour cette partie IHM, nous avons comme objet un éditeur de texte, un navigateu
 			\end{center}
 		\end{figure}
 		
-	\subsubsection{Surcharger les méthodes originales}
+		\subsubsection{Surcharger les méthodes originales}
 
 	La difficulté n'était pas d'afficher une barre avec des numéros dedans, ni de récupérer le nombre de lignes, car nous avons une méthode pour cela. La difficulté était de synchroniser le défilement des deux éléments (widgets).\\
 		
@@ -417,8 +419,9 @@ Pour cette partie IHM, nous avons comme objet un éditeur de texte, un navigateu
 		
 		Nous arrivons ainsi à synchroniser les deux éléments lors du défilement de l'un comme de l'autre avec la souris ou le pad.
 		
+\section{Edition}
 		
-\section{Recherche et édition du texte}
+	\subsection*{Recherche et édition du texte}
 
 	\subsection{Sélection de la ligne courante}
 
@@ -441,7 +444,7 @@ Pour cette partie IHM, nous avons comme objet un éditeur de texte, un navigateu
 		\end{center}
 	\end{figure}
 
-\subsection{Sélection du mot courant}
+	\subsection{Sélection du mot courant}
 
 	Pour l'ajout de la sélection du mot courant, la démarche est exactement la même que pour la sélection de la ligne courante, nous devons simplement changer la méthode de sélection, passant de QTextCursor.LineUnderCursor à QTextCursor.WordUnderCursor, afin de ne plus sélectionner la ligne mais le mot présent au niveau du curseur. 
 
@@ -461,7 +464,7 @@ Pour cette partie IHM, nous avons comme objet un éditeur de texte, un navigateu
 	
 	%\newpage
 
-\subsection{Duplication}
+	\subsection{Duplication}
 
 	Pour l'ajout de la duplication du texte, nous avons choisi de différencier deux cas, le premier où rien n'est sélectionné et le second où du texte est déjà sélectionné. Dans le premier cas, toute la ligne est dupliquée et dans le second seule la partie sélectionnée est dupliquée.
 
@@ -483,7 +486,7 @@ Pour cette partie IHM, nous avons comme objet un éditeur de texte, un navigateu
 	\end{figure}
 
 	\newpage
-\subsection{Recherche}
+	\subsection{Recherche}
 
 	Pour la recherche dans le document, nous avons décidé d'ajouter une boîte de dialogue permettant d'entrer le texte à rechercher. Pour cela nous avons créé une classe SearchDialog (héritant de QDialog). Lors de l'affichage de cette boîte de dialogue nous utilisons la méthode \textbf{exec}, qui rend impossible l'interaction avec la fenêtre en arrière-plan tant que la boite de dialogue est ouverte.
 
@@ -513,7 +516,7 @@ Pour cette partie IHM, nous avons comme objet un éditeur de texte, un navigateu
 	\end{figure}
 	\newpage
 
-\subsection{Indentation du fichier}
+	\subsection{Indentation du fichier}
 
 	Pour l'indentation du document, nous allons changer son contenu (ajout/retrait de tabulation). Nous devons donc stocker la position courante du curseur (grâce à la méthode \textbf{blockNumber} de l'objet QTextCursor). Par la suite, on récupère le contenu du document grâce à la méthode \textbf{toPlainText} de l'objet Editeur. On créé une variable \textbf{indent\_level}, qui contient le niveau courant d'indentation, puis on parcourt toutes les lignes de notre document. Si la ligne contient le caractère "\}", on retire 1 au niveau d'indentation puis on change la ligne pour ajouter au début de cette dernière \textbf{indent\_level} fois une tabulation, puis on ajoute 1 au niveau d'indentation si la ligne contient "\{".
 	Pour finir on définit le nouveau texte ainsi obtenu comme texte de notre document avec la méthode \textbf{setPlainText} et on replace le curseur au bon endroit.
@@ -533,7 +536,7 @@ Pour cette partie IHM, nous avons comme objet un éditeur de texte, un navigateu
 		\end{center}
 	\end{figure}
 
-\subsection{Commenter la sélection}
+	\subsection{Commenter la sélection}
 
 	De la même façon que pour la duplication du texte, nous avons séparé cette action en deux cas, soit du texte est sélectionné soit rien n'est sélectionné.
 	Dans le cas où du texte est sélectionné nous commenterons seulement à partir du début de la sélection. Si plusieurs lignes sont sélectionnées elles seront évidemment toutes commentées. Si il n'y a pas de texte sélectionné, on commente la ligne courante.
@@ -563,7 +566,7 @@ Pour cette partie IHM, nous avons comme objet un éditeur de texte, un navigateu
 
 		Les snippets sont des bouts de code qui sont réutilisables d'un projet à un autre (comme les conditions, les boucles et les définitions de fonction par exemple). Dans notre IDE nous utilisons des mots clés que l'on associe à ces bouts de code. Lorsque l'on tape un des mots clés puis que l'on presse la touche \textbf{tabulation}, le mot clé est remplacé par le bout de code qui correspond.
 
-	\subsubsection{Intergration des bouts de code dans l'IDE}
+	\subsubsection{Intégration des bouts de code dans l'IDE}
 
 		\paragraph{Utilisation du JSON}
 
@@ -576,7 +579,7 @@ Pour cette partie IHM, nous avons comme objet un éditeur de texte, un navigateu
 				\end{center}
 			\end{figure}
 
-		\paragraph{Connection entre le JSON et l'IDE}
+		\paragraph{Connexion entre le JSON et l'IDE}
 
 			Pour capturer l'appui sur la touche \textbf{tabulation}, nous utilisons la méthode \textbf{keyPressEvent} de notre classe \textbf{Editeur}. Cette méthode est appelée à l'appui sur une des touches du clavier. Par la suite, si la touche est la touche \textbf{tabulation}, nous parsons le JSON pour avoir touts les couples (mot clé, bout de code). Puis en fonction du mot placé au niveau du curseur, on le remplace ou non par le bout de code correspondant.
 
@@ -590,12 +593,12 @@ Pour cette partie IHM, nous avons comme objet un éditeur de texte, un navigateu
 \section{Fichier de configuration XML}
 
 L'Extensible Markup Language (XML, « langage de balisage extensible » en français) est un métalangage informatique de balisage générique qui dérive du SGML. Cette syntaxe est dite « extensible » car elle permet de définir différents espaces de noms, c'est-à-dire des langages avec chacun leur vocabulaire et leur grammaire, comme XHTML, XSLT, RSS, SVG… Elle est reconnaissable par son usage des chevrons (<, >) encadrant les balises. 
-\newpage
-La boîte à outils XML lxml est une liaison Pythonic pour les bibliothèques C libxml2 et libxslt. Il est unique car il combine la fonctionnalité de la vitesse et de la fonctionnalité XML de ces bibliothèques avec la simplicité d'une API native Python, la plupart du temps compatible mais supérieure à l'API ElementTree bien connue. La dernière version fonctionne avec toutes les versions de CPython de 2.6 à 3.6. Nous avons utilisé la librairie LXML (version 3.7.2) qui fait le lien entre Python et l'XML, qui nous permet d'utiliser des outils de parse XML dans notre IDE avec Python. 
+%\newpage
+La boîte à outils XML lxml est une liaison Pythonic pour les bibliothèques C libxml2 et libxslt. Il combine la vitesse et la simplicité d'une API native Python, la plupart du temps compatible mais supérieure à l'API ElementTree. La dernière version fonctionne avec toutes les versions de CPython de 2.6 à 3.6. Nous avons utilisé la librairie LXML (version 3.7.2) qui fait le lien entre Python et le XML, qui nous permet d'utiliser des outils de parse XML dans notre IDE avec Python. 
 
 \subsection{Pourquoi le XML}
 
-Au fur et à mesure de l'ajout de fonctionnalités dans notre IDE, l'utilisation du XML s'est vite imposée du fait de son efficacité. En effet, l'outil "etree", après son import, nous permet de parser un fichier XML et de le parcourir et écrire par la suite afin de subvenir à nos besoins dans l'élaboration des différentes fonctionnalités de notre IDE dans différentes conditions. Nous utilisons plusieurs fichiers xml, un pour chaque projet, un pour tous les projets et un fichier de configuration. 
+Au fur et à mesure de l'ajout de fonctionnalités dans notre IDE, l'utilisation du XML s'est vite imposée du fait de son efficacité. En effet, l'outil "etree", après son import, nous permet de parser un fichier XML, de le parcourir et de le modifier en fonction de nos besoins dans l'élaboration des différentes fonctionnalités de notre IDE. Nous utilisons plusieurs fichiers xml, un pour chaque projet, un pour tous les projets et un fichier de configuration. 
 
 \subsection{Le module XML et le fichier de configuration}
 
@@ -761,7 +764,7 @@ Lorsque l'on clique sur le bouton pour afficher les informations de projet, nous
 
 		Pour notre IDE, nous avons utilisé le compilateur \textbf{GCC}, pour compiler les projets de type \textbf{C}. Mais nous utilisons aussi les interpréteur de python afin d'interpréter les projets de type \textbf{Python}. Par la suite, pour chaque nouveaux langages il nous suffit d'utiliser le bon compilateur ou le bon interpréteur.
 		
-	\subsection{Integration de \textbf{GCC} à notre IDE}
+	\subsection{Intégration de \textbf{GCC} à notre IDE}
 
 		Pour utiliser \textbf{GCC} avec notre IDE, nous avons créé une fenêtre de configuration afin de permettre à l'utilisateur de choisir la configuration adéquate à la compilation de son projet.
 
@@ -843,13 +846,15 @@ En ce qui concerne la modification des raccourcis, il est possible de d'écrire 
 Il n'est néanmoins pas nécessaire de d'écrire à la main "Ctrl" "+" "...". Les touches telles que "Ctrl", "Shift", "Alt" verront leurs noms écrit après simple pression sur leur touche (utilisation de la fonction "keyPressEvent").
 C'est lorsque l'on clique sur le bouton valider que la fonction qui valide un raccourci va être appelée. Ainsi, certaines combinaisons de touches ne sont pas permises, telles que "M+Shift+Ctrl". Nous avons aussi décidé de faire en sorte que si l'utilisateur écrit quelque chose de ce style : "Ctrl+Shift+JHGFFUTRF", on écrive dans le fichier "racc\_utilisateur.json" : "Ctrl+Shift+J".
 
-\section{Cache des documents}
+\section{Optimisation}
 
-	\subsection{Utilité du cache}
+	\subsection{Cache des documents}
+
+		\subsubsection{Utilité du cache}
 
 		Afin de pouvoir faire de la coloration du code, nous avons utilisé \textbf{Lex} mais pour les fichiers de plusieurs centaines de lignes \textbf{Lex} prend plusieurs secondes pour nous donner la listes des tokens du fichier. Nous avons donc décidé d'utiliser un fichier de cache afin de ne pas utiliser \textbf{Lex} pour colorer des lignes que nous avons déjà coloré auparavant.
 
-	\subsection{Intégration du cache dans l'IDE}
+		\subsubsection{Intégration du cache dans l'IDE}
 
 		Pour le cache, nous avons décidé d'utiliser un fichier JSON pour l'enregistrer. Le fonctionnement est assez simple la clé est le bout de code (snippet) que l'on donne à \textbf{Lex} et la valeur est la réponse de ce dernier. Par la suite, il ne nous reste plus qu'à utiliser les valeurs du fichier JSON à la place de \textbf{Lex}
 
@@ -863,6 +868,30 @@ C'est lorsque l'on clique sur le bouton valider que la fonction qui valide un ra
 		Grâce au cache nous avons un gain de temps considérable sur l'ouverture des documents.
 		
 		Nous avons créé deux fonctions, l'une vide le cache du projet courant et l'autre vide tout le cache. 
+		
+	\subsection{Statistiques}
+	
+		\subsubsection{Cache}
+		
+		Avant la mise en place du cache, l'ouverture d'un fichier pouvait être relativement longue à cause du traitement effectué par Lex sur ce dernier.
+		
+		\begin{figure}[h!]
+				\begin{center}
+					\includegraphics[scale=0.5]{images/exempleJsonCache}
+					\caption{Extrait d'un JSON contenant le cache}
+				\end{center}
+		\end{figure}
+		
+		\subsubsection{Empreinte mémoire}
+		
+		Afin de présenter un IDE correct, nous avons réalisé quelques tests concernant la consommation de mémoire lors de diverses actions réalisées depuis notre IDE.
+		
+		\begin{figure}[h!]
+				\begin{center}
+					\includegraphics[scale=0.5]{images/exempleJsonCache}
+					\caption{Extrait d'un JSON contenant le cache}
+				\end{center}
+		\end{figure}
 
 \section{Nouvelles grammaires}
 
