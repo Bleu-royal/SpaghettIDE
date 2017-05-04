@@ -591,11 +591,11 @@ Pour cette partie IHM, nous avons comme objet un éditeur de texte, un navigateu
 
 L'Extensible Markup Language (XML, « langage de balisage extensible » en français) est un métalangage informatique de balisage générique qui dérive du SGML. Cette syntaxe est dite « extensible » car elle permet de définir différents espaces de noms, c'est-à-dire des langages avec chacun leur vocabulaire et leur grammaire, comme XHTML, XSLT, RSS, SVG… Elle est reconnaissable par son usage des chevrons (<, >) encadrant les balises. 
 \newpage
-La boîte à outils XML lxml est une liaison Pythonic pour les bibliothèques C libxml2 et libxslt. Il est unique car il combine la fonctionnalité de la vitesse et de la fonctionnalité XML de ces bibliothèques avec la simplicité d'une API native Python, la plupart du temps compatible mais supérieure à l'API ElementTree bien connue. La dernière version fonctionne avec toutes les versions de CPython de 2.6 à 3.6. Nous avons utilisé la librairie LXML (version 3.7.2) qui fait le lien entre Python et l'XML, qui nous permet d'utiliser des outils de parse XML dans notre IDE avec Python. En effet, l'outil "etree", après son import, nous permet de parser un fichier XML et de le parcourir et modifier par la suite. 
+La boîte à outils XML lxml est une liaison Pythonic pour les bibliothèques C libxml2 et libxslt. Il est unique car il combine la fonctionnalité de la vitesse et de la fonctionnalité XML de ces bibliothèques avec la simplicité d'une API native Python, la plupart du temps compatible mais supérieure à l'API ElementTree bien connue. La dernière version fonctionne avec toutes les versions de CPython de 2.6 à 3.6. Nous avons utilisé la librairie LXML (version 3.7.2) qui fait le lien entre Python et l'XML, qui nous permet d'utiliser des outils de parse XML dans notre IDE avec Python. 
 
 \subsection{Pourquoi le XML}
 
-Au fur et à mesure de l'ajout de fonctionnalités dans notre IDE, l'utilisation du XML s'est vite imposée du fait de son efficacité. Nous devions ainsi lire, parcourir et écrire dans un fichier XML afin de subvenir à nos besoins dans l'élaboration des différentes fonctionnalités de notre IDE dans différentes conditions. Nous utilisons plusieurs fichiers xml, un pour chaque projet, un pour tous les projets et un fichier de configuration.
+Au fur et à mesure de l'ajout de fonctionnalités dans notre IDE, l'utilisation du XML s'est vite imposée du fait de son efficacité. En effet, l'outil "etree", après son import, nous permet de parser un fichier XML et de le parcourir et écrire par la suite afin de subvenir à nos besoins dans l'élaboration des différentes fonctionnalités de notre IDE dans différentes conditions. Nous utilisons plusieurs fichiers xml, un pour chaque projet, un pour tous les projets et un fichier de configuration. 
 
 \subsection{Le module XML et le fichier de configuration}
 
@@ -1012,6 +1012,8 @@ C'est lorsque l'on clique sur le bouton valider que la fonction qui valide un ra
 	L'état de l'assistance vocale (si elle est activée ou non) est stocké dans le fichier de configuration conf.xml. Ainsi, au redémarrage, vous retrouverez l'assistance vocale telle que vous l'avez laissé (A l'unanimité, nous conseillons fortement de la désactiver, c'est très vite pénible) !\\
 	
 	Si vous n'êtes pas sous Mac, la fonctionnalité sera grisée dans le menu et vous ne pourrez pas l'activer.
+	
+	\newpage
 	
 	\subsection{La cheminée}
 	
