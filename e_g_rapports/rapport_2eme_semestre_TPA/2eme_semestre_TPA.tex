@@ -361,18 +361,18 @@ Pour cette partie IHM, nous avons comme objet un éditeur de texte, un navigateu
 
 	L'objet que nous utilisons pour afficher et éditer le code est un QTextEdit de QT. Il ne possède pas de méthode pour afficher les numéros de lignes, et il n'y a pas d'autres alternatives à celui-ci pour faire cela non plus.
 	
-	Il nous fallait donc un autre élément, afin d'afficher les numéros de lignes qui serait placé sur le côté, nous avons choisi le côté droit.
+	Il nous fallait donc un autre élément, afin d'afficher les numéros de lignes qui serait placé sur le côté, nous avons choisi le côté gauche.
 	
 		\begin{figure}[h!]
 			\begin{center}
-				\includegraphics[scale=0.17]{images/imgs_lines/avant}
+				\includegraphics[scale=0.2]{images/imgs_lines/avant}
 				\caption{Sans la barre de numérotation des lignes}
 			\end{center}
 		\end{figure}
 		
 		\begin{figure}[h!]
 			\begin{center}
-				\includegraphics[scale=0.17]{images/imgs_lines/apres}
+				\includegraphics[scale=0.3]{images/imgs_lines/apres}
 				\caption{Avec la barre de numérotation des lignes}
 			\end{center}
 		\end{figure}
@@ -651,6 +651,8 @@ Pour créer un nouveau projet, il suffit de cliquer sur le bouton du menu "Nouve
 				\caption{Interface graphique de création de projet}
 			\end{center}
 		\end{figure}
+		
+		\newpage
 
 Nous pouvons maintenant ajouter du code et donc des fichiers dans le nouveau projet créé.
 
@@ -805,6 +807,8 @@ Lorsque l'on clique sur le bouton pour afficher les informations de projet, nous
 			\caption{Respectivement l'inspecteur et le navigateur de fichiers sont affichés}
 		\end{center}
 	\end{figure}
+	
+	\newpage
 	
 	Au niveau du code, le navigateur de fichiers est créé à l'aide d'un QTreeView (comme au premier semestre), et il est remplacé par un QTextEdit qui constitue l'inspecteur lorsqu'on clique sur le bouton.\\
 	
@@ -1013,7 +1017,7 @@ C'est lorsque l'on clique sur le bouton valider que la fonction qui valide un ra
 	
 	Nous n'avons pas trouvé de moyen d'actualiser la barre de menu lors du changement de langue. Il faut donc redémarrer l'IDE afin d'avoir les textes de la barre de menu dans la nouvelle langue choisie. En revanche tous les autres textes, c'est à dire les messages affichés sont directement dans la nouvelle langue.
 	
-\subsection{Rajouter une langue}
+	\subsection{Rajouter une langue}
 
 	Si nous souhaitons intégrer une nouvelle langue, rien de plus simple !\\
 	
@@ -1067,6 +1071,11 @@ C'est lorsque l'on clique sur le bouton valider que la fonction qui valide un ra
 	\end{figure}
 	
 	Attention de ne pas vous brûler !
-	
+
+\section{Bilan}
+
+Un IDE nécessite un éditeur de texte, un compilateur, un interpréteur et un débogueur. Nous avons réussi à intégrer ces quatre fonctionnalités indispensables. Le code peut-être en plus coloré et analysé. Les grammaires que nous avons ajoutées permettent la compilation des langages C et Python.
+
+Nous avons rajouté des fonctionnalités importantes mais pas indispensables, telles que celles présentées dans la partie édition. Nous avons rendue personnalisable l'interface homme-machine pour que cette dernière soit plus agréable en fonction des préférences de l'utilisateur.
 
 \end{document}
