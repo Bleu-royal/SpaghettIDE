@@ -914,6 +914,36 @@ C'est lorsque l'on clique sur le bouton valider que la fonction qui valide un ra
 		On voit ici que peut importe le nombre de fichiers contenant le projet ouvert, l'empreinte mémoire reste quasiment la même. Ce qui va consommer de la mémoire est la taille (nombre de lignes) des fichiers ouverts. Plus un fichier est long, plus il faudra de mémoire pour le stocker. \\
 		On observe que l'empreinte mémoire de l'IDE reste assez faible.
 
+\newpage
+
+\section{Grammaire C}
+
+	\subsection{Lex}
+
+		Afin d'avoir la coloration syntaxique du language C, nous avons créé une grammaire lexicale compréhensible par lex. Pour cela on a crée une liste nommée tokens, contenant le nom de tous les tokens dont nous avons besoin comme \textbf{STRING\_LITERAL} par exemple qui représente une chaine de charactère entre guillemets, mais aussi les mots clefs du language c comme \textbf{bool}, \textbf{int} ou bien \textbf{if}. Par la suite, nous avons associé chacun des tokens à une expression régulière permettant ainsi à Lex de pouvoir identifier un token dans du code.
+		
+		\begin{figure}[h!]
+				\begin{center}
+					\includegraphics[scale=0.45]{images/lexC}
+					\caption{Exemple de tokens et d'expressions pour Lex}
+				\end{center}
+		\end{figure}
+
+	\subsection{Yacc}
+
+		Pour analyser la partie syntaxique du language C, nous avons utilisé Yacc. Ce dernier va utiliser la liste de tokens retournée par Lex et une suite de règle syntaxique mettant ces tokens en liens les uns avec les autres.
+
+		Pour ecrire une règle grammaticale on doit définir une fonction python dont le nom est de la forme \textbf{p\_nomDeLaRegle}. Par la suite, on ecrit la règle à proprement parler dans la docString de la fonction. Une règle est de la forme \textbf{nomDeLaRegle : regle | autre regle | encore une autre}. De plus, cette fonction sera appelée lorsque Yacc trouvera un block correspondant.
+		
+		\begin{figure}[h!]
+				\begin{center}
+					\includegraphics[scale=0.45]{images/yaccC}
+					\caption{Exemple de grammaire pour Yacc}
+				\end{center}
+		\end{figure}
+
+
+
 \section{Nouvelles grammaires}
 
 	\subsection{Grammaire Arithmétique}
