@@ -184,7 +184,7 @@ class MenuBar(QMenuBar):
         theme_pimp = MyAction(parent, "&Pimp", "Thème Pimp", lambda: self.__change_theme_to("pimp"))
         theme_forest = MyAction(parent, "&Forêt", "Thème Forêt", lambda: self.__change_theme_to("forest"))
         theme_ocean = MyAction(parent, "&Océan", "Thème Océan", lambda: self.__change_theme_to("ocean"))
-        theme_galaxy = MyAction(parent, "&Galexio", "Thème Galaxie", lambda: self.__change_theme_to("galaxy"))
+        theme_galaxy = MyAction(parent, "&Galaxy", "Thème Galaxie", lambda: self.__change_theme_to("galaxy"))
         theme_blackwhite = MyAction(parent, "&Black n White", "Thème Black n White",
                                     lambda: self.__change_theme_to("black_white"))
         theme_pastel = MyAction(parent, "&Pastel", "Thème Pastel", lambda: self.__change_theme_to("pastel"))

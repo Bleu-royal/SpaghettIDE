@@ -914,9 +914,10 @@ C'est lorsque l'on clique sur le bouton valider que la fonction qui valide un ra
 		On voit ici que peut importe le nombre de fichiers contenant le projet ouvert, l'empreinte mémoire reste quasiment la même. Ce qui va consommer de la mémoire est la taille (nombre de lignes) des fichiers ouverts. Plus un fichier est long, plus il faudra de mémoire pour le stocker. \\
 		On observe que l'empreinte mémoire de l'IDE reste assez faible.
 
-\newpage
 
 \section{Grammaire C}
+
+	Cette grammaire était déjà partiellement présente au premier semestre. Nous ne l'avons pas écrite, mais elle nous a permis de comprendre le fonctionnement des grammaires et de comment elles sont utilisées par les logiciels Lex et Yacc.
 
 	\subsection{Lex}
 
@@ -931,9 +932,9 @@ C'est lorsque l'on clique sur le bouton valider que la fonction qui valide un ra
 
 	\subsection{Yacc}
 
-		Pour analyser la partie syntaxique du language C, nous avons utilisé Yacc. Ce dernier va utiliser la liste de tokens retournée par Lex et une suite de règle syntaxique mettant ces tokens en liens les uns avec les autres.
+		Pour analyser la partie syntaxique du language C, nous avons utilisé Yacc. Ce dernier va utiliser la liste de tokens retournée par Lex et une suite de règles syntaxiques mettant ces tokens en lien les uns avec les autres.
 
-		Pour ecrire une règle grammaticale on doit définir une fonction python dont le nom est de la forme \textbf{p\_nomDeLaRegle}. Par la suite, on ecrit la règle à proprement parler dans la docString de la fonction. Une règle est de la forme \textbf{nomDeLaRegle : regle | autre regle | encore une autre}. De plus, cette fonction sera appelée lorsque Yacc trouvera un block correspondant.
+		Pour écrire une règle grammaticale on doit définir une fonction python dont le nom est de la forme \textbf{p\_nomDeLaRegle}. Par la suite, on ecrit la règle à proprement parler dans la docString de la fonction. Une règle est de la forme \textbf{nomDeLaRegle : règle | autre règle | encore une autre}. De plus, cette fonction sera appelée lorsque Yacc trouvera un block correspondant.
 		
 		\begin{figure}[h!]
 				\begin{center}
@@ -946,7 +947,11 @@ C'est lorsque l'on clique sur le bouton valider que la fonction qui valide un ra
 
 \section{Nouvelles grammaires}
 
+	Voici les deux grammaires que nous avons ajouté au cours de ce second semestre.
+
 	\subsection{Grammaire Arithmétique}
+	
+		Nous avons écrit cette grammaire pour nous commencer par une grammaire plutôt simple, qui ne contient que peu d'informations et de données à traiter. Cela nous a permis par la suite de nous perfectionner.
 
 		\subsubsection{Lex}
 			
