@@ -184,7 +184,7 @@ Pour cette partie IHM, nous avons comme objet un éditeur de texte, un navigateu
 		
 	\subsection{Les thèmes et les styles}
 	
-	Afin de pouvoir rendre l'application plus agréable à utiliser pour chaque utilisateur, nous avons choisi de permettre la personnalisation du thème global.
+	Afin de pouvoir rendre l'application plus agréable à utiliser, nous avons choisi de permettre la personnalisation du thème global.
 	Voici quelques exemples de thèmes : 
 	
 	
@@ -317,6 +317,7 @@ Pour cette partie IHM, nous avons comme objet un éditeur de texte, un navigateu
 					\end{center}
 				\end{figure}
 				
+				\newpage
 			\item à la barre de progression
 			\begin{figure}[h!]
 					\begin{center}
@@ -372,7 +373,7 @@ Pour cette partie IHM, nous avons comme objet un éditeur de texte, un navigateu
 		
 		\begin{figure}[h!]
 			\begin{center}
-				\includegraphics[scale=0.3]{images/imgs_lines/apres}
+				\includegraphics[scale=0.25]{images/imgs_lines/apres}
 				\caption{Avec la barre de numérotation des lignes}
 			\end{center}
 		\end{figure}
@@ -426,7 +427,7 @@ Pour cette partie IHM, nous avons comme objet un éditeur de texte, un navigateu
 	\subsection{Sélection de la ligne courante}
 
 	Dans un premier temps, nous avons ajouté une fonction permettant de sélectionner la ligne où se trouve le curseur.
-	Pour cela, nous récupérons l'objet QTextCursor de notre classe Editeur (héritant de QTextEdit) puis nous utilisons la méthode \textbf{select} de cet objet qui nous permet de sélectionner du texte dans notre Editeur, cette méthode prend en paramètre une méthode de selection, QTextCursor.LineUnderCursor dans notre cas. La ligne où se trouve notre curseur va donc être éelectionnée.
+	Pour cela, nous récupérons l'objet QTextCursor de notre classe Editeur (héritant de QTextEdit) puis nous utilisons la méthode \textbf{select} de cet objet qui nous permet de sélectionner du texte dans notre Editeur, cette méthode prend en paramètre une méthode de selection, QTextCursor.LineUnderCursor dans notre cas. La ligne où se trouve notre curseur va donc être sélectionnée.
 	Pour appliquer ces modifications, nous devons appliquer notre objet QTextCursor à notre Editeur, pour cela on utilise la méthode \textbf{setTextCursor} de l'objet Editeur et on lui passe en paramètre notre QTextCursor.  
 
 
@@ -468,7 +469,7 @@ Pour cette partie IHM, nous avons comme objet un éditeur de texte, un navigateu
 
 	Pour l'ajout de la duplication du texte, nous avons choisi de différencier deux cas, le premier où rien n'est sélectionné et le second où du texte est déjà sélectionné. Dans le premier cas, toute la ligne est dupliquée et dans le second seule la partie sélectionnée est dupliquée.
 
-	Pour cela, nous récupérons une nouvelle fois le QTextCursor de notre Editeur, puis pour savoir dans quel cas nous sommes on utilise la méthode selectedText de l'objet QTextCursor. Ainsi, si aucun text n'est sélectionné nous sélectionnons la ligne courante comme précédemment. De plus, on assigne la valeur  \textbf{\\n} à la variable \textbf{return\_}. En effet si on duplique une ligne entière, on retourne à la ligne entre la sélection d'origine et la partie dupliquée. Puis on ajoute le texte dans notre objet Editeur grâce à la méthode \textbf{inserText} avec en paramètre la sélection du QTextCursor (récupérée grâce à la méthode \textbf{selectedText}) suivie de la variable \textbf{return\_} elle même suivie de la sélection du QTextCursor.
+	Pour cela, nous récupérons une nouvelle fois le QTextCursor de notre Editeur, puis pour savoir dans quel cas nous sommes on utilise la méthode selectedText de l'objet QTextCursor. Ainsi, si aucun texte n'est sélectionné nous sélectionnons la ligne courante comme précédemment. De plus, on assigne la valeur \textbf{n} à la variable \textbf{return\_}. En effet si on duplique une ligne entière, on retourne à la ligne entre la sélection d'origine et la partie dupliquée. Puis on ajoute le texte dans notre objet Editeur grâce à la méthode \textbf{inserText} avec en paramètre la sélection du QTextCursor (récupérée grâce à la méthode \textbf{selectedText}) suivie de la variable \textbf{return\_} elle même suivie de la sélection du QTextCursor.
 
 	\begin{figure}[h!]
 		\begin{center}
@@ -598,7 +599,7 @@ Pour cette partie IHM, nous avons comme objet un éditeur de texte, un navigateu
 
 L'Extensible Markup Language (XML, « langage de balisage extensible » en français) est un métalangage informatique de balisage générique qui dérive du SGML. Cette syntaxe est dite « extensible » car elle permet de définir différents espaces de noms, c'est-à-dire des langages avec chacun leur vocabulaire et leur grammaire, comme XHTML, XSLT, RSS, SVG… Elle est reconnaissable par son usage des chevrons (<, >) encadrant les balises. 
 %\newpage
-La boîte à outils XML lxml est une liaison Pythonic pour les bibliothèques C libxml2 et libxslt. Il combine la vitesse et la simplicité d'une API native Python, la plupart du temps compatible mais supérieure à l'API ElementTree. La dernière version fonctionne avec toutes les versions de CPython de 2.6 à 3.6. Nous avons utilisé la librairie LXML (version 3.7.2) qui fait le lien entre Python et le XML, qui nous permet d'utiliser des outils de parse XML dans notre IDE avec Python. 
+La boîte à outils XML lxml est une liaison Pythonic pour les bibliothèques C libxml2 et libxslt. Il combine la vitesse et la simplicité d'une API native Python. La dernière version fonctionne avec toutes les versions de CPython de 2.6 à 3.6. Nous avons utilisé la librairie LXML (version 3.7.2) qui fait le lien entre Python et le XML, qui nous permet d'utiliser des outils de parse XML dans notre IDE avec Python. 
 
 \subsection{Pourquoi le XML}
 
@@ -773,7 +774,7 @@ Lorsque l'on clique sur le bouton pour afficher les informations de projet, nous
 
 	\subsection{Compilateurs utilisés}
 
-		Pour notre IDE, nous avons utilisé le compilateur \textbf{GCC}, pour compiler les projets de type \textbf{C}. Mais nous utilisons aussi les interpréteur de python afin d'interpréter les projets de type \textbf{Python}. Par la suite, pour chaque nouveaux langages il nous suffit d'utiliser le bon compilateur ou le bon interpréteur.
+		Pour notre IDE, nous avons utilisé le compilateur \textbf{GCC}, pour compiler les projets de type \textbf{C}. Mais nous utilisons aussi les interpréteurs de python afin d'interpréter les projets de type \textbf{Python}. Par la suite, pour chaque nouveau langage il nous suffit d'utiliser le bon compilateur ou le bon interpréteur.
 		
 	\subsection{Intégration de \textbf{GCC} à notre IDE}
 
@@ -890,6 +891,8 @@ C'est lorsque l'on clique sur le bouton valider que la fonction qui valide un ra
 		
 		Avant la mise en place du cache, l'ouverture d'un fichier pouvait être relativement longue à cause du traitement effectué par Lex sur ce dernier.
 		
+		\newpage
+		
 		\begin{figure}[h!]
 				\begin{center}
 					\includegraphics[scale=0.5]{images/stats_ouverture}
@@ -903,10 +906,13 @@ C'est lorsque l'on clique sur le bouton valider que la fonction qui valide un ra
 		
 		\begin{figure}[h!]
 				\begin{center}
-					\includegraphics[scale=0.5]{images/exempleJsonCache}
-					\caption{Extrait d'un JSON contenant le cache}
+					\includegraphics[scale=0.45]{images/mem}
+					\caption{Empreinte mémoire en fonction des processus en cours dans l'IDE}
 				\end{center}
 		\end{figure}
+		
+		On voit ici que peut importe le nombre de fichiers contenant le projet ouvert, l'empreinte mémoire reste quasiment la même. Ce qui va consommer de la mémoire est la taille (nombre de lignes) des fichiers ouverts. Plus un fichier est long, plus il faudra de mémoire pour le stocker. \\
+		On observe que l'empreinte mémoire de l'IDE reste assez faible.
 
 \section{Nouvelles grammaires}
 
@@ -1085,8 +1091,31 @@ C'est lorsque l'on clique sur le bouton valider que la fonction qui valide un ra
 
 \section{Bilan}
 
-Un IDE nécessite un éditeur de texte, un compilateur, un interpréteur et un débogueur. Nous avons réussi à intégrer ces quatre fonctionnalités indispensables. Le code peut-être en plus coloré et analysé. Les grammaires que nous avons ajoutées permettent la compilation des langages C et Python.
+Un IDE nécessite un éditeur de texte comprenant la coloration, l'auto-complétion ainsi que l'analyse syntaxique. Mais également un compilateur ou un interpréteur selon le langage utilisé. Nous avons réussi à intégrer ces fonctionnalités indispensables à notre IDE. Les grammaires que nous avons ajoutées permettent la compilation des langages C et Python.\\
 
 Nous avons rajouté des fonctionnalités importantes mais pas indispensables, telles que celles présentées dans la partie édition. Nous avons rendue personnalisable l'interface homme-machine pour que cette dernière soit plus agréable en fonction des préférences de l'utilisateur.
+
+\subsection{Répartition du travail}
+
+	Nous rappelons que tous les membres du groupe ne partaient pas de la même base.Thomas et Théo avaient déjà des bases et des facilités avec la programmation objet et l'emploi de Qt, tandis que Emma et Alexis ont eu plus de travail de recherche, ont dû d'avantage se documenter et ont eu besoin de plus d'aide.
+
+	\begin{itemize}
+		\item Théo : Intégration du compilateur, ajouts des grammaires, fonctionnalités d'édition et de recherche, coloration lexicale, cache
+		\item Emma : Architecture de l'IDE, gestion des boutons, barre de menu, fenêtre de personnalisation des raccourcis, graphiste / dessinatrice
+		\item Alexis : Navigateur de projets, gestion des projets, fichiers de configuration et traitement du XML
+		\item Thomas : Interface graphique (inspecteur d'éléments, barres de statut, numérotation des lignes, styles des popups et fenêtres), gestion des thèmes, gestion de la langue, gestion des Thread
+		\item Tout le groupe : Étude des logiciels Lex et Yacc, rapports, soutenance, recherches sur les différentes parties, tests et statistiques sur la rapidité et l'optimisation du programme.
+	\end{itemize}
+	
+\subsection{Webographie}
+	
+	Voici les sites que nous avons utilisé pour nous documenter :
+	
+	\begin{itemize}
+		\item Documentation sur les méthodes des objets de Qt : https://srinikom.github.io/pyside-docs/PySide/QtGui/
+		\item Autre site de doc sur Qt : http://doc.qt.io/qt-4.8/stylesheet-examples.html
+		\item Documentation sur les modules Python : https://docs.python.org/3.4/py-modindex.html
+	\end{itemize}
+
 
 \end{document}
