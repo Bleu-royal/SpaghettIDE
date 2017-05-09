@@ -736,6 +736,8 @@ class Fenetre(QWidget):
                                                                   ["text-back-color"]) + ";}")
         self.inspecteur.setStyleSheet("background: " + themes.get_rgb(themes.get_color_from_theme("treeview")
                                                                   ["BACKGROUND"]) + ";")
+        self.img_logo.setStyleSheet("background: " + themes.get_rgb(themes.get_color_from_theme("textedit")
+                                                                  ["text-back-color"]) + ";}")
 
         for onglets_ouverts in self.codes:
             onglets_ouverts.maj_style()
