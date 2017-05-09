@@ -97,4 +97,3 @@ class LinesActualise(Thread):
             self.parent.sig_update_lines.emit(i)
             if self.animate:
                 sleep(0.01)
-        self.parent.sig_update_lines_termine.emit(True)

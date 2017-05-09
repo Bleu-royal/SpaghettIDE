@@ -41,7 +41,6 @@ class Fenetre(QWidget):
     sig_progress = Signal(int)
     sig_progress_termine = Signal(bool)
     sig_update_lines = Signal(int)
-    sig_update_lines_termine = Signal(bool)
 
     def __init__(self, titre, workplace_path=QDir.homePath() + "/workplace/"):
         """
@@ -186,7 +185,6 @@ class Fenetre(QWidget):
         self.sig_message.connect(self.prog_mess)
         self.sig_progress.connect(self.prog_val)
         self.sig_update_lines.connect(self.change_lines)
-        self.sig_update_lines_termine.connect(self.nb_lignes.go_top)
 
         self.show_img()
         
@@ -411,7 +409,11 @@ class Fenetre(QWidget):
         :param e: événement reçu : nouveau numéro à ajouter
         :type e: int
         """
-        if e == self.last+1:
+        if self.last == self.docs[self.get_idx()].get_nb_lignes()-1:
+            self.nb_lignes.append(str(e))
+            self.last += 1
+            self.nb_lignes.go_top()
+        elif e == self.last+1:
             self.nb_lignes.append(str(e))  # addItem(str(e)) --> QListWidget
             self.last += 1
 

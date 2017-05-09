@@ -61,7 +61,7 @@ class Lignes(QTextEdit):
         Replace la numérotation des lignes tout en haut
         """
         if self.master.aller_en_haut_lignes:
-            self.scrollToAnchor("1")
+            self.scrollToAnchor("1\n2\n3")
             self.master.aller_en_haut_lignes = False
 
     def maj_style(self):
