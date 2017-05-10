@@ -227,9 +227,13 @@ def importproject(parent, chemin=False):
 
             for e in os.listdir(chemin):
                 if os.path.isfile("%s/%s"%(chemin,e)) and e[0] != ".":
-                    ext = e.split(".")[-1]
-                    project_lang = var.supported_extensions.get(ext, "Python")
-                    break
+                    ext = "*" + e.split(".")[-1]
+                    for e in var.extension_by_language:
+                        print(ext, var.extension_by_language[e])
+                        if ext in var.extension_by_language[e] and e != "":
+                            project_lang = e[0].upper() + e[1:]
+                            break
+                    # project_lang = var.supported_extensions.get(ext, "Python")
 
             create_xml("%s/%s.xml" % (QDir(workplace_path + project_name).path(), project_name))
             path = "%s/%s.xml" % (QDir(workplace_path + project_name).path(), project_name)
