@@ -305,6 +305,7 @@ class DialogErreurs(QDialog):
 
 def get_erreurs(lines, project_path):
 
+    print("lignes : %s, path : %s"%(lines, project_path))
     erreurs = lines.split("%s/"%project_path)[1:]
     erreurs[-1] = "\n".join(erreurs[-1].split("\n")[:-2])
     erreurs = ["\n".join(e.split("\n")[:2]) for e in erreurs]

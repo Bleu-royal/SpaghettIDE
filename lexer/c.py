@@ -24,7 +24,8 @@ types = [
     "short",
     "signed",
     "unsigned",
-    "void"
+    "void",
+    "size_t"
 ]
 
 operandes = [
@@ -77,6 +78,7 @@ keywords = {
     "break": "BREAK",
     "case": "CASE",
     "char": "CHAR",
+    "size_t": "SIZE_T",
     "const": "CONST",
     "continue": "CONTINUE",
     "default": "DEFAULT",
@@ -172,7 +174,7 @@ tokens = [
 }"""
 
 t_INCLUDE = r"\#include"
-t_INCLUDE_STRING = r"<[A-Za-z_]+.h>"
+t_INCLUDE_STRING = r"(<[A-Za-z_]+.h>)|(\"[A-Za-z_]+.h\")"
 t_STRING_LITERAL = r"[A-Za-z_]?\"(\.|[^\"])*\""
 t_ELLIPSIS = r"\.\.\."
 t_RIGHT_ASSIGN = r">>="
@@ -616,6 +618,7 @@ def p_type_specifier(p):
                       | DOUBLE
                       | SIGNED
                       | UNSIGNED
+                      | SIZE_T
                       | struct_or_union_specifier
                       | enum_specifier'''  # TYPE_NAME
     if not str(p.lineno(0) - 1) in lignes:
