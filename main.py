@@ -45,6 +45,8 @@ try:
 
     fenetre = Fenetre("SpaghettIDE (Bleu Royal)", workplace_path)  # Creation of the main window
 
+    print(configuration)
+
     if configuration['numerote_lines'] == 'False':
         fenetre.show_line_column()
         write_xml("conf.xml", "numerote_lines", "False")
