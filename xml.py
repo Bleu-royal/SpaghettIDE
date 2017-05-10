@@ -121,6 +121,7 @@ except :
               "     <current_workplace>%s</current_workplace>\n"
               "</configuration>"%(QDir.homePath() + "/workplace/"))
     new.close()
+    configuration = open_xml("conf.xml")
     
 try :
     open("projects.xml")
