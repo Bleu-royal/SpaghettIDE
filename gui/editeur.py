@@ -108,21 +108,28 @@ class Lignes(QTextEdit):
         text_cursor.clearSelection()
         self.setTextCursor(text_cursor)
 
-    def colorate_line(self, line):
+    def colorate_line(self, fichier, line):
 
-        text_cursor = self.textCursor()
-        text_cursor.movePosition(QTextCursor.Start)
-        for i in range(line-1):
-            text_cursor.movePosition(QTextCursor.Down)
+        idx = self.master.get_idx()
 
-        text_cursor.select(QTextCursor.LineUnderCursor)
+        if idx >= 0:
 
-        text_char_format = QTextCharFormat()
-        text_char_format.setBackground(Qt.red)
+            doc = self.master.docs[idx]
+            if doc.chemin_enregistrement == "%s/%s"%(self.master.project_path,fichier):
 
-        text_cursor.setCharFormat(text_char_format)
-        text_cursor.clearSelection()
-        self.setTextCursor(text_cursor)
+                text_cursor = self.textCursor()
+                text_cursor.movePosition(QTextCursor.Start)
+                for i in range(line-1):
+                    text_cursor.movePosition(QTextCursor.Down)
+
+                text_cursor.select(QTextCursor.LineUnderCursor)
+
+                text_char_format = QTextCharFormat()
+                text_char_format.setBackground(Qt.red)
+
+                text_cursor.setCharFormat(text_char_format)
+                text_cursor.clearSelection()
+                self.setTextCursor(text_cursor)
 
 class Editeur(QTextEdit):
 

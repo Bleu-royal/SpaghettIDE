@@ -316,7 +316,7 @@ def afficher_erreurs(parent, erreurs):
     for e in erreurs:
         splite = e.split(":")
         if len(splite) >= 5:
-            lines.colorate_line(int(splite[1]))
+            lines.colorate_line(splite[0], int(splite[1]))
 
 def compiler(parent):
 
