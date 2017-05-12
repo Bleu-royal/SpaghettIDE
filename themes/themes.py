@@ -5,6 +5,8 @@ import os
 import sys
 from xml import *
 
+from PySide.QtGui import *
+
 def change_theme(theme):
 	"""
 	Permet le changement de thème via son écriture dans le fichier xml.
@@ -63,3 +65,15 @@ def get_rgb(l):
 	"""
 
 	return "rgb(" + str(l[0]) + "," + str(l[1]) + "," + str(l[2]) + ")"
+
+
+def get_qcolor(l):
+	"""
+	Returns a RGB string from a list.
+
+	:param l: Liste of color
+	:type l: list
+	:rtype: str
+	"""
+
+	return QColor(l[0], l[1], l[2])

@@ -36,7 +36,6 @@ class LignesAndTab(QWidget):
         self.parent.anim_line = not self.parent.anim_line
         self.anim.setText(self.values[self.parent.anim_line])
 
-
 class Lignes(QTextEdit):
     def __init__(self, master, police, taille_texte):
         """
@@ -63,6 +62,7 @@ class Lignes(QTextEdit):
         if self.master.aller_en_haut_lignes:
             self.scrollToAnchor("1\n2\n3")
             self.master.aller_en_haut_lignes = False
+
 
     def maj_style(self):
         """
@@ -92,6 +92,37 @@ class Lignes(QTextEdit):
         Ici on change le curseur en normal.
         """
         self.viewport().setCursor(Qt.ArrowCursor)
+
+    def retirer_erreurs(self):
+        c = themes.get_color_from_theme("textedit")
+
+        color = themes.get_qcolor(c["text-back-color"])
+
+        text_cursor = self.textCursor()
+        text_cursor.select(QTextCursor.Document)
+
+        text_char_format = QTextCharFormat()
+        text_char_format.setBackground(color)
+
+        text_cursor.setCharFormat(text_char_format)
+        text_cursor.clearSelection()
+        self.setTextCursor(text_cursor)
+
+    def colorate_line(self, line):
+
+        text_cursor = self.textCursor()
+        text_cursor.movePosition(QTextCursor.Start)
+        for i in range(line-1):
+            text_cursor.movePosition(QTextCursor.Down)
+
+        text_cursor.select(QTextCursor.LineUnderCursor)
+
+        text_char_format = QTextCharFormat()
+        text_char_format.setBackground(Qt.red)
+
+        text_cursor.setCharFormat(text_char_format)
+        text_cursor.clearSelection()
+        self.setTextCursor(text_cursor)
 
 class Editeur(QTextEdit):
 

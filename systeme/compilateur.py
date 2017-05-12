@@ -305,11 +305,18 @@ class DialogErreurs(QDialog):
 
 def get_erreurs(lines, project_path):
 
-    print("lignes : %s, path : %s"%(lines, project_path))
     erreurs = lines.split("%s/"%project_path)[1:]
     erreurs[-1] = "\n".join(erreurs[-1].split("\n")[:-2])
     erreurs = ["\n".join(e.split("\n")[:2]) for e in erreurs]
     return erreurs
+
+def afficher_erreurs(parent, erreurs):
+    lines = parent.nb_lignes
+
+    for e in erreurs:
+        splite = e.split(":")
+        if len(splite) >= 5:
+            lines.colorate_line(int(splite[1]))
 
 def compiler(parent):
 
@@ -334,6 +341,7 @@ def compiler(parent):
             erreurs = get_erreurs(res, parent.project_path)
             dialogErreur = DialogErreurs(erreurs)
             dialogErreur.exec()
+            afficher_erreurs(parent, erreurs)
         else:
             QMessageBox.about(parent, get_text("comp_res"), get_text("comp_ok"))
             config_json = json.loads(xml.project_compil_json(xml_path))

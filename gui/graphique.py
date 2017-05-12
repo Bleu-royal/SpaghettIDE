@@ -376,6 +376,8 @@ class Fenetre(QWidget):
             nblignes = self.docs[idx].get_nb_lignes()
             self.infobar.showMessage(str(nblignes) + get_text("infobar_line") + "s"*(nblignes != 1))
 
+            self.nb_lignes.retirer_erreurs()
+
             if nblignes != prev:
                 self.nb_lignes.clear()
                 self.update_lines_number = parallele.LinesActualise(self, nblignes, self.anim_line)
