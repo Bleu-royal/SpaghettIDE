@@ -339,9 +339,10 @@ def compiler(parent):
     if parent.project_type == "c":
         if res != "":
             erreurs = get_erreurs(res, parent.project_path)
+            afficher_erreurs(parent, erreurs)
+
             dialogErreur = DialogErreurs(erreurs)
             dialogErreur.exec()
-            afficher_erreurs(parent, erreurs)
         else:
             QMessageBox.about(parent, get_text("comp_res"), get_text("comp_ok"))
             config_json = json.loads(xml.project_compil_json(xml_path))
