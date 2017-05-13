@@ -756,20 +756,7 @@ def infosproject(parent):
         ip.language.addItem(project["language"])
         for language in languages:
             ip.language.addItem(language)
-
-        # if project["language"] == "Python":
-        #     ip.language.addItem("Python")
-        #     ip.language.addItem("C")
-        #     ip.language.addItem("Arithmétique")
-        # elif project["language"] == "C":
-        #     ip.language.addItem("C")
-        #     ip.language.addItem("Python")
-        #     ip.language.addItem("Arithmétique")
-        # elif project["language"] == "Arithmétique":
-        #     ip.language.addItem("Arithmétique")
-        #     ip.language.addItem("Python")
-        #     ip.language.addItem("C")
-        
+            
         ip.layout.addWidget(ip.language)
         ip.location.setParent(None)
         ip.location = QLabel(get_text("project_location") + QDir(parent.workplace_path + project_name).path())
