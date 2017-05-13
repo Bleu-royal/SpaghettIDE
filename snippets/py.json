@@ -9,6 +9,7 @@
 	"class" : ["class MaClasse:\n      pass", 2, 4],
 	"init" : ["def __init__(self):\n      pass", 0, 0],
 	"repr" : ["def __repr__(self):\n      pass", 0, 0],
+	"radd" : ["def __radd__(self):\n      pass", 0, 0],
 	"print" : ["print(\"texte\")", 0, 8],
 	"try" : ["try:\n      pass\nexcept:\n      pass", 3, 9]
 }
