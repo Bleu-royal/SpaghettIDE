@@ -250,8 +250,8 @@ class TreeView(QTreeView):
         name = self.model.fileName(self.currentIndex())
         ext = name.split(".")[-1]
 
+        dir_ = stat.filemode(os.stat(path).st_mode)[0] == "d"
         executable = "x" in stat.filemode(os.stat(path).st_mode)[:4]
-
 
         if ext in [i[1:] for i in var.extension_by_language[self.fenetre.project_type]] + [i[1:] for i in var.txt_extentions]:
             self.fenetre.open(path)
@@ -259,6 +259,8 @@ class TreeView(QTreeView):
             self.fenetre.open_img(path)
         elif ext in [i[1:] for i in var.gif_extentions]:
             self.fenetre.open_gif(path)
+        elif dir_:
+            pass#temp
         elif executable:
             os.system(path)
         else:
