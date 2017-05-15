@@ -26,14 +26,14 @@ class Inspecteur(QListWidget):
     def load(self):
         self.clear()
 
-        if self.parent.project_type in [x[1:] for x in var.extension_by_language[""]]:
+        idx = self.parent.get_idx()
+        doc = self.parent.docs[idx]
+        ext = doc.extension
+        current_file = doc.chemin_enregistrement
+
+        if ext in [x[1:] for x in var.extension_by_language[""]]:
 
             class_name = {"py" : "Classes", "c": "Structs", "h" : "Structs"}
-
-            idx = self.parent.get_idx()
-            doc = self.parent.docs[idx]
-            ext = doc.extension
-            current_file = doc.chemin_enregistrement
 
             self.def_functions_infos = ""
             self.def_structs_infos = ""
