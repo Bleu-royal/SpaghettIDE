@@ -308,6 +308,8 @@ class DialogErreurs(QDialog):
 
 def get_erreurs(lines, project_path):
 
+    print("erreur ---%s----"%lines)
+
     if project_path in lines.split("\n")[0]:
         erreurs = lines.split("%s/"%project_path)[1:]
         erreurs[-1] = "\n".join(erreurs[-1].split("\n")[:-2])
@@ -321,8 +323,11 @@ def afficher_erreurs(parent, erreurs):
     for e in erreurs:
         splite = e.split(":")
         if len(splite) >= 5:
-            lines.colorate_line(splite[0], int(splite[1]))
-
+            try:    
+                lines.colorate_line(splite[0], int(splite[1]))
+            except:
+                pass
+                
 def compiler(parent):
 
     xml_path = "%s/%s.xml"%(parent.project_path, parent.project_path.split("/")[-1])
