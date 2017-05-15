@@ -176,8 +176,17 @@ class TreeView(QTreeView):
         shutil.rmtree(path)
     
     def act_remove_file_func(self):
-
         path = self.model.filePath(self.currentIndex())
+
+        docs = self.fenetre.docs
+        doc_idx = False
+        for i,doc in enumerate(docs):
+            if doc.chemin_enregistrement == path:
+                doc_idx = i
+                break
+
+        self.fenetre.close_tab_idx(doc_idx)
+
         os.remove(path)
 
     def act_import_func(self):

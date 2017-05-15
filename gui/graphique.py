@@ -496,6 +496,14 @@ class Fenetre(QWidget):
 
         document.save_document(self)
 
+    def close_tab_idx(self, idx):
+        self.select_tab(idx)
+        self.close_current_tab()
+
+    def select_tab(self, idx):
+
+        self.tab_widget.setCurrentIndex(idx)
+
     def close_current_tab(self):
         """
         Ferme l'onglet courant
