@@ -39,7 +39,6 @@ from gui.raccourcis.raccourcis import Raccourcis
 class Fenetre(QWidget):
     sig_message = Signal(str)
     sig_progress = Signal(int)
-    sig_progress_termine = Signal(bool)
     sig_update_lines = Signal(int)
 
     def __init__(self, titre, workplace_path=QDir.homePath() + "/workplace/"):
@@ -497,12 +496,11 @@ class Fenetre(QWidget):
         document.save_document(self)
 
     def close_tab_idx(self, idx):
-        self.select_tab(idx)
-        self.close_current_tab()
-
-    def select_tab(self, idx):
-
+        current_idx = self.get_idx() 
+        if current_idx > idx : current_idx -= 1
         self.tab_widget.setCurrentIndex(idx)
+        self.close_current_tab()
+        self.tab_widget.setCurrentIndex(current_idx)
 
     def close_current_tab(self):
         """

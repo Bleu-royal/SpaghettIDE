@@ -251,7 +251,6 @@ def document_deja_ouvert(parent, chemin):
     return False
 
 def open_document(parent, chemin, secu=False):
-
     if parent.project_path != "":
         if not chemin:
             chemin = QFileDialog.getOpenFileName(parent, get_text("ouverture_2"), parent.project_path, var.file_by_language[parent.project_type] + ";;" + var.txt_extentions_filedialog)[0]
@@ -269,37 +268,26 @@ def open_document(parent, chemin, secu=False):
                 parent.tab_widget.setCurrentIndex(len(parent.codes) - 1)
                 parent.defaut_info_message()
             else:
-                idx = 0
                 for i in range(len(parent.docs)):
                     if parent.docs[i].chemin_enregistrement == chemin:
-                        idx = i
+                        parent.tab_widget.setCurrentIndex(i)
                         break
-                parent.tab_widget.setCurrentIndex(idx)
         elif chemin != "":
-            # parent.status_message("Impossible d'ouvrir ce document car il ne fait pas partie du projet courant.", 2000)
             if not secu:
                 open_project_and_document(parent, chemin)
     else:
         if not secu  and chemin:
             open_project_and_document(parent, chemin)
-        # parent.status_message("Aucun projet ouvert, veuillez ouvrir ou créer un projet.", 2000)
 
 def open_project_and_document(parent, chemin):
-        parent.docs = []
-        parent.highlighters = []
-        parent.codes = []
-        parent.tab_widget.clear()
+    parent.docs = []
+    parent.highlighters = []
+    parent.codes = []
+    parent.tab_widget.clear()
 
-        path = chemin.replace(parent.workplace_path, "").split("/")[0]
-        workplace.open_project(parent.treeview, path)
-        # open_document(parent, chemin)
-        parent.sig_progress_termine.connect(lambda e: open_doc_from_sig(e, parent, chemin))
-
-
-def open_doc_from_sig(e, parent, chemin):
-    if e:
-        open_document(parent, chemin, True)
-
+    path = chemin.replace(parent.workplace_path, "").split("/")[0]
+    workplace.open_project(parent.treeview, path)
+    open_document(parent, chemin)
 
 def closedocument(parent):
     pass

@@ -78,7 +78,7 @@ class ProgressDisp(Thread):
                 prev_val = self.memo.progress
 
             sleep(0.01)
-        self.parent.fenetre.sig_progress_termine.emit(True)
+        # self.parent.fenetre.sig_progress_termine.emit(True)
 
 class LinesActualise(Thread):
     def __init__(self, parent, nb_lignes, animate):
