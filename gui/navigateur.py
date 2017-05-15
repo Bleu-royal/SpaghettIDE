@@ -63,7 +63,8 @@ class TreeView(QTreeView):
 
         # self.setStyleSheet("background-color: rgb(50, 50, 50); color: white")
 
-        self.model = QFileSystemModel()
+        self.model = QFileSystemModel()        
+
         self.file = QFile()
         self.model.setRootPath(self.fenetre.workplace_path)
         self.setModel(self.model)
@@ -223,6 +224,7 @@ class TreeView(QTreeView):
         :rtype: None
         """
         workplace.open_project(self)
+        self.expand(self.currentIndex())
 
     def keyPressEvent(self, event):
         """

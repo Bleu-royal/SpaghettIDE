@@ -252,6 +252,7 @@ class Mem:
 def open_project(parent, name=False):
 
     if not name:
+        idx = parent.currentIndex()
         name = parent.model.fileName(parent.currentIndex())
 
     if QDir(parent.fenetre.workplace_path + name).exists():
