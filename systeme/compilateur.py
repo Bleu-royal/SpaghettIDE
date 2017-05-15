@@ -308,10 +308,12 @@ class DialogErreurs(QDialog):
 
 def get_erreurs(lines, project_path):
 
-    erreurs = lines.split("%s/"%project_path)[1:]
-    erreurs[-1] = "\n".join(erreurs[-1].split("\n")[:-2])
-    erreurs = ["\n".join(e.split("\n")[:2]) for e in erreurs]
-    return erreurs
+    if project_path in lines.split("\n")[0]:
+        erreurs = lines.split("%s/"%project_path)[1:]
+        erreurs[-1] = "\n".join(erreurs[-1].split("\n")[:-2])
+        erreurs = ["\n".join(e.split("\n")[:2]) for e in erreurs]
+        return erreurs
+    return [lines]
 
 def afficher_erreurs(parent, erreurs):
     lines = parent.nb_lignes
