@@ -7,6 +7,7 @@ from PySide.QtCore import *
 
 from themes import themes
 from systeme.document import find
+import kernel.variables as var
 
 sys.path[:0] = ["../"]
 sys.path[:0] = ["gui"]
@@ -25,46 +26,48 @@ class Inspecteur(QListWidget):
     def load(self):
         self.clear()
 
-        class_name = {"py" : "Classes", "c": "Structs", "h" : "Structs"}
+        if self.parent.project_type in [x[1:] for x in var.extension_by_language[""]]:
 
-        idx = self.parent.get_idx()
-        doc = self.parent.docs[idx]
-        ext = doc.extension
-        current_file = doc.chemin_enregistrement
+            class_name = {"py" : "Classes", "c": "Structs", "h" : "Structs"}
 
-        self.def_functions_infos = ""
-        self.def_structs_infos = ""
-        self.def_vars_infos = ""
+            idx = self.parent.get_idx()
+            doc = self.parent.docs[idx]
+            ext = doc.extension
+            current_file = doc.chemin_enregistrement
 
-        if current_file in self.parent.def_functions:
-            self.def_functions_infos = self.parent.def_functions[current_file]
+            self.def_functions_infos = ""
+            self.def_structs_infos = ""
+            self.def_vars_infos = ""
 
-        if current_file in self.parent.def_structs:
-            self.def_structs_infos = self.parent.def_structs[current_file]
+            if current_file in self.parent.def_functions:
+                self.def_functions_infos = self.parent.def_functions[current_file]
 
-        if current_file in self.parent.def_vars:
-            self.def_vars_infos = self.parent.def_vars[current_file]
+            if current_file in self.parent.def_structs:
+                self.def_structs_infos = self.parent.def_structs[current_file]
 
-        if self.def_functions_infos != []:
-            self.add("Fonctions : ")
+            if current_file in self.parent.def_vars:
+                self.def_vars_infos = self.parent.def_vars[current_file]
 
-        for def_functions in self.def_functions_infos:
-            if isinstance(def_functions, list):
-                self.add("    - %s" % def_functions[0])
-            else:
-                self.add("    - %s" % def_functions)
+            if self.def_functions_infos != []:
+                self.add("Fonctions : ")
 
-        if self.def_structs_infos != []:
-            self.add("%s : " % class_name[ext])
+            for def_functions in self.def_functions_infos:
+                if isinstance(def_functions, list):
+                    self.add("    - %s" % def_functions[0])
+                else:
+                    self.add("    - %s" % def_functions)
 
-        for def_struct in self.def_structs_infos:
-            self.add("    - %s" % def_struct)
+            if self.def_structs_infos != []:
+                self.add("%s : " % class_name[ext])
 
-        if self.def_vars_infos != []:
-            self.add("Variables : ")
+            for def_struct in self.def_structs_infos:
+                self.add("    - %s" % def_struct)
 
-        for def_var in self.def_vars_infos:
-            self.add("    - %s" % def_var)
+            if self.def_vars_infos != []:
+                self.add("Variables : ")
+
+            for def_var in self.def_vars_infos:
+                self.add("    - %s" % def_var)
 
     def add(self, item):
 
