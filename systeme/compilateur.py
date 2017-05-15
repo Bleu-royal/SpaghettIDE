@@ -1,8 +1,11 @@
 import os, xml, json
 from PySide.QtGui import *
 
+import kernel.variables as var
 from subprocess import Popen, PIPE
 from language.language import get_text
+from systeme import execute
+
 
 class LineEditPath(QLineEdit):
 
@@ -332,11 +335,18 @@ def compiler(parent):
 
     curt = os.getcwd()
     os.chdir(parent.project_path)
-    out, res = Popen(configuration, shell=True, stdout=PIPE, stderr=PIPE).communicate()
-    out, res = out.decode("utf-8"), res.decode("utf-8")
+
+    if parent.project_type in var.inter_lang:
+
+        execute.exec_(configuration, True)
+
+    else:
+        out, res = Popen(configuration, shell=True, stdout=PIPE, stderr=PIPE).communicate()
+        out, res = out.decode("utf-8"), res.decode("utf-8")
+
     os.chdir(curt)
 
-    if parent.project_type == "c":
+    if parent.project_type in var.compil_lang:
         if res != "":
             erreurs = get_erreurs(res, parent.project_path)
             afficher_erreurs(parent, erreurs)
@@ -350,16 +360,11 @@ def compiler(parent):
                 name = "a.out" if config_json[4] == "" else config_json[4] # Nom du fichier
                 os.system("%s/%s"%(parent.project_path, name))
 
-    else:
-        print("##### Debut du script python #####")
-        print(out)
-        print("##### Fin du script python #####")
-
 def configuration_compilation(parent):
 
     xml_path = "%s/%s.xml"%(parent.project_path, parent.project_path.split("/")[-1])
 
-    if parent.project_type == "c":
+    if parent.project_type in var.compil_lang:
         config = ConfigCompilC(parent)
     else:
         config = ConfigInterpPython(parent)

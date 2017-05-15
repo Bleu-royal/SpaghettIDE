@@ -4,6 +4,7 @@ import stat
 from PySide.QtGui import *
 from PySide.QtCore import *
 from systeme import workplace
+from systeme import execute
 from themes import themes
 from language.language import get_text, get_tmenu
 import shutil
@@ -262,6 +263,6 @@ class TreeView(QTreeView):
         elif dir_:
             pass#temp
         elif executable:
-            os.system(path)
+            execute.exec_(path)
         else:
             QMessageBox.critical(self.fenetre, get_text("opening_fail"), get_text("opening_fail_text"))
