@@ -248,9 +248,16 @@ class ConfigInterpPython(QDialog):
         layout.addWidget(self.lineEdit_fichier_depart, 2, 1)
         self.informations += [self.lineEdit_fichier_depart]
 
+        lbl_emplacement_depart = QLabel(get_text("comp_opts_py"))
+        layout.addWidget(lbl_emplacement_depart, 3, 0)
+
+        self.lineEdit_options = QLineEdit(self.parent)
+        layout.addWidget(self.lineEdit_options, 3, 1)
+        self.informations += [self.lineEdit_options]
+
         btn_valider = QPushButton(get_text("comp_run"))
         btn_valider.clicked.connect(self.valider)
-        layout.addWidget(btn_valider, 3, 0, 1, 2)
+        layout.addWidget(btn_valider, 4, 0, 1, 2)
 
         self.setLayout(layout)
 
@@ -272,7 +279,7 @@ class ConfigInterpPython(QDialog):
         return json.dumps(res)
 
     def get_configuration_string(self):
-        return "%s %s"%(self.lineEdit_emplacement_interpreteur.text(), self.lineEdit_fichier_depart.text())
+        return "%s %s %s"%(self.lineEdit_emplacement_interpreteur.text(), self.lineEdit_fichier_depart.text(), self.lineEdit_options.text())
 
     def setConfig(self, config_json):
         config_json = json.loads(config_json)
