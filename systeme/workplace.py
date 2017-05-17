@@ -251,17 +251,21 @@ class Mem:
 
 def open_project(parent, name=False):
 
+
     if not name:
         idx = parent.currentIndex()
         name = parent.model.fileName(parent.currentIndex())
 
     if QDir(parent.fenetre.workplace_path + name).exists():
 
-        if name:
-            parent.fenetre.docs = []
-            parent.fenetre.highlighters = []
-            parent.fenetre.codes = []
-            parent.fenetre.tab_widget.clear()
+
+        parent.collapseAll()
+        parent.expand(parent.currentIndex())
+
+        parent.fenetre.docs = []
+        parent.fenetre.highlighters = []
+        parent.fenetre.codes = []
+        parent.fenetre.tab_widget.clear()
 
         parent.fenetre.show_progress_bar()
 

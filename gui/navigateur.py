@@ -224,8 +224,6 @@ class TreeView(QTreeView):
         :rtype: None
         """
         workplace.open_project(self)
-        self.collapseAll()
-        self.expand(self.currentIndex())
 
     def keyPressEvent(self, event):
         """
