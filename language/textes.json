@@ -239,6 +239,11 @@
     "en": "Input file : "
   },
 
+  "comp_opts_py": {
+    "fr": "Options : ",
+    "en": "Options : "
+  },
+
   "comp_res": {
     "fr": "Résultat de la compilation",
     "en": "Compilation output"

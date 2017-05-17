@@ -543,7 +543,8 @@ class Fenetre(QWidget):
             self.treeview.setMaximumHeight(self.ecran.screenGeometry().height())
             self.inspecteur.setMaximumHeight(1)
 
-        chemin = QFileDialog.getExistingDirectory(self, get_text("chg_worplace"), self.workplace_path) + "/"
+        chemin = QFileDialog.getExistingDirectory(self, get_text("chg_worplace"), self.workplace_path).replace("\\","/") + "/"
+        print(chemin)
         if chemin != "/":
             self.treeview.change_worplace(chemin)
             self.workplace_path = chemin
