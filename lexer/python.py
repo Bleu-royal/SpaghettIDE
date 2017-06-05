@@ -140,7 +140,6 @@ keywords = {
     "while" : "WHILE",
     "with" : "WITH",
     "yield" : "YIELD",
-
 }
 
 tokens = [
