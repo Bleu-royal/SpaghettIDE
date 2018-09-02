@@ -25,3 +25,6 @@ Python version 3.4 : https://www.python.org/downloads/
 QT version 4.8.7 : https://www.qt.io/download/
 
 PySide version 1.2.4 : http://wiki.qt.io/Category:LanguageBindings::PySide::Downloads
+
+
+Documentation : https://doc.qt.io
